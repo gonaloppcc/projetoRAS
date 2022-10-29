@@ -9,5 +9,6 @@ export const PALETTE = {
     BLOOD_RED: '#660708',
     EERIE_BLACK: '#161A1D',
     RICH_BLACK: '#0B090A',
-    SPECIAL: '#E6B800',
+    SPECIAL: '#FFCC00',
+    SPECIAL_DARK: '#E6B800',
 };

@@ -1,12 +1,6 @@
-import React from 'react';
-import {Box} from '@mui/system';
 import {PALETTE} from '../../constants/Palette';
 
-export interface NavbarProps {
-    children?: React.ReactNode;
-}
-
-const layoutStyle = {
+export const layoutStyle = {
     paddingX: '2vw',
     display: 'flex',
     flexDirection: 'row',
@@ -17,7 +11,7 @@ const layoutStyle = {
     background: PALETTE.IMPERIAL_RED,
 };
 
-const navlinksStyle = {
+export const navlinksStyle = {
     height: '100%',
     display: 'flex',
     flexDirection: 'row',
@@ -25,19 +19,11 @@ const navlinksStyle = {
     alignItems: 'center',
 };
 
-const profileNavbarStyle = {
+export const profileNavbarStyle = {
     height: '100%',
     display: 'flex',
     flexDirection: 'row',
     justifyContent: 'flex-start',
     alignItems: 'center',
-};
-
-export const Navbar = ({children: navlinks}: NavbarProps) => {
-    return (
-        <Box sx={layoutStyle}>
-            <Box sx={navlinksStyle}>{navlinks}</Box>
-            <Box sx={profileNavbarStyle}>Profile Stuff</Box>
-        </Box>
-    );
+    gap: '2vw',
 };
