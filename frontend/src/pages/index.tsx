@@ -3,8 +3,8 @@ import Head from 'next/head';
 import {Box} from '@mui/system';
 import {EventCard} from '../components/cards/EventCard';
 import {useEvents} from '../hooks/useEvents';
-import {PALETTE} from '../constants/Palette';
 import {Report} from '../components/Report';
+import {BetCard} from '../components/cards/BetCard';
 
 const Home: NextPage = () => {
     const {isSuccess, isLoading, events, isError, error} = useEvents();
@@ -25,7 +25,7 @@ const Home: NextPage = () => {
                     borderRadius: '2%',
                     height: '100%',
                     width: '45%',
-                    background: PALETTE.WHITE,
+                    //background: PALETTE.WHITE,
                 }}
             />
             <Box
@@ -53,7 +53,22 @@ const Home: NextPage = () => {
                     height: '100%',
                 }}
             >
-                <Report />
+                <Report>
+                    <BetCard
+                        odd={{name: 'Resultado Final: Rio Ave', price: 1.26}}
+                        event={'Rio Ave - Barcelona'}
+                    />
+
+                    <BetCard
+                        odd={{name: 'Resultado Final: Barcelona', price: 5.68}}
+                        event={'Rio Ave - Barcelona'}
+                    />
+
+                    <BetCard
+                        odd={{name: 'Resultado Final: Empate', price: 3.68}}
+                        event={'Rio Ave - Barcelona'}
+                    />
+                </Report>
             </Box>
         </>
     );

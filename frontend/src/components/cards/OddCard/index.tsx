@@ -8,6 +8,8 @@ export interface OddCardProps extends Odd {
 }
 
 export const OddCard = ({name, price, selected}: OddCardProps) => {
+    const priceFormatted = price.toFixed(2);
+
     // TODO: Implement selected behavior
     return (
         <Card sx={ODD_CARD_STYLE}>
@@ -27,7 +29,7 @@ export const OddCard = ({name, price, selected}: OddCardProps) => {
                     fontWeight: 'bold',
                 }}
             >
-                {price}
+                {priceFormatted}
             </span>
         </Card>
     );

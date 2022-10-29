@@ -42,6 +42,8 @@ export const EventCard = ({
         ...isLiveStyle,
     };
 
+    const finalScore = scores ? scores.replace('x', ' - ') : '';
+
     return (
         <Card sx={cardStyle}>
             <Box sx={EVENT_CARD_LEFT_STYLE}>
@@ -65,9 +67,10 @@ export const EventCard = ({
             </Box>
 
             <Box sx={EVENT_CARD_RIGHT_STYLE}>
-                {odds.map((odd) => (
-                    <OddCard key={odd.name} {...odd} />
-                ))}
+                {!completed &&
+                    odds.map((odd) => <OddCard key={odd.name} {...odd} />)}
+
+                {completed && `Resultado Final: ${finalScore}`}
             </Box>
         </Card>
     );
