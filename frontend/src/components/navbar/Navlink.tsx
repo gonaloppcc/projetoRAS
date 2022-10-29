@@ -3,13 +3,13 @@ import Link from 'next/link';
 import {UrlObject} from 'url';
 import {PALETTE} from '../../constants/Palette';
 
-interface Props {
+export interface NavlinkProps {
     name: string;
     href: string | UrlObject;
     isActive?: boolean;
 }
 
-export const Navlink = ({name, href, isActive}: Props) => {
+export const Navlink = ({name, href, isActive}: NavlinkProps) => {
     return (
         <div
             style={{

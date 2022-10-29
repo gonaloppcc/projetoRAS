@@ -2,7 +2,7 @@ import React from 'react';
 import {Box} from '@mui/system';
 import {PALETTE} from '../../constants/Palette';
 
-interface Props {
+export interface NavbarProps {
     children?: React.ReactNode;
 }
 
@@ -33,7 +33,7 @@ const profileNavbarStyle = {
     alignItems: 'center',
 };
 
-export const Navbar = ({children: navlinks}: Props) => {
+export const Navbar = ({children: navlinks}: NavbarProps) => {
     return (
         <Box sx={layoutStyle}>
             <Box sx={navlinksStyle}>{navlinks}</Box>
