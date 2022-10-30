@@ -35,6 +35,15 @@ class Promotion(BaseModel):
     id : str
     validity : str
 
+# Aqui todas as bets pertencem ao mesmo user, depois alterar.
+bets = {}
+
+class Bet(BaseModel):
+    id_game : str
+    date : str
+    value_bet : int
+    state : str
+    win : int
 
 
 # ----------------- Métodos de Post
@@ -54,6 +63,15 @@ def read_item(new_promotion : Promotion):
             return {"data": "Promoção adicionada com sucesso"}
 
     return {"data": "Jogo não encontrado"}
+
+@app.post("/bets/{game_id}")
+def read_item(new_bet : Bet):
+    for obj in ucras.games_only:
+        if obj == new_bet.id_game:
+            bets[new_bet.id_game] = new_bet
+            return {"data": "Promoção adicionada com sucesso"}
+    return {"data": "Jogo não encontrado"}
+
 # ----------------- Métodos de GET
 @app.get("/")
 def read_root():
@@ -96,6 +114,12 @@ def read_item(game_id : str):
 @app.get("/game/{game_id}")
 def read_item(game_id : str):
     return {"data": ucras.get_game(game_id)}
+
+
+
+@app.get("/bets/")
+def read_item():
+    return {"data": bets}
 '''
 Should initialize variables, but it doesn't work.
 def main():
