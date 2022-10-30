@@ -48,6 +48,7 @@ for game in r:
         game_id = game["id"]
         (odd_home, odd_away, odd_draw) = get_bets(game["bookmakers"] , game["homeTeam"], game["awayTeam"])
         games_only[game_id] = {
+            "id" : game_id,
             "awayTeam" : game["awayTeam"],
             "homeTeam" : game["homeTeam"],
             "completed": game["completed"],
@@ -62,3 +63,6 @@ if debug:
     print(games_only)
 #print(r.json())
  
+
+def get_game(game_id):
+    return games_only[game_id]

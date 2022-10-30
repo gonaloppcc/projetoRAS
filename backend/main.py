@@ -29,6 +29,22 @@ class Game(BaseModel):
     odd_away_win : Optional[float]
     odd_tie : Optional[float]
 
+promotions = {}
+
+class Promotion(BaseModel):
+    id : str
+    validity : str
+
+# Aqui todas as bets pertencem ao mesmo user, depois alterar.
+bets = {}
+
+class Bet(BaseModel):
+    id_game : str
+    date : str
+    value_bet : int
+    state : str
+    win : int
+
 
 # ----------------- Métodos de Post
 
@@ -36,6 +52,25 @@ class Game(BaseModel):
 def read_root(game : Game):
     games[len(games)] = game
     return {"data": f"New game is created: {game.home_team} vs. {game.away_team}"}
+
+# Valida de o jogo existe
+# A key no dicionário de promoções é o id do jogo, depois alterar.
+@app.post("/promotions/{game_id}")
+def read_item(new_promotion : Promotion):
+    for obj in ucras.games_only:
+        if obj == new_promotion.id:
+            promotions[new_promotion.id] = new_promotion
+            return {"data": "Promoção adicionada com sucesso"}
+
+    return {"data": "Jogo não encontrado"}
+
+@app.post("/bets/{game_id}")
+def read_item(new_bet : Bet):
+    for obj in ucras.games_only:
+        if obj == new_bet.id_game:
+            bets[new_bet.id_game] = new_bet
+            return {"data": "Promoção adicionada com sucesso"}
+    return {"data": "Jogo não encontrado"}
 
 # ----------------- Métodos de GET
 @app.get("/")
@@ -57,10 +92,34 @@ def read_root():
     
 
 
+# Este pode-se apagar, é um default com coisas que depois quero ver melhor
 @app.get("/items/{item_id}")
 def read_item(item_id: int, q: Union[str, None] = None):
     return {"item_id": item_id, "q": q}
 
+@app.get("/promotions/")
+def read_item():
+    return {"data": promotions}
+
+
+@app.get("/promotions/{game_id}")
+def read_item(game_id : str):
+    try:
+        promotion_info = promotions[game_id]
+        game_info = ucras.get_game(game_id)
+        return {"game_id": game_id, "promotion" : promotion_info, "game" : game_info}
+    except:
+        return {"Error": "Id not found?"}
+
+@app.get("/game/{game_id}")
+def read_item(game_id : str):
+    return {"data": ucras.get_game(game_id)}
+
+
+
+@app.get("/bets/")
+def read_item():
+    return {"data": bets}
 '''
 Should initialize variables, but it doesn't work.
 def main():
