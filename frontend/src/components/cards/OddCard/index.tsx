@@ -5,14 +5,15 @@ import {Odd} from '../../../types/Event';
 
 export interface OddCardProps extends Odd {
     selected?: boolean;
+    onClick?: () => void;
 }
 
-export const OddCard = ({name, price, selected}: OddCardProps) => {
+export const OddCard = ({name, price, onClick, selected}: OddCardProps) => {
     const priceFormatted = price.toFixed(2);
 
     // TODO: Implement selected behavior
     return (
-        <Card sx={ODD_CARD_STYLE}>
+        <Card sx={ODD_CARD_STYLE} onClick={onClick}>
             <span
                 style={{
                     // TODO: This should be in a separate file

@@ -1,35 +1,24 @@
 import React from 'react';
 import {Report} from '../components/Report';
-import {Box} from '@mui/system';
 import {BetCard} from '../components/cards/BetCard';
+import {Flex} from '../components/Flex';
+import {useReport} from '../hooks/useReport';
 
 const Components = () => {
+    const {bets} = useReport();
+
     return (
-        <Box
-            sx={{
-                height: '100%',
-                width: '100%',
-                display: 'flex',
-                flexDirection: 'row',
-                justifyContent: 'flex-end',
-                gap: '2vw',
-            }}
-        >
+        <Flex flexDirection="row" justifyContent="flex-end" gap="2vw">
             <Report>
-                <BetCard
-                    odd={{name: 'Resultado Final: Varzim', price: 1.54}}
-                    event={'Varzim vs Sporting'}
-                />
-                <BetCard
-                    odd={{name: 'Resultado Final: Varzim', price: 1.54}}
-                    event={'Varzim vs Sporting'}
-                />
-                <BetCard
-                    odd={{name: 'Resultado Final: Varzim', price: 1.54}}
-                    event={'Varzim vs Sporting'}
-                />
+                {bets.map((bet, index) => (
+                    <BetCard
+                        key={index}
+                        /* FIXME Key shouldn't be the index */ odd={bet.odd}
+                        event={bet.eventName}
+                    />
+                ))}
             </Report>
-        </Box>
+        </Flex>
     );
 };
 
