@@ -11,4 +11,5 @@ export const PALETTE = {
     RICH_BLACK: '#0B090A',
     SPECIAL: '#FFCC00',
     SPECIAL_DARK: '#E6B800',
+    FADE_BLACK: 'rgba(0, 0, 0, 0.1)',
 };

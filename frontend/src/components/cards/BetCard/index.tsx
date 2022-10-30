@@ -3,6 +3,7 @@ import {Card} from '@mui/material';
 import {Odd} from '../../../types/Event';
 import SportsSoccerIcon from '@mui/icons-material/SportsSoccer';
 import {Box} from '@mui/system';
+import {PALETTE} from '../../../constants/Palette';
 
 export interface BetCardProps {
     odd: Odd;
@@ -15,13 +16,16 @@ export const BetCard = ({odd: {name, price}, event}: BetCardProps) => {
             sx={{
                 padding: '2vh',
                 maxHeight: '100px',
+                minHeight: '80px',
                 display: 'flex',
                 flexDirection: 'row',
                 justifyContent: 'space-between',
                 alignItems: 'center',
                 gap: '5vw',
-                borderColor: 'black',
+                borderStyle: 'solid',
+                borderColor: PALETTE.FADE_BLACK,
                 borderWidth: '1px',
+                boxShadow: 'none',
             }}
         >
             <Box

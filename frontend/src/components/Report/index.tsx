@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import {Card, Tab, Tabs} from '@mui/material';
-import {Box} from '@mui/system';
-import {BETS_CONTAINER_STYLES, REPORT_STYLES} from './styles';
+import {REPORT_STYLES} from './styles';
+import {Flex} from '../Flex';
 
 interface ReportProps {
     children: React.ReactNode;
@@ -23,7 +23,9 @@ export const Report = ({children: bets}: ReportProps) => {
                 <Tab value={0} label="Simples" />
                 <Tab value={1} label="Múltipla" />
             </Tabs>
-            <Box sx={BETS_CONTAINER_STYLES}>{bets}</Box>
+            <Flex flexDirection="column" gap="2vh">
+                {bets}
+            </Flex>
         </Card>
     );
 };

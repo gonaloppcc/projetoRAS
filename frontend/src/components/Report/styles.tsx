@@ -10,6 +10,7 @@ export const REPORT_STYLES = {
     flexDirection: 'column',
     justifyContent: 'flex-start',
     alignItems: 'flex-start',
+    gap: '2vh',
 };
 
 export const BETS_CONTAINER_STYLES = {
