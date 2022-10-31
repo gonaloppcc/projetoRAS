@@ -1,16 +1,13 @@
 import type {NextPage} from 'next';
 import Head from 'next/head';
-import {Box} from '@mui/material';
+import {Box, CircularProgress} from '@mui/material';
 import {EventCard} from '../components/cards/EventCard';
 import {useEvents} from '../hooks/useEvents';
 import {Report} from '../components/Report';
-import {BetCard} from '../components/cards/BetCard';
 import {Flex} from '../components/Flex';
-import {useReport} from '../hooks/useReport';
 
 const Home: NextPage = () => {
     const {isSuccess, isLoading, events, isError, error} = useEvents();
-    const {bets} = useReport();
 
     return (
         <>
@@ -33,22 +30,18 @@ const Home: NextPage = () => {
             />
             <Flex flexDirection="column" justifyContent="flex-start" gap="2vh">
                 {isError && <div>{error}</div>}
-                {isLoading && <div>Loading...</div>}
+                {isLoading && (
+                    <Flex justifyContent="center" alignItems="center">
+                        <CircularProgress />
+                    </Flex>
+                )}
                 {isSuccess &&
                     events.map((event) => (
                         <EventCard key={event.id} {...event} />
                     ))}
             </Flex>
             <Flex width="45%">
-                <Report>
-                    {bets.map((bet, index) => (
-                        <BetCard
-                            key={index}
-                            /* FIXME Key shouldn't be the index */ odd={bet.odd}
-                            event={bet.eventName}
-                        />
-                    ))}
-                </Report>
+                <Report />
             </Flex>
         </>
     );

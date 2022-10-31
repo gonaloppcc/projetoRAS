@@ -1,22 +1,33 @@
 import create from 'zustand';
 import {Odd} from '../types/Event';
+import {v4 as uuidv4} from 'uuid';
 
-interface BetState {
+export type BetType = 'Simple' | 'Multiple';
+
+export interface BetState {
+    id: string;
     eventId: string;
     eventName: string;
     odd: Odd;
 }
 
+export type BetWithNoId = Omit<BetState, 'id'>;
+
 interface ReportState {
     bets: BetState[];
+    betType: BetType;
 
     // Handlers
-    addBet: (bet: BetState) => void;
+    addBet: (bet: BetWithNoId) => void;
     removeBet: (id: string) => void;
+    setBetType: (betType: BetType) => void;
+
+    submitReport: () => void;
 }
 
 const initialBets: BetState[] = [
     {
+        id: uuidv4(),
         eventId: '1',
         eventName: 'Liverpool - Porto',
         odd: {
@@ -26,12 +37,16 @@ const initialBets: BetState[] = [
     },
 ];
 
+const initialBetType: BetType = 'Simple';
+
 export const useReport = create<ReportState>((set) => ({
     bets: initialBets,
-    addBet: (bet) => set((state) => ({bets: [...state.bets, bet]})),
+    betType: initialBetType,
+    addBet: (bet) =>
+        set((state) => ({bets: [...state.bets, {id: uuidv4(), ...bet}]})),
     removeBet: (id) =>
         set((state) => {
-            const index = state.bets.findIndex((bet) => bet.eventId === id);
+            const index = state.bets.findIndex((bet) => bet.id === id);
             if (index === -1) {
                 return {bets: state.bets};
             }
@@ -39,5 +54,13 @@ export const useReport = create<ReportState>((set) => ({
             newBets.splice(index, 1);
 
             return {bets: newBets};
+        }),
+    setBetType: (betType: BetType) => set({betType}),
+
+    submitReport: async () =>
+        set(() => {
+            // TODO: Connect to backend
+
+            return {bets: []}; // Just clearing the bets for now
         }),
 }));
