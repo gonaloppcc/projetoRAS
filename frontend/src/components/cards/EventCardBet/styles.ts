@@ -1,4 +1,4 @@
-import { green, red } from "@mui/material/colors";
+import {green, red} from '@mui/material/colors';
 
 export const EVENT_CARD_STYLE = {
     minWidth: '400px',
@@ -23,9 +23,10 @@ export const EVENT_CARD_LEFT_STYLE = {
 export const EVENT_CARD_LEFT_STYLE1 = {
     minWidth: '400px',
     display: 'flex',
-    flexDirection: 'column',
+    flexDirection: 'row',
     justifyContent: 'center',
-    alignItems: 'flex-start',
+    alignItems: 'center',
+    gap: '1vw',
 };
 export const EVENT_CARD_RIGHT_STYLE = {
     display: 'flex',
@@ -37,10 +38,14 @@ export const EVENT_CARD_RIGHT_STYLE = {
 
 export const EVENT_CARD_WIN = {
     backgroundColor: green,
-    
-                        fontWeight: 100,
-}
+    //fontWeight: 100,
+
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'space-between',
+    //alignItems: 'flex-start',
+};
 export const EVENT_CARD_LOST = {
     backgroundColor: red,
-                        fontWeight: 50,
-}
+    fontWeight: 50,
+};

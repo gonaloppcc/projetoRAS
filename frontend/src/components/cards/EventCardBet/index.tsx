@@ -9,12 +9,12 @@ import {
     EVENT_CARD_LEFT_STYLE,
     EVENT_CARD_RIGHT_STYLE,
     EVENT_CARD_STYLE,
-EVENT_CARD_LOST ,
-EVENT_CARD_WIN 
+    EVENT_CARD_LOST,
+    EVENT_CARD_WIN,
 } from './styles';
 import {PALETTE} from '../../../constants/Palette';
 import Stack from '@mui/material/Stack';
-
+import {Flex} from '../../Flex';
 
 export type EventCardProps = Event;
 
@@ -32,9 +32,6 @@ export const EventCardBet = ({
         month: 'long',
         day: 'numeric',
     });
-
-
-
 
     const odds = bookmakers[0].markets[0].outcomes;
 
@@ -54,55 +51,49 @@ export const EventCardBet = ({
     // -1 -> Away winner
     // 0 -> Tie
     // 1 -> Home winner
-    const result = Math.floor(Math.random() * (1 + 1) - 1);
+    const result = Math.floor(Math.random() * 3 - 1);
     const betMade = Math.floor(Math.random() * (1 + 1) - 1);
-    
-    function whichTeam(){
-        if (result === 0)    return "Empate";
+
+    function whichTeam() {
+        if (result === 0) return 'Empate';
         if (result < 0) return awayTeam;
         return homeTeam;
-        
     }
 
-    const userWin = result === betMade
+    const isWin = result === betMade;
 
     const finalScore = scores ? scores.replace('x', ' - ') : '';
 
-    const bet_value = 10;
+    const betValue = 10;
 
     return (
         <Card sx={cardStyle}>
-           <Stack direction="row" spacing={2}>
-            <span
-                     style={{
-                        alignContent: 'center',
-                        marginRight: '2%',
-                    }}
-            
-            >
-                <SportsSoccerIcon />
-</span>
-            <Box sx={EVENT_CARD_LEFT_STYLE1}>
-                <span
-                    style={{
-                        fontSize: '1rem',
-                        fontWeight: 700,
-                    }}
-                >
-                    Resultado final: {whichTeam()}
-                </span>
+            <Flex>
+                <Box sx={EVENT_CARD_LEFT_STYLE1}>
+                    <SportsSoccerIcon />
+                    <Flex flexDirection="column">
+                        <span
+                            style={{
+                                fontSize: '1rem',
+                                fontWeight: 700,
+                            }}
+                        >
+                            Resultado final: {whichTeam()}
+                        </span>
 
+                        <span
+                            style={{
+                                fontSize: '0.8rem',
+                                fontWeight: 400,
+                            }}
+                        >
+                            {name}
+                        </span>
+                    </Flex>
+                </Box>
+            </Flex>
+            <Flex flexDirection="column">
                 <span
-                    style={{
-                        fontSize: '0.8rem',
-                        fontWeight: 400,
-                    }}
-                >
-                    {name}
-                </span>
-            </Box>
-            <Box sx={EVENT_CARD_LEFT_STYLE}>
-<span
                     style={{
                         fontSize: '0.8rem',
                         fontWeight: 400,
@@ -117,26 +108,35 @@ export const EventCardBet = ({
                         fontWeight: 700,
                     }}
                 >
-                    {bet_value}€
+                    {betValue}€
                 </span>
-            </Box>
-                {userWin &&
-            <Box sx={EVENT_CARD_WIN}>
-                    <h1>Ganhou</h1>
-                    <h3>{bet_value}</h3>
-            </Box>
-                    }
-                
-                {!userWin &&
-            <Box sx={EVENT_CARD_LOST}>
-                    <h1>Perdeu</h1>
-                    <h3>{bet_value}</h3>
-            </Box>
-                    }
-<Box sx={EVENT_CARD_RIGHT_STYLE}>
-                Estado: Terminado
-            </Box>
-            </Stack> 
+            </Flex>
+            <Flex
+                flexDirection="column"
+                background={isWin ? PALETTE.SPECIAL : PALETTE.IMPERIAL_RED}
+            >
+                {isWin && (
+                    <Box sx={EVENT_CARD_WIN}>
+                        <span
+                            style={{
+                                fontSize: '1rem',
+                                fontWeight: 700,
+                            }}
+                        >
+                            Ganhou
+                        </span>
+                        <span>{betValue}</span>
+                    </Box>
+                )}
+
+                {!isWin && (
+                    <Box sx={EVENT_CARD_LOST}>
+                        <span>Perdeu</span>
+                        <span>{betValue}</span>
+                    </Box>
+                )}
+            </Flex>
+            <Flex>Estado: Terminado</Flex>
         </Card>
     );
 };

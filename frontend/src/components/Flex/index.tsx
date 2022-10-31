@@ -1,5 +1,4 @@
 import React from 'react';
-import {Property} from 'csstype';
 import FlexDirection = Property.FlexDirection;
 import JustifyContent = Property.JustifyContent;
 import Gap = Property.Gap;
@@ -11,6 +10,7 @@ export interface FlexProps {
     gap?: Gap;
     width?: string;
     height?: string;
+    background?: string;
 }
 
 export const Flex = ({
@@ -20,6 +20,7 @@ export const Flex = ({
     gap,
     width,
     height,
+    background,
 }: FlexProps) => {
     const flexStyles = {
         width: width ?? '100%',
@@ -29,6 +30,7 @@ export const Flex = ({
         justifyContent: justifyContent,
         gap: gap,
         overflow: 'auto',
+        background: background,
     };
 
     return <div style={flexStyles}>{children}</div>;
