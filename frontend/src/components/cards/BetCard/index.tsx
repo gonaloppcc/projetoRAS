@@ -11,6 +11,8 @@ export interface BetCardProps {
 }
 
 export const BetCard = ({odd: {name, price}, event}: BetCardProps) => {
+    const priceFormatted = price.toFixed(2);
+
     return (
         <Card
             sx={{
@@ -52,7 +54,7 @@ export const BetCard = ({odd: {name, price}, event}: BetCardProps) => {
                     </span>
                 </Box>
             </Box>
-            <span>{price}</span>
+            <span>{priceFormatted}</span>
         </Card>
     );
 };

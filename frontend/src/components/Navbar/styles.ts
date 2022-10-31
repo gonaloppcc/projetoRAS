@@ -1,6 +1,7 @@
 import {PALETTE} from '../../constants/Palette';
 
 export const layoutStyle = {
+    color: PALETTE.WHITE,
     paddingX: '2vw',
     display: 'flex',
     flexDirection: 'row',

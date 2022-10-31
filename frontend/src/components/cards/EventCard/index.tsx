@@ -37,9 +37,17 @@ export const EventCard = ({
 
     const odds = bookmakers[0].markets[0].outcomes;
 
-    const name = `${homeTeam} - ${awayTeam}`;
-
     const isLive = scores != null && !completed;
+
+    const currentScore = scores ? scores.replace('x', ' - ') : '';
+
+    const homeTeamScore = scores ? scores.split('x')[0] : '';
+
+    const awayTeamScore = scores ? scores.split('x')[1] : '';
+
+    const name = !isLive
+        ? `${homeTeam} - ${awayTeam}`
+        : `${homeTeam} ${homeTeamScore} - ${awayTeamScore} ${awayTeam}`;
 
     const isLiveStyle = isLive
         ? {background: PALETTE.RICH_BLACK, color: PALETTE.WHITE}
@@ -49,8 +57,6 @@ export const EventCard = ({
         ...EVENT_CARD_STYLE,
         ...isLiveStyle,
     };
-
-    const finalScore = scores ? scores.replace('x', ' - ') : '';
 
     return (
         <Card sx={cardStyle}>
@@ -84,7 +90,7 @@ export const EventCard = ({
                         />
                     ))}
 
-                {completed && `Resultado Final: ${finalScore}`}
+                {completed && `Resultado Final: ${currentScore}`}
             </Box>
         </Card>
     );
