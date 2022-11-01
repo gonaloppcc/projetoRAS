@@ -18,6 +18,7 @@ a {
     padding: 0;
     border: 0;
     background: none;
+    font-family: "Roboto", serif;
 }
 
 @media (prefers-color-scheme: dark) {

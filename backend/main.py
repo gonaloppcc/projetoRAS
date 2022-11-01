@@ -6,7 +6,7 @@ from fastapi import FastAPI
 # Para permitir posts
 from pydantic import BaseModel
 
-import ucras 
+import ucras
 
 # Comandos para correr:
 #                  file:instance of FastAPI
@@ -54,7 +54,7 @@ def read_root(game : Game):
     return {"data": f"New game is created: {game.home_team} vs. {game.away_team}"}
 
 # Valida de o jogo existe
-# A key no dicionário de promoções é o id do jogo, depois alterar.
+# A label no dicionário de promoções é o id do jogo, depois alterar.
 @app.post("/promotions/{game_id}")
 def read_item(new_promotion : Promotion):
     for obj in ucras.games_only:
@@ -82,14 +82,14 @@ def read_root():
 def read_root():
     if len(games) == 0:
         return {"info": "No games available"}
-    else: 
+    else:
         return {"data": games}
 
 @app.get("/APIgames")
 def read_root():
     return {"info" : ucras.games_only}
     #return {"info": "No games available"}
-    
+
 
 
 # Este pode-se apagar, é um default com coisas que depois quero ver melhor

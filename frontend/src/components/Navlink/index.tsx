@@ -1,7 +1,7 @@
 import React from 'react';
 import Link from 'next/link';
 import {UrlObject} from 'url';
-import {PALETTE} from '../../constants/Palette';
+import {PALETTE} from '../../constants/PALETTE';
 import {NAVLINK_STYLES} from './styles';
 
 export interface NavlinkProps {

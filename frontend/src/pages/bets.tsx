@@ -1,10 +1,8 @@
 import type {NextPage} from 'next';
 import Head from 'next/head';
 import {Box} from '@mui/system';
-import {EventCardBet} from '../components/cards/EventCardBet';
+import {BetStatusCard} from '../components/cards/BetStatusCard';
 import {useEvents} from '../hooks/useEvents';
-import {Report} from '../components/Report';
-import {BetCard} from '../components/cards/BetCard';
 
 const Home: NextPage = () => {
     const {isSuccess, isLoading, events, isError, error} = useEvents();
@@ -30,6 +28,7 @@ const Home: NextPage = () => {
             />
             <Box
                 sx={{
+                    paddingX: '5vw',
                     width: '100%',
                     height: '100%',
                     overflowY: 'auto',
@@ -43,9 +42,12 @@ const Home: NextPage = () => {
                 {isError && <div>{error}</div>}
                 {isLoading && <div>Loading...</div>}
                 {isSuccess &&
-                    events.filter((event) => event.completed).map((event) => { console.log(event);
-                        return <EventCardBet key={event.id} {...event} />
-                    })}
+                    events
+                        .filter((event) => event.completed)
+                        .map((event) => {
+                            console.log(event);
+                            return <BetStatusCard key={event.id} {...event} />;
+                        })}
             </Box>
         </>
     );

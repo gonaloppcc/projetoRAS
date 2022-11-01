@@ -1,4 +1,4 @@
-import {PALETTE} from '../../../constants/Palette';
+import {PALETTE} from '../../../constants/PALETTE';
 
 export const ODD_CARD_STYLE = {
     paddingY: '1vh',

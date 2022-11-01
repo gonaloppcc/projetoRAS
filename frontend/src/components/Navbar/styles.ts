@@ -1,4 +1,4 @@
-import {PALETTE} from '../../constants/Palette';
+import {PALETTE} from '../../constants/PALETTE';
 
 export const layoutStyle = {
     color: PALETTE.WHITE,

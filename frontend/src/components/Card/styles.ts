@@ -1,4 +1,4 @@
-import {PALETTE} from '../../constants/Palette';
+import {PALETTE} from '../../constants/PALETTE';
 import {CSSProperties} from 'react';
 
 export const CardStyles: CSSProperties = {

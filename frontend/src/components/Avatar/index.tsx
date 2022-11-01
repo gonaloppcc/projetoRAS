@@ -1,7 +1,7 @@
 import React from 'react';
 import {Avatar as MuiAvatar} from '@mui/material';
 import {Box} from '@mui/system';
-import {PALETTE} from '../../constants/Palette';
+import {PALETTE} from '../../constants/PALETTE';
 
 export interface AvatarProps {
     name: string;

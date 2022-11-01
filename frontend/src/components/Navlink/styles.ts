@@ -1,4 +1,4 @@
-import {PALETTE} from '../../constants/Palette';
+import {PALETTE} from '../../constants/PALETTE';
 
 export const NAVLINK_STYLES = {
     display: 'flex',

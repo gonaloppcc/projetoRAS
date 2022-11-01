@@ -1,5 +1,5 @@
 import {CSSProperties} from 'react';
-import {PALETTE} from '../../constants/Palette';
+import {PALETTE} from '../../constants/PALETTE';
 
 export const BUTTON_STYLES: CSSProperties = {
     color: PALETTE.WHITE,

@@ -1,4 +1,4 @@
-import {PALETTE} from '../../../constants/Palette';
+import {PALETTE} from '../../../constants/PALETTE';
 
 export const PAGE_BODY_STYLES = {
     width: '100vw',

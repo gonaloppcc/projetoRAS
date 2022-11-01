@@ -11,6 +11,8 @@ export interface NavbarProps {
     children?: React.ReactNode;
 }
 
+const betsUrl = '/bets';
+
 export const Navbar = ({children: navlinks}: NavbarProps) => {
     const money = 100;
 
@@ -19,11 +21,13 @@ export const Navbar = ({children: navlinks}: NavbarProps) => {
             <Box sx={navlinksStyle}>{navlinks}</Box>
             <Box sx={profileNavbarStyle}>
                 <Balance money={money} />
-                <Link href="/bets" /* TODO: Hardcoded endpoint for now*/>
-                    <Flex alignItems="center" gap="0.2vw">
-                        <NotesIcon />
-                        Apostas
-                    </Flex>
+                <Link href={betsUrl}>
+                    <a>
+                        <Flex alignItems="center" gap="0.2vw">
+                            <NotesIcon />
+                            Apostas
+                        </Flex>
+                    </a>
                 </Link>
                 <Avatar name="Marco"></Avatar>
             </Box>

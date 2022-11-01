@@ -8,7 +8,7 @@ import {
     EVENT_CARD_RIGHT_STYLE,
     EVENT_CARD_STYLE,
 } from './styles';
-import {PALETTE} from '../../../constants/Palette';
+import {PALETTE} from '../../../constants/PALETTE';
 import {useReport} from '../../../hooks/useReport';
 
 export type EventCardProps = Event;
