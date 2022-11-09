@@ -7,7 +7,11 @@ interface RowProps {
 
 export const Row = ({children}: RowProps) => {
     return (
-        <Flex flexDirection="row" justifyContent="space-between">
+        <Flex
+            flexDirection="row"
+            justifyContent="space-between"
+            alignItems="center"
+        >
             {children}
         </Flex>
     );

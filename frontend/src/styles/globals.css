@@ -19,6 +19,7 @@ a {
     border: 0;
     background: none;
     font-family: "Roboto", serif;
+    border: none;
 }
 
 @media (prefers-color-scheme: dark) {

@@ -10,7 +10,15 @@ import {ReportFooterMultipleBet} from '../ReportFooterMultipleBet';
 interface ReportProps {}
 
 export const Report = ({}: ReportProps) => {
-    const {bets, removeBet, betType, setBetType, submitReport} = useReport();
+    const {
+        bets,
+        removeBet,
+        betType,
+        setBetType,
+        submitReport,
+        bettingAmount,
+        changeBettingAmount,
+    } = useReport();
 
     const multipleBetOdd = bets.reduce((acc, bet) => {
         return acc * bet.odd.price;
@@ -60,9 +68,10 @@ export const Report = ({}: ReportProps) => {
             )}
             {betType === 'Multiple' && (
                 <ReportFooterMultipleBet
-                    bettingAmount={20}
-                    winningAmount={multipleBetOdd * 20}
+                    bettingAmount={bettingAmount || 0}
+                    winningAmount={multipleBetOdd * (bettingAmount || 0)}
                     betHandler={submitBetHandler}
+                    changeBettingAmount={changeBettingAmount}
                 />
             )}
         </Card>

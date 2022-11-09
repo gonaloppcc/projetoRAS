@@ -9,6 +9,7 @@ export interface BetState {
     eventId: string;
     eventName: string;
     odd: Odd;
+    bettingAmount?: number; // Undefined when betType is Multiple
 }
 
 export type BetWithNoId = Omit<BetState, 'id'>;
@@ -16,11 +17,14 @@ export type BetWithNoId = Omit<BetState, 'id'>;
 interface ReportState {
     bets: BetState[];
     betType: BetType;
+    bettingAmount?: number; // Undefined when betType is Single
 
     // Handlers
     addBet: (bet: BetWithNoId) => void;
     removeBet: (id: string) => void;
     setBetType: (betType: BetType) => void;
+
+    changeBettingAmount: (bettingAmount: number) => void;
 
     submitReport: () => void;
 }
@@ -40,6 +44,7 @@ const initialBets: BetState[] = [
 const initialBetType: BetType = 'Simple';
 
 export const useReport = create<ReportState>((set) => ({
+    bettingAmount: 0,
     bets: initialBets,
     betType: initialBetType,
     addBet: (bet) =>
@@ -56,6 +61,8 @@ export const useReport = create<ReportState>((set) => ({
             return {bets: newBets};
         }),
     setBetType: (betType: BetType) => set({betType}),
+
+    changeBettingAmount: (bettingAmount: number) => set({bettingAmount}),
 
     submitReport: async () =>
         set(() => {

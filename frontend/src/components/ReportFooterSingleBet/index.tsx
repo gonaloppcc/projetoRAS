@@ -7,12 +7,14 @@ interface ReportFooterSingleBetProps {
     bettingAmount: number;
     winningAmount: number;
     betHandler: () => void;
+    changeBettingAmount?: (amount: number) => void;
 }
 
 export const ReportFooterSingleBet = ({
     bettingAmount,
     winningAmount,
     betHandler,
+    changeBettingAmount,
 }: ReportFooterSingleBetProps) => {
     return (
         <Card style={{flexDirection: 'column', width: '100%', gap: '2vh'}}>
