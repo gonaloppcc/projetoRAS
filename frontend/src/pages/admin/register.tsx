@@ -6,8 +6,7 @@ import {LoginCard} from '../../components/LoginCard';
 const Home: NextPage = () => {
     return (
         <>
-            <div className="bg-blue-500">Olá !</div>
-            <LoginCard />
+            <RegisterSpecialist />
         </>
     );
 };
