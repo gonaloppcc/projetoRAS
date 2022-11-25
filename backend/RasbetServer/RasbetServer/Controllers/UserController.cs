@@ -83,7 +83,7 @@ public class UserController : ControllerBase
     /// <param name="json">Json object with the new password</param>
     /// <returns>The user with the updated password or BadRequest if the user does not exist</returns>
     [HttpPatch("[action]", Name = "ChangePassword")]
-    public ActionResult<User> ChangePassword([FromQuery] int id, JsonObject json)
+    public ActionResult<User> ChangePassword([FromQuery] int id, [FromBody] JsonObject json)
     {
         if (id == 0)
             return NotFound($"User with id={id} not found");
