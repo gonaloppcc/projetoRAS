@@ -53,13 +53,13 @@ export const LoginCard = () => {
 
     return (
         <div className="h-screen w-screen justify-center flex items-center bg-CULTURED">
-            <div className="bg-white flex flex-col items-center px-10 py-12 h-max absolute gap-10 ">
+            <div className="bg-white w-auto flex flex-col items-center px-10 pt-10 pb-20 h-auto  relative ">
                 <div className="w-24 h-10 not-italic font-normal text-3xl leading-10 text-black flex-none order-none flex-grow-0">
                     Entrar
                 </div>
-                <div className="flex flex-col items-start flex-none order-1 h-48  gap-12 w-64">
+                <div className="flex flex-col items-start flex-none order-1   gap-12 ">
                     {/* Input boxes*/}
-                    <div className="flex-none order-none h-20 w-64 ">
+                    <div className="flex-none order-none  ">
                         {/*{Object.keys(formErrors).length === 0 &&
                             isSubmitting && (
                                 <span className="rounded inline-block font-semibold text-xl mb-4 p-2 text-center w-full text-white bg-green-400">
@@ -69,7 +69,7 @@ export const LoginCard = () => {
                         <form
                             onSubmit={handleSubmit}
                             noValidate
-                            className="h-fit"
+                            className=" gap-5"
                         >
                             <div className="flex flex-col mb-6">
                                 <label htmlFor="email">Email</label>
@@ -77,6 +77,7 @@ export const LoginCard = () => {
                                     type="email"
                                     name="email"
                                     id="email"
+                                    placeholder="Email"
                                     value={formValues.email}
                                     onChange={handleChange}
                                     className={
@@ -98,6 +99,7 @@ export const LoginCard = () => {
                                     type="password"
                                     name="password"
                                     id="password"
+                                    placeholder="Password"
                                     value={formValues.password}
                                     onChange={handleChange}
                                     className={
@@ -120,25 +122,25 @@ export const LoginCard = () => {
                                     </button>
                                 </div>
                             </div>
+                            <div className="flex-none order-2 h-12 ">
+                                <div className="text-center	">
+                                    <a
+                                        href="/register"
+                                        className="flex-none order-2 h text-lg"
+                                    >
+                                        Não tem conta? Registe-se agora!
+                                    </a>
+                                </div>
+                                <div className="text-center	">
+                                    <a
+                                        href="https://www.youtube.com/watch?v=E_i0iVloA18&list=TLPQMjUxMTIwMjJxDb98oNzlJA&index=7&ab_channel=WetBedGang"
+                                        className="flex-none order-2  text-lg"
+                                    >
+                                        Esqueci-me da palavra-passe
+                                    </a>
+                                </div>
+                            </div>
                         </form>
-                        <div className="flex-none order-2 h-12 pu    w-72">
-                            <div className="text-center	">
-                                <a
-                                    href="https://www.youtube.com/watch?v=E_i0iVloA18&list=TLPQMjUxMTIwMjJxDb98oNzlJA&index=7&ab_channel=WetBedGang"
-                                    className="flex-none order-2 h text-lg"
-                                >
-                                    Não tem conta? Registe-se agora!
-                                </a>
-                            </div>
-                            <div className="text-center	">
-                                <a
-                                    href="https://www.youtube.com/watch?v=E_i0iVloA18&list=TLPQMjUxMTIwMjJxDb98oNzlJA&index=7&ab_channel=WetBedGang"
-                                    className="flex-none order-2  text-lg"
-                                >
-                                    Esqueci-me da palavra-passe
-                                </a>
-                            </div>
-                        </div>
                     </div>
                 </div>
             </div>
