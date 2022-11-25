@@ -8,4 +8,8 @@
         <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
     </PropertyGroup>
 
+    <ItemGroup>
+      <Compile Remove="Program.cs" />
+    </ItemGroup>
+
 </Project>
