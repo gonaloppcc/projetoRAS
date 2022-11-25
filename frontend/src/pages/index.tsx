@@ -1,11 +1,9 @@
 import type {NextPage} from 'next';
 import {EventCard, EventCardProps} from '@components/EventCard';
 //import hello from '../../locales/pt/common.json';
-import pt from '@locales/pt/common.json';
-import en from '@locales/en/common.json';
-import {useRouter} from 'next/router';
 import {Competitions} from '@components/Competitions';
 import {CompetitionProps} from '@components/CompetitionCard';
+import {PageLayout} from '@components/PageLayout';
 
 /* FIXME Mock data hardcoded */
 const MOCK_EVENT: EventCardProps = {
@@ -43,23 +41,16 @@ const MOCK_COMPETITIONS: CompetitionProps[] = [
 ];
 
 const Home: NextPage = () => {
-    const router = useRouter();
-
-    const locale = router.locale || 'en';
-
     /* FIXME DUMMY MAIN PAGE!! */
     return (
-        <div className="bg-CULTURED w-screen h-screen p-2 flex flex-col gap-3">
-            {MOCK_EVENTS.map((event) => (
-                <EventCard key={event.eventName} {...event} />
-            ))}
-            <Competitions competitions={MOCK_COMPETITIONS} />
-            {
-                locale == 'en'
-                    ? en.hello
-                    : pt.hello /* FIXME Hardcoded as an example */
-            }
-        </div>
+        <PageLayout>
+            <div className="flex flex-col justify-start gap-3">
+                {MOCK_EVENTS.map((event) => (
+                    <EventCard key={event.eventName} {...event} />
+                ))}
+                <Competitions competitions={MOCK_COMPETITIONS} />
+            </div>
+        </PageLayout>
     );
 };
 
