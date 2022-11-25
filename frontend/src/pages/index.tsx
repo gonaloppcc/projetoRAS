@@ -1,8 +1,5 @@
 import type {NextPage} from 'next';
 import {EventCard, EventCardProps} from '@components/EventCard';
-//import hello from '../../locales/pt/common.json';
-import {Competitions} from '@components/Competitions';
-import {CompetitionProps} from '@components/CompetitionCard';
 import {PageLayout} from '@components/PageLayout';
 
 /* FIXME Mock data hardcoded */
@@ -25,30 +22,25 @@ const MOCK_EVENT: EventCardProps = {
     ],
 };
 
-const MOCK_EVENTS: EventCardProps[] = [MOCK_EVENT, MOCK_EVENT, MOCK_EVENT];
-
-const MOCK_COMPETITIONS: CompetitionProps[] = [
-    {
-        name: 'Portugal - Primeira Liga',
-        eventType: 'Futebol',
-        isFavorite: true,
-    },
-    {
-        name: 'Portugal - Segunda Liga',
-        eventType: 'Futebol',
-        isFavorite: false,
-    },
+const MOCK_EVENTS: EventCardProps[] = [
+    MOCK_EVENT,
+    MOCK_EVENT,
+    MOCK_EVENT,
+    MOCK_EVENT,
+    MOCK_EVENT,
+    MOCK_EVENT,
+    MOCK_EVENT,
+    MOCK_EVENT,
 ];
-
 const Home: NextPage = () => {
     /* FIXME DUMMY MAIN PAGE!! */
     return (
         <PageLayout>
-            <div className="flex flex-col justify-start gap-3">
+            <div className="flex flex-col justify-start gap-3 w-full">
                 {MOCK_EVENTS.map((event) => (
                     <EventCard key={event.eventName} {...event} />
                 ))}
-                <Competitions competitions={MOCK_COMPETITIONS} />
+                {/*<Competitions competitions={MOCK_COMPETITIONS} />*/}
             </div>
         </PageLayout>
     );

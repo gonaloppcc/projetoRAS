@@ -7,7 +7,7 @@ export interface CompetitionsProps {
 
 export const Competitions = ({competitions}: CompetitionsProps) => {
     return (
-        <div className="flex flex-col items-start max-w-lg p-0">
+        <div className="flex flex-col items-start w-full p-0">
             <div className="p-2.5 bg-WHITE w-full">
                 {'TOP COMPETITIONS' /* FIXME: Hardcoded for now!! */}
             </div>
