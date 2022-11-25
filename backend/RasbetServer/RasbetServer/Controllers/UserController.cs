@@ -86,9 +86,8 @@ public class UserController : ControllerBase
     public ActionResult<User> ChangePassword([FromQuery] int id, JsonObject json)
     {
         if (id == 0)
-        {
             return NotFound($"User with id={id} not found");
-        }
+        
         var dyn = JsonConvert.DeserializeObject<dynamic>(json.ToString());
         string password = dyn.password;
         if (password is null)
@@ -97,5 +96,20 @@ public class UserController : ControllerBase
         }
         
         return new User("email@email.com", "TempUsername", password, "TemplateNIF", "Imagine a CC Here", "Cell num123");
+    }
+
+    /// TODO: Implement this properly when we have a working database
+    /// <summary>
+    /// Deletes a User from the system
+    /// </summary>
+    /// <param name="id">Id of the user to delete</param>
+    /// <returns>Ok in case of a successful deletion or Not Found when the User does not exist</returns>
+    [HttpDelete("[action]", Name = "DeleteUser")]
+    public IActionResult Delete([FromQuery] int id)
+    {
+        if (id == 0)
+            return NotFound($"User with id={id} not found");
+
+        return Ok("User successfully deleted");
     }
 }
