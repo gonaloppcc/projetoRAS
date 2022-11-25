@@ -3,7 +3,7 @@ import React, {useEffect, useState} from 'react';
 export const InputForm = (props) => {
     return (
         <div className="flex flex-col pb-6 ">
-            <label htmlFor={props.HtmlFor}></label>
+            <label htmlFor={props.HtmlFor}>{props.name}</label>
             <input
                 type={props.htmlFor}
                 name={props.id}

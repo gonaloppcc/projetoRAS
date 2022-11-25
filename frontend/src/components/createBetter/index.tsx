@@ -139,7 +139,7 @@ export const CreateBetter = () => {
                                 error={formErrors.phone}
                             />
                             <InputForm
-                                htmlFor="number"
+                                htmlFor="text"
                                 name="Número Cartão de Cidadão"
                                 id="numberCC"
                                 value={formValues.numberCC}
@@ -157,7 +157,7 @@ export const CreateBetter = () => {
                             <div className="flex-none order-2  ">
                                 <div className="text-center	">
                                     <a
-                                        href="/general"
+                                        href="/login"
                                         className="flex-none order-2 h text-lg"
                                     >
                                         Já tem conta? Faça login!

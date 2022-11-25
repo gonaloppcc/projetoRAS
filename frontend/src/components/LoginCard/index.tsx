@@ -1,5 +1,6 @@
 import {ClassNames} from '@emotion/react';
 import React, {useEffect, useState} from 'react';
+import {InputForm} from '../createBetter/inputForm';
 export const LoginCard = () => {
     const intialValues = {email: '', password: ''};
 
@@ -71,53 +72,26 @@ export const LoginCard = () => {
                             noValidate
                             className=" gap-5"
                         >
-                            <div className="flex flex-col mb-6">
-                                <label htmlFor="email">Email</label>
-                                <input
-                                    type="email"
-                                    name="email"
-                                    id="email"
-                                    placeholder="Email"
-                                    value={formValues.email}
-                                    onChange={handleChange}
-                                    className={
-                                        formErrors.email
-                                            ? 'border-red-500 border-2'
-                                            : 'border-black border-b-2'
-                                    }
-                                />
-                                {formErrors.email && (
-                                    <span className="text-base mt-1 text-red-500">
-                                        {formErrors.email}
-                                    </span>
-                                )}
-                            </div>
-
-                            <div className="flex flex-col mb-6 pb-6">
-                                <label htmlFor="password">Palavra-passe</label>
-                                <input
-                                    type="password"
-                                    name="password"
-                                    id="password"
-                                    placeholder="Password"
-                                    value={formValues.password}
-                                    onChange={handleChange}
-                                    className={
-                                        formErrors.password
-                                            ? 'border-red-500 border-2'
-                                            : 'border-black border-b-2'
-                                    }
-                                />
-                                {formErrors.password && (
-                                    <span className="text-base mt-1 text-red-500">
-                                        {formErrors.password}
-                                    </span>
-                                )}
-                            </div>
-                            <div className="flex flex-col items-start self-stretch flex-none order-1 h-12 px-20 justify-center pb-20 ">
+                            <InputForm
+                                htmlFor="email"
+                                name="Email"
+                                id="email"
+                                value={formValues.email}
+                                handleChange={handleChange}
+                                error={formErrors.email}
+                            />
+                            <InputForm
+                                htmlFor="password"
+                                name="Palavra-passe"
+                                id="password"
+                                value={formValues.password}
+                                handleChange={handleChange}
+                                error={formErrors.password}
+                            />
+                            <div className="flex flex-col pt-5 items-start self-stretch flex-none order-1 h-12 px-20 justify-center pb-20 ">
                                 <div className="flex flex-row items-start self-stretch flex-none order-none h-12 p-2 w-24 gap-5 bg-red-600 rounded justify-center ">
                                     <button type="submit">
-                                        <div className="flex items-center flex-none order-none font-normal text-2xl leading-7 text-center text-white not-italic w-20 "></div>
+                                        <div className="flex items-center inline-block align-middle flex-none order-none font-normal text-2xl leading-7 text-center text-white not-italic w-20 "></div>
                                         Sign In
                                     </button>
                                 </div>
