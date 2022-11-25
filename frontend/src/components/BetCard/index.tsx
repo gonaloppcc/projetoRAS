@@ -6,13 +6,13 @@ interface Odd {
     price: number;
 }
 
-interface BetCardProps {
+export interface EventCardProps {
     eventName: string;
     date: string;
     odds: Odd[];
 }
 
-export const BetCard = (props: BetCardProps) => {
+export const EventCard = (props: EventCardProps) => {
     return (
         <div className="flex flex-row justify-between items-center px-4 py-2 max-w-lg h-18 drop-shadow-sm rounded bg-WHITE">
             <div className="flex flex-row items-center gap-1">

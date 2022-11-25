@@ -1,11 +1,7 @@
-import type { NextPage } from 'next'
-import Head from 'next/head'
-import Image from 'next/image'
+import type {NextPage} from 'next';
 
 const Home: NextPage = () => {
-  return (
-    <div>Olá espceialsdas</div>
-  )
-}
+    return <div>Specialist Main Page</div>;
+};
 
-export default Home
+export default Home;
