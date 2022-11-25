@@ -74,4 +74,28 @@ public class UserController : ControllerBase
         var user = new User(email, username, password, nif, cc, cellphone);
         return Ok("User successfully created");
     }
+
+    /// TODO: Implement this function properly once we have a working database 
+    /// <summary>
+    /// Replaces a users password with a new one
+    /// </summary>
+    /// <param name="id">User's id</param>
+    /// <param name="json">Json object with the new password</param>
+    /// <returns>The user with the updated password or BadRequest if the user does not exist</returns>
+    [HttpPatch("[action]", Name = "ChangePassword")]
+    public ActionResult<User> ChangePassword([FromQuery] int id, JsonObject json)
+    {
+        if (id == 0)
+        {
+            return NotFound($"User with id={id} not found");
+        }
+        var dyn = JsonConvert.DeserializeObject<dynamic>(json.ToString());
+        string password = dyn.password;
+        if (password is null)
+        {
+            return BadRequest("No password was provided");
+        }
+        
+        return new User("email@email.com", "TempUsername", password, "TemplateNIF", "Imagine a CC Here", "Cell num123");
+    }
 }
