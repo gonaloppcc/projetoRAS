@@ -1,5 +1,5 @@
 import type {NextPage} from 'next';
-import {EventCard, EventCardProps} from '@components/BetCard';
+import {EventCard, EventCardProps} from '@components/EventCard';
 //import hello from '../../locales/pt/common.json';
 import pt from '@locales/pt/common.json';
 import en from '@locales/en/common.json';
