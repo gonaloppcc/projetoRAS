@@ -11,6 +11,7 @@ public class UserController : ControllerBase
 {
     public UserController() {}
 
+    /// TODO: Implement user logging in once database is created
     /// <summary>
     /// Logs in a user
     /// </summary>
@@ -32,6 +33,8 @@ public class UserController : ControllerBase
         return new User(email, "Marco Costa", password, "12345678", "87654321", "919191919");
     }
 
+    
+    /// TODO: Implement user creation once we have a working database
     /// <summary>
     /// Registers a user in the system
     /// </summary>
