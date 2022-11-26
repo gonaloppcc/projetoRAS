@@ -1,11 +1,9 @@
-import {ClassNames} from '@emotion/react';
 import React, {useEffect, useState} from 'react';
 import {InputForm} from '../createBetter/inputForm';
+import {Modal} from '../Modal/index';
 import {REGEX_MAIL} from '../../utils/regex';
 
-import {Fragment, useRef} from 'react';
-import {Dialog, Transition} from '@headlessui/react';
-import {ExclamationTriangleIcon} from '@heroicons/react/24/outline';
+import {useRef} from 'react';
 
 export const LoginCard = () => {
     const intialValues = {email: '', password: ''};
@@ -62,8 +60,6 @@ export const LoginCard = () => {
 
     const [open, setOpen] = useState(false);
 
-    const cancelButtonRef = useRef(null);
-
     const forgetPasswordContent = () => {
         return (
             <>
@@ -89,58 +85,11 @@ export const LoginCard = () => {
                             Code
                         </label>
                         <div className="pt-4">
-                            <button type="submit">
-                                <div className="flex items-center inline-block align-middle flex-none order-none font-normal text-2xl leading-7 text-center text-white not-italic w-20 "></div>
-                                {/*  FIXME */}
-                                Reset
-                            </button>
+                            <RedButton text={'Reset'} />{' '}
                         </div>
                     </div>
                 </div>
             </>
-        );
-    };
-
-    const Modal = (props) => {
-        return (
-            <Transition.Root show={open} as={Fragment}>
-                <Dialog
-                    as="div"
-                    className="relative z-10"
-                    initialFocus={cancelButtonRef}
-                    onClose={setOpen}
-                >
-                    <Transition.Child
-                        as={Fragment}
-                        enter="ease-out duration-300"
-                        enterFrom="opacity-0"
-                        enterTo="opacity-90"
-                        leave="ease-in duration-200"
-                        leaveFrom="opacity-90"
-                        leaveTo="opacity-0"
-                    >
-                        <div className="fixed inset-0 bg-gray-300 bg-opacity-90 transition-opacity" />
-                    </Transition.Child>
-
-                    <div className="fixed inset-0 z-10 overflow-y-auto">
-                        <div className="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
-                            <Transition.Child
-                                as={Fragment}
-                                enter="ease-out duration-300"
-                                enterFrom="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
-                                enterTo="opacity-90 translate-y-0 sm:scale-100"
-                                leave="ease-in duration-200"
-                                leaveFrom="opacity-90 translate-y-0 sm:scale-100"
-                                leaveTo="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
-                            >
-                                <Dialog.Panel className="relative transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg">
-                                    {props.content}
-                                </Dialog.Panel>
-                            </Transition.Child>
-                        </div>
-                    </div>
-                </Dialog>
-            </Transition.Root>
         );
     };
 
@@ -176,13 +125,7 @@ export const LoginCard = () => {
                                     error={formErrors.password}
                                 />
                                 <div className="flex flex-col pt-5 items-start self-stretch flex-none order-1 h-12 px-20 justify-center pb-20 ">
-                                    <div className="flex flex-row items-start self-stretch flex-none order-none h-12 p-2 w-24 gap-5 bg-red-600 rounded justify-center ">
-                                        <button type="submit">
-                                            <div className="flex items-center inline-block align-middle flex-none order-none font-normal text-2xl leading-7 text-center text-white not-italic w-20 "></div>
-                                            {/*  FIXME */}
-                                            Sign In
-                                        </button>
-                                    </div>
+                                    <RedButton text={'Sign in'} />
                                 </div>
                                 <div className="flex-none order-2 h-12 ">
                                     <div className="text-center	">
@@ -211,10 +154,23 @@ export const LoginCard = () => {
             </div>
         );
     };
-
+    const RedButton = (props) => {
+        return (
+            <div className=" items-start text-white	align-baseline	 h-12 p-2 w-24  bg-red-600 text-center	rounded">
+                <button type="submit">{props.text}</button>
+            </div>
+        );
+    };
     return (
         <div>
-            {open && <Modal content={forgetPasswordContent} />}
+            {open && (
+                <Modal
+                    open={open}
+                    setOpen={setOpen}
+                    content={forgetPasswordContent}
+                />
+            )}
+
             <LoginBody />
         </div>
     );
