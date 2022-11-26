@@ -18,7 +18,7 @@ export const Navlink = ({name, href, isActive}: NavlinkProps) => {
     return (
         <div
             className={classNames(
-                'flex flex-row items-start p-4 gap-2 h-full text-WHITE cursor-pointer',
+                'flex flex-row items-start px-4 gap-2 h-full text-WHITE cursor-pointer',
                 {
                     'bg-CARNELIAN': isActive,
                 }
