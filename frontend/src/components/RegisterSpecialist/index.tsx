@@ -57,6 +57,8 @@ export const RegisterSpecialist = (props) => {
     //form validation handler
     const validate = (values) => {
         let errors = {};
+        // FIXME todos
+        // E regex
         const regex = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/i;
 
         if (!values.email) {
@@ -75,7 +77,7 @@ export const RegisterSpecialist = (props) => {
             errors.username = 'Cannot be blank';
         }
         if (modalities.length === 0) {
-            errors.modalities = 'Preenche pelo menos uma.';
+            errors.modalities = 'Choose at least one.';
         }
         return errors;
     };
@@ -90,10 +92,12 @@ export const RegisterSpecialist = (props) => {
         <div className="h-screen w-screen justify-center flex items-center bg-CULTURED">
             <div className="bg-white w-1/2 flex flex-col items-center px-10 pt-10 pb-20 h-auto  relative ">
                 <div className="w-24 h-10  not-italic font-normal text-4xl leading-10 text-black flex-none order-none  flex-grow-0">
+                    {/* FIXME */}
                     Registo
                 </div>
                 <div className="flex flex-col items-start flex-none order-1 pt-5  gap-12 ">
                     <div className="flex-none order-none  ">
+                        {/* FIXME Todos */}
                         <form
                             onSubmit={handleSubmit}
                             noValidate
@@ -124,15 +128,16 @@ export const RegisterSpecialist = (props) => {
                                 error={formErrors.password}
                             />
                             <ScrollModalities
+                                key="Scroll_Mod"
                                 changeModality={changeModalities}
                                 modalities={props.modalities}
                                 maybeError={formErrors.modalities}
                             />
 
                             <div className="flex flex-col items-start self-stretch flex-none order-1 h-12 px-20 justify-center   pt-10">
-                                <div className="flex flex-row  order-none h-12 p-2 w-24 gap-5 bg-red-600 rounded  ">
+                                <div className="text-white h-12 p-2 w-24 gap-5 bg-red-600 rounded text-center	 ">
                                     <button type="submit">
-                                        <div className="flex items-center inline-block align-top flex-none order-none font-normal text-2xl leading-7 text-center text-white not-italic w-20 "></div>
+                                        {/* FIXME Todos */}
                                         Registar
                                     </button>
                                 </div>

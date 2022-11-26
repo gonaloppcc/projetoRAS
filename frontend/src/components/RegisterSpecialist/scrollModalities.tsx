@@ -8,6 +8,7 @@ export const ScrollModalities = (props) => {
     return (
         <div>
             <div className="text-lg border-grey-300 border-b-2 text-slate-400">
+                {/* FIXME */}
                 Modalidades
             </div>
 
