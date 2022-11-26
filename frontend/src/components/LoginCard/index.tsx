@@ -1,7 +1,7 @@
 import {ClassNames} from '@emotion/react';
 import React, {useEffect, useState} from 'react';
 import {InputForm} from '../createBetter/inputForm';
-import {REGEX_MAIL} from '../utils';
+import {REGEX_MAIL} from '../../utils/regex';
 export const LoginCard = () => {
     const intialValues = {email: '', password: ''};
 

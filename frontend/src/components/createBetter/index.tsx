@@ -1,7 +1,7 @@
 import {ClassNames} from '@emotion/react';
 import React, {useEffect, useState} from 'react';
 import {InputForm} from './inputForm';
-import {REGEX_MAIL} from '../utils';
+import {REGEX_MAIL, REGEX_NUMBERS, REGEX_USERNAME} from '../../utils/regex';
 export const CreateBetter = () => {
     const intialValues = {
         username: '',
@@ -39,12 +39,10 @@ export const CreateBetter = () => {
     const validate = (values) => {
         let errors = {};
         // Phone numbers, cc, nifs all with 9 numbers
-        const REGEX_NUMBERS = /^\d{9}$/i;
-        const username = /^[\d\w$]{1,10}/i;
 
         if (!values.username) {
             errors.username = 'Obrigatório';
-        } else if (!username.test(values.username)) {
+        } else if (!REGEX_USERNAME.test(values.username)) {
             errors.username = 'Nome inválido';
         }
 
