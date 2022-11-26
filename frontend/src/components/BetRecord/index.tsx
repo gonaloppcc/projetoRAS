@@ -25,8 +25,8 @@ export const BetRecord = ({
         <div className="flex flex-row justify-between items-center px-4 gap-8 bg-WHITE rounded">
             <div className="flex flex-row justify-center items-center gap-4">
                 <SportsSoccer />
-                <div className="flex flex-col items-start p-0 gap-2">
-                    <span className="text-EERIE_BLACK text-base">
+                <div className="flex flex-col items-start p-0 gap-1">
+                    <span className="text-EERIE_BLACK text-base font-semibold">
                         {betName}
                     </span>
                     <span className="text-LIGHT_GRAY text-xs">{eventName}</span>
@@ -60,11 +60,9 @@ export const BetRecord = ({
                 </div>
             )}
             {betWinnings === 0 && (
-                <div className="flex flex-col items-start p-0 gap-2 bg-IMPERIAL_RED">
-                    <span className="text-LIGHT_GRAY text-xs">{'Ganhos'}</span>
-                    <span className="text-EERIE_BLACK text-base">
-                        {betWinnings} €
-                    </span>
+                <div className="flex flex-col items-start pl-4 pr-8 py-4 gap-2 bg-IMPERIAL_RED text-WHITE">
+                    <span className="text-xs">{'Ganhos'}</span>
+                    <span className="text-base">{betWinnings} €</span>
                 </div>
             )}
 
