@@ -1,6 +1,7 @@
 import {ClassNames} from '@emotion/react';
 import React, {useEffect, useState} from 'react';
 import {InputForm} from './inputForm';
+import {REGEX_MAIL} from '../utils';
 export const CreateBetter = () => {
     const intialValues = {
         username: '',
@@ -34,11 +35,11 @@ export const CreateBetter = () => {
     };
 
     //form validation handler
+    // FIXME Em todos
     const validate = (values) => {
         let errors = {};
-        const mail = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/i;
         // Phone numbers, cc, nifs all with 9 numbers
-        const numbers = /^\d{9}$/i;
+        const REGEX_NUMBERS = /^\d{9}$/i;
         const username = /^[\d\w$]{1,10}/i;
 
         if (!values.username) {
@@ -55,24 +56,24 @@ export const CreateBetter = () => {
 
         if (!values.mail) {
             errors.mail = 'Obrigatório';
-        } else if (!mail.test(values.mail)) {
+        } else if (!REGEX_MAIL.test(values.mail)) {
             errors.mail = 'Mail incorreto';
         }
 
         if (!values.nif) {
             errors.nif = 'Obrigatório';
-        } else if (!numbers.test(values.nif)) {
+        } else if (!REGEX_NUMBERS.test(values.nif)) {
             errors.nif = 'NIF inválido (9 carateres)';
         }
 
         if (!values.phone) {
             errors.phone = 'Obrigatório';
-        } else if (!numbers.test(values.phone)) {
+        } else if (!REGEX_NUMBERS.test(values.phone)) {
             errors.phone = 'Número de telemóvel errado';
         }
         if (!values.numberCC) {
             errors.numberCC = 'Obrigatório';
-        } else if (!numbers.test(values.numberCC)) {
+        } else if (!REGEX_NUMBERS.test(values.numberCC)) {
             errors.numberCC = 'Número de telemóvel errado';
         }
         return errors;
@@ -97,6 +98,7 @@ export const CreateBetter = () => {
                             noValidate
                             className="gap-5"
                         >
+                            {/*  FIXME Em todos */}
                             <InputForm
                                 htmlFor="text"
                                 name="Nome de utilizador"
@@ -147,11 +149,9 @@ export const CreateBetter = () => {
                                 error={formErrors.numberCC}
                             />
                             <div className="flex flex-col items-start self-stretch flex-none order-1 px-20 justify-center pt-1 pb-10">
-                                <div className="flex flex-row items-start self-stretch flex-none order-none h-12 p-2 w-24 gap-5 bg-red-600 rounded justify-center ">
-                                    <button type="submit">
-                                        <div className="flex items-center flex-none order-none font-normal text-2xl leading-7 text-center text-white not-italic w-20 "></div>
-                                        Registar
-                                    </button>
+                                <div className=" text-white text-center h-12 p-2 w-24 gap-5 bg-red-600 rounded justify-center ">
+                                    {/*  FIXME Em todos */}
+                                    <button type="submit">Registar</button>
                                 </div>
                             </div>
                             <div className="flex-none order-2  ">
@@ -160,6 +160,7 @@ export const CreateBetter = () => {
                                         href="/login"
                                         className="flex-none order-2 h text-lg"
                                     >
+                                        {/*  FIXME Em todos */}
                                         Já tem conta? Faça login!
                                     </a>
                                 </div>

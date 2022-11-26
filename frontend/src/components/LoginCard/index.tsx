@@ -1,6 +1,7 @@
 import {ClassNames} from '@emotion/react';
 import React, {useEffect, useState} from 'react';
 import {InputForm} from '../createBetter/inputForm';
+import {REGEX_MAIL} from '../utils';
 export const LoginCard = () => {
     const intialValues = {email: '', password: ''};
 
@@ -29,11 +30,13 @@ export const LoginCard = () => {
     //form validation handler
     const validate = (values) => {
         let errors = {};
-        const regex = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/i;
 
+        {
+            /*  FIXME EM TODOS*/
+        }
         if (!values.email) {
             errors.email = 'Cannot be blank';
-        } else if (!regex.test(values.email)) {
+        } else if (!REGEX_MAIL.test(values.email)) {
             errors.email = 'Invalid email format';
         }
 
@@ -59,19 +62,13 @@ export const LoginCard = () => {
                     Entrar
                 </div>
                 <div className="flex flex-col items-start flex-none order-1   gap-12 ">
-                    {/* Input boxes*/}
                     <div className="flex-none order-none  ">
-                        {/*{Object.keys(formErrors).length === 0 &&
-                            isSubmitting && (
-                                <span className="rounded inline-block font-semibold text-xl mb-4 p-2 text-center w-full text-white bg-green-400">
-                                    Form submitted successfully
-                                </span>
-                            )} */}
                         <form
                             onSubmit={handleSubmit}
                             noValidate
                             className=" gap-5"
                         >
+                            {/*  FIXME EM TODOS*/}
                             <InputForm
                                 htmlFor="email"
                                 name="Email"
@@ -92,6 +89,7 @@ export const LoginCard = () => {
                                 <div className="flex flex-row items-start self-stretch flex-none order-none h-12 p-2 w-24 gap-5 bg-red-600 rounded justify-center ">
                                     <button type="submit">
                                         <div className="flex items-center inline-block align-middle flex-none order-none font-normal text-2xl leading-7 text-center text-white not-italic w-20 "></div>
+                                        {/*  FIXME */}
                                         Sign In
                                     </button>
                                 </div>
@@ -102,6 +100,7 @@ export const LoginCard = () => {
                                         href="/register"
                                         className="flex-none order-2 h text-lg"
                                     >
+                                        {/*  FIXME */}
                                         Não tem conta? Registe-se agora!
                                     </a>
                                 </div>
@@ -110,6 +109,7 @@ export const LoginCard = () => {
                                         href="https://www.youtube.com/watch?v=E_i0iVloA18&list=TLPQMjUxMTIwMjJxDb98oNzlJA&index=7&ab_channel=WetBedGang"
                                         className="flex-none order-2  text-lg"
                                     >
+                                        {/*  FIXME */}
                                         Esqueci-me da palavra-passe
                                     </a>
                                 </div>
