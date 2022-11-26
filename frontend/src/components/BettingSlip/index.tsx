@@ -16,7 +16,7 @@ export const BettingSlip = () => {
                     </div>
                 </div>
             </div>
-            <Bets>2</Bets>
+            <Bets></Bets>
             <BettingSlipInfo
                 amount={5}
                 possibleWinnings={20}

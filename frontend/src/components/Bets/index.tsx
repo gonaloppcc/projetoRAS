@@ -1,7 +1,7 @@
 import React from 'react';
 
 interface BetsProps {
-    children: React.ReactNode;
+    children?: React.ReactNode;
 }
 
 export const Bets = ({children}: BetsProps) => {
