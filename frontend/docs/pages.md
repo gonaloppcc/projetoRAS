@@ -2,78 +2,80 @@
 
 ## Authentication
 
-- Login
+-   Login
 
-- Register
+-   Register
 
-- Forgot Password
+-   Forgot Password
 
-- Reset Password
+-   Reset Password
 
 ### Admin
 
-- Register specialist
+-   Register specialist
 
-- Delete Account
+-   Delete Account
 
 ## Dashboard
 
 ### Player
 
- In Nav Bar, add the friends button
+In Nav Bar, add the friends button
 
 #### Global State
 
-- Account { name, email, profileImage, role, balance, favoriteLeagues }
+-   Account { name, email, profileImage, role, balance, favoriteLeagues }
 
-- Report { bets, stake, profit }
+-   Report { bets, stake, profit }
 
 Components:
 
-- Top Competitions
+-   Top Competitions
 
-- Friends bets
+-   Friends bets
 
-- Boletim
+-   Boletim
 
 #### Main Content
 
-- Events
+-   Events
 
-- Event Page
+-   Event Page
 
-- Promoted Events
+-   Promoted Events
 
-- My Bets
+-   My Bets
 
-- My Transactions
+-   My Transactions
 
-- All Friends Feed
+-   All Friends Feed
 
-- My Friends
+-   My Friends
 
-- Edit profile (information in global state and fetch stats from backend)
+-   Edit profile (information in global state and fetch stats from backend)
 
 ### Specialist
 
 ## Dashboard
-- Sports
-- Leagues
-- 
+
+-   Sports
+-   Leagues
+-
+
 #### Main Content
 
-- Events
+-   Events
 
-- Event Page (editable)
+-   Event Page (editable)
 
-- Adicionar jogo 
+-   Adicionar jogo
 
 ### Admin
 
-- Add specialist
+-   Add specialist
 
-- Add promotion
+-   Add promotion
 
-- Change bet state
+-   Change bet state
 
-- Remove specialist
+-   Remove specialist
