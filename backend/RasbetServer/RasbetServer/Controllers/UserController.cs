@@ -21,12 +21,12 @@ public class UserController : ControllerBase
     [HttpGet("[action]", Name = "Login")]
     public ActionResult<User> Login([FromBody] JsonObject json)
     {
-        var dyn = JsonConvert.DeserializeObject<dynamic>(json.ToString());
-        string email = dyn.email;
+        var deserialized = JsonConvert.DeserializeObject<dynamic>(json.ToString());
+        string email = deserialized.email;
         if (email is null)
             return BadRequest("No email was provided");
 
-        string password = dyn.password;
+        string password = deserialized.password;
         if (password is null)
             return BadRequest("No password was provided");
 
@@ -39,39 +39,16 @@ public class UserController : ControllerBase
     /// Registers a user in the system
     /// </summary>
     /// 
-    /// <param name="json">
-    /// Json object in the body of the POST request.
-    /// Must have all the fields required to create a new User class
+    /// <param name="user">
+    /// The user to register in the system
     /// </param>
     /// <returns>
     /// Ok in case the user was successfully registered
-    /// or BadRequest if the json is missing any atributes
+    /// or BadRequest if the json is missing any attributes
     /// </returns>
     [HttpPost("[action]", Name = "Register")]
-    public IActionResult Register([FromBody] JsonObject json)
+    public IActionResult Register([FromBody] User user)
     {
-        var dyn = JsonConvert.DeserializeObject<dynamic>(json.ToString());
-        
-        string email = dyn.email;
-        if (email is null)
-            return BadRequest("No email was provided");
-        string username = dyn.username;
-        if (username is null)
-            return BadRequest("No username was provided");
-        string password = dyn.password;
-        if (password is null)
-            return BadRequest("No password was provided");
-        string nif = dyn.nif;
-        if (nif is null)
-            return BadRequest("No nif was provided");
-        string cc = dyn.cc;
-        if (cc is null)
-            return BadRequest("No CC was provided");
-        string cellphone = dyn.cellphone;
-        if (cellphone is null)
-            return BadRequest("No cellphone number was provided");
-
-        var user = new User(email, username, password, nif, cc, cellphone);
         return Ok("User successfully created");
     }
 
@@ -88,8 +65,8 @@ public class UserController : ControllerBase
         if (id == 0)
             return NotFound($"User with id={id} not found");
         
-        var dyn = JsonConvert.DeserializeObject<dynamic>(json.ToString());
-        string password = dyn.password;
+        var deserialized = JsonConvert.DeserializeObject<dynamic>(json.ToString());
+        string password = deserialized.password;
         if (password is null)
         {
             return BadRequest("No password was provided");
