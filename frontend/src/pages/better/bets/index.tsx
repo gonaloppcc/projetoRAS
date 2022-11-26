@@ -1,6 +1,7 @@
 import React from 'react';
 import {BetRecord, BetRecordProps} from '@components/BetRecord';
 import {PageLayout} from '@components/PageLayout';
+import {Accordion} from '@components/Accordion';
 
 const MOCK_WIN_BET_RECORD: BetRecordProps = {
     eventName: 'Manchester United vs. Liverpool',
@@ -25,11 +26,13 @@ const MOCK_LOST_BET_RECORD: BetRecordProps = {
 const Bets = () => {
     return (
         <PageLayout>
-            <div className="flex flex-col justify-start gap-4">
-                <BetRecord {...MOCK_WIN_BET_RECORD}></BetRecord>
-                <BetRecord {...MOCK_LOST_BET_RECORD}></BetRecord>
-                <BetRecord {...MOCK_WIN_BET_RECORD}></BetRecord>
-            </div>
+            <Accordion>
+                <div className="w-full flex flex-col justify-start gap-1">
+                    <BetRecord {...MOCK_WIN_BET_RECORD}></BetRecord>
+                    <BetRecord {...MOCK_LOST_BET_RECORD}></BetRecord>
+                    <BetRecord {...MOCK_WIN_BET_RECORD}></BetRecord>
+                </div>
+            </Accordion>
         </PageLayout>
     );
 };
