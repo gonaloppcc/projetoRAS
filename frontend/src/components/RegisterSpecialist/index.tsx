@@ -1,8 +1,36 @@
 import {ClassNames} from '@emotion/react';
+import {ErrorSharp} from '@mui/icons-material';
 import React, {useEffect, useState} from 'react';
 import {InputForm} from '../createBetter/inputForm';
-export const LoginCard = () => {
-    const intialValues = {email: '', password: ''};
+import {ScrollModalities} from './scrollModalities';
+
+export const RegisterSpecialist = () => {
+    /*
+    Get Sports available
+    */
+
+    // Depois passa para estruturas com nomes e ícones, em cada posição da lista
+    const MOCK_Modalities = ['Futebol', 'Basket', 'Marathon'];
+    const [modalities, setModalities] = useState([]);
+    const changeModalities = (modality, value) => {
+        console.log('Change state');
+
+        value
+            ? setModalities((current) => [...current, modality])
+            : setModalities((current) =>
+                  current.filter((element) => {
+                      return element !== modality;
+                  })
+              );
+    };
+    /*
+    Form Part
+    */
+    const intialValues = {
+        email: '',
+        username: '',
+        password: '',
+    };
 
     const [formValues, setFormValues] = useState(intialValues);
     const [formErrors, setFormErrors] = useState({});
@@ -11,6 +39,7 @@ export const LoginCard = () => {
     const submit = () => {
         console.log('Submissão feita');
         console.log(formValues);
+        console.log(modalities);
     };
 
     //input change handler
@@ -43,6 +72,12 @@ export const LoginCard = () => {
             errors.password = 'Password must be more than 4 characters';
         }
 
+        if (!values.username) {
+            errors.username = 'Cannot be blank';
+        }
+        if (modalities.length === 0) {
+            errors.modalities = 'Preenche pelo menos uma.';
+        }
         return errors;
     };
 
@@ -54,19 +89,12 @@ export const LoginCard = () => {
 
     return (
         <div className="h-screen w-screen justify-center flex items-center bg-CULTURED">
-            <div className="bg-white w-auto flex flex-col items-center px-10 pt-10 pb-20 h-auto  relative ">
-                <div className="w-24 h-10 not-italic font-normal text-3xl leading-10 text-black flex-none order-none flex-grow-0">
-                    Entrar
+            <div className="bg-white w-1/2 flex flex-col items-center px-10 pt-10 pb-20 h-auto  relative ">
+                <div className="w-24 h-10  not-italic font-normal text-4xl leading-10 text-black flex-none order-none  flex-grow-0">
+                    Registo
                 </div>
-                <div className="flex flex-col items-start flex-none order-1   gap-12 ">
-                    {/* Input boxes*/}
+                <div className="flex flex-col items-start flex-none order-1 pt-5  gap-12 ">
                     <div className="flex-none order-none  ">
-                        {/*{Object.keys(formErrors).length === 0 &&
-                            isSubmitting && (
-                                <span className="rounded inline-block font-semibold text-xl mb-4 p-2 text-center w-full text-white bg-green-400">
-                                    Form submitted successfully
-                                </span>
-                            )} */}
                         <form
                             onSubmit={handleSubmit}
                             noValidate
@@ -81,6 +109,14 @@ export const LoginCard = () => {
                                 error={formErrors.email}
                             />
                             <InputForm
+                                htmlFor="text"
+                                name="Username"
+                                id="username"
+                                value={formValues.username}
+                                handleChange={handleChange}
+                                error={formErrors.username}
+                            />
+                            <InputForm
                                 htmlFor="password"
                                 name="Palavra-passe"
                                 id="password"
@@ -88,30 +124,18 @@ export const LoginCard = () => {
                                 handleChange={handleChange}
                                 error={formErrors.password}
                             />
-                            <div className="flex flex-col pt-5 items-start self-stretch flex-none order-1 h-12 px-20 justify-center pb-20 ">
-                                <div className="flex flex-row items-start self-stretch flex-none order-none h-12 p-2 w-24 gap-5 bg-red-600 rounded justify-center ">
+                            <ScrollModalities
+                                changeModality={changeModalities}
+                                modalities={MOCK_Modalities}
+                                maybeError={formErrors.modalities}
+                            />
+
+                            <div className="flex flex-col items-start self-stretch flex-none order-1 h-12 px-20 justify-center   pt-10">
+                                <div className="flex flex-row  order-none h-12 p-2 w-24 gap-5 bg-red-600 rounded  ">
                                     <button type="submit">
-                                        <div className="flex items-center inline-block align-middle flex-none order-none font-normal text-2xl leading-7 text-center text-white not-italic w-20 "></div>
-                                        Sign In
+                                        <div className="flex items-center inline-block align-top flex-none order-none font-normal text-2xl leading-7 text-center text-white not-italic w-20 "></div>
+                                        Registar
                                     </button>
-                                </div>
-                            </div>
-                            <div className="flex-none order-2 h-12 ">
-                                <div className="text-center	">
-                                    <a
-                                        href="/register"
-                                        className="flex-none order-2 h text-lg"
-                                    >
-                                        Não tem conta? Registe-se agora!
-                                    </a>
-                                </div>
-                                <div className="text-center	">
-                                    <a
-                                        href="https://www.youtube.com/watch?v=E_i0iVloA18&list=TLPQMjUxMTIwMjJxDb98oNzlJA&index=7&ab_channel=WetBedGang"
-                                        className="flex-none order-2  text-lg"
-                                    >
-                                        Esqueci-me da palavra-passe
-                                    </a>
                                 </div>
                             </div>
                         </form>

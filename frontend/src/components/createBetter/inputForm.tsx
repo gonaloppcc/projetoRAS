@@ -14,7 +14,7 @@ export const InputForm = (props) => {
                 className={
                     props.error
                         ? 'border-red-500 border-2'
-                        : 'border-black border-b-2'
+                        : 'border-stone-300 border-b-2'
                 }
             />
             {props.error && (
