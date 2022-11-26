@@ -4,13 +4,12 @@ import React, {useEffect, useState} from 'react';
 import {InputForm} from '../createBetter/inputForm';
 import {ScrollModalities} from './scrollModalities';
 
-export const RegisterSpecialist = () => {
+export const RegisterSpecialist = (props) => {
     /*
     Get Sports available
     */
 
     // Depois passa para estruturas com nomes e ícones, em cada posição da lista
-    const MOCK_Modalities = ['Futebol', 'Basket', 'Marathon'];
     const [modalities, setModalities] = useState([]);
     const changeModalities = (modality, value) => {
         console.log('Change state');
@@ -126,7 +125,7 @@ export const RegisterSpecialist = () => {
                             />
                             <ScrollModalities
                                 changeModality={changeModalities}
-                                modalities={MOCK_Modalities}
+                                modalities={props.modalities}
                                 maybeError={formErrors.modalities}
                             />
 
