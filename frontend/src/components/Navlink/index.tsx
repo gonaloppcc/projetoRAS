@@ -1,26 +1,31 @@
 import React from 'react';
-import Link from 'next/link';
-import {UrlObject} from 'url';
-import {PALETTE} from '../../constants/PALETTE';
-import {NAVLINK_STYLES} from './styles';
+import classNames from 'classnames';
+import {useRouter} from 'next/router';
 
 export interface NavlinkProps {
     name: string;
-    href: string | UrlObject;
+    href: string;
     isActive?: boolean;
 }
 
 export const Navlink = ({name, href, isActive}: NavlinkProps) => {
-    const isActiveStyle = isActive
-        ? {
-              background: isActive ? PALETTE.RUBY_RED : PALETTE.CARNELIAN,
-              opacity: isActive ? 1 : 0.8,
-          }
-        : undefined;
+    const router = useRouter();
+
+    const onClickHandler = async () => {
+        await router.push(href);
+    };
 
     return (
-        <div style={{...NAVLINK_STYLES, ...isActiveStyle}}>
-            <Link href={href}>{name}</Link>
+        <div
+            className={classNames(
+                'flex flex-row items-start p-4 gap-2 h-full text-WHITE cursor-pointer',
+                {
+                    'bg-CARNELIAN': isActive,
+                }
+            )}
+            onClick={onClickHandler}
+        >
+            {name}
         </div>
     );
 };

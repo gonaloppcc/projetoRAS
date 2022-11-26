@@ -1,49 +1,48 @@
 import type {NextPage} from 'next';
-import Head from 'next/head';
-import {Box, CircularProgress} from '@mui/material';
-import {EventCard} from '../components/cards/EventCard';
-import {useEvents} from '../hooks/useEvents';
-import {Report} from '../components/Report';
-import {Flex} from '../components/Flex';
+import {EventCard, EventCardProps} from '@components/EventCard';
+import {PageLayout} from '@components/PageLayout';
 
+/* FIXME Mock data hardcoded */
+const MOCK_EVENT: EventCardProps = {
+    eventName: 'Real Madrid vs Barcelona',
+    date: 'Hoje 20:15',
+    odds: [
+        {
+            name: 'Real Madrid',
+            price: 1.5,
+        },
+        {
+            name: 'Empate',
+            price: 2.5,
+        },
+        {
+            name: 'Barcelona',
+            price: 3.5,
+        },
+    ],
+};
+
+const MOCK_EVENTS: EventCardProps[] = [
+    MOCK_EVENT,
+    MOCK_EVENT,
+    MOCK_EVENT,
+    MOCK_EVENT,
+    MOCK_EVENT,
+    MOCK_EVENT,
+    MOCK_EVENT,
+    MOCK_EVENT,
+];
 const Home: NextPage = () => {
-    const {isSuccess, isLoading, events, isError, error} = useEvents();
-
+    /* FIXME DUMMY MAIN PAGE!! */
     return (
-        <>
-            <Head>
-                <title>RASBET</title>
-                <meta
-                    name="description"
-                    content="Conteudo fornedido pela RASBET"
-                />
-                <link rel="icon" href="/logo.png" />
-            </Head>
-
-            <Box
-                sx={{
-                    borderRadius: '2%',
-                    height: '100%',
-                    width: '45%',
-                    //background: PALETTE.WHITE,
-                }}
-            />
-            <Flex flexDirection="column" justifyContent="flex-start" gap="2vh">
-                {isError && <div>{error}</div>}
-                {isLoading && (
-                    <Flex justifyContent="center" alignItems="center">
-                        <CircularProgress />
-                    </Flex>
-                )}
-                {isSuccess &&
-                    events.map((event) => (
-                        <EventCard key={event.id} {...event} />
-                    ))}
-            </Flex>
-            <Flex width="45%">
-                <Report />
-            </Flex>
-        </>
+        <PageLayout>
+            <div className="flex flex-col justify-start gap-3 w-full">
+                {MOCK_EVENTS.map((event) => (
+                    <EventCard key={event.eventName} {...event} />
+                ))}
+                {/*<Competitions competitions={MOCK_COMPETITIONS} />*/}
+            </div>
+        </PageLayout>
     );
 };
 
