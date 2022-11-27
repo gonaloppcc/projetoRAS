@@ -4,11 +4,17 @@ import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 import classNames from 'classnames';
 
 export interface AccordionProps {
+    header: string;
     children: React.ReactNode;
+    initialOpen?: boolean;
 }
 
-export const Accordion = ({children}: AccordionProps) => {
-    const [isOpen, setIsOpen] = useState<boolean>(false);
+export const Accordion = ({
+    header,
+    children,
+    initialOpen = true,
+}: AccordionProps) => {
+    const [isOpen, setIsOpen] = useState<boolean>(initialOpen);
 
     const toggle = () => {
         setIsOpen(!isOpen);
@@ -24,7 +30,7 @@ export const Accordion = ({children}: AccordionProps) => {
                     'border-b-0': isOpen,
                 })}
             >
-                <span className="font-semibold">Em Curso</span>
+                <span className="font-semibold">{header}</span>
                 {isOpen ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
             </button>
             {isOpen && children}

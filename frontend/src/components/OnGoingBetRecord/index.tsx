@@ -1,7 +1,7 @@
 import React from 'react';
 import {SportsSoccer} from '@mui/icons-material';
 
-export interface BetRecordProps {
+export interface OnGoingBetRecordProps {
     eventName: string;
     eventDate: string;
     eventType: string; // FIXME Change to enum
@@ -9,18 +9,20 @@ export interface BetRecordProps {
     betName: string;
     betOdd: number;
     betAmount: number;
-    betWinnings: number;
+    betPossibleWinnings: number;
+    cancelBetHandler: () => void;
 }
 
-export const BetRecord = ({
+export const OnGoingBetRecord = ({
     eventName,
     eventDate,
     eventType,
     betName,
     betOdd,
     betAmount,
-    betWinnings,
-}: BetRecordProps) => {
+    betPossibleWinnings,
+    cancelBetHandler,
+}: OnGoingBetRecordProps) => {
     // FIXME: Hardcoded text in this component
     return (
         <div className="flex flex-row justify-between items-center px-4 gap-8 bg-WHITE rounded">
@@ -40,9 +42,7 @@ export const BetRecord = ({
 
             <div className="flex flex-col items-start p-0 gap-2">
                 <span className="text-LIGHT_GRAY text-sm">{'Cota'}</span>
-                <span className="text-SPECIAL text-base font-semibold">
-                    {betOdd}
-                </span>
+                <span className="text-SPECIAL text-base">{betOdd}</span>
             </div>
 
             <div className="flex flex-col items-start p-0 gap-2">
@@ -53,21 +53,23 @@ export const BetRecord = ({
                     {betAmount} €
                 </span>
             </div>
+            <div className="flex flex-col items-start py-4 gap-2">
+                <span className="text-LIGHT_GRAY text-xs">
+                    {'Potenciais Ganhos'}
+                </span>
+                <span className="text-base font-semibold">
+                    {betPossibleWinnings} €
+                </span>
+            </div>
 
-            {betWinnings > 0 && (
-                <div className="h-full flex flex-col items-start w-20 p-4 gap-2 bg-RIGHT_GREEN text-WHITE">
-                    <span className="text-xs">{'Ganhos'}</span>
-                    <span className="text-base font-semibold">
-                        {betWinnings} €
-                    </span>
-                </div>
-            )}
-            {betWinnings === 0 && (
-                <div className="flex flex-col items-start w-20 p-4 gap-2 bg-IMPERIAL_RED text-WHITE">
-                    <span className="text-xs">{'Ganhos'}</span>
-                    <span className="text-base">{betWinnings} €</span>
-                </div>
-            )}
+            <div className="flex flex-col items-start py-4 gap-2">
+                <button
+                    onClick={cancelBetHandler}
+                    className="bg-SPECIAL hover:bg-SPECIAL_DARK p-3 rounded font-semibold"
+                >
+                    Cancelar
+                </button>
+            </div>
         </div>
     );
 };
