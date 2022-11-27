@@ -3,11 +3,13 @@ import Head from 'next/head';
 import Image from 'next/image';
 import {RegisterSpecialist} from '../../components/RegisterSpecialist';
 
-const MOCK_Modalities = ['Futebol', 'Basket', 'Marathon'];
+const MOCK_MODALITIES = ['Futebol', 'Basket', 'Marathon'];
 const Home: NextPage = () => {
     return (
         <>
-            <RegisterSpecialist modalities={MOCK_Modalities} />
+            <div className="bg-blue-400">
+                <RegisterSpecialist modalities={MOCK_MODALITIES} />
+            </div>
         </>
     );
 };
