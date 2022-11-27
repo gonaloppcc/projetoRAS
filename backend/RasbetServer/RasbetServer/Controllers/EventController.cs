@@ -30,18 +30,19 @@ public class EventController : ControllerBase
     }
 
     [HttpGet(Name = "GetPage")]
-    public ActionResult<List<Event>> GetPage([FromQuery] Sport sport, [FromQuery] int page)
+    public ActionResult<List<Event>> GetPage([FromQuery] Sport sport, [FromQuery] int pageNum)
     {
-        if (page*2 >= MockEvents.Count)
-            return NoContent();
-
-        List<Event> events = MockEvents;
+        var events = MockEvents;
         if (sport != Sport.All)
             events = MockEvents.FindAll(e => e.GetSport() == sport);
-        return Ok(JsonConvert.SerializeObject(events.Skip(2*page).Take(2), _settings));
+        var page = events.Skip(2 * pageNum).Take(2);
+        
+        if (pageNum*2 >= page.Count())
+            return NoContent();
+        return Ok(JsonConvert.SerializeObject(page, _settings));
     }
 
-    [HttpGet("{id:int}")]
+    [HttpGet("{id:int}", Name = "GetEvent")]
     public ActionResult<Event> GetEvent(int id)
     {
         return MockEvents[id];
