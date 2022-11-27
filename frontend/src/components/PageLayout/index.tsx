@@ -31,13 +31,13 @@ export const PageLayout = ({children}: PageLayoutProps) => {
         <div className="w-screen h-screen flex flex-col">
             <Navbar />
             <div className="w-full h-full p-8 bg-CULTURED flex flex-row justify-center gap-8">
-                <div className="hidden md:flex flex-row justify-start w-1/4">
+                <div className="hidden md:flex flex-row justify-start w-1/5">
                     <Competitions competitions={MOCK_COMPETITIONS} />
                 </div>
-                <div className="flex flex-row justify-center w-1/2">
+                <div className="flex flex-row justify-center w-3/5">
                     {children}
                 </div>
-                <div className="hidden md:flex flex-row justify-center w-1/4">
+                <div className="hidden md:flex flex-row justify-center w-1/5">
                     <BettingSlip />
                 </div>
             </div>

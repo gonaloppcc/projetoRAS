@@ -1,6 +1,7 @@
 import React from 'react';
 import Image from 'next/image';
 import {Navlink} from '@components/Navlink';
+import Link from 'next/link';
 
 const navlinks = [
     {
@@ -19,8 +20,8 @@ const BALANCE = 100; // FIXME: This should be the user's balance
 
 export const Navbar = () => {
     return (
-        <div className="hidden md:flex flex-row justify-between items-center px-8 h-12 gap-3 bg-IMPERIAL_RED ">
-            <div className="flex flex-row items-center gap-8">
+        <div className="hidden md:flex flex-row justify-between items-center px-8 h-12 gap-3 bg-IMPERIAL_RED">
+            <div className="h-full flex flex-row items-center gap-8">
                 <Image src={'/logo.png'} width={50} height={50} />
                 <div className="h-full flex flex-row ">
                     {navlinks.map((navlink) => (
@@ -33,9 +34,9 @@ export const Navbar = () => {
                     {BALANCE} €
                 </span>
 
-                <span className="text-WHITE">
+                <Link href="better/bets" className="text-WHITE">
                     {'Apostas' /* FIXME Hardcoded for now */}
-                </span>
+                </Link>
                 <div className="flex flex-row items-center gap-2">
                     <div className="w-8 h-8 rounded-full bg-LIGHT_GRAY" />
                     <span className="text-WHITE">
