@@ -50,7 +50,8 @@ export const BetRecord = ({
                     {'Valor apostado'}
                 </span>
                 <span className="text-EERIE_BLACK text-base font-semibold">
-                    {betAmount} €
+                    {betAmount} €{' '}
+                    {/* FIXME: Money currency is hardcoded and can vary */}
                 </span>
             </div>
 
@@ -59,13 +60,17 @@ export const BetRecord = ({
                     <span className="text-xs">{'Ganhos'}</span>
                     <span className="text-base font-semibold">
                         {betWinnings} €
+                        {/* FIXME: Money currency is hardcoded and can vary */}
                     </span>
                 </div>
             )}
             {betWinnings === 0 && (
                 <div className="flex flex-col items-start w-20 p-4 gap-2 bg-IMPERIAL_RED text-WHITE">
                     <span className="text-xs">{'Ganhos'}</span>
-                    <span className="text-base">{betWinnings} €</span>
+                    <span className="text-base">
+                        {betWinnings} €
+                        {/* FIXME: Money currency is hardcoded and can vary */}
+                    </span>
                 </div>
             )}
         </div>
