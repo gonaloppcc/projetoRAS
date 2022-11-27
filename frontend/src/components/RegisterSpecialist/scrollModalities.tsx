@@ -1,8 +1,6 @@
 export const ScrollModalities = (props) => {
     const checkBoxClicked = (args, mod) => {
-        //console.log(args);
-        //console.log(mod.target.checked);
-        props.changeModality(args, mod.target.checked);
+         props.changeModality(args, mod.target.checked);
     };
 
     return (
