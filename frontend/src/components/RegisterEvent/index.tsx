@@ -1,7 +1,6 @@
 import {ClassNames} from '@emotion/react';
 import {ErrorSharp} from '@mui/icons-material';
 import React, {useEffect, useState} from 'react';
-import {InputForm} from '../createBetter/inputForm';
 import {OtherTable} from './otherTable';
 import {Scroll} from './scroll';
 
