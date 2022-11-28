@@ -3,6 +3,7 @@ import {ErrorSharp} from '@mui/icons-material';
 import React, {useEffect, useState} from 'react';
 import {InputForm} from '../createBetter/inputForm';
 import {ScrollModalities} from './scrollModalities';
+import {REGEX_MAIL, REGEX_USERNAME} from 'utils/regex';
 
 export const RegisterSpecialist = (props) => {
     /*
@@ -60,12 +61,11 @@ export const RegisterSpecialist = (props) => {
         let errors = {};
         // FIXME todos
         // E regex
-        const regex = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/i;
 
-        if (!values.email) {
-            errors.email = 'Cannot be blank';
-        } else if (!regex.test(values.email)) {
-            errors.email = 'Invalid email format';
+        if (!values.username) {
+            errors.username = 'Cannot be blank';
+        } else if (!REGEX_USERNAME.test(values.username)) {
+            errors.username = 'Invalid username format';
         }
 
         if (!values.password) {
@@ -80,9 +80,6 @@ export const RegisterSpecialist = (props) => {
             errors.mail = 'Mail incorreto';
         }
 
-        if (!values.username) {
-            errors.username = 'Cannot be blank';
-        }
         if (modalities.length === 0) {
             errors.modalities = 'Choose at least one.';
         }
