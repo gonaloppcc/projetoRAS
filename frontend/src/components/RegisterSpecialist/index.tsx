@@ -55,6 +55,7 @@ export const RegisterSpecialist = (props) => {
     };
 
     //form validation handler
+    // FIXME Em todos
     const validate = (values) => {
         let errors = {};
         // FIXME todos
@@ -68,9 +69,15 @@ export const RegisterSpecialist = (props) => {
         }
 
         if (!values.password) {
-            errors.password = 'Cannot be blank';
+            errors.password = 'Obrigatório';
         } else if (values.password.length < 4) {
-            errors.password = 'Password must be more than 4 characters';
+            errors.password = 'Password tem de ter mais de 4 carateres';
+        }
+
+        if (!values.mail) {
+            errors.mail = 'Obrigatório';
+        } else if (!REGEX_MAIL.test(values.mail)) {
+            errors.mail = 'Mail incorreto';
         }
 
         if (!values.username) {
@@ -101,15 +108,17 @@ export const RegisterSpecialist = (props) => {
                         <form
                             onSubmit={handleSubmit}
                             noValidate
-                            className=" gap-5"
+                            className="gap-5"
                         >
+                            {/*  FIXME Em todos */}
+
                             <InputForm
                                 htmlFor="email"
                                 name="Email"
-                                id="email"
-                                value={formValues.email}
+                                id="mail"
+                                value={formValues.mail}
                                 handleChange={handleChange}
-                                error={formErrors.email}
+                                error={formErrors.mail}
                             />
                             <InputForm
                                 htmlFor="text"
