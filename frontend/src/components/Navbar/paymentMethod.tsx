@@ -1,10 +1,11 @@
 import {InputForm} from '@components/createBetter/inputForm';
 import React, {useState, useEffect} from 'react';
 import Image from 'next/image';
+
 export const PaymentMethod = (props) => {
     const [change, setChange] = useState<number>(0);
-    const [changeError, setChangeError] = useState<string>('');
-    const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
+    const [changeError, setChangeError] = useState('');
+    const [isSubmitting, setIsSubmitting] = useState(false);
     const [paymentMethod, setPaymentMethod] = useState<number>(0);
 
     const handleChange = (e) => {
@@ -12,15 +13,15 @@ export const PaymentMethod = (props) => {
         setChange(parseFloat(value));
     };
 
-    const clickedButton = (pos: int) => {
+    const clickedPaymentMethod = (pos: int) => {
         setPaymentMethod(pos);
     };
 
     const PaymentCard = (props) => {
         return (
             <button
-                onClick={() => clickedButton(props.pos)}
-                className={`bg-white border-pink-600  w-fit h-fit delay-75 ${
+                onClick={() => clickedPaymentMethod(props.pos)}
+                className={`bg-white border-pink-600  w-fit h-fit delay-75 p-5  ${
                     props.pos === paymentMethod ? 'border-4' : 'border-0'
                 }`}
             >
@@ -34,22 +35,31 @@ export const PaymentMethod = (props) => {
         );
     };
     const validate = (change: int) => {
+        // TODO: Se for levantar verificar se não é superior ao balanço
+        // FIXME
         if (change <= 0) return 'Invalid value';
         else return '';
     };
     const handleSubmit = (e) => {
         e.preventDefault();
-        setChangeError(validate(change));
+        var errors = validate(change);
+        setChangeError(errors);
         setIsSubmitting(true);
+        console.log('Clicou em submeter');
     };
     const submit = () => {
         console.log('Submissão feita');
         props.isDepositing
             ? props.changeBalance(props.balance + change)
             : props.changeBalance(props.balance - change);
-        props.setMenu(3);
+        console.log('O valor novo é:');
+        console.log(props.balance);
+        props.setMenu(2);
     };
     useEffect(() => {
+        console.log('Vai submeter?');
+        console.log(changeError === '' && isSubmitting);
+        console.log(change);
         if (changeError === '' && isSubmitting) {
             submit();
         }
@@ -68,7 +78,8 @@ export const PaymentMethod = (props) => {
     return (
         <div className="p-2">
             {props.isDepositing
-                ? 'Selecione o método de pagamento'
+                ? // FIXME
+                  'Selecione o método de pagamento'
                 : 'Selecione o método de levantamento'}
 
             <div className="flex flex-row gap-5 justify-around	">
@@ -94,12 +105,16 @@ export const PaymentMethod = (props) => {
             <InputForm
                 htmlFor="number"
                 name="Montante"
+                // FIXME
                 id="montante"
                 value={change}
                 handleChange={handleChange}
                 error={changeError}
             />
             <div className=" flex flex-row gap-5 justify-around	">
+                {/*
+                FIXME texto
+                */}
                 <RedButton onClick={handleSubmit} text="Depositar dinheiro" />
             </div>
         </div>

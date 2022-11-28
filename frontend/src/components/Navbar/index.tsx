@@ -3,6 +3,7 @@ import {Modal} from '@components/Modal';
 import {NavBarBody} from './navbarBody';
 import {PaymentMethod} from './paymentMethod';
 import {DepositOrwithdraw} from './depositOrwithdraw';
+import {FinishTransfer} from './finishTransfer';
 
 const BALANCE = 100; // FIXME: This should be the user's balance
 export const Navbar = () => {
@@ -16,8 +17,8 @@ export const Navbar = () => {
     const [currentMenu, setCurrentMenu] = useState<number>(0);
     const [deposit, setDeposit] = useState<boolean>(true);
 
-    const closeModal = () => {
-        setOpen(false);
+    const closeModal = (open: boolean) => {
+        setOpen(open);
         setCurrentMenu(0);
     };
 
@@ -49,7 +50,19 @@ export const Navbar = () => {
                     }
                 />
             )}
-            {!open && <NavBarBody setOpen={closeModal} />}
+            {open && currentMenu === 3 && (
+                <Modal
+                    open={open}
+                    setOpen={closeModal}
+                    content={
+                        <FinishTransfer
+                            setOpen={setOpen}
+                            isDepositing={deposit}
+                        />
+                    }
+                />
+            )}
+            <NavBarBody setOpen={closeModal} />
         </div>
     );
 };
