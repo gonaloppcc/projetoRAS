@@ -13,22 +13,36 @@ public class MarathonEvent : Event
     {
         var participants = VariableNumParticipants.FromJson(json.GetProperty("Participants"));
         var date = json.GetProperty("Date").GetDateTime();
-        if (!Enum.TryParse(json.GetProperty("Competition").GetString(), out Competition comp))
-            throw new JsonException();
+        ulong competitionId = json.GetProperty("CompetitionId").GetUInt64();
+        ulong specialistId = json.GetProperty("SpecialistId").GetUInt64();
 
-        return new MarathonEvent(participants, comp, date);
+        return new MarathonEvent(null, participants, date, competitionId, specialistId);
     }
     
-    public MarathonEvent(IEnumerable<string> participants, Competition comp, DateTime date)
+    public MarathonEvent(
+        ulong? id,
+        IEnumerable<ulong> participants,
+        DateTime date,
+        ulong competitionId,
+        ulong specialistId
+        )
         : base(
+            id,
             new VariableNumParticipants(participants),
-            comp,
-            date
+            date,
+            competitionId,
+            specialistId
         )
     { }
     
-    public MarathonEvent(VariableNumParticipants participants, Competition comp, DateTime date) 
-        : base(participants, comp, date)
+    public MarathonEvent(
+        ulong? id,
+        VariableNumParticipants participants,
+        DateTime date,
+        ulong competitionId,
+        ulong specialistId
+        ) 
+        : base(id, participants, date, competitionId, specialistId)
     { }
 
     public override string ToJson(JsonSerializerSettings settings)

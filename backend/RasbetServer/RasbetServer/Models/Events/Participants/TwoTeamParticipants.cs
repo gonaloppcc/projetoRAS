@@ -4,26 +4,22 @@ namespace RasbetServer.Models.Events.Participants;
 
 public class TwoTeamParticipants : IParticipants
 {
-    public string Home { get; }
-    public string Away { get; }
+    public ulong HomeId { get; }
+    public ulong AwayId { get; }
     
-    public TwoTeamParticipants(string home, string away)
+    public TwoTeamParticipants(ulong home, ulong away)
     {
-        Home = home;
-        Away = away;
+        HomeId = home;
+        AwayId = away;
     }
 
-    public List<string> GetParticipants()
-        => new() { Home, Away };
+    public List<ulong> GetParticipants()
+        => new() { HomeId, AwayId };
 
     public static TwoTeamParticipants FromJson(JsonElement json)
     {
-        var home = json.GetProperty("Home").GetString();
-        var away = json.GetProperty("Away").GetString();
-        if (home is null || away is null)
-        {
-            throw new JsonException();
-        }
+        var home = json.GetProperty("HomeId").GetUInt64();
+        var away = json.GetProperty("AwayId").GetUInt64();
         
         return new TwoTeamParticipants(home, away);
     }

@@ -7,26 +7,19 @@ public class VariableNumParticipants : IParticipants
 {
     public static VariableNumParticipants FromJson(JsonElement json)
     {
-        List<string> participants = new();
-        foreach (var participant in json.GetProperty("Participants").EnumerateArray().Select(element => element.GetString()))
-        {
-            if (participant is null)
-                throw new JsonException();
-            
-            participants.Add(participant);
-        }
+        var participants = json.GetProperty("Participants").EnumerateArray().Select(element => element.GetUInt64()).ToList();
 
         return new VariableNumParticipants(participants);
     }
     
-    public List<string> Participants { get; }
+    public List<ulong> Participants { get; }
 
-    public VariableNumParticipants(IEnumerable<string> participants)
+    public VariableNumParticipants(IEnumerable<ulong> participants)
     {
         Participants = participants.ToList();
     }
     
-    public List<string> GetParticipants()
+    public List<ulong> GetParticipants()
     {
         return Participants;
     }

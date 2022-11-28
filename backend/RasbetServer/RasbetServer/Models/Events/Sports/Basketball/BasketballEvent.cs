@@ -10,22 +10,28 @@ public class BasketballEvent : Event
     public static Sport SportType => Sport.Basketball;
 
     public BasketballEvent(
-        string homeTeam,
-        string awayTeam,
-        Competition comp,
-        DateTime date
+        ulong id,
+        ulong homeTeam,
+        ulong awayTeam,
+        DateTime date,
+        ulong competitionId,
+        ulong specialistId
     ) : base(
+        id,
         new TwoTeamParticipants(homeTeam, awayTeam), 
-        comp, 
-        date
-        ) 
+        date,
+        competitionId,
+        specialistId
+        )
     { }
 
     public BasketballEvent(
+        ulong? id,
         TwoTeamParticipants participants,
-        Competition comp,
-        DateTime date
-    ) : base(participants, comp, date)
+        DateTime date,
+        ulong competitionId,
+        ulong specialistId
+    ) : base(id, participants, date, competitionId, specialistId)
     { }
 
     public override string ToJson(JsonSerializerSettings settings)
@@ -37,11 +43,10 @@ public class BasketballEvent : Event
     {
         var participants = TwoTeamParticipants.FromJson(json.GetProperty("Participants"));
         var date = json.GetProperty("Date").GetDateTime();
-
-        if (!Enum.TryParse(json.GetProperty("Competition").GetString(), out Competition comp))
-            throw new JsonException();
-
-        return new BasketballEvent(participants, comp, date);
+        ulong competitionId = json.GetProperty("CompetitionId").GetUInt64();
+        ulong specialistId = json.GetProperty("SpecialistId").GetUInt64();
+        
+        return new BasketballEvent(null, participants, date, competitionId, specialistId);
     }
 
     public override Sport GetSport()

@@ -9,31 +9,38 @@ public class FootballEvent : Event
     public static Sport SportType => Sport.Football;
 
     public FootballEvent(
-        string homeTeam,
-        string awayTeam,
-        Competition comp,
-        DateTime date
+        ulong? id,
+        ulong homeTeam,
+        ulong awayTeam,
+        DateTime date,
+        ulong competitionId,
+        ulong specialistId
     ) : base(
+        id,
         new TwoTeamParticipants(homeTeam, awayTeam),
-        comp,
-        date
+        date,
+        competitionId,
+        specialistId
         )
     { }
 
     public FootballEvent(
+        ulong? id,
         TwoTeamParticipants participants,
-        Competition comp,
-        DateTime date
-    ) : base(participants,comp,date)
+        DateTime date,
+        ulong competitionId,
+        ulong specialistId
+        ) : base(id, participants, date, competitionId, specialistId)
     { }
     
     public static FootballEvent FromJson(JsonElement json)
     {
         var participants = TwoTeamParticipants.FromJson(json.GetProperty("Participants"));
-        var date = json.GetProperty("Date").GetDateTime();
-        Competition comp = (Competition) json.GetProperty("Competition").GetUInt16();
+        var date = json.GetProperty("Date").GetDateTime(); 
+        ulong competitionId = json.GetProperty("CompetitionId").GetUInt64();
+        ulong specialistId = json.GetProperty("SpecialistId").GetUInt64();
         
-        return new FootballEvent(participants, comp, date);
+        return new FootballEvent(null, participants, date, competitionId, specialistId);
     }
 
     public override string ToJson(JsonSerializerSettings settings)

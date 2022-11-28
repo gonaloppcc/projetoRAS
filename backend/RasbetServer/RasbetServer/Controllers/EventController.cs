@@ -16,16 +16,16 @@ public class EventController : ControllerBase
     // TODO: Remove this and obtain events from the database
     private static readonly List<Event> MockEvents = new()
     {
-       new FootballEvent("Porto", "Sporting", Competition.PortugueseFirstLeague, DateTime.Now),
-       new FootballEvent("Benfica", "Rio Ave", Competition.PortugueseFirstLeague, DateTime.Now),
-       new FootballEvent("Barcelona", "PSG", Competition.ChampionsLeague, DateTime.Now),
-       new FootballEvent("Liverpool", "Tottenham", Competition.EnglishFirstLeague, DateTime.Now),
-       new FootballEvent("Man Utd", "Arsenal", Competition.EnglishFirstLeague, DateTime.Now),
-       new FootballEvent("Atlético de Madrid", "Ajax", Competition.EuropaLeague, DateTime.Now),
-       new BasketballEvent("Bayton Bobcats", "East Houston Utd", Competition.NationalBasketballLeague, DateTime.Now),
-       new BasketballEvent("Pasadena Storm", "Lake Houston Flight", Competition.NationalBasketballLeague, DateTime.Now),
-       new BasketballEvent("Houston Hurricanes", "Galveston Islanders", Competition.NationalBasketballLeague, DateTime.Now),
-       new MarathonEvent(new []{ "António Fernands", "Miguel Amaro", "Ricardo Santos", "Miguel Fonseca" },  Competition.FunchalMarathon, DateTime.Now),
+       new FootballEvent(0, 1, 2, DateTime.Now, 0, 1),
+       new FootballEvent(1, 3, 4, DateTime.Now, 0, 2),
+       new FootballEvent(2, 2, 3, DateTime.Now, 0, 2),
+       new FootballEvent(3, 1, 2, DateTime.Now, 2, 2),
+       new FootballEvent(4, 1, 3, DateTime.Now, 2, 1),
+       new FootballEvent(5, 1, 2, DateTime.Now, 2, 3),
+       new BasketballEvent(6, 6, 4, DateTime.Now, 3, 4),
+       new BasketballEvent(7, 3, 4, DateTime.Now, 3, 4),
+       new BasketballEvent(8, 2, 4, DateTime.Now, 3, 4),
+       new MarathonEvent(9, new ulong[]{ 2, 8, 9, 6 }, DateTime.Now, 3, 2),
     };
 
     private readonly JsonSerializerSettings _settings = new();
