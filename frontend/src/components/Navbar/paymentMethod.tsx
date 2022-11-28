@@ -2,7 +2,6 @@ import {InputForm} from '@components/createBetter/inputForm';
 import React, {useState, useEffect} from 'react';
 import Image from 'next/image';
 export const PaymentMethod = (props) => {
-    const [open, setOpen] = useState<boolean>(false);
     const [change, setChange] = useState<number>(0);
     const [changeError, setChangeError] = useState<string>('');
     const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
@@ -14,10 +13,7 @@ export const PaymentMethod = (props) => {
     };
 
     const clickedButton = (pos: int) => {
-        console.log('AQUI');
-        console.log(pos);
         setPaymentMethod(pos);
-        console.log(paymentMethod);
     };
 
     const PaymentCard = (props) => {
@@ -71,7 +67,10 @@ export const PaymentMethod = (props) => {
 
     return (
         <div className="p-2">
-            Selecione o método de pagamento
+            {props.isDepositing
+                ? 'Selecione o método de pagamento'
+                : 'Selecione o método de levantamento'}
+
             <div className="flex flex-row gap-5 justify-around	">
                 <PaymentCard
                     pathPhoto={'/paypal.png'}
@@ -96,7 +95,7 @@ export const PaymentMethod = (props) => {
                 htmlFor="number"
                 name="Montante"
                 id="montante"
-                value={props.balance}
+                value={change}
                 handleChange={handleChange}
                 error={changeError}
             />
