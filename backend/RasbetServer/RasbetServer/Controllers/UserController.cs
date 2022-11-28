@@ -2,6 +2,7 @@ using System.Text.Json.Nodes;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using RasbetServer.Models;
+using RasbetServer.Models.Users;
 
 namespace RasbetServer.Controllers;
 
@@ -30,7 +31,7 @@ public class UserController : ControllerBase
         if (password is null)
             return BadRequest("No password was provided");
 
-        return new User(email, "Marco Costa", password, "12345678", "87654321", "919191919");
+        return new Better(email, "Marco Costa", password, "12345678", "87654321", "919191919", 0.25f);
     }
 
     
