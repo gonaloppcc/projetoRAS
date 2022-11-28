@@ -1,4 +1,3 @@
-import {ClassNames} from '@emotion/react';
 import React, {useEffect, useState} from 'react';
 import {InputForm} from './inputForm';
 import {REGEX_MAIL, REGEX_NUMBERS, REGEX_USERNAME} from '../../utils/regex';
@@ -139,14 +138,14 @@ export const CreateBetter = () => {
                                 error={formErrors.phone}
                             />
                             <InputForm
-                                htmlFor="text"
+                                htmlFor="number"
                                 name="Número Cartão de Cidadão"
                                 id="numberCC"
                                 value={formValues.numberCC}
                                 handleChange={handleChange}
                                 error={formErrors.numberCC}
                             />
-                            <div className="flex flex-col items-start self-stretch flex-none order-1 px-20 justify-center pt-1 pb-10">
+                            <div className="flex flex-col items-start self-stretch flex-none order-1 px-20 py-3">
                                 <div className=" text-white text-center h-12 p-2 w-24 gap-5 bg-red-600 rounded justify-center ">
                                     {/*  FIXME Em todos */}
                                     <button type="submit">Registar</button>

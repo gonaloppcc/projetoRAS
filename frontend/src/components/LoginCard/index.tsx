@@ -1,12 +1,12 @@
 import React, {useEffect, useState} from 'react';
-import {InputForm} from '../createBetter/inputForm';
-import {Modal} from '../Modal/index';
-import {REGEX_MAIL} from '../../utils/regex';
-
-import {useRef} from 'react';
-
+import {InputForm} from './../createBetter/inputForm';
+import {REGEX_MAIL, REGEX_NUMBERS, REGEX_USERNAME} from '../../utils/regex';
+import {ForgetPasswordContent} from './forgetPassword';
 export const LoginCard = () => {
-    const intialValues = {email: '', password: ''};
+    const intialValues = {
+        mail: '',
+        password: '',
+    };
 
     const [formValues, setFormValues] = useState(intialValues);
     const [formErrors, setFormErrors] = useState({});
@@ -31,22 +31,21 @@ export const LoginCard = () => {
     };
 
     //form validation handler
+    // FIXME Em todos
     const validate = (values) => {
         let errors = {};
-
-        {
-            /*  FIXME EM TODOS*/
-        }
-        if (!values.email) {
-            errors.email = 'Cannot be blank';
-        } else if (!REGEX_MAIL.test(values.email)) {
-            errors.email = 'Invalid email format';
-        }
+        // Phone numbers, cc, nifs all with 9 numbers
 
         if (!values.password) {
-            errors.password = 'Cannot be blank';
+            errors.password = 'Obrigatório';
         } else if (values.password.length < 4) {
-            errors.password = 'Password must be more than 4 characters';
+            errors.password = 'Password tem de ter mais de 4 carateres';
+        }
+
+        if (!values.mail) {
+            errors.mail = 'Obrigatório';
+        } else if (!REGEX_MAIL.test(values.mail)) {
+            errors.mail = 'Mail incorreto';
         }
 
         return errors;
@@ -58,117 +57,61 @@ export const LoginCard = () => {
         }
     }, [formErrors]);
 
-    const [open, setOpen] = useState(false);
-
-    const forgetPasswordContent = () => {
-        return (
-            <>
-                <div className="flex flex-col gap-3 p-5">
-                    <div className="text-lg  pl-6 pb-2">
-                        Esqueci-me da password
-                    </div>
-                    <div>
-                        Foi enviado um mail para o endereço #####, com um código
-                        de verificação.
-                    </div>
-                    <div className=" relative z-0">
-                        <input
-                            type="text"
-                            id="floating_standard"
-                            className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
-                            placeholder=" "
-                        />
-                        <label className="absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
-                            Code
-                        </label>
-                        <div className="pt-4">
-                            <RedButton text={'Reset'} />{' '}
-                        </div>
-                    </div>
-                </div>
-            </>
-        );
-    };
-
-    const LoginBody = () => {
-        return (
-            <div className="h-screen w-screen justify-center flex items-center bg-CULTURED">
-                <div className="bg-white w-auto flex flex-col items-center px-10 pt-10 pb-20 h-auto  relative ">
-                    <div className="w-24 h-10 not-italic font-normal text-3xl leading-10 text-black flex-none order-none flex-grow-0">
-                        Entrar
-                    </div>
-                    <div className="flex flex-col items-start flex-none order-1   gap-12 ">
-                        <div className="flex-none order-none  ">
-                            <form
-                                onSubmit={handleSubmit}
-                                noValidate
-                                className=" gap-5"
-                            >
-                                {/*  FIXME EM TODOS*/}
-                                <InputForm
-                                    htmlFor="email"
-                                    name="Email"
-                                    id="email"
-                                    value={formValues.email}
-                                    handleChange={handleChange}
-                                    error={formErrors.email}
-                                />
-                                <InputForm
-                                    htmlFor="password"
-                                    name="Palavra-passe"
-                                    id="password"
-                                    value={formValues.password}
-                                    handleChange={handleChange}
-                                    error={formErrors.password}
-                                />
-                                <div className="flex flex-col pt-5 items-start self-stretch flex-none order-1 h-12 px-20 justify-center pb-20 ">
-                                    <RedButton text={'Sign in'} />
-                                </div>
-                                <div className="flex-none order-2 h-12 ">
-                                    <div className="text-center	">
-                                        <a
-                                            href="/register"
-                                            className="flex-none order-2 h text-lg"
-                                        >
-                                            {/*  FIXME */}
-                                            Não tem conta? Registe-se agora!
-                                        </a>
-                                    </div>
-                                    <div className="text-center	">
-                                        <div
-                                            className="flex-none order-2 cursor-pointer text-lg"
-                                            onClick={() => setOpen(true)}
-                                        >
-                                            {/*  FIXME */}
-                                            Esqueci-me da palavra-passe
-                                        </div>
-                                    </div>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        );
-    };
-    const RedButton = (props) => {
-        return (
-            <div className=" items-start text-white	align-baseline	 h-12 p-2 w-24  bg-red-600 text-center	rounded">
-                <button type="submit">{props.text}</button>
-            </div>
-        );
-    };
     return (
-        <div>
-            {open && (
-                <Modal
-                    open={open}
-                    setOpen={setOpen}
-                    content={forgetPasswordContent}
-                />
-            )}
+        <div className="h-screen w-screen justify-center flex items-center bg-CULTURED">
+            <div className="bg-white w-auto flex flex-col items-center px-10 pt-10 pb-10 h-auto gap-10 relative ">
+                <div className="w-24 h-10  not-italic font-normal text-3xl leading-10 text-black flex-none order-none flex-grow-0">
+                    Registo
+                </div>
+                <div className="flex flex-col items-start flex-none order-1">
+                    <div className="flex-none order-none  ">
+                        <form
+                            onSubmit={handleSubmit}
+                            noValidate
+                            className="gap-5"
+                        >
+                            {/*  FIXME Em todos */}
 
-            <LoginBody />
+                            <InputForm
+                                htmlFor="email"
+                                name="Email"
+                                id="mail"
+                                value={formValues.mail}
+                                handleChange={handleChange}
+                                error={formErrors.mail}
+                            />
+                            <InputForm
+                                htmlFor="password"
+                                name="Palavra-passe"
+                                id="password"
+                                value={formValues.password}
+                                handleChange={handleChange}
+                                error={formErrors.password}
+                            />
+
+                            <div className="flex flex-col items-start self-stretch flex-none order-1 px-20 justify-center pt-1 pb-10">
+                                <div className=" text-white text-center h-12 p-2 w-24 gap-5 bg-red-600 rounded justify-center ">
+                                    {/*  FIXME Em todos */}
+                                    <button type="submit">Registar</button>
+                                </div>
+                            </div>
+                            <div className="flex flex-col gap-2 text-center  ">
+                                <a
+                                    href="/register"
+                                    className="flex-none order-2 h text-lg"
+                                >
+                                    {/*  FIXME Em todos */}
+                                    Não tem conta? Registe-se agora!
+                                </a>
+                                <div className="flex-none order-2 h text-lg">
+                                    {/*  FIXME Adicionar o modal aqui */}
+                                    Esqueci-me da palavra-passe
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
         </div>
     );
 };
