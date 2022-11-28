@@ -73,7 +73,7 @@ public class UserController : ControllerBase
             return BadRequest("No password was provided");
         }
         
-        return new User("email@email.com", "TempUsername", password, "TemplateNIF", "Imagine a CC Here", "Cell num123");
+        return new Better("email@email.com", "TempUsername", password, "TemplateNIF", "Imagine a CC Here", "Cell num123", 0.50f);
     }
 
     /// TODO: Implement this properly when we have a working database
