@@ -1,6 +1,6 @@
 using System.Text.Json;
 
-namespace RasbetServer.Models.Events.Football;
+namespace RasbetServer.Models.Events.Participants;
 
 public class TwoTeamParticipants : IParticipants
 {

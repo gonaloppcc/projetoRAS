@@ -2,8 +2,10 @@ using System.Text.Json;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using RasbetServer.Models.Events;
-using RasbetServer.Models.Events.Football;
+using RasbetServer.Models.Events.Sports;
 using RasbetServer.Models.Events.Sports.Basketball;
+using RasbetServer.Models.Events.Sports.Football;
+using RasbetServer.Models.Events.Sports.Marathon;
 
 namespace RasbetServer.Controllers;
 
@@ -20,6 +22,10 @@ public class EventController : ControllerBase
        new FootballEvent("Liverpool", "Tottenham", Competition.EnglishFirstLeague, DateTime.Now),
        new FootballEvent("Man Utd", "Arsenal", Competition.EnglishFirstLeague, DateTime.Now),
        new FootballEvent("Atlético de Madrid", "Ajax", Competition.EuropaLeague, DateTime.Now),
+       new BasketballEvent("Bayton Bobcats", "East Houston Utd", Competition.NationalBasketballLeague, DateTime.Now),
+       new BasketballEvent("Pasadena Storm", "Lake Houston Flight", Competition.NationalBasketballLeague, DateTime.Now),
+       new BasketballEvent("Houston Hurricanes", "Galveston Islanders", Competition.NationalBasketballLeague, DateTime.Now),
+       new MarathonEvent(new []{ "António Fernands", "Miguel Amaro", "Ricardo Santos", "Miguel Fonseca" },  Competition.FunchalMarathon, DateTime.Now),
     };
 
     private readonly JsonSerializerSettings _settings = new();
@@ -55,6 +61,7 @@ public class EventController : ControllerBase
         {
             Sport.Football => FootballEvent.FromJson(json),
             Sport.Basketball => BasketballEvent.FromJson(json),
+            Sport.Marathon => MarathonEvent.FromJson(json),
             _ => throw new ArgumentOutOfRangeException(nameof(sport), sport, null)
         };
         MockEvents.Add(newEvent);

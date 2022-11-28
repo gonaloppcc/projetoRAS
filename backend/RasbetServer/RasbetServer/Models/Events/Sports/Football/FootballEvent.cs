@@ -1,8 +1,8 @@
 using System.Text.Json;
 using Newtonsoft.Json;
-using JsonException = System.Text.Json.JsonException;
+using RasbetServer.Models.Events.Participants;
 
-namespace RasbetServer.Models.Events.Football;
+namespace RasbetServer.Models.Events.Sports.Football;
 
 public class FootballEvent : Event
 {

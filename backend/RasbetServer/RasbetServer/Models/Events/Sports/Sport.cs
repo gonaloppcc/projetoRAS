@@ -1,8 +1,9 @@
-namespace RasbetServer.Models.Events;
+namespace RasbetServer.Models.Events.Sports;
 
 public enum Sport : ushort
 {
     All,
     Football,
-    Basketball
+    Basketball,
+    Marathon
 }

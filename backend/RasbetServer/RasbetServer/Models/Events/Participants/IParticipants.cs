@@ -1,4 +1,4 @@
-namespace RasbetServer.Models.Events;
+namespace RasbetServer.Models.Events.Participants;
 
 public interface IParticipants
 {

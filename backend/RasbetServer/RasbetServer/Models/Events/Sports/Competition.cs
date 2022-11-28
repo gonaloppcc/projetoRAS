@@ -1,4 +1,4 @@
-namespace RasbetServer.Models.Events;
+namespace RasbetServer.Models.Events.Sports;
 
 public enum Competition : ushort
 {
@@ -6,7 +6,8 @@ public enum Competition : ushort
     EnglishFirstLeague,
     ChampionsLeague,
     EuropaLeague,
-    NationalBasketballLeague
+    NationalBasketballLeague,
+    FunchalMarathon
 }
 
 public static class FootballCompetitionMethods

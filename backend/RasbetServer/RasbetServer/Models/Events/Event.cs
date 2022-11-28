@@ -1,5 +1,6 @@
-using System.Text.Json;
 using Newtonsoft.Json;
+using RasbetServer.Models.Events.Participants;
+using RasbetServer.Models.Events.Sports;
 
 namespace RasbetServer.Models.Events;
 
