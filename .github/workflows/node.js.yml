@@ -14,6 +14,10 @@ jobs:
 
     runs-on: ubuntu-latest
 
+    defaults:
+      run:
+        working-directory: ./frontend
+
     strategy:
       matrix:
         node-version: [14.x, 16.x, 18.x]
@@ -26,7 +30,7 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
-        
+
     - run: npm install yarn -g
     - run: yarn install
     - run: yarn build
