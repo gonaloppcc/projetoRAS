@@ -1,3 +1,6 @@
 {
-    "hello": "Olá"
+    "hello": "Olá",
+    "loginCard": {
+        "titleCard" : "Registo" 
+    }
 }

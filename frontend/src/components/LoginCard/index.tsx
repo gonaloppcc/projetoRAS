@@ -1,20 +1,24 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useState, useTransition} from 'react';
 import {InputForm} from './../createBetter/inputForm';
 import {REGEX_MAIL, REGEX_NUMBERS, REGEX_USERNAME} from '../../utils/regex';
 import {ForgetPasswordContent} from './forgetPassword';
-export const LoginCard = () => {
-    const intialValues = {
-        mail: '',
-        password: '',
-    };
+import {useTranslation} from 'react-i18next';
 
+const intialValues = {
+    mail: '',
+    password: '',
+};
+
+export const LoginCard = () => {
     const [formValues, setFormValues] = useState(intialValues);
     const [formErrors, setFormErrors] = useState({});
     const [isSubmitting, setIsSubmitting] = useState(false);
+    const {t} = useTranslation();
 
     const submit = () => {
         console.log('Submissão feita');
         console.log(formValues);
+        console.log(t('hello'));
     };
 
     //input change handler
