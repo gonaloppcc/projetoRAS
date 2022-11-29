@@ -1,3 +1,4 @@
+using System.Text.Json;
 using System.Text.Json.Nodes;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
@@ -12,6 +13,7 @@ namespace RasbetServer.Controllers;
 [Route("events")]
 public class EventController : ControllerBase
 {
+    // TODO: Implement this properly
     [HttpGet(Name = "GetPage")]
     public ActionResult<Event> GetPage([FromQuery] int sportId, [FromQuery] int pageNum)
     {
@@ -31,5 +33,30 @@ public class EventController : ControllerBase
             )
         };
         return Ok(JsonConvert.SerializeObject(e));
+    }
+
+    // TODO: Implement this properly
+    [HttpGet("{id:long}", Name = "GetEvent")]
+    public ActionResult<Event> GetEvent()
+    {
+        var e = new FootballEvent(
+            0,
+            new TwoParticipants(
+                new ParticipantOdd(0, 2.3f, new Player("Porto"), null),
+                3,
+                new ParticipantOdd(1, 1.3f, new Player("Benfica"), null)
+                , 2
+            ),
+            DateTime.Now,
+            "Primeira Liga Portuguesa",
+            false
+        );
+        return Ok(JsonConvert.SerializeObject(e));
+    }
+
+    // TODO: Implement this properly
+    public IActionResult AddEvent([FromQuery] int sportId, JsonElement json)
+    {
+        return Ok("Event added successfully");
     }
 }
