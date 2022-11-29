@@ -17,7 +17,7 @@ async void FetcherJob() {
 
         var num = rand.Next();
 
-        await api.WriteToDatabase(num.ToString());
+        api.WriteToDatabase("AAA");
 
         Console.WriteLine("New Games were just fetched!");
 
