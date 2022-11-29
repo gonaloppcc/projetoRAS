@@ -1,5 +1,6 @@
 import type {NextPage} from 'next';
 import {EventCard, EventCardProps} from '@components/EventCard';
+import {PageLayout} from '@components/PageLayout';
 
 /* FIXME Mock data hardcoded */
 const MOCK_EVENT: EventCardProps = {
@@ -38,23 +39,25 @@ const Home: NextPage = () => {
         {name: 'Benfica', price: 22},
     ];
     return (
-        <div className="bg-CULTURED w-screen h-screen p-2 flex flex-col gap-3">
-            <EventCard
-                eventName={'Porto - Benfica'}
-                date={'Hoje 20:15'}
-                odds={listOdds}
-            ></EventCard>
-            <EventCard
-                eventName={'Porto - Benfica'}
-                date={'Hoje 20:15'}
-                odds={listOdds}
-            ></EventCard>
-            <EventCard
-                eventName={'Porto - Benfica'}
-                date={'Hoje 20:15'}
-                odds={listOdds}
-            ></EventCard>
-        </div>
+        <PageLayout>
+            <div className="flex flex-col justify-start gap-3 w-full">
+                <EventCard
+                    eventName={'Porto - Benfica'}
+                    date={'Hoje 20:15'}
+                    odds={listOdds}
+                />
+                <EventCard
+                    eventName={'Porto - Benfica'}
+                    date={'Hoje 20:15'}
+                    odds={listOdds}
+                />
+                <EventCard
+                    eventName={'Porto - Benfica'}
+                    date={'Hoje 20:15'}
+                    odds={listOdds}
+                />
+            </div>
+        </PageLayout>
     );
 };
 
