@@ -4,7 +4,7 @@ import Image from 'next/image';
 import {RegisterEvent} from '@components/RegisterEvent';
 
 /* FIXME Mock data hardcoded */
-const MOCK_SPORTS = [
+const MOCK_SPORTS: [Sport] = [
     {
         name: 'Football',
         leagues: ['Premier league', 'Primeira liga', 'Espanha', 'França'],
@@ -27,6 +27,14 @@ const MOCK_SPORTS = [
         minParticipants: 2,
     },
 ];
+
+export interface Sport {
+    name: string;
+    leagues: [string];
+    participants: [string];
+    maxParticipants: number;
+    minParticipants: number;
+}
 
 const Home: NextPage = () => {
     /* FIXME DUMMY MAIN PAGE!! */

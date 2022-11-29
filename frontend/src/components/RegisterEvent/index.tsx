@@ -1,10 +1,13 @@
-import {ClassNames} from '@emotion/react';
-import {ErrorSharp} from '@mui/icons-material';
 import React, {useEffect, useState} from 'react';
 import {OtherTable} from './otherTable';
 import {Scroll} from './scroll';
+import {Sport} from 'pages/specialist/registerEvent';
 
-export const RegisterEvent = (props) => {
+export interface RegisterEventProps {
+    data: React.ReactNode;
+}
+
+export const RegisterEvent = ({data}: [Sport]) => {
     /*
     Get Sports available
     */
@@ -72,15 +75,14 @@ export const RegisterEvent = (props) => {
     };
 
     const getCurrentSport = () => {
-        return sport.length > 0 ? sport[0] : props.data[0].name;
+        return sport.length > 0 ? sport[0] : data[0].name;
     };
 
     //form validation handler
     const validate = () => {
         let errors = {};
-        // FIXME mensagens de erro
-        let sportInfo = props.data.filter(
-            (sport) => sport.name === getCurrentSport()
+        let sportInfo = data.filter(
+            (sport: Sport) => sport.name === getCurrentSport()
         )[0];
 
         if (teams.length > sportInfo.maxParticipants)
@@ -102,8 +104,8 @@ export const RegisterEvent = (props) => {
 
     const getTeams = () => {
         let currentSport = getCurrentSport();
-        return props.data
-            .map((sport) => {
+        return data
+            .map((sport: Sport) => {
                 if (sport.name === currentSport) {
                     return sport.participants;
                 }
@@ -111,25 +113,25 @@ export const RegisterEvent = (props) => {
             .filter((elem) => elem !== undefined)[0];
     };
     const getLeagues = () => {
-        let currentSport = getCurrentSport();
-        return props.data
-            .map((sport) => {
+        let currentSport: string = getCurrentSport();
+        return data
+            .map((sport: Sport) => {
                 if (sport.name === currentSport) {
                     return sport.leagues;
                 }
             })
-            .filter((elem) => elem !== undefined)[0];
+            .filter((elem: Sport) => elem !== undefined)[0];
     };
     const today = new Date().toISOString().split('T')[0];
     return (
         <div className="h-screen w-screen justify-center flex items-center bg-CULTURED">
-            <div className="bg-white w-1/2 flex flex-col items-center px-10 pt-10 pb-20 h-auto  relative ">
+            <div className="bg-white w-1/2 flex flex-col items-center px-10 py-10 h-auto  relative gap-3">
                 <div className="w-fit h-10  not-italic font-normal text-4xl leading-10 text-black flex-none order-none  flex-grow-0">
                     {/* FIXME */}
                     Adicionar evento
                 </div>
                 <div className="flex items-center justify-center">
-                    <div className="flex flex-row">
+                    <div className="flex flex-row gap-5">
                         <div className="datepicker relative form-floating mb-3 xl:w-96">
                             <input
                                 type="date"
@@ -177,7 +179,7 @@ export const RegisterEvent = (props) => {
                                 key="Scroll_Sport"
                                 title="Desporto"
                                 changeFunction={changeSport}
-                                content={props.data.map((sport) => sport.name)}
+                                content={data.map((sport) => sport.name)}
                                 maybeError={formErrors.sport}
                             />
                             <Scroll
