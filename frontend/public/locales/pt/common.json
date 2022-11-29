@@ -1,7 +1,8 @@
 {
 
   "page.home.head.title": "Exemplo pt",
-  "coisa" : "Log in na aplicação",
+  "coisa" : "Aceder",
+  "loginCard.register": "Registar",
   "loginCard.ForgetPassword": "Esqueci-me da palavra-passe",
   "loginCard.error.min4car": "A palavra-passe não é válida!",
   "loginCard.errorpassword": "A palavra-passe está incorreta!",

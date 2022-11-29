@@ -18,6 +18,7 @@ export const CreateBetter = () => {
 
     const intl = useIntl();
 
+    const featureregister = intl.formatMessage({id: 'loginCard.register'});
     const error4char = intl.formatMessage({id: 'loginCard.error.min4car'});
     const required = intl.formatMessage({id: 'loginCard.Required'});
     const errormail = intl.formatMessage({id: 'loginCard.error.mail'});
@@ -103,7 +104,7 @@ export const CreateBetter = () => {
         <div className="h-screen w-screen justify-center flex items-center bg-CULTURED">
             <div className="bg-white w-auto flex flex-col items-center px-10 pt-10 pb-10 h-auto gap-10 relative ">
                 <div className="w-24 h-10  not-italic font-normal text-3xl leading-10 text-black flex-none order-none flex-grow-0">
-                    Registo
+                    {featureregister}
                 </div>
                 <div className="flex flex-col items-start flex-none order-1">
                     <div className="flex-none order-none  ">
