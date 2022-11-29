@@ -21,12 +21,12 @@ public class Specialist : User
     public static Specialist FromJson(JObject json)
     {
         int? id = null;
-        var email = json["email"].Value<string>();
-        var username = json["username"].Value<string>();
-        var password = json["password"].Value<string>();
+        var email = json[nameof(Email)].Value<string>();
+        var username = json[nameof(Username)].Value<string>();
+        var password = json[nameof(Password)].Value<string>();
         List<string> specialties = new();
 
-        foreach (var specialty in json["specialties"].Value<JArray>())
+        foreach (var specialty in json[nameof(specialties)].Value<JArray>())
         {
             if (specialty is null)
                 throw new JsonException();

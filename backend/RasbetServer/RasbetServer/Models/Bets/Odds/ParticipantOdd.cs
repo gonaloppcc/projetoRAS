@@ -10,7 +10,7 @@ public class ParticipantOdd : Odd
         ulong? id,
         float price,
         Participant part,
-        Promotion promo
+        Promotion? promo
     ) : base(id, price, promo)
     {
         Part = part;

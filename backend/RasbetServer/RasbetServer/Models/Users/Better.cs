@@ -32,13 +32,13 @@ public class Better : User
     public static Better FromJson(JObject json)
     {
         int? id = null;
-        var email = json["email"].Value<string>();
-        var username = json["username"].Value<string>();
-        var password = json["password"].Value<string>();
-        var nif = json["nif"].Value<string>();
-        var cc = json["cc"].Value<string>();
-        var cellphone = json["cellphone"].Value<string>();
-        var balance = json["balance"].Value<float>();
+        var email = json[nameof(Email)].Value<string>();
+        var username = json[nameof(Username)].Value<string>();
+        var password = json[nameof(Password)].Value<string>();
+        var nif = json[nameof(Nif)].Value<string>();
+        var cc = json[nameof(Cc)].Value<string>();
+        var cellphone = json[nameof(Cellphone)].Value<string>();
+        var balance = json[nameof(Balance)].Value<float>();
         List<Transaction> transactions = new();
 
         return new Better(id, email, username, password, nif, cc, cellphone, balance, transactions);

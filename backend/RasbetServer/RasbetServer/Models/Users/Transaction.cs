@@ -13,7 +13,7 @@ public class Transaction
 
     public static Transaction FromJson(JObject json)
     {
-        var value = json["value"].Value<float>();
+        var value = json[nameof(Value)].Value<float>();
 
         return new Transaction(value);
     }

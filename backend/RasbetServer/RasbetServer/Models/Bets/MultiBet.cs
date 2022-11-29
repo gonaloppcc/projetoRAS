@@ -4,6 +4,8 @@ namespace RasbetServer.Models.Bets;
 
 public class MultiBet : Bet
 {
+    public List<KeyValuePair<Odd, float>> TargetOdds { get; }
+ 
     public MultiBet(
         ulong? id,
         DateTime date,
@@ -13,8 +15,6 @@ public class MultiBet : Bet
     {
         TargetOdds = odds;
     }
-
-    public List<KeyValuePair<Odd, float>> TargetOdds { get; }
 
     public override float CalcCashOut()
     {

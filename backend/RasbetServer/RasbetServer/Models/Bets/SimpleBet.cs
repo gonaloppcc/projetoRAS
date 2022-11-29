@@ -4,6 +4,9 @@ namespace RasbetServer.Models.Bets;
 
 public class SimpleBet : Bet
 {
+    public Odd Target { get; private set; }
+    public float Amount { get; }
+ 
     public SimpleBet(
         ulong? id,
         DateTime date,
@@ -13,9 +16,6 @@ public class SimpleBet : Bet
     {
         Amount = amount;
     }
-
-    public Odd Target { get; private set; }
-    public float Amount { get; }
 
     public override float CalcCashOut()
     {
