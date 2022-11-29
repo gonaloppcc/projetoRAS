@@ -22,6 +22,11 @@ export const LoginCard = () => {
     const btnForgetPassword = intl.formatMessage({
         id: 'loginCard.ForgetPassword',
     });
+
+    const error4char = intl.formatMessage({
+        id: 'loginCard.error.min4car',
+    });
+
     const submit = () => {
         console.log('Submissão feita');
         console.log(formValues);
@@ -49,7 +54,7 @@ export const LoginCard = () => {
         if (!values.password) {
             errors.password = 'Obrigatório';
         } else if (values.password.length < 4) {
-            errors.password = 'Password tem de ter mais de 4 carateres';
+            errors.password = error4char;
         }
 
         if (!values.mail) {
