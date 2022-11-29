@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import {InputForm} from './inputForm';
 import {REGEX_MAIL, REGEX_NUMBERS, REGEX_USERNAME} from '../../utils/regex';
+import {FormattedMessage, useIntl} from 'react-intl';
 export const CreateBetter = () => {
     const intialValues = {
         username: '',
@@ -14,6 +15,10 @@ export const CreateBetter = () => {
     const [formValues, setFormValues] = useState(intialValues);
     const [formErrors, setFormErrors] = useState({});
     const [isSubmitting, setIsSubmitting] = useState(false);
+
+    const intl = useIntl();
+
+    const error4char = intl.formatMessage({id: 'loginCard.error.min4car'});
 
     const submit = () => {
         console.log('Submissão feita');
@@ -48,7 +53,7 @@ export const CreateBetter = () => {
         if (!values.password) {
             errors.password = 'Obrigatório';
         } else if (values.password.length < 4) {
-            errors.password = 'Password tem de ter mais de 4 carateres';
+            errors.password = error4char;
         }
 
         if (!values.mail) {

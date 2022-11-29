@@ -2,7 +2,9 @@ import React, {useEffect, useState, useTransition} from 'react';
 import {InputForm} from './../createBetter/inputForm';
 import {REGEX_MAIL, REGEX_NUMBERS, REGEX_USERNAME} from '../../utils/regex';
 import {ForgetPasswordContent} from './forgetPassword';
-import {useTranslation} from 'react-i18next';
+
+import {useRouter} from 'next/router';
+import {FormattedMessage, useIntl} from 'react-intl';
 
 const intialValues = {
     mail: '',
@@ -13,12 +15,16 @@ export const LoginCard = () => {
     const [formValues, setFormValues] = useState(intialValues);
     const [formErrors, setFormErrors] = useState({});
     const [isSubmitting, setIsSubmitting] = useState(false);
-    const {t} = useTranslation();
 
+    const intl = useIntl();
+
+    const title = intl.formatMessage({id: 'coisa'});
+    const btnForgetPassword = intl.formatMessage({
+        id: 'loginCard.ForgetPassword',
+    });
     const submit = () => {
         console.log('Submissão feita');
         console.log(formValues);
-        console.log(t('hello'));
     };
 
     //input change handler
@@ -65,7 +71,7 @@ export const LoginCard = () => {
         <div className="h-screen w-screen justify-center flex items-center bg-CULTURED">
             <div className="bg-white w-auto flex flex-col items-center px-10 pt-10 pb-10 h-auto gap-10 relative ">
                 <div className="w-24 h-10  not-italic font-normal text-3xl leading-10 text-black flex-none order-none flex-grow-0">
-                    Registo
+                    {title}
                 </div>
                 <div className="flex flex-col items-start flex-none order-1">
                     <div className="flex-none order-none  ">
@@ -109,7 +115,7 @@ export const LoginCard = () => {
                                 </a>
                                 <div className="flex-none order-2 h text-lg">
                                     {/*  FIXME Adicionar o modal aqui */}
-                                    Esqueci-me da palavra-passe
+                                    {btnForgetPassword}
                                 </div>
                             </div>
                         </form>

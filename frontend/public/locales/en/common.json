@@ -1,0 +1,7 @@
+{
+  "page.home.head.title": "Exemplo ing",
+  "coisa" : "Log in in application",
+
+  "loginCard.ForgetPassword": "Forget my password",
+  "loginCard.error.min4car": "The password must have 4 characters."
+}
