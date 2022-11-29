@@ -3,5 +3,22 @@
   "page.home.head.title": "Exemplo pt",
   "coisa" : "Log in na aplicação",
   "loginCard.ForgetPassword": "Esqueci-me da palavra-passe",
-  "loginCard.error.min4car": "A password deve ter pelo menos 4 carateres."
+  "loginCard.error.min4car": "A palavra-passe não é válida!",
+  "loginCard.errorpassword": "A palavra-passe está incorreta!",
+  "loginCard.Required":"Campo obrigatório!",
+  "loginCard.error.mail":"O email não é válido!",
+  "loginCard.error.name":"O username não é válido!",
+  "loginCard.error.nif":"O NIF não é válido!",
+  "loginCard.error.mobile":"O número de telefone não é válido!",
+  "loginCard.error.cc":"O CC não é válido!",
+  "loginCard.usernane":"Nome de utilizador",
+  "loginCard.password":"Palavra-passe",
+  "loginCard.mail":"Email",
+  "loginCard.nif":"NIF",
+  "loginCard.phone":"Número de telemóvel",
+  "loginCard.cc":"Número de Cartão de Cidadão",
+  "loginCard.login":"Não tem conta? Registe-se agora!",
+  "loginCard.button.login":"Aceder"
+
+
 }

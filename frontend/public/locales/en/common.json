@@ -3,5 +3,20 @@
   "coisa" : "Log in in application",
 
   "loginCard.ForgetPassword": "Forget my password",
-  "loginCard.error.min4car": "The password must have 4 characters."
+  "loginCard.error.min4car": "The password is not valid!",
+  "loginCard.errorpassword": "The password is wrong!",
+  "loginCard.Required":"Required field!",
+  "loginCard.error.mail":"The email is not valid!",
+  "loginCard.error.name":"The username is not valid!",
+  "loginCard.error.nif":"The NIF is not valid!",
+  "loginCard.error.mobile":"The mobile number is not valid!",
+  "loginCard.error.cc":"The ID Card number is not valid!",
+  "loginCard.usernane":"Username",
+  "loginCard.password":"Password",
+  "loginCard.mail":"Email",
+  "loginCard.nif":"NIF",
+  "loginCard.phone":"Mobile Number",
+  "loginCard.cc":"ID Card Number",
+  "loginCard.login":"Create a new account? Register now!",
+  "loginCard.button.login":"Login"
 }

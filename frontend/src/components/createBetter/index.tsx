@@ -19,6 +19,18 @@ export const CreateBetter = () => {
     const intl = useIntl();
 
     const error4char = intl.formatMessage({id: 'loginCard.error.min4car'});
+    const required = intl.formatMessage({id: 'loginCard.Required'});
+    const errormail = intl.formatMessage({id: 'loginCard.error.mail'});
+    const errorname = intl.formatMessage({id: 'loginCard.error.name'});
+    const errornif = intl.formatMessage({id: 'loginCard.error.nif'});
+    const errormobile = intl.formatMessage({id: 'loginCard.error.mobile'});
+    const errorcc = intl.formatMessage({id: 'loginCard.error.cc'});
+    const featurename = intl.formatMessage({id: 'loginCard.usernane'});
+    const featurepass = intl.formatMessage({id: 'loginCard.password'});
+    const featuremail = intl.formatMessage({id: 'loginCard.mail'});
+    const featurenif = intl.formatMessage({id: 'loginCard.nif'});
+    const featurephone = intl.formatMessage({id: 'loginCard.phone'});
+    const featurecc = intl.formatMessage({id: 'loginCard.cc'});
 
     const submit = () => {
         console.log('Submissão feita');
@@ -45,38 +57,38 @@ export const CreateBetter = () => {
         // Phone numbers, cc, nifs all with 9 numbers
 
         if (!values.username) {
-            errors.username = 'Obrigatório';
+            errors.username = required;
         } else if (!REGEX_USERNAME.test(values.username)) {
-            errors.username = 'Nome inválido';
+            errors.username = errorname;
         }
 
         if (!values.password) {
-            errors.password = 'Obrigatório';
+            errors.password = required;
         } else if (values.password.length < 4) {
             errors.password = error4char;
         }
 
         if (!values.mail) {
-            errors.mail = 'Obrigatório';
+            errors.mail = required;
         } else if (!REGEX_MAIL.test(values.mail)) {
-            errors.mail = 'Mail incorreto';
+            errors.mail = errormail;
         }
 
         if (!values.nif) {
-            errors.nif = 'Obrigatório';
+            errors.nif = required;
         } else if (!REGEX_NUMBERS.test(values.nif)) {
-            errors.nif = 'NIF inválido (9 carateres)';
+            errors.nif = errornif;
         }
 
         if (!values.phone) {
-            errors.phone = 'Obrigatório';
+            errors.phone = required;
         } else if (!REGEX_NUMBERS.test(values.phone)) {
-            errors.phone = 'Número de telemóvel errado';
+            errors.phone = errormobile;
         }
         if (!values.numberCC) {
-            errors.numberCC = 'Obrigatório';
+            errors.numberCC = required;
         } else if (!REGEX_NUMBERS.test(values.numberCC)) {
-            errors.numberCC = 'Número de telemóvel errado';
+            errors.numberCC = errorcc;
         }
         return errors;
     };
@@ -103,7 +115,7 @@ export const CreateBetter = () => {
                             {/*  FIXME Em todos */}
                             <InputForm
                                 htmlFor="text"
-                                name="Nome de utilizador"
+                                name = {featurename}
                                 id="username"
                                 value={formValues.username}
                                 handleChange={handleChange}
@@ -112,7 +124,7 @@ export const CreateBetter = () => {
 
                             <InputForm
                                 htmlFor="password"
-                                name="Palavra-passe"
+                                name={featurepass}
                                 id="password"
                                 value={formValues.password}
                                 handleChange={handleChange}
@@ -120,7 +132,7 @@ export const CreateBetter = () => {
                             />
                             <InputForm
                                 htmlFor="email"
-                                name="Email"
+                                name={featuremail}
                                 id="mail"
                                 value={formValues.mail}
                                 handleChange={handleChange}
@@ -128,7 +140,7 @@ export const CreateBetter = () => {
                             />
                             <InputForm
                                 htmlFor="number"
-                                name="NIF"
+                                name={featurenif}
                                 id="nif"
                                 value={formValues.nif}
                                 handleChange={handleChange}
@@ -136,7 +148,7 @@ export const CreateBetter = () => {
                             />
                             <InputForm
                                 htmlFor="tel"
-                                name="Número telemóvel"
+                                name={featurephone}
                                 id="phone"
                                 value={formValues.phone}
                                 handleChange={handleChange}
@@ -144,7 +156,7 @@ export const CreateBetter = () => {
                             />
                             <InputForm
                                 htmlFor="number"
-                                name="Número Cartão de Cidadão"
+                                name={featurecc}
                                 id="numberCC"
                                 value={formValues.numberCC}
                                 handleChange={handleChange}

@@ -18,13 +18,26 @@ export const LoginCard = () => {
 
     const intl = useIntl();
 
+    const featurepass = intl.formatMessage({id: 'loginCard.password'});
+    const featuremail = intl.formatMessage({id: 'loginCard.mail'});
+    const featurelogin = intl.formatMessage({id: 'loginCard.login'});
+    const buttonlogin = intl.formatMessage({id: 'loginCard.button.login'});
+
     const title = intl.formatMessage({id: 'coisa'});
     const btnForgetPassword = intl.formatMessage({
         id: 'loginCard.ForgetPassword',
     });
 
     const error4char = intl.formatMessage({
-        id: 'loginCard.error.min4car',
+        id: 'loginCard.errorpassword',
+    });
+
+    const required = intl.formatMessage({
+        id: 'loginCard.Required',
+    });
+
+    const erroremail = intl.formatMessage({
+        id: 'loginCard.error.mail',
     });
 
     const submit = () => {
@@ -52,15 +65,15 @@ export const LoginCard = () => {
         // Phone numbers, cc, nifs all with 9 numbers
 
         if (!values.password) {
-            errors.password = 'Obrigatório';
+            errors.password = required;
         } else if (values.password.length < 4) {
             errors.password = error4char;
         }
 
         if (!values.mail) {
-            errors.mail = 'Obrigatório';
+            errors.mail = required;
         } else if (!REGEX_MAIL.test(values.mail)) {
-            errors.mail = 'Mail incorreto';
+            errors.mail = erroremail;
         }
 
         return errors;
@@ -89,7 +102,7 @@ export const LoginCard = () => {
 
                             <InputForm
                                 htmlFor="email"
-                                name="Email"
+                                name={featuremail}
                                 id="mail"
                                 value={formValues.mail}
                                 handleChange={handleChange}
@@ -97,7 +110,7 @@ export const LoginCard = () => {
                             />
                             <InputForm
                                 htmlFor="password"
-                                name="Palavra-passe"
+                                name={featurepass}
                                 id="password"
                                 value={formValues.password}
                                 handleChange={handleChange}
@@ -107,7 +120,7 @@ export const LoginCard = () => {
                             <div className="flex flex-col items-start self-stretch flex-none order-1 px-20 justify-center pt-1 pb-10">
                                 <div className=" text-white text-center h-12 p-2 w-24 gap-5 bg-red-600 rounded justify-center ">
                                     {/*  FIXME Em todos */}
-                                    <button type="submit">Registar</button>
+                                    <button type="submit">{buttonlogin}</button>
                                 </div>
                             </div>
                             <div className="flex flex-col gap-2 text-center  ">
@@ -116,7 +129,7 @@ export const LoginCard = () => {
                                     className="flex-none order-2 h text-lg"
                                 >
                                     {/*  FIXME Em todos */}
-                                    Não tem conta? Registe-se agora!
+                                    {featurelogin}
                                 </a>
                                 <div className="flex-none order-2 h text-lg">
                                     {/*  FIXME Adicionar o modal aqui */}
