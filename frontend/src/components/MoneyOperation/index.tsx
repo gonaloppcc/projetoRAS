@@ -83,7 +83,7 @@ export const MoneyOperation = ({
                     {'Saldo após movimento'}
                 </span>
                 <span className="text-EERIE_BLACK text-base font-semibold">
-                    {balanceAfterOperation} €{' '}
+                    {balanceAfterOperation} €
                     {/* FIXME: Money currency is hardcoded and can vary */}
                 </span>
             </div>
