@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {InputForm} from './inputForm';
+import {InputForm} from '@components/createBetter/inputForm';
 import {REGEX_MAIL, REGEX_NUMBERS, REGEX_USERNAME} from '../../utils/regex';
 export const CreateBetter = () => {
     const intialValues = {
