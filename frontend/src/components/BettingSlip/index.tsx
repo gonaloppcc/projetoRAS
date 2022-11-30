@@ -1,8 +1,10 @@
 import React from 'react';
-import {BettingSlipInfo} from '@components/BettingSlipInfo';
-import {useBettingSlip} from '@state/useBettingSlip';
-import {BetCard} from '@components/BetCard';
+import {MultipleBetBettingSlipInfo} from '@components/MultipleBetBettingSlipInfo';
+import {BetType, useBettingSlip} from '@state/useBettingSlip';
+import {MultipleBetCard} from '@components/MultipleBetCard';
 import {Tabs} from '@components/Tabs';
+import {SimpleBetCard} from '@components/SimpleBetCard';
+import {SimpleBetBettingSlipInfo} from '@components/SimpleBetBettingSlipInfo';
 
 const TABS = [
     {
@@ -31,20 +33,42 @@ export const BettingSlip = () => {
                     setSelectedTabIndex={setBetType}
                 />
             </div>
-            <div className="w-full h-full flex flex-col items-start p-4 gap-2 overflow-y-auto">
-                {bets.map((bet) => (
-                    <BetCard
-                        key={bet.id}
-                        {...bet}
-                        removeBetHandler={getRemoveBetHandler(bet.id)}
+            {betType === BetType.Simple && (
+                <>
+                    <div className="w-full h-full flex flex-col items-start p-4 gap-2 overflow-y-auto">
+                        {bets.map((bet) => (
+                            <SimpleBetCard
+                                key={bet.id}
+                                {...bet}
+                                removeBetHandler={getRemoveBetHandler(bet.id)}
+                            />
+                        ))}
+                    </div>
+                    <SimpleBetBettingSlipInfo
+                        amount={5}
+                        possibleWinnings={20}
+                        placeBetOnClick={submitReport}
                     />
-                ))}
-            </div>
-            <BettingSlipInfo
-                amount={5}
-                possibleWinnings={20}
-                placeBetOnClick={submitReport}
-            />
+                </>
+            )}
+            {betType === BetType.Multiple && (
+                <>
+                    <div className="w-full h-full flex flex-col items-start p-4 gap-2 overflow-y-auto">
+                        {bets.map((bet) => (
+                            <MultipleBetCard
+                                key={bet.id}
+                                {...bet}
+                                removeBetHandler={getRemoveBetHandler(bet.id)}
+                            />
+                        ))}
+                    </div>
+                    <MultipleBetBettingSlipInfo
+                        amount={5}
+                        possibleWinnings={20}
+                        placeBetOnClick={submitReport}
+                    />
+                </>
+            )}
         </div>
     );
 };

@@ -4,18 +4,18 @@ import {SportIcon} from '@components/SportIcon';
 import {formatMoney} from '../../utils/formatters';
 import {CloseButton} from '@components/CloseButton';
 
-export interface BetCardProps extends BetState {
+export interface SimpleBetCardProps extends BetState {
     removeBetHandler?: () => void;
 }
 
-export const BetCard = ({
+export const SimpleBetCard = ({
     id,
     eventId,
     eventName,
     bettingAmount,
     odd: {name, price},
     removeBetHandler,
-}: BetCardProps) => {
+}: SimpleBetCardProps) => {
     return (
         <div className="flex flex-row justify-between items-center px-2 py-2 min-w-min w-full h-20 border rounded bg-WHITE">
             <div className="flex flex-row justify-start items-center gap-2">

@@ -1,16 +1,16 @@
 import React from 'react';
 
-interface BettingSlipInfoProps {
+interface MultipleBettingSlipInfoProps {
     amount: number;
     possibleWinnings: number;
     placeBetOnClick: () => void;
 }
 
-export const BettingSlipInfo = ({
+export const MultipleBetBettingSlipInfo = ({
     amount,
     possibleWinnings,
     placeBetOnClick,
-}: BettingSlipInfoProps) => {
+}: MultipleBettingSlipInfoProps) => {
     return (
         <div className="w-full flex flex-col items-start p-2 gap-2 bg-WHITE shadow">
             <div className="w-full flex flex-row justify-between items-start p-0">
