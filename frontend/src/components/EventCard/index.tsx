@@ -10,6 +10,7 @@ interface Odd {
 export interface EventCardProps {
     eventId: string;
     eventName: string;
+    eventType: string;
     commenceTime: string;
     odds: Odd[];
 }
@@ -17,13 +18,14 @@ export interface EventCardProps {
 export const EventCard = ({
     eventId,
     eventName,
+    eventType,
     commenceTime,
     odds,
 }: EventCardProps) => {
     const {addBet} = useBettingSlip();
 
     const addBetHandler = (odd: Odd) => {
-        return () => addBet({eventId, eventName, odd});
+        return () => addBet({eventType, eventId, eventName, odd});
     };
 
     // TODO: Improve the date format

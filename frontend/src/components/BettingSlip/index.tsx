@@ -63,7 +63,7 @@ export const BettingSlip = () => {
                         ))}
                     </div>
                     <MultipleBetBettingSlipInfo
-                        amount={5}
+                        odd={5.56}
                         possibleWinnings={20}
                         placeBetOnClick={submitReport}
                     />

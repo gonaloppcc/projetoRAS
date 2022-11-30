@@ -15,6 +15,7 @@ export interface BetState {
     id: string;
     eventId: string;
     eventName: string;
+    eventType: string;
     odd: Odd;
     bettingAmount?: number; // Undefined when betType is Multiple
 }
@@ -41,6 +42,7 @@ const initialBets: BetState[] = [
         id: uuidv4(),
         eventId: '1',
         eventName: 'Liverpool - Porto',
+        eventType: 'football',
         odd: {
             name: 'Resultado Final: Liverpool',
             price: 1.5,
