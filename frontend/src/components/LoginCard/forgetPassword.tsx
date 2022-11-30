@@ -3,6 +3,7 @@ import emailjs from '@emailjs/browser';
 import {InputForm} from '@components/createBetter/inputForm';
 
 export const ForgetPassword = (props) => {
+    const sendMail: boolean = false;
     const form = useRef();
 
     const [code, setCode] = useState('');
@@ -17,19 +18,6 @@ export const ForgetPassword = (props) => {
         const {name, value} = e.target;
         setMail(value);
     };
-    /*
-    const maybeCode = (mail: string, code: int) => {
-        <form ref={form} onSubmit={sendEmail}>
-            <label>Name</label>
-            <input type="text" value={mail} name="to_name" />
-            <label>Email</label>
-            <input type="email" value={code} name="message" />
-            <label>Message</label>
-            <textarea name="message" />
-            <input type="submit" value="Send" />
-        </form>;
-    };
-    */
 
     var templateParams = {
         to_name: 'USER_MAIL',
@@ -39,54 +27,34 @@ export const ForgetPassword = (props) => {
     const [error, setError] = useState({});
     const sendEmail = () => {
         console.log('Send email');
+        if (sendMail) {
+            emailjs
+                .send(
+                    'gmail',
+                    'template_h8to77o',
+                    templateParams,
 
-        emailjs
-            .send(
-                'gmail',
-                'template_h8to77o',
-                templateParams,
-
-                'xSUyz4Yg5V6qWfUlw'
-            )
-            .then(
-                function (response) {
-                    console.log('SUCCESS!', response.status, response.text);
-                },
-                function (error) {
-                    console.log('FAILED...', error);
-                }
-            );
-
-        /*
-        emailjs
-            .sendForm(
-                'gmail',
-                'template_h8to77o',
-                stupidForm,
-                'xSUyz4Yg5V6qWfUlw'
-            )
-            .then(
-                (result) => {
-                    console.log(result.text);
-                },
-                (error) => {
-                    console.log(error.text);
-                }
-            );
-            */
+                    'xSUyz4Yg5V6qWfUlw'
+                )
+                .then(
+                    function (response) {
+                        console.log('SUCCESS!', response.status, response.text);
+                    },
+                    function (error) {
+                        console.log('FAILED...', error);
+                    }
+                );
+        }
     };
     const RedButton = (props) => {
         return (
             <div
                 onClick={props.onClick}
-                className=" items-start text-white	align-baseline	 h-12 p-2 w-24  bg-red-600 text-center	rounded"
+                className="  text-white	h-12 p-2 w-24  bg-red-600 text-center	rounded"
             >
                 <button type="submit">{props.text}</button>
             </div>
         );
-    };
-    const prepareSendEmail = () => {
-        sendEmail();
     };
 
     const codeInserted = () => {
@@ -124,8 +92,8 @@ export const ForgetPassword = (props) => {
                         error={error.mail}
                     />
                 </div>
-                <div className="pt-4">
-                    <RedButton text={'Send Mail'} onClick={prepareSendEmail} />
+                <div className="pt-4 flex flex-row gap-4 center">
+                    <RedButton text={'Send Mail'} onClick={sendEmail} />
                     <RedButton
                         text={'Check code'}
                         onClick={codeInserted}
