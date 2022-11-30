@@ -2,6 +2,8 @@ using System.Text.Json;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json.Linq;
 using RasbetServer.Models.Users;
+using RasbetServer.Repositories;
+using RasbetServer.Repositories.Contexts;
 
 namespace RasbetServer.Controllers;
 
@@ -9,6 +11,13 @@ namespace RasbetServer.Controllers;
 [Route("users")]
 public class UserController : ControllerBase
 {
+    private readonly IBetterRepository _betterRepository;
+
+    public UserController(IBetterRepository betterRepository)
+    {
+        _betterRepository = betterRepository;
+    }
+    
     /// TODO: Implement user logging in once database is created
     /// <summary>
     ///     Logs in a user
@@ -24,7 +33,8 @@ public class UserController : ControllerBase
         if (email is null || password is null)
             return BadRequest();
 
-        return Ok("Success");
+        var user = _betterRepository.LoginBetter(email, password);
+        return Ok("Better");
     }
 
 
@@ -41,12 +51,14 @@ public class UserController : ControllerBase
     [HttpPost(Name = "Register")]
     public IActionResult Register([FromBody] JsonElement json, [FromQuery] bool isBetter)
     {
-        User newUser;
-        if (isBetter)
+        Better newUser;
+        //if (isBetter)
             newUser = Better.FromJson(JObject.Parse(json.ToString()));
-        else
-            newUser = Specialist.FromJson(JObject.Parse(json.ToString()));
+        //else
+        //    newUser = Specialist.FromJson(JObject.Parse(json.ToString()));
 
+        _betterRepository.AddBetter(newUser);
+        
         return Ok("User successfully created");
     }
     

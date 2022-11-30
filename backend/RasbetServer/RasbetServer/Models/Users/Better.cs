@@ -4,8 +4,10 @@ namespace RasbetServer.Models.Users;
 
 public class Better : User
 {
+    public Better() :base() {}
+    
     public Better(
-        int? id,
+        ulong? id,
         string email,
         string username,
         string password,
@@ -23,15 +25,15 @@ public class Better : User
         TransactionHist = transactionHist.ToList();
     }
 
-    public string Nif { get; }
-    public string Cc { get; }
-    public string Cellphone { get; }
-    public float Balance { get; }
-    public List<Transaction> TransactionHist { get; }
+    public string Nif { get; set; }
+    public string Cc { get; set; }
+    public string Cellphone { get; set; }
+    public float Balance { get; set; }
+    public List<Transaction> TransactionHist { get; set; }
 
     public static Better FromJson(JObject json)
     {
-        int? id = null;
+        ulong? id = null;
         var email = json[nameof(Email)].Value<string>();
         var username = json[nameof(Username)].Value<string>();
         var password = json[nameof(Password)].Value<string>();

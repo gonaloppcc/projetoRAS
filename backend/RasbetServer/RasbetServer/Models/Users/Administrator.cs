@@ -3,7 +3,7 @@ namespace RasbetServer.Models.Users;
 public class Administrator : User
 {
     public Administrator(
-        int? id,
+        ulong? id,
         string email,
         string username,
         string password

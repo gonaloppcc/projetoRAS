@@ -6,21 +6,21 @@ namespace RasbetServer.Models.Users;
 public class Specialist : User
 {
     public Specialist(
-        int? id,
+        ulong? id,
         string email,
         string username,
         string password,
         IEnumerable<string> specialties
     ) : base(id, email, username, password)
     {
-        Specialtes = specialties.ToList();
+        Specialties = specialties.ToList();
     }
 
-    public List<string> Specialtes { get; }
+    public List<string> Specialties { get; }
 
     public static Specialist FromJson(JObject json)
     {
-        int? id = null;
+        ulong? id = null;
         var email = json[nameof(Email)].Value<string>();
         var username = json[nameof(Username)].Value<string>();
         var password = json[nameof(Password)].Value<string>();

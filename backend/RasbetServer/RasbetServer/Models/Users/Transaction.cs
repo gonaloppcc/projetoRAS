@@ -4,17 +4,26 @@ namespace RasbetServer.Models.Users;
 
 public class Transaction
 {
-    public Transaction(float value)
+    public Transaction() {}
+    
+    public Transaction(ulong? id, float value, ulong betterId, Better? better)
     {
+        Id = id;
         Value = value;
+        BetterId = betterId;
+        Better = better;
     }
 
-    public float Value { get; }
+    public ulong? Id { get; set; }
+    public float Value { get; set; }
+    public ulong BetterId { get; set; }
+    public Better? Better { get; set; }
 
     public static Transaction FromJson(JObject json)
     {
         var value = json[nameof(Value)].Value<float>();
+        var betterId = json[nameof(BetterId)].Value<ulong>();
 
-        return new Transaction(value);
+        return new Transaction(null, value, betterId, null);
     }
 }
