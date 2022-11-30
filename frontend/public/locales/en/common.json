@@ -18,5 +18,9 @@
   "loginCard.phone":"Mobile Number",
   "loginCard.cc":"ID Card Number",
   "loginCard.login":"Create a new account? Register now!",
-  "loginCard.button.login":"Login"
+  "loginCard.button.login":"Login",
+  "navbar.sports":"Sports",
+  "navbar.promotion":"Promotions",
+  "navbar.bets":"My Bets"
+
 }

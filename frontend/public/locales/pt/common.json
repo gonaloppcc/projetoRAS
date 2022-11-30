@@ -19,7 +19,9 @@
   "loginCard.phone":"Número de telemóvel",
   "loginCard.cc":"Número de Cartão de Cidadão",
   "loginCard.login":"Não tem conta? Registe-se agora!",
-  "loginCard.button.login":"Aceder"
-
+  "loginCard.button.login":"Aceder",
+  "navbar.sports":"Desporto",
+  "navbar.promotion":"Promoções",
+  "navbar.bets":"Apostas"
 
 }
