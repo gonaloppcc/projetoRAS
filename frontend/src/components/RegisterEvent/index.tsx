@@ -123,19 +123,22 @@ export const RegisterEvent = ({data}: [Sport]) => {
             .filter((elem: Sport) => elem !== undefined)[0];
     };
     const today = new Date().toISOString().split('T')[0];
+
+    const showForm: boolean = true;
+
     return (
         <div className="h-screen w-screen justify-center flex items-center bg-CULTURED">
-            <div className="bg-white w-1/2 flex flex-col items-center px-10 py-10 h-auto  relative gap-3">
+            <div className="bg-white  flex flex-col items-center px-10 py-10 h-auto  relative gap-3">
                 <div className="w-fit h-10  not-italic font-normal text-4xl leading-10 text-black flex-none order-none  flex-grow-0">
                     {/* FIXME */}
                     Adicionar evento
                 </div>
-                <div className="flex items-center justify-center">
-                    <div className="flex flex-row gap-5">
-                        <div className="datepicker relative form-floating mb-3 xl:w-96">
+                <div className="flex items-center justify-center  pt-4">
+                    <div className="flex flex-row  center w-full ">
+                        <div className="datepicker w-1/2 relative form-floating mb-3 xl:w-96">
                             <input
                                 type="date"
-                                className="form-control block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
+                                className="form-control block px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
                                 placeholder="Select a date"
                                 onChange={changeDate}
                                 id={'Calendar'}
@@ -149,7 +152,7 @@ export const RegisterEvent = ({data}: [Sport]) => {
                                 Game Day
                             </label>
                         </div>
-                        <div className="flex justify-center">
+                        <div className="flex justify-center w-1/4">
                             <div className="timepicker relative form-floating mb-3 xl:w-96">
                                 <input
                                     type="time"
@@ -167,7 +170,7 @@ export const RegisterEvent = ({data}: [Sport]) => {
                         </div>
                     </div>
                 </div>
-                <div className="flex flex-col  items-start flex-none order-1 pt-5  gap-12 ">
+                <div className="flex flex-col  items-start flex-none order-1 gap-12 ">
                     <div className="flex-none order-none  ">
                         {/* FIXME Todos */}
                         <form
@@ -175,37 +178,58 @@ export const RegisterEvent = ({data}: [Sport]) => {
                             noValidate
                             className=" gap-5"
                         >
-                            <Scroll
-                                key="Scroll_Sport"
-                                title="Desporto"
-                                changeFunction={changeSport}
-                                content={data.map((sport) => sport.name)}
-                                maybeError={formErrors.sport}
-                            />
-                            <Scroll
-                                key="Scroll_Mod"
-                                title="Modalidade"
-                                changeFunction={changeTeams}
-                                content={getTeams()}
-                                maybeError={formErrors.teams}
-                            />
-                            <Scroll
-                                key="Scroll_League"
-                                title="Liga"
-                                changeFunction={changeLeague}
-                                content={getLeagues()}
-                                maybeError={formErrors.league}
-                            />
-                            {/*
-                            <InputForm
-                                htmlFor="text"
-                                name="Username"
-                                id="username"
-                                value={formValues.username}
-                                handleChange={handleChange}
-                                error={formErrors.username}
-                            />
-    */}
+                            {showForm ? (
+                                <Scroll
+                                    key="Scroll_Sport"
+                                    title="Desporto"
+                                    changeFunction={changeSport}
+                                    content={data.map((sport) => sport.name)}
+                                    maybeError={formErrors.sport}
+                                />
+                            ) : (
+                                <OtherTable
+                                    key="Scroll_Sport2"
+                                    title="Desporto"
+                                    changeFunction={changeLeague}
+                                    content={data.map((sport) => sport.name)}
+                                    maybeError={formErrors.sport}
+                                />
+                            )}
+                            {showForm ? (
+                                <Scroll
+                                    key="Scroll_Mod"
+                                    title="Modalidade"
+                                    changeFunction={changeTeams}
+                                    content={getTeams()}
+                                    maybeError={formErrors.teams}
+                                />
+                            ) : (
+                                <OtherTable
+                                    key="Scroll_Mod"
+                                    title="Modalidade"
+                                    changeFunction={changeTeams}
+                                    content={getTeams()}
+                                    maybeError={formErrors.teams}
+                                />
+                            )}
+
+                            {showForm ? (
+                                <Scroll
+                                    key="Scroll_League"
+                                    title="Liga"
+                                    changeFunction={changeLeague}
+                                    content={getLeagues()}
+                                    maybeError={formErrors.league}
+                                />
+                            ) : (
+                                <OtherTable
+                                    key="Scroll_League"
+                                    title="Liga"
+                                    changeFunction={changeLeague}
+                                    content={getLeagues()}
+                                    maybeError={formErrors.league}
+                                />
+                            )}
                             <div className="flex flex-col items-start self-stretch flex-none order-1 h-12 px-20 justify-center   pt-10">
                                 <div className="text-white h-12 p-2 w-24 gap-5 bg-red-600 rounded text-center	 ">
                                     <button type="submit">
@@ -218,13 +242,6 @@ export const RegisterEvent = ({data}: [Sport]) => {
                     </div>
                 </div>
             </div>
-            <OtherTable
-                key="Scroll_League"
-                title="Liga"
-                changeFunction={changeLeague}
-                content={getLeagues()}
-                maybeError={formErrors.league}
-            />
         </div>
     );
 };

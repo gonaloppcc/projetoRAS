@@ -7,7 +7,14 @@ import {RegisterEvent} from '@components/RegisterEvent';
 const MOCK_SPORTS: [Sport] = [
     {
         name: 'Football',
-        leagues: ['Premier league', 'Primeira liga', 'Espanha', 'França'],
+        leagues: [
+            'Premier league',
+            'Primeira liga',
+            'Espanha',
+            'França',
+            'Espanha2',
+            'Polónia',
+        ],
         participants: ['Benfica', 'Porto', 'Real Madrid'],
         maxParticipants: 2,
         minParticipants: 2,
