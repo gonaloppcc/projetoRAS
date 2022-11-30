@@ -1,7 +1,10 @@
 import create from 'zustand';
 import {v4 as uuidv4} from 'uuid';
 
-export type BetType = 'Simple' | 'Multiple';
+export enum BetType {
+    Simple,
+    Multiple,
+}
 
 export interface Odd {
     name: string;
@@ -28,7 +31,7 @@ interface ReportState {
     removeBet: (id: string) => void;
     setBetType: (betType: BetType) => void;
 
-    changeBettingAmount: (bettingAmount: number) => void;
+    setBettingAmount: (bettingAmount: number) => void;
 
     submitReport: () => void;
 }
@@ -45,7 +48,7 @@ const initialBets: BetState[] = [
     },
 ];
 
-const initialBetType: BetType = 'Simple';
+const initialBetType: BetType = BetType.Simple;
 
 export const useBettingSlip = create<ReportState>((set) => ({
     bettingAmount: 0,
@@ -66,7 +69,7 @@ export const useBettingSlip = create<ReportState>((set) => ({
         }),
     setBetType: (betType: BetType) => set({betType}),
 
-    changeBettingAmount: (bettingAmount: number) => set({bettingAmount}),
+    setBettingAmount: (bettingAmount: number) => set({bettingAmount}),
 
     submitReport: async () =>
         set(() => {

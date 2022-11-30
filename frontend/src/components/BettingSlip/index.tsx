@@ -2,9 +2,20 @@ import React from 'react';
 import {BettingSlipInfo} from '@components/BettingSlipInfo';
 import {useBettingSlip} from '@state/useBettingSlip';
 import {BetCard} from '@components/BetCard';
+import {Tabs} from '@components/Tabs';
+
+const TABS = [
+    {
+        name: 'Simples',
+    },
+    {
+        name: 'Múltipla',
+    },
+];
 
 export const BettingSlip = () => {
-    const {betType, bets, removeBet, submitReport} = useBettingSlip();
+    const {betType, setBetType, bets, removeBet, submitReport} =
+        useBettingSlip();
 
     const getRemoveBetHandler = (id: string) => () => {
         removeBet(id);
@@ -14,14 +25,11 @@ export const BettingSlip = () => {
         <div className="w-full flex flex-col items-start p-0 gap-1 bg-WHITE rounded">
             <div className="w-full flex flex-col items-start p-4 gap-2 bg-WHITE shadow rounded-t">
                 {'BOLETIM' /* FIXME Text hardcoded for now!! */}
-                <div className="w-full flex flex-row justify-start items-center p-0 gap-2 text-left">
-                    <div className="p-2 border-b-2 border-RICH_BLACK">
-                        {'Simples' /* FIXME Text hardcoded for now!! */}
-                    </div>
-                    <div className="p-2 border-RICH_BLACK">
-                        {'Múltipla' /* FIXME Text hardcoded for now!! */}
-                    </div>
-                </div>
+                <Tabs
+                    tabs={TABS}
+                    selectedTabIndex={betType}
+                    setSelectedTabIndex={setBetType}
+                />
             </div>
             <div className="w-full h-full flex flex-col items-start p-4 gap-2 overflow-y-auto">
                 {bets.map((bet) => (
