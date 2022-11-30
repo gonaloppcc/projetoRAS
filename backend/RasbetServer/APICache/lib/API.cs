@@ -21,14 +21,13 @@ public class Api {
         Console.WriteLine(json);
     }
 
-    public void WriteToDatabase(string data) {
-        var cmd = 
+    public async Task WriteToDatabase(string data) {
+        // Insert some data
+        await using var cmd =
             // noinspection SqlResolve
-            _dataSource.CreateCommand("INSERT INTO users(username) VALUES ('AAA')");
+            _dataSource.CreateCommand($"INSERT INTO users(username) VALUES ('{data}')");
 
-        Console.WriteLine("Here");
-
-        cmd.ExecuteNonQuery();
-        Console.WriteLine("Exec cmd!");
+        cmd.Parameters.AddWithValue("Hello World");
+        await cmd.ExecuteNonQueryAsync();
     }
 }
