@@ -1,31 +1,24 @@
 using System.Net.Http.Headers;
-using APICache.lib;
+
+var builder = WebApplication.CreateBuilder(args);
+var app = builder.Build();
 
 using HttpClient client = new();
 client.DefaultRequestHeaders.Accept.Clear();
 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-client.DefaultRequestHeaders.Add("User-Agent", "RASBet Application");
+client.DefaultRequestHeaders.Add("User-Agent", ".NET Foundation Repository Reporter");
 
-const int refreshRate = 5000; //10 * 60;
+const string apiUrl = "http://ucras.di.uminho.pt/v1/games/";
 
-var rand = new Random();
-var api = new Api();
+await FetchGames(client);
 
-async void FetcherJob() {
-    while (true) {
-        //await api.FetchGames(client);
+static async Task FetchGames(HttpClient client) {
+    var json = await client.GetStringAsync(apiUrl);
 
-        var num = rand.Next();
-
-        await api.WriteToDatabase(num.ToString());
-
-        Console.WriteLine("New Games were just fetched!");
-
-        Thread.Sleep(refreshRate);
-    }
-    // ReSharper disable once FunctionNeverReturns
+    Console.WriteLine(json);
 }
 
-Console.WriteLine("Please make sure the vpn is connected!");
 
-new Thread(FetcherJob).Start();
+app.MapGet("/", () => "Hello World!");
+
+app.Run();
