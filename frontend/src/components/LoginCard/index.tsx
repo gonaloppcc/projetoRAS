@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {InputForm} from './../createBetter/inputForm';
+import {InputForm} from '../CreateBetter/inputForm';
 import {REGEX_MAIL, REGEX_NUMBERS, REGEX_USERNAME} from '../../utils/regex';
 import {ForgetPasswordContent} from './forgetPassword';
 export const LoginCard = () => {

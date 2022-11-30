@@ -1,3 +1,5 @@
+import {PrimaryButton} from '@components/Button';
+
 export const ForgetPasswordContent = () => {
     const RedButton = (props) => {
         return (
@@ -26,7 +28,7 @@ export const ForgetPasswordContent = () => {
                         Code
                     </label>
                     <div className="pt-4">
-                        <RedButton text={'Reset'} />{' '}
+                        <RedButton text={'Reset'} />
                     </div>
                 </div>
             </div>
