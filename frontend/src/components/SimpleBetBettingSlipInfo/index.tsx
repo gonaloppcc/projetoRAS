@@ -12,7 +12,7 @@ export const SimpleBetBettingSlipInfo = ({
     placeBetOnClick,
 }: SimpleBettingSlipInfoProps) => {
     return (
-        <div className="w-full flex flex-col items-start p-2 gap-2 bg-WHITE shadow">
+        <div className="w-full flex flex-col items-start p-2 gap-2 bg-WHITE shadow rounded">
             <div className="w-full flex flex-row justify-between items-start p-0">
                 <span>
                     {'Montante Total' /* FIXME Text hardcoded for now!! */}
