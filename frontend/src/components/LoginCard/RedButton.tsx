@@ -1,6 +1,7 @@
 export interface RedButtonProps {
     text: string;
-    onClick: React.MouseEventHandler<HTMLButtonElement>;
+    onClick?: React.MouseEventHandler<HTMLButtonElement>;
+    type?: React.ButtonHTMLAttributes<HTMLButtonElement>;
 }
 
 /**
@@ -8,13 +9,24 @@ export interface RedButtonProps {
  * Mas meti tipos :)
  */
 
-export const RedButton = ({text, onClick}: RedButtonProps) => {
-    return (
-        <div
-            onClick={onClick}
-            className="  text-white	h-12 p-2 w-30  bg-red-600 text-center	 rounded"
-        >
-            <button>{text}</button>
-        </div>
-    );
+export const RedButton = ({text, onClick, type}: RedButtonProps) => {
+    if (type)
+        return (
+            <button
+                className="bg-IMPERIAL_RED hover:bg-CARNELIAN py-2 px-4 disabled:opacity-50 disable:cursor-not-allowed text-WHITE rounded font-semibold"
+                type={type}
+            >
+                {text}
+            </button>
+        );
+    else {
+        return (
+            <button
+                onClick={onClick}
+                className="bg-IMPERIAL_RED hover:bg-CARNELIAN py-2 px-4 disabled:opacity-50 disable:cursor-not-allowed text-WHITE rounded font-semibold"
+            >
+                {text}
+            </button>
+        );
+    }
 };

@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import {InputForm} from '@components/createBetter/inputForm';
 import {REGEX_MAIL} from '../../utils/regex';
+import {RedButton} from './RedButton';
 
 // Receives a function that opens the Modal of "ForgetPassword"
 export interface LoginBodyProps {
@@ -95,10 +96,9 @@ export const LoginBody = ({setOpen}: LoginBodyProps) => {
                             />
 
                             <div className="flex flex-col items-start self-stretch flex-none order-1 px-20 py-3">
-                                <div className=" text-white text-center h-12 p-2 w-24 gap-5 bg-red-600 rounded justify-center ">
-                                    {/*  FIXME Em todos */}
-                                    <button type="submit">Aceder</button>
-                                </div>
+                                {/*  FIXME Em todos */}
+                                {/*<button type="submit">Aceder</button>*/}
+                                <RedButton type={'submit'} text={'Aceder'} />
                             </div>
                             <div className="flex-none order-2  text-center	">
                                 <a
@@ -108,7 +108,10 @@ export const LoginBody = ({setOpen}: LoginBodyProps) => {
                                     {/*  FIXME Em todos */}
                                     Não tem conta? Registe-se agora!
                                 </a>
-                                <div onClick={() => setOpen(true)}>
+                                <div
+                                    onClick={() => setOpen(true)}
+                                    className="cursor-pointer"
+                                >
                                     Esqueci-me da palavra-passe
                                 </div>
                             </div>

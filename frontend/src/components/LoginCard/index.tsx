@@ -11,11 +11,7 @@ export const LoginCard = () => {
                 <Modal
                     open={open}
                     setOpen={setOpen}
-                    content={
-                        <ForgetPassword
-                            code_generated={Math.floor(Math.random() * 100)}
-                        />
-                    }
+                    content={<ForgetPassword />}
                 />
             )}
 

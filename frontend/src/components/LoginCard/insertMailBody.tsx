@@ -1,28 +1,45 @@
-
-
 import React, {useRef, useState} from 'react';
+import {REGEX_MAIL} from 'utils/regex';
+import emailjs from '@emailjs/browser';
+import {RedButton} from './RedButton';
+import {InputForm} from '@components/createBetter/inputForm';
 
-export const InsertMailBody =  => {
-    
-    const [inputMail, setInputMail] = useState<string>('');
+export interface ForgetPasswordProps {
+    code: number;
+    changeCode: (value: number) => void;
+    mail: string;
+    changeMail: (value: string) => void;
+    mailSent: (value: boolean) => void;
+}
+
+export const InsertMailBody = ({
+    code,
+    changeCode,
+    changeMail,
+    mail,
+    mailSent,
+}: ForgetPasswordProps) => {
+    // Constant, to prevent sending too many mails while testing.
+    const sendMail: boolean = false;
+
     const [errorMail, setErrorMail] = useState<string>('');
 
-    const changeMail = (e) => {
+    const changeMailInput = (e) => {
         const {name, value} = e.target;
-        setInputMail(value);
+        changeMail(value);
     };
 
     var templateToMail = {
         to_name: 'USER_MAIL',
-        message: `${code_generated}`,
+        message: `${code}`,
     };
 
     const sendEmailClicked = () => {
         let canSendMail: boolean = true;
-        if (!inputMail) {
+        if (!mail) {
             setErrorMail('Obrigatório');
             canSendMail = false;
-        } else if (!REGEX_MAIL.test(inputMail)) {
+        } else if (!REGEX_MAIL.test(mail)) {
             setErrorMail('Mail incorreto');
             canSendMail = false;
         }
@@ -33,7 +50,7 @@ export const InsertMailBody =  => {
 
     // This has to be constant, are api keys.
     const sendEmail = () => {
-        console.log(`Send email to ${inputMail}`);
+        console.log(`Send email to ${mail}`);
         if (sendMail) {
             emailjs
                 .send(
@@ -52,9 +69,29 @@ export const InsertMailBody =  => {
                     }
                 );
         }
+        mailSent(true);
     };
 
-    return (<div>Página de inserir mail</div>)
+    return (
+        <div className="flex flex-col gap-3 p-5">
+            <div className="text-lg font-semibold pb-2 border-b">
+                Esqueci-me da password
+            </div>
+            <div>Introduza um email para recuperar o acesso à conta.</div>
+            <div className=" relative z-0">
+                <InputForm
+                    htmlForm="mail"
+                    name="Email"
+                    id="emailRecover"
+                    value={mail}
+                    handleChange={changeMailInput}
+                    error={errorMail}
+                />
+            </div>
 
-
-}
+            <div className="flex items-center justify-center gap-10">
+                <RedButton text={'Send Mail'} onClick={sendEmailClicked} />
+            </div>
+        </div>
+    );
+};

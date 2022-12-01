@@ -6,17 +6,14 @@ import {RedButton} from './RedButton';
 import {InsertMailBody} from './insertMailBody';
 import {InsertCodeBody} from './insertCodeBody';
 
-export interface ForgetPasswordProps {
-    code_generated: number;
-    mail: string;
-}
-
-export const ForgetPassword = ({code_generated, mail}: ForgetPasswordProps) => {
+export const ForgetPassword = () => {
     // This var is only for debugging purposes.
     // Used to check if mails is going to be sent or not.
-    const sendMail: boolean = false;
 
     const [mailSent, setMailSent] = useState<boolean>(false);
+
+    const [code, setCode] = useState<number>(Math.floor(Math.random() * 100));
+    const [mail, setMail] = useState<string>('');
     {
         /*
     return (
@@ -57,8 +54,16 @@ export const ForgetPassword = ({code_generated, mail}: ForgetPasswordProps) => {
     }
     return (
         <div>
-            {!mailSent && <InsertMailBody mailSent={setMailSent} />}
-            {mailSent && <InsertCodeBody />}
+            {!mailSent && (
+                <InsertMailBody
+                    mailSent={setMailSent}
+                    code={code}
+                    changeCode={setCode}
+                    mail={mail}
+                    changeMail={setMail}
+                />
+            )}
+            {mailSent && <InsertCodeBody code={code} />}
         </div>
     );
 };
