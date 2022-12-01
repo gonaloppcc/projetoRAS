@@ -44,7 +44,7 @@ export const MultipleBetBettingSlipInfo = ({
                     />
                 </div>
             </div>
-            <div className="w-full flex flex-row justify-between items-start pr-2">
+            <div className="w-full flex flex-row justify-between items-start p-0 font-semibold text-lg">
                 <span>
                     {'Total de Ganhos' /* FIXME Text hardcoded for now!! */}
                 </span>

@@ -12,7 +12,8 @@ export const Tab = ({name, isActive, onClick}: TabProps) => {
         <div
             onClick={onClick}
             className={classNames({
-                'p-2 border-RICH_BLACK cursor-pointer': true,
+                'p-2 border-RICH_BLACK cursor-pointer rounded-t hover:bg-CULTURED':
+                    true,
                 'border-b-2': isActive,
             })}
         >

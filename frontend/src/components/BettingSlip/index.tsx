@@ -69,6 +69,7 @@ export const BettingSlip = () => {
                             );
                         }, 0)}
                         placeBetOnClick={submitReport}
+                        currency={currency}
                     />
                 </>
             )}
