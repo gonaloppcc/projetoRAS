@@ -2,6 +2,7 @@ import React, {useEffect, useState} from 'react';
 import {InputForm} from '@components/createBetter/inputForm';
 import {REGEX_MAIL} from '../../utils/regex';
 import {RedButton} from './RedButton';
+import {PrimaryButton} from '@components/Button';
 
 // Receives a function that opens the Modal of "ForgetPassword"
 export interface LoginBodyProps {
@@ -63,6 +64,8 @@ export const LoginBody = ({setOpen}: LoginBodyProps) => {
         }
     }, [formErrors]);
 
+    const TextLoginBodyBTN = () => <div>Aceder</div>;
+
     return (
         <div className="h-screen w-screen justify-center flex items-center bg-CULTURED ">
             <div className="bg-white w-auto flex flex-col items-center px-10 pt-10 h-auto gap-3 relative pb-10 ">
@@ -95,10 +98,13 @@ export const LoginBody = ({setOpen}: LoginBodyProps) => {
                                 error={formErrors.password}
                             />
 
-                            <div className="flex flex-col items-start self-stretch flex-none order-1 px-20 py-3">
+                            <div className="flex flex-col center px-20 py-3">
                                 {/*  FIXME Em todos */}
                                 {/*<button type="submit">Aceder</button>*/}
-                                <RedButton type={'submit'} text={'Aceder'} />
+                                <PrimaryButton
+                                    type={'submit'}
+                                    children={<TextLoginBodyBTN />}
+                                />
                             </div>
                             <div className="flex-none order-2  text-center	">
                                 <a

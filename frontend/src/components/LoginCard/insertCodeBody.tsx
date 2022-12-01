@@ -1,3 +1,4 @@
+import {PrimaryButton} from '@components/Button';
 import {InputForm} from '@components/createBetter/inputForm';
 import React, {useRef, useState} from 'react';
 import {RedButton} from './RedButton';
@@ -21,6 +22,8 @@ export const InsertCodeBody = ({code}: ForgetPasswordProps) => {
         console.log(parseInt(insertedCode) === code);
     };
 
+    const TextCheckCodeBTN = () => <div>Check code</div>;
+
     return (
         <div className="flex flex-col gap-3 p-5">
             <div className="text-lg font-semibold pb-2 border-b">
@@ -38,7 +41,10 @@ export const InsertCodeBody = ({code}: ForgetPasswordProps) => {
                 />
             </div>
             <div className="flex items-center justify-center gap-10">
-                <RedButton text={'Check code'} onClick={compareCodes} />
+                <PrimaryButton
+                    children={<TextCheckCodeBTN />}
+                    onClick={compareCodes}
+                />
             </div>
         </div>
     );

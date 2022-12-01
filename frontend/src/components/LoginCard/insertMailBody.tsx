@@ -3,6 +3,7 @@ import {REGEX_MAIL} from 'utils/regex';
 import emailjs from '@emailjs/browser';
 import {RedButton} from './RedButton';
 import {InputForm} from '@components/createBetter/inputForm';
+import {PrimaryButton} from '@components/Button';
 
 export interface ForgetPasswordProps {
     code: number;
@@ -72,6 +73,8 @@ export const InsertMailBody = ({
         mailSent(true);
     };
 
+    const TextInsertMailBTN = () => <div>Send Mail</div>;
+
     return (
         <div className="flex flex-col gap-3 p-5">
             <div className="text-lg font-semibold pb-2 border-b">
@@ -90,7 +93,10 @@ export const InsertMailBody = ({
             </div>
 
             <div className="flex items-center justify-center gap-10">
-                <RedButton text={'Send Mail'} onClick={sendEmailClicked} />
+                <PrimaryButton
+                    children={<TextInsertMailBTN />}
+                    onClick={sendEmailClicked}
+                />
             </div>
         </div>
     );
