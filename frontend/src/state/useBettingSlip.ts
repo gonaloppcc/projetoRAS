@@ -44,7 +44,7 @@ const initialBets: BetState[] = [
         eventName: 'Liverpool - Porto',
         eventType: 'football',
         odd: {
-            name: 'Resultado Final: Liverpool',
+            name: 'Liverpool',
             price: 1.5,
         },
     },

@@ -16,8 +16,15 @@ const TABS = [
 ];
 
 export const BettingSlip = () => {
-    const {betType, setBetType, bets, removeBet, submitReport} =
-        useBettingSlip();
+    const {
+        bettingAmount,
+        setBettingAmount,
+        betType,
+        setBetType,
+        bets,
+        removeBet,
+        submitReport,
+    } = useBettingSlip();
 
     const getRemoveBetHandler = (id: string) => () => {
         removeBet(id);
@@ -63,9 +70,12 @@ export const BettingSlip = () => {
                         ))}
                     </div>
                     <MultipleBetBettingSlipInfo
-                        odd={5.56}
-                        possibleWinnings={20}
+                        odd={bets.reduce((acc, bet) => acc * bet.odd.price, 1)}
                         placeBetOnClick={submitReport}
+                        bettingAmount={
+                            bettingAmount as number /* bettingAmount is always defined when the bet is Multiple */
+                        }
+                        setBettingAmount={setBettingAmount}
                     />
                 </>
             )}

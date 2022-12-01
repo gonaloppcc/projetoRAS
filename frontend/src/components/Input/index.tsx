@@ -5,20 +5,30 @@ interface InputProps {
     placeholder?: string;
     value?: string;
     onChange?: (value: string) => void;
+    suffix?: string;
 }
 
-export const Input = ({type, placeholder, value, onChange}: InputProps) => {
+export const Input = ({
+    type,
+    placeholder,
+    value,
+    onChange,
+    suffix,
+}: InputProps) => {
     const onChangeHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
         if (onChange) onChange(event.target.value);
     };
 
     return (
-        <input
-            type={type}
-            className="w-40 bg-LIGHT_GRAY p-2 rounded font-semibold focus:outline-none"
-            placeholder={placeholder}
-            value={value}
-            onChange={onChangeHandler}
-        />
+        <div className="w-40 flex flex-row bg-LIGHT_GRAY p-2 rounded font-semibold">
+            <input
+                className="bg-inherit w-full focus:outline-none"
+                type={type}
+                placeholder={placeholder}
+                value={value}
+                onChange={onChangeHandler}
+            />
+            {suffix}
+        </div>
     );
 };

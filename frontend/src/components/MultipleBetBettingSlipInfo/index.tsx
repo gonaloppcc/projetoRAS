@@ -4,16 +4,22 @@ import {Input} from '@components/Input';
 
 interface MultipleBettingSlipInfoProps {
     odd: number;
-    possibleWinnings: number;
     placeBetOnClick: () => void;
+    bettingAmount: number;
+    setBettingAmount: (amount: number) => void;
 }
 
 export const MultipleBetBettingSlipInfo = ({
     odd,
-    possibleWinnings,
     placeBetOnClick,
+    bettingAmount,
+    setBettingAmount,
 }: MultipleBettingSlipInfoProps) => {
-    const [bettingAmount, setBettingAmount] = React.useState<string>();
+    const bettingAmountAsString = String(bettingAmount);
+
+    const setBettingAmountHandler = (amount: string) => {
+        setBettingAmount(Number(amount));
+    };
 
     return (
         <div className="w-full flex flex-col items-start p-2 gap-2 bg-WHITE shadow rounded">
@@ -29,15 +35,16 @@ export const MultipleBetBettingSlipInfo = ({
                     placeholder={
                         'Montante' /* FIXME Text hardcoded for now!! */
                     }
-                    value={bettingAmount}
-                    onChange={setBettingAmount}
+                    value={bettingAmountAsString}
+                    onChange={setBettingAmountHandler}
+                    suffix={'€' /* FIXME Currency hardcoded for now!! */}
                 />
             </div>
-            <div className="w-full flex flex-row justify-between items-start p-0">
+            <div className="w-full flex flex-row justify-between items-start pr-2">
                 <span>
                     {'Total de Ganhos' /* FIXME Text hardcoded for now!! */}
                 </span>
-                <span>{possibleWinnings}</span>
+                <span>{`${formatNumber(odd * bettingAmount)} €`}</span>
             </div>
             <button
                 className="w-full py-1.5 bg-IMPERIAL_RED rounded-xl shadow-2xl text-WHITE"
