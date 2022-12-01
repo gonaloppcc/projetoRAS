@@ -1,7 +1,6 @@
-import React, {useRef, useState} from 'react';
+import React, {useState} from 'react';
 import {REGEX_MAIL} from 'utils/regex';
 import emailjs from '@emailjs/browser';
-import {RedButton} from './RedButton';
 import {InputForm} from '@components/createBetter/inputForm';
 import {PrimaryButton} from '@components/Button';
 

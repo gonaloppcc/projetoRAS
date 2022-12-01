@@ -1,7 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import {InputForm} from '@components/createBetter/inputForm';
 import {REGEX_MAIL} from '../../utils/regex';
-import {RedButton} from './RedButton';
 import {PrimaryButton} from '@components/Button';
 
 // Receives a function that opens the Modal of "ForgetPassword"

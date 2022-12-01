@@ -1,7 +1,6 @@
 import {PrimaryButton} from '@components/Button';
 import {InputForm} from '@components/createBetter/inputForm';
-import React, {useRef, useState} from 'react';
-import {RedButton} from './RedButton';
+import React, {useState} from 'react';
 
 export interface ForgetPasswordProps {
     code: number;
