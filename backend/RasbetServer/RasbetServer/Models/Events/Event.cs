@@ -2,7 +2,7 @@ using RasbetServer.Models.Events.Participants;
 
 namespace RasbetServer.Models.Events;
 
-public class Event
+public abstract class Event
 {
     public Event(
         ulong? id,
