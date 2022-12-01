@@ -1,10 +1,11 @@
 import {ClassNames} from '@emotion/react';
 import React, {useEffect, useState} from 'react';
 import {InputForm} from '../createBetter/inputForm';
-export const DeleteAccount = () => {
-    const intialValue = {username: ''};
 
-    const [formValue, setFormValue] = useState(intialValue);
+export const DeleteAccount = () => {
+    const initialValue = {username: ''};
+
+    const [formValue, setFormValue] = useState(initialValue);
     const [formErrors, setFormErrors] = useState({});
     const [isSubmitting, setIsSubmitting] = useState(false);
 

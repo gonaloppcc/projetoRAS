@@ -17,31 +17,27 @@ export const OpenGameCard = (props) => {
     };
     const button = (text) => {
         return (
-            <>
-                <button className="bg-yellow-500 font-bold py-3 px-2 grow-0 rounded ">
-                    {text}
-                </button>
-            </>
+            <button className="bg-yellow-500 font-bold py-3 px-2 grow-0 rounded ">
+                {text}
+            </button>
         );
     };
 
     return (
-        <>
-            <div className="bg-white flex flex-col gap-3">
-                <SuspendedGameCard game={props.game} />
-                <div className="pl-5 pb-3  ">
-                    <div className="pr-10 m-auto text-xl content-between grow rounded-lg w-full ">
-                        {/*FIXME*/}
-                        Adicionar Promoção
-                    </div>
-                    <div className="flex flex-row gap-2  items-center">
-                        {/*FIXME*/}
-                        {inputBox('Duração (Horas)')}
-                        {inputBox('Multiplicador')}
-                        {button('Confirmar')}
-                    </div>{' '}
+        <div className="bg-white flex flex-col gap-3">
+            <SuspendedGameCard game={props.game} />
+            <div className="pl-5 pb-3  ">
+                <div className="pr-10 m-auto text-xl content-between grow rounded-lg w-full ">
+                    {/*FIXME*/}
+                    Adicionar Promoção
+                </div>
+                <div className="flex flex-row gap-2 items-center">
+                    {/*FIXME*/}
+                    {inputBox('Duração (Horas)')}
+                    {inputBox('Multiplicador')}
+                    {button('Confirmar')}
                 </div>
             </div>
-        </>
+        </div>
     );
 };
