@@ -19,8 +19,24 @@
   "loginCard.cc":"ID Card Number",
   "loginCard.login":"Create a new account? Register now!",
   "loginCard.button.login":"Login",
-  "navbar.sports":"Sports",
+  "navbar.sports":"Sport",
   "navbar.promotion":"Promotions",
-  "navbar.bets":"My Bets"
+  "navbar.bets":"My Bets",
+  "competitions.top.competitions":"Top competitions",
+  "better/bets.final.result":"Final score: ",
+  "better/bets.Open":"Open",
+  "better/bets.Closed":"Ended",
+  "better/bets.Cancel":"Cancel",
+  "OnGoingBetRecord.Cancel":"Cancel",
+  "OnGoingBetRecord.Date":"Date",
+  "OnGoingBetRecord.Odds":"Total odds",
+  "OnGoingBetRecord.Stake":"Total stake",
+  "OnGoingBetRecord.Possible.Winnings":"Potential winnings",
+  "BetRecord.winnings":"Winnings",
+  "BettingSlip.mybet":"MY BET",
+  "BettingSlip.singles":"Singles",
+  "BettingSlip.multiples":"Multiples",
+  "BettingSlipInfo.Bet.now":"Bet now"
+
 
 }

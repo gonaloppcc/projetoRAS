@@ -22,6 +22,20 @@
   "loginCard.button.login":"Aceder",
   "navbar.sports":"Desporto",
   "navbar.promotion":"Promoções",
-  "navbar.bets":"Apostas"
+  "navbar.bets":"Apostas",
+  "competitions.top.competitions":"Top competições",
+  "better/bets.final.result":"Resultado Final: ",
+  "better/bets.Open":"Abertas",
+  "better/bets.Closed":"Encerradas",
+  "OnGoingBetRecord.Cancel":"Cancelar",
+  "OnGoingBetRecord.Date":"Data",
+  "OnGoingBetRecord.Odds":"Cota",
+  "OnGoingBetRecord.Stake":"Valor Apostado",
+  "OnGoingBetRecord.Possible.Winnings":"Potenciais Ganhos",
+  "BetRecord.winnings":"Ganhos",
+  "BettingSlip.mybet":"BOLETIM",
+  "BettingSlip.singles":"Simples",
+  "BettingSlip.multiples":"Múltiplas",
+  "BettingSlipInfo.Bet.now":"Apostar"
 
 }
