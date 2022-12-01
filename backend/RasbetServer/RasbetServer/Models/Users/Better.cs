@@ -5,7 +5,7 @@ namespace RasbetServer.Models.Users;
 public class Better : User
 {
     public Better(
-        int? id,
+        string? id,
         string email,
         string username,
         string password,
@@ -31,7 +31,7 @@ public class Better : User
 
     public static Better FromJson(JObject json)
     {
-        int? id = null;
+        string? id = null;
         var email = json[nameof(Email)].Value<string>();
         var username = json[nameof(Username)].Value<string>();
         var password = json[nameof(Password)].Value<string>();

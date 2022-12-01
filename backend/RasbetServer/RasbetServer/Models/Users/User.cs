@@ -3,7 +3,7 @@ namespace RasbetServer.Models.Users;
 public abstract class User
 {
     public User(
-        int? id,
+        string? id,
         string email,
         string username,
         string password
@@ -15,7 +15,7 @@ public abstract class User
         Password = password;
     }
 
-    public int? Id { get; protected set; }
+    public string? Id { get; protected set; }
     public string Email { get; protected set; }
     public string Username { get; protected set; }
     public string Password { get; protected set; }
