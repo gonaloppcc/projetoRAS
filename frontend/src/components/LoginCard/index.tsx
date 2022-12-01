@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {LoginBody} from './LoginBody';
+import {LoginBody} from './loginBody';
 import {Modal} from '@components/Modal';
 import {ForgetPassword} from './forgetPassword';
 
@@ -14,7 +14,6 @@ export const LoginCard = () => {
                     content={
                         <ForgetPassword
                             code_generated={Math.floor(Math.random() * 100)}
-                            mail={'MAIL USER'}
                         />
                     }
                 />
