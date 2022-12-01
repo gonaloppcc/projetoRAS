@@ -17,8 +17,10 @@ const TABS = [
 
 export const BettingSlip = () => {
     const {
+        currency,
         bettingAmount,
         setBettingAmount,
+        setBetAmount,
         betType,
         setBetType,
         bets,
@@ -47,13 +49,25 @@ export const BettingSlip = () => {
                             <SimpleBetCard
                                 key={bet.id}
                                 {...bet}
+                                bettingAmount={bet.bettingAmount as number}
                                 removeBetHandler={getRemoveBetHandler(bet.id)}
+                                setBettingAmount={(amount) =>
+                                    setBetAmount(bet.id, amount)
+                                }
+                                currency={currency}
                             />
                         ))}
                     </div>
                     <SimpleBetBettingSlipInfo
-                        amount={5}
-                        possibleWinnings={20}
+                        amount={bets.reduce((acc, bet) => {
+                            return acc + (bet.bettingAmount as number);
+                        }, 0)}
+                        possibleWinnings={bets.reduce((acc, bet) => {
+                            return (
+                                acc +
+                                (bet.bettingAmount as number) * bet.odd.price
+                            );
+                        }, 0)}
                         placeBetOnClick={submitReport}
                     />
                 </>
@@ -76,6 +90,7 @@ export const BettingSlip = () => {
                             bettingAmount as number /* bettingAmount is always defined when the bet is Multiple */
                         }
                         setBettingAmount={setBettingAmount}
+                        currency={currency}
                     />
                 </>
             )}

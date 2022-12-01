@@ -1,4 +1,5 @@
 import React from 'react';
+import {formatNumber} from '../../utils/formatters';
 
 interface SimpleBettingSlipInfoProps {
     amount: number;
@@ -17,13 +18,13 @@ export const SimpleBetBettingSlipInfo = ({
                 <span>
                     {'Montante Total' /* FIXME Text hardcoded for now!! */}
                 </span>
-                <span>{amount}</span>
+                <span>{formatNumber(amount)}</span>
             </div>
-            <div className="w-full flex flex-row justify-between items-start p-0">
+            <div className="w-full flex flex-row justify-between items-start p-0 font-semibold text-lg">
                 <span>
                     {'Total de Ganhos' /* FIXME Text hardcoded for now!! */}
                 </span>
-                <span>{possibleWinnings}</span>
+                <span>{formatNumber(possibleWinnings)}</span>
             </div>
             <button
                 className="w-full py-1.5 bg-IMPERIAL_RED rounded-xl shadow-2xl text-WHITE"

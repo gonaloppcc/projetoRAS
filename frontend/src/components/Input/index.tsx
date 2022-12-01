@@ -20,7 +20,7 @@ export const Input = ({
     };
 
     return (
-        <div className="w-40 flex flex-row bg-LIGHT_GRAY p-2 rounded font-semibold">
+        <div className="w-full flex flex-row bg-LIGHT_GRAY p-2 rounded font-semibold">
             <input
                 className="bg-inherit w-full focus:outline-none"
                 type={type}

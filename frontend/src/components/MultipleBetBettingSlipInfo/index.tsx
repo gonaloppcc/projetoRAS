@@ -7,6 +7,7 @@ interface MultipleBettingSlipInfoProps {
     placeBetOnClick: () => void;
     bettingAmount: number;
     setBettingAmount: (amount: number) => void;
+    currency?: string;
 }
 
 export const MultipleBetBettingSlipInfo = ({
@@ -14,6 +15,7 @@ export const MultipleBetBettingSlipInfo = ({
     placeBetOnClick,
     bettingAmount,
     setBettingAmount,
+    currency = '€',
 }: MultipleBettingSlipInfoProps) => {
     const bettingAmountAsString = String(bettingAmount);
 
@@ -30,21 +32,25 @@ export const MultipleBetBettingSlipInfo = ({
                         {formatNumber(odd)}
                     </span>
                 </div>
-                <Input
-                    type="number"
-                    placeholder={
-                        'Montante' /* FIXME Text hardcoded for now!! */
-                    }
-                    value={bettingAmountAsString}
-                    onChange={setBettingAmountHandler}
-                    suffix={'€' /* FIXME Currency hardcoded for now!! */}
-                />
+                <div>
+                    <Input
+                        type="number"
+                        placeholder={
+                            'Montante' /* FIXME Text hardcoded for now!! */
+                        }
+                        value={bettingAmountAsString}
+                        onChange={setBettingAmountHandler}
+                        suffix={currency}
+                    />
+                </div>
             </div>
             <div className="w-full flex flex-row justify-between items-start pr-2">
                 <span>
                     {'Total de Ganhos' /* FIXME Text hardcoded for now!! */}
                 </span>
-                <span>{`${formatNumber(odd * bettingAmount)} €`}</span>
+                <span>{`${formatNumber(
+                    odd * bettingAmount
+                )} ${currency}`}</span>
             </div>
             <button
                 className="w-full py-1.5 bg-IMPERIAL_RED rounded-xl shadow-2xl text-WHITE"
