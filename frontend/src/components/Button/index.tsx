@@ -1,15 +1,24 @@
-import React from 'react';
+import React, {ButtonHTMLAttributes} from 'react';
 
 interface ButtonProps {
     children: React.ReactNode;
     disabled?: boolean;
+    onClick?: React.MouseEventHandler<HTMLButtonElement>;
+    type?: ButtonHTMLAttributes<HTMLButtonElement>;
 }
 
-export const PrimaryButton = ({children, disabled}: ButtonProps) => {
+export const PrimaryButton = ({
+    children,
+    disabled,
+    onClick,
+    type,
+}: ButtonProps) => {
     return (
         <button
             disabled={disabled}
             className="bg-IMPERIAL_RED hover:bg-CARNELIAN py-2 px-4 disabled:opacity-50 disable:cursor-not-allowed text-WHITE rounded font-semibold"
+            onClick={onClick}
+            type={type}
         >
             {children}
         </button>
