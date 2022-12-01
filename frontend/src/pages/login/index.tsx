@@ -1,7 +1,9 @@
 import type {NextPage} from 'next';
+import Head from 'next/head';
+//import {LoginCard}
 
 const Home: NextPage = () => {
-    return <div>Specialist Main Page</div>;
+    return <LoginCard />;
 };
 
 export default Home;

@@ -1,8 +1,6 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
-    content: [
-        "./src/**/*.{js,ts,jsx,tsx}",
-    ],
+    content: ['./src/**/*.{js,ts,jsx,tsx}'],
     theme: {
         extend: {
             colors: {
@@ -22,9 +20,9 @@ module.exports = {
                 RIGHT_GREEN: '#60C625',
             },
             fontFamily: {
-                'sans': ['Roboto', 'sans-serif'],
+                sans: ['Roboto', 'sans-serif'],
             },
         },
     },
     plugins: [],
-}
+};

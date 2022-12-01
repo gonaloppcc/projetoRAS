@@ -33,14 +33,29 @@ const MOCK_EVENTS: EventCardProps[] = [
     MOCK_EVENT,
 ];
 const Home: NextPage = () => {
-    /* FIXME DUMMY MAIN PAGE!! */
+    const listOdds = [
+        {name: 'Porto', price: 32},
+        {name: 'Empate', price: 32},
+        {name: 'Benfica', price: 22},
+    ];
     return (
         <PageLayout>
             <div className="flex flex-col justify-start gap-3 w-full">
-                {MOCK_EVENTS.map((event) => (
-                    <EventCard key={event.eventName} {...event} />
-                ))}
-                {/*<Competitions competitions={MOCK_COMPETITIONS} />*/}
+                <EventCard
+                    eventName={'Porto - Benfica'}
+                    date={'Hoje 20:15'}
+                    odds={listOdds}
+                />
+                <EventCard
+                    eventName={'Porto - Benfica'}
+                    date={'Hoje 20:15'}
+                    odds={listOdds}
+                />
+                <EventCard
+                    eventName={'Porto - Benfica'}
+                    date={'Hoje 20:15'}
+                    odds={listOdds}
+                />
             </div>
         </PageLayout>
     );
