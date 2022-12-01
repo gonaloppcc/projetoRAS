@@ -13,11 +13,7 @@ namespace RasbetServer.Controllers;
 [Route("events")]
 public class EventController : ControllerBase
 {
-    // TODO: Implement this properly
-    [HttpGet(Name = "GetPage")]
-    public ActionResult<Event> GetPage([FromQuery] int sportId, [FromQuery] int pageNum)
-    {
-        List<Event> e = new()
+    private List<Event> MockEvents = new()
         {
             new FootballEvent(
                 0,
@@ -30,27 +26,58 @@ public class EventController : ControllerBase
                 DateTime.Now,
                 "Primeira Liga Portuguesa",
                 false
+            ),
+            new FootballEvent(
+                1,
+                new TwoParticipants(
+                    new ParticipantOdd(0, 2.3f, new Player("Trofense"), null),
+                    3,
+                    new ParticipantOdd(1, 1.3f, new Player("Santo Tirso"), null)
+                    , 2
+                    ),
+                DateTime.Now,
+                "Primeira Liga Portuguesa",
+                false
+            ),
+            new FootballEvent(
+                2,
+                new TwoParticipants(
+                    new ParticipantOdd(0, 2.3f, new Player("Guimarães"), null),
+                    3,
+                    new ParticipantOdd(1, 1.3f, new Player("Boavista"), null)
+                    , 2
+                    ),
+                DateTime.Now,
+                "Primeira Liga Portuguesa",
+                false
+            ),
+            new FootballEvent(
+                3,
+                new TwoParticipants(
+                    new ParticipantOdd(0, 2.3f, new Player("Sporting"), null),
+                    3,
+                    new ParticipantOdd(1, 1.3f, new Player("Braga"), null)
+                    , 2
+                    ),
+                DateTime.Now,
+                "Primeira Liga Portuguesa",
+                false
             )
         };
-        return Ok(JsonConvert.SerializeObject(e));
+    
+    // TODO: Implement this properly
+    [HttpGet(Name = "GetPage")]
+    public ActionResult<List<Event>> GetPage([FromQuery] int sportId, [FromQuery] int pageNum)
+    {
+        var page = MockEvents.Skip(pageNum * 2).Take(2).ToList();
+        return Ok(JsonConvert.SerializeObject(page));
     }
 
     // TODO: Implement this properly
-    [HttpGet("{id:long}", Name = "GetEvent")]
-    public ActionResult<Event> GetEvent()
+    [HttpGet("{id:int}", Name = "GetEvent")]
+    public ActionResult<Event> GetEvent(int id)
     {
-        var e = new FootballEvent(
-            0,
-            new TwoParticipants(
-                new ParticipantOdd(0, 2.3f, new Player("Porto"), null),
-                3,
-                new ParticipantOdd(1, 1.3f, new Player("Benfica"), null)
-                , 2
-            ),
-            DateTime.Now,
-            "Primeira Liga Portuguesa",
-            false
-        );
+        var e = MockEvents[id];
         return Ok(JsonConvert.SerializeObject(e));
     }
 
