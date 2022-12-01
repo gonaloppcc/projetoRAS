@@ -13,10 +13,10 @@ public class Specialist : User
         IEnumerable<string> specialties
     ) : base(id, email, username, password)
     {
-        Specialtes = specialties.ToList();
+        Specialties = specialties.ToList();
     }
 
-    public List<string> Specialtes { get; }
+    public List<string> Specialties { get; }
 
     public static Specialist FromJson(JObject json)
     {
