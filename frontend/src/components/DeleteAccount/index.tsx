@@ -1,3 +1,4 @@
+import {PrimaryButton} from '@components/Button';
 import {ClassNames} from '@emotion/react';
 import React, {useEffect, useState} from 'react';
 import {InputForm} from '../createBetter/inputForm';
@@ -51,8 +52,8 @@ export const DeleteAccount = () => {
 
     return (
         <div className="h-screen w-screen justify-center flex items-top bg-CULTURED">
-            <div className="bg-white w-3/4  flex flex-col items-center px-10 pt-10  mt-20 h-fit  ">
-                <div className=" not-italic font-normal lack flex-none order-none flex-grow-0">
+            <div className="bg-white w-1/2  flex flex-col items-center px-10 pt-10  mt-20 h-fit  ">
+                <div className=" not-italic font-lg font-semibold lack flex-none order-none flex-grow-0">
                     Selecione o nome do utilizador que pretende remover
                 </div>
                 <div className="flex flex-col items-start flex-none order-1 pt-5  gap-12 ">
@@ -67,13 +68,14 @@ export const DeleteAccount = () => {
                             error={formErrors.username}
                         />
 
-                        <div className="flex flex-col pt-5 items-start self-stretch flex-none order-1 h-12 px-20 justify-center pt-10 pb-20 ">
-                            <div className="flex flex-row items-start order-none h-12 p-2 w-fit bg-red-600  text-white text-xl rounded justify-center ">
-                                <button type="submit" onClick={deleteAccount}>
-                                    {/* FIXME */}
-                                    Remover Conta
-                                </button>
-                            </div>
+                        <div className="flex flex-col py-5 items-start self-stretch ">
+                            <PrimaryButton
+                                type="submit"
+                                onClick={deleteAccount}
+                            >
+                                {/* FIXME */}
+                                Remover Conta
+                            </PrimaryButton>
                         </div>
                     </form>
                 </div>

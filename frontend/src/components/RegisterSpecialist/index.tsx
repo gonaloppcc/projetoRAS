@@ -4,6 +4,7 @@ import React, {useEffect, useState} from 'react';
 import {InputForm} from '../createBetter/inputForm';
 import {ScrollModalities} from './scrollModalities';
 import {REGEX_MAIL, REGEX_USERNAME} from 'utils/regex';
+import {PrimaryButton} from '@components/Button';
 
 export const RegisterSpecialist = (props) => {
     /*
@@ -27,7 +28,7 @@ export const RegisterSpecialist = (props) => {
     Form Part
     */
     const intialValues = {
-        email: '',
+        mail: '',
         username: '',
         password: '',
     };
@@ -92,6 +93,8 @@ export const RegisterSpecialist = (props) => {
         }
     }, [formErrors]);
 
+    const RegSpecTextBTN = () => <div>Registar</div>;
+
     return (
         <div className="h-screen w-screen justify-center flex items-center bg-CULTURED">
             <div className="bg-white w-1/2 flex flex-col items-center px-10 pt-10 pb-20 h-auto  relative ">
@@ -141,12 +144,12 @@ export const RegisterSpecialist = (props) => {
                             />
 
                             <div className="flex flex-col items-start self-stretch flex-none order-1 h-12 px-20 justify-center   pt-10">
-                                <div className="text-white h-12 p-2 w-24 gap-5 bg-red-600 rounded text-center	 ">
-                                    <button type="submit">
-                                        {/* FIXME Todos */}
-                                        Registar
-                                    </button>
-                                </div>
+                                <PrimaryButton
+                                    type="submit"
+                                    children={<RegSpecTextBTN />}
+                                >
+                                    {/* FIXME Todos */}
+                                </PrimaryButton>
                             </div>
                         </form>
                     </div>
