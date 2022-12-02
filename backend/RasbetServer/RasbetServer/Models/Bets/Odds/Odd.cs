@@ -1,3 +1,5 @@
+using RasbetServer.Models.Events;
+
 namespace RasbetServer.Models.Bets.Odds;
 
 public abstract class Odd
@@ -13,6 +15,6 @@ public abstract class Odd
         Promo = promo;
     }
 
-    public abstract bool HasWon();
+    public abstract bool HasWon(Event @event);
     public abstract string GetName();
 }
