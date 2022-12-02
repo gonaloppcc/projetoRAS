@@ -16,7 +16,7 @@ public class TieOdd : Odd
 
         foreach (var result in results)
         {
-            if (result.Score > highestScore)
+            if (result.Score >= highestScore)
             {
                 sndHighestScore = highestScore;
                 highestScore = result.Score;

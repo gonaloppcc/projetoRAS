@@ -26,7 +26,7 @@ public class ParticipantOdd : Odd
 
         foreach (var result in results.Skip(1))
         {
-            if (result.Score > highestScore.Score)
+            if (result.Score >= highestScore.Score)
             {
                 sndHighestScore = highestScore;
                 highestScore = result;
