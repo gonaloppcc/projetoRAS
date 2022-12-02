@@ -1,6 +1,7 @@
 import {Sport} from 'pages/registerEvent';
 import React, {useEffect, useState} from 'react';
 import {SearchBox} from './searchBox';
+import {OtherTable} from './otherTable';
 
 export interface RegisterEventProps {
     data: React.ReactNode;
@@ -14,28 +15,58 @@ export const RegisterEvent = ({data}: [Sport]) => {
     const [sport, setSport] = useState<string>('');
     const [sportSelected, setSportSelected] = useState<boolean>(false);
 
-    const [possibleLeagues, setPossibleLeagues] = useState<[string]>([]);
+    const [possibleLeagues, setPossibleLeagues] = useState<[string]>(
+        data[0].leagues
+    );
     const [league, setLeague] = useState<string>('');
-    const [leagueSelected, setLeagueSelected] = useState<boolean>(false);
+    const [leagueSelected, setLeagueSelected2] = useState<boolean>(false);
+
+    const [possibleTeams, setPossibleTeams] = useState<[string]>([]);
+    const [selectedTeams, setSelectedTeams] = useState<[string]>([]);
+
+    const setLeagueSelected = (value: boolean) => {
+        console.log('Change select league');
+        console.log(value);
+        setLeagueSelected2(value);
+    };
 
     const getLeagues = () => {
         let thing = sportSelected
             ? data.filter((sportInfo: Sport) => sportInfo.name == sport)[0]
             : data[0];
-        console.log(thing);
         console.log(thing.leagues);
+        console.log(data[0].leagues);
         setPossibleLeagues(thing.leagues);
         return thing.leagues;
         //return thing[0].leagues;
         return ['Olá', 'Adeus'];
     };
 
+    const getTeams = () => {
+        let thing = sportSelected
+            ? data.filter((sportInfo: Sport) => sportInfo.name == sport)[0]
+            : data[0];
+        setPossibleTeams(thing.participants);
+        return thing.participants;
+        //return thing[0].leagues;
+        return ['Olá', 'Adeus'];
+    };
     // Necessary to update the leagues associated to the sport
     useEffect(() => {
         if (sportSelected) {
+            console.log('Atualiza equipas e ligas');
             getLeagues();
+            getTeams();
+            setSportSelected(true);
+        } else {
+            setPossibleLeagues([]);
+            setPossibleTeams([]);
         }
-    }, [sportSelected]);
+    }, [sport]);
+
+    const selectTeam = (e) => {
+        console.log(e);
+    };
 
     return (
         <div className="h-screen w-screen justify-center flex items-center bg-CULTURED">
@@ -54,17 +85,24 @@ export const RegisterEvent = ({data}: [Sport]) => {
                         selected={sportSelected}
                         changeSelected={setSportSelected}
                     />
-                    {sportSelected && (
-                        <SearchBox
-                            content={possibleLeagues}
-                            title={'Ligas'}
-                            currentSearch={league}
-                            changeCurrentSearch={setLeague}
-                            selected={leagueSelected}
-                            changeSelected={setLeagueSelected}
-                        />
-                    )}
-                    {!sportSelected && <div>Espera </div>}
+                    <SearchBox
+                        content={possibleLeagues}
+                        title={'Ligas'}
+                        currentSearch={league}
+                        changeCurrentSearch={setLeague}
+                        selected={leagueSelected}
+                        changeSelected={setLeagueSelected}
+                    />
+                </div>
+                <div>
+                    <OtherTable
+                        title="Teams"
+                        changeFunction={selectTeam}
+                        //content={data.map((sport) => sport.name)}
+                        content={possibleTeams}
+                        //maybeError={formErrors.sport}
+                        maybeError={''}
+                    />
                 </div>
             </div>
         </div>
