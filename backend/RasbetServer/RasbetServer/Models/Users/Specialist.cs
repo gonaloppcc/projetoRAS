@@ -5,7 +5,7 @@ using Newtonsoft.Json.Linq;
 namespace RasbetServer.Models.Users;
 
 public class Specialist : User {
-    [Required] public List<string> Specialties { get; }
+    [Required] public List<string> Specialties { get; set; }
 
     public Specialist(
         string? id,

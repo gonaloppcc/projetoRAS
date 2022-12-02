@@ -4,7 +4,8 @@ using Newtonsoft.Json.Linq;
 namespace RasbetServer.Models.Users;
 
 public class Transaction {
-    [Required] public float Value { get; }
+    [Key] public ulong? _id { get; set; }
+    [Required] public float Value { get; set; }
 
     public Transaction(float value) {
         Value = value;

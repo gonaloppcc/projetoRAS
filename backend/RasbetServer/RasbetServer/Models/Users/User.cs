@@ -1,17 +1,24 @@
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Runtime.CompilerServices;
+using Microsoft.EntityFrameworkCore;
 
 namespace RasbetServer.Models.Users;
 
 public abstract class User {
-    [Key] public string? Id { get; protected set; }
+    [Key]
+    [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+    public string? Id { get; set; }
 
     // TODO: Index this
-    [Required] public string Email { get; protected set; }
+    [Required] public string Email { get; set; }
 
     // TODO: Index this
-    [Required] public string Username { get; protected set; }
-    [Required] public string Password { get; protected set; }
+    [Required] public string Username { get; set; }
+    [Required] public string Password { get; set; }
+
+    public User() {
+    }
 
     public User(
         string? id,
