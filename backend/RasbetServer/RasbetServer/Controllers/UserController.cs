@@ -30,22 +30,34 @@ public class UserController : ControllerBase
 
     /// TODO: Implement user creation once we have a working database
     /// <summary>
-    ///     Registers a user in the system
+    ///     Registers a better in the system
     /// </summary>
-    /// <param name="json">Json with the info to register the new user</param>
-    /// <param name="isBetter">Tag telling whether this user is a Better or a Specialist</param>
+    /// <param name="json">Json with the info to register the new better</param>
     /// <returns>
-    ///     Ok in case the user was successfully registered
+    ///     Ok in case the better was successfully registered
     ///     or BadRequest if the json is missing any attributes
     /// </returns>
-    [HttpPost(Name = "Register")]
+    [HttpPost("better", Name = "RegisterBetter")]
     public IActionResult RegisterBetter([FromBody] JsonElement json)
     {
         var better = Better.FromJson(JObject.Parse(json.ToString()));
-        return Ok("User successfully created");
+        return Ok("Better successfully created");
     }
-    
-    
+
+    /// <summary>
+    ///     Registers a new specialist in the system
+    /// </summary>
+    /// <param name="json">Json with the info to register the new specialist</param>
+    /// <returns>
+    ///     Ok in the case the specialist was successfully registered
+    ///     or BadRequest if the json is missing any attributes
+    /// </returns>
+    [HttpPost("specialist", Name = "RegisterSpecialist")]
+    public IActionResult RegisterSpecialist([FromBody] JsonElement json)
+    {
+        var specialist = Specialist.FromJson(JObject.Parse(json.ToString()));
+        return Ok("Specialist successfully created");
+    }
 
     /// TODO: Implement this function properly once we have a working database 
     /// <summary>

@@ -26,7 +26,7 @@ public class Specialist : User
         var password = json[nameof(Password)].Value<string>();
         List<string> specialties = new();
 
-        foreach (var specialty in json[nameof(specialties)].Value<JArray>())
+        foreach (var specialty in json[nameof(Specialties)].Value<JArray>())
         {
             if (specialty is null)
                 throw new JsonException();
