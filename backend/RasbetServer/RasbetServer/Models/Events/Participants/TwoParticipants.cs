@@ -18,5 +18,11 @@ public class TwoParticipants : IParticipants
         => new() { Home, Away };
 
     public Result? GetWinner()
-        => Home.Score != Away.Score ? Home : null;
+    {
+        if (Home.Score == Away.Score)
+            return null;
+
+        return Home.Score > Away.Score ?
+            Home : Away;
+    }
 }
