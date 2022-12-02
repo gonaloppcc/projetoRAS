@@ -8,10 +8,10 @@ public class TwoParticipants : IParticipants
     public Result Away { get; set; }
     public TieOdd? Tie { get; set; }
 
-    public TwoParticipants(ParticipantOdd home, int score1, ParticipantOdd away, int score2)
+    public TwoParticipants(ParticipantOdd home, int homeScore, ParticipantOdd away, int awayScore)
     {
-        Home = new Result(home, score1);
-        Away = new Result(away, score2);
+        Home = new Result(home, homeScore);
+        Away = new Result(away, awayScore);
     }
 
     public List<Result> GetParticipants() 
