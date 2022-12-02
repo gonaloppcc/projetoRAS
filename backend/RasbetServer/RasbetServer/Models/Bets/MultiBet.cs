@@ -1,23 +1,21 @@
 using RasbetServer.Models.Bets.Odds;
+using RasbetServer.Models.Events;
 
 namespace RasbetServer.Models.Bets;
 
 public class MultiBet : Bet
 {
-    public List<KeyValuePair<Odd, float>> TargetOdds { get; }
- 
+    public List<Event> Events { get; }
+    
     public MultiBet(
         ulong? id,
         DateTime date,
         bool closed,
-        List<KeyValuePair<Odd, float>> odds)
-        : base(id, date, closed)
+        Odd odd,
+        float amount,
+        IEnumerable<Event> events
+    ) : base(id, date, closed, odd, amount)
     {
-        TargetOdds = odds;
-    }
-
-    public override float CalcCashOut()
-    {
-        throw new NotImplementedException();
+        Events = events.ToList();
     }
 }

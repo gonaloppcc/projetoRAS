@@ -1,24 +1,21 @@
 using RasbetServer.Models.Bets.Odds;
+using RasbetServer.Models.Events;
 
 namespace RasbetServer.Models.Bets;
 
 public class SimpleBet : Bet
 {
-    public Odd Target { get; private set; }
-    public float Amount { get; }
- 
+    public Event Event { get; }
+    
     public SimpleBet(
         ulong? id,
         DateTime date,
         bool closed,
-        float amount
-    ) : base(id, date, closed)
+        Odd odd,
+        float amount,
+        Event @event
+    ) : base(id, date, closed , odd, amount)
     {
-        Amount = amount;
-    }
-
-    public override float CalcCashOut()
-    {
-        throw new NotImplementedException();
+        Event = @event;
     }
 }
