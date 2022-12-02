@@ -4,6 +4,6 @@ namespace RasbetServer.Models.Events.Participants;
 
 public interface IParticipants
 {
-    List<KeyValuePair<ParticipantOdd, int>> GetParticipants();
-    KeyValuePair<ParticipantOdd, int>? GetWinner();
+    List<Result> GetParticipants();
+    Result? GetWinner();
 }
