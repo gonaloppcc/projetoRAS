@@ -10,4 +10,7 @@ public class TieOdd : Odd
     {
         throw new NotImplementedException();
     }
+
+    public override string GetName()
+        => "Tie";
 }

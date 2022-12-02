@@ -14,4 +14,5 @@ public abstract class Odd
     }
 
     public abstract bool HasWon();
+    public abstract string GetName();
 }

@@ -20,4 +20,6 @@ public class ParticipantOdd : Odd
     {
         throw new NotImplementedException();
     }
+
+    public override string GetName() => Part.Name;
 }
