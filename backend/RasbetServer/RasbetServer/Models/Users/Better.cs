@@ -1,9 +1,15 @@
+using System.ComponentModel.DataAnnotations;
 using Newtonsoft.Json.Linq;
 
 namespace RasbetServer.Models.Users;
 
-public class Better : User
-{
+public class Better : User {
+    [Required] [StringLength(9)] public string Nif { get; }
+    [Required] [StringLength(9)] public string Cc { get; }
+    [Required] [StringLength(9)] public string Cellphone { get; }
+    [Required] public float Balance { get; }
+    [Required] public List<Transaction> TransactionHist { get; }
+
     public Better(
         string? id,
         string email,
@@ -14,8 +20,7 @@ public class Better : User
         string cellphone,
         float balance,
         IEnumerable<Transaction> transactionHist
-    ) : base(id, email, username, password)
-    {
+    ) : base(id, email, username, password) {
         Nif = nif;
         Cc = cc;
         Cellphone = cellphone;
@@ -23,14 +28,7 @@ public class Better : User
         TransactionHist = transactionHist.ToList();
     }
 
-    public string Nif { get; }
-    public string Cc { get; }
-    public string Cellphone { get; }
-    public float Balance { get; }
-    public List<Transaction> TransactionHist { get; }
-
-    public static Better FromJson(JObject json)
-    {
+    public static Better FromJson(JObject json) {
         string? id = null;
         var email = json[nameof(Email)].Value<string>();
         var username = json[nameof(Username)].Value<string>();
