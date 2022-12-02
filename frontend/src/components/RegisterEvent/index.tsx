@@ -3,6 +3,7 @@ import React, {useEffect, useState} from 'react';
 import {SearchBox} from './searchBox';
 import {OtherTable} from './otherTable';
 import {PrimaryButton} from '@components/Button';
+import {ErrorSharp} from '@mui/icons-material';
 
 export interface RegisterEventProps {
     data: React.ReactNode;
@@ -31,8 +32,6 @@ export const RegisterEvent = ({data}: [Sport]) => {
             : data[0];
         setPossibleLeagues(thing.leagues);
         return thing.leagues;
-        //return thing[0].leagues;
-        return ['Olá', 'Adeus'];
     };
 
     const getTeams = () => {
@@ -41,21 +40,16 @@ export const RegisterEvent = ({data}: [Sport]) => {
             : data[0];
         setPossibleTeams(thing.participants);
         return thing.participants;
-        //return thing[0].leagues;
-        return ['Olá', 'Adeus'];
     };
     // Necessary to update the leagues associated to the sport
     useEffect(() => {
         if (sportSelected) {
             getLeagues();
+            setSelectedTeams([]);
             getTeams();
             setSportSelected(true);
         }
     }, [sport]);
-
-    const selectTeam = (e) => {
-        console.log(e);
-    };
 
     const today = new Date().toISOString().split('T')[0];
     const [date, setDate] = useState<string>('');
@@ -67,25 +61,81 @@ export const RegisterEvent = ({data}: [Sport]) => {
         setHour(e.target.value);
     };
 
-    interface IError {
-        name: string;
-    }
-    const [formErrors, setFormErrors] = useState<IError>({});
+    const [formErrors, setFormErrors] = useState({});
+    const [isSubmitting, setIsSubmitting] = useState(false);
+
+    //form submission handler
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        setFormErrors(validate());
+        setIsSubmitting(true);
+    };
+
+    useEffect(() => {
+        if (Object.keys(formErrors).length === 0 && isSubmitting) {
+            submit();
+        }
+    }, [formErrors]);
 
     // FIXME
     const submitButtonContent = <div>Submeter</div>;
 
-    const submitClicked = () => {
+    const submit = () => {
         console.log('Submit');
+        console.log(date);
+        console.log(hour);
+        console.log(sport);
+        console.log(league);
+        console.log(selectedTeams);
     };
 
     const validate = () => {
         let errors = {};
-    };
+        // FIXME em todos
+        if (!sportSelected) {
+            errors.sport = 'Obrigatório';
+        }
+        if (!leagueSelected) {
+            errors.league = 'Obrigatório';
+        }
+        const sportInfo = data.filter(
+            (sportInList) => sportInList.name === sport
+        )[0];
 
+        if (leagueSelected && !sportInfo.leagues.includes(league)) {
+            errors.league = 'Liga não disponível na modalidade';
+        }
+
+        if (sportSelected) {
+            const numSelectedTeams = selectedTeams.length;
+            if (numSelectedTeams > sportInfo.maxParticipants) {
+                errors.teams = 'Número de equipas ultrapassa máximo.';
+            }
+            if (numSelectedTeams < sportInfo.minParticipants) {
+                errors.teams = 'Número de equipas insuficiente.';
+            }
+        }
+        if (!date) {
+            errors.date = 'Obrigatório';
+        }
+        if (!hour) {
+            errors.hour = 'Obrigatório';
+        }
+
+        return errors;
+    };
+    const changeTeams = (team, value) => {
+        value
+            ? setSelectedTeams((current) => [...current, team])
+            : setSelectedTeams((current) =>
+                  current.filter((element) => {
+                      return element !== team;
+                  })
+              );
+    };
     return (
         <div className="h-screen w-screen justify-center flex items-center bg-CULTURED">
-            <div className="bg-white  flex flex-col items-center px-10 py-10 h-auto  relative gap-3">
+            <div className="bg-white  flex flex-col items-center px-10 py-10 h-auto  relative gap-2">
                 <div className="w-fit h-10  text-4xl ">
                     {/* FIXME */}
                     Adicionar evento
@@ -99,7 +149,7 @@ export const RegisterEvent = ({data}: [Sport]) => {
                         changeCurrentSearch={setSport}
                         selected={sportSelected}
                         changeSelected={setSportSelected}
-                        maybeError={'Erro'}
+                        maybeError={formErrors.sport}
                     />
                     <SearchBox
                         content={possibleLeagues}
@@ -108,7 +158,7 @@ export const RegisterEvent = ({data}: [Sport]) => {
                         changeCurrentSearch={setLeague}
                         selected={leagueSelected}
                         changeSelected={setLeagueSelected}
-                        maybeError={'Erro'}
+                        maybeError={formErrors.league}
                     />
                 </div>
                 <div className="w-full">
@@ -116,11 +166,11 @@ export const RegisterEvent = ({data}: [Sport]) => {
                         <div className="w-2/3">
                             <OtherTable
                                 title="Teams"
-                                changeFunction={selectTeam}
+                                changeFunction={changeTeams}
                                 //content={data.map((sport) => sport.name)}
                                 content={possibleTeams}
                                 //maybeError={formErrors.sport}
-                                maybeError={'Erro'}
+                                maybeError={formErrors.teams}
                             />
                         </div>
                         <div className="w-1/3 flex flex-col px-3">
@@ -133,13 +183,20 @@ export const RegisterEvent = ({data}: [Sport]) => {
                                     id={'Calendar'}
                                     min={today}
                                 />
-                                <label
-                                    htmlFor="floatingInput"
-                                    className="text-gray-700"
-                                >
-                                    {/* FIXME */}
-                                    Game Day
-                                </label>
+                                <div className="flex flex-row justify-between">
+                                    <label
+                                        htmlFor="floatingInput"
+                                        className="text-gray-700"
+                                    >
+                                        {/* FIXME */}
+                                        Game Day
+                                    </label>
+                                    {formErrors.date && (
+                                        <div className="text-red-500 font-semibold">
+                                            Erro
+                                        </div>
+                                    )}
+                                </div>
                             </div>
                             <div className="w-full">
                                 <div className="timepicker relative form-floating mb-3 ">
@@ -149,12 +206,19 @@ export const RegisterEvent = ({data}: [Sport]) => {
                                         placeholder="Select a date"
                                         onChange={changeHour}
                                     />
-                                    <label
-                                        htmlFor="floatingInput"
-                                        className="text-gray-700"
-                                    >
-                                        Match Hour
-                                    </label>
+                                    <div className="flex flex-row justify-between">
+                                        <label
+                                            htmlFor="floatingInput"
+                                            className="text-gray-700"
+                                        >
+                                            Match Hour
+                                        </label>
+                                        {formErrors.hour && (
+                                            <div className="text-red-500 font-semibold">
+                                                Erro
+                                            </div>
+                                        )}
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -163,7 +227,7 @@ export const RegisterEvent = ({data}: [Sport]) => {
                 <div>
                     <PrimaryButton
                         children={submitButtonContent}
-                        onClick={submitClicked}
+                        onClick={handleSubmit}
                     />
                 </div>
             </div>
