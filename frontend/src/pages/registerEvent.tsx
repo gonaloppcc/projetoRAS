@@ -15,7 +15,7 @@ const MOCK_SPORTS: [Sport] = [
             'Espanha2',
             'Polónia',
         ],
-        participants: ['Benfica', 'Porto', 'Real Madrid'],
+        participants: ['Benfica', 'Porto', 'Real Madrid', 'Varzim', 'Rio Ave'],
         maxParticipants: 2,
         minParticipants: 2,
     },

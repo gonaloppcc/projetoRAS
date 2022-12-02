@@ -9,7 +9,7 @@ export const Scroll = (props) => {
                 {props.title}
             </div>
 
-            <div className="border-solid pt-3  h-24 overflow-auto scrollbar-hide">
+            <div className="border-solid pt-3  h-28 overflow-auto scrollbar-hide">
                 {props.content.map((word) => (
                     <div
                         key={`${word}-3`}

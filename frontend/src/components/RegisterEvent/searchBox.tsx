@@ -1,3 +1,4 @@
+import {PrimaryButton} from '@components/Button';
 import React, {useEffect, useState} from 'react';
 
 // Depois meter isto genérico, recebe uma lista de coisas, e vai filtrando
@@ -9,6 +10,7 @@ export interface SearchBoxProps {
     changeCurrentSearch: (value: string) => void;
     selected: boolean;
     changeSelected: (value: boolean) => void;
+    maybeError: string;
 }
 
 export const SearchBox = ({
@@ -18,6 +20,7 @@ export const SearchBox = ({
     changeCurrentSearch,
     selected,
     changeSelected,
+    maybeError,
 }: SearchBoxProps) => {
     const [validEntries, setValidEntries] = useState<[string]>(content);
 
@@ -40,8 +43,6 @@ export const SearchBox = ({
     };
 
     const clicou = () => {
-        console.log('Clicou aqui');
-        console.log(content);
         if (currentSearch.length == 0) {
             setValidEntries(content);
         }
@@ -80,17 +81,19 @@ export const SearchBox = ({
                         ></input>
                     </div>
                     <div className="py-3 text-sm overflow-auto max-h-28">
-                        {validEntries.map((line) => (
-                            <div
-                                key={line}
-                                className="flex justify-start cursor-pointer text-gray-700 hover:text-blue-400 hover:bg-blue-100 rounded-md px-2 py-2 my-2"
-                                onClick={lineChoosen}
-                            >
-                                {line}
-                            </div>
-                        ))}
+                        {!selected &&
+                            validEntries.map((line) => (
+                                <div
+                                    key={line}
+                                    className="flex justify-start cursor-pointer text-gray-700 hover:text-blue-400 hover:bg-blue-100 rounded-md px-2 py-2 my-2"
+                                    onClick={lineChoosen}
+                                >
+                                    {line}
+                                </div>
+                            ))}
                     </div>
                 </div>
+                <div className="text-red-500 font-semibold">{maybeError}</div>
             </div>
         </div>
     );
