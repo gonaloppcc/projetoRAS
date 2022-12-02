@@ -15,6 +15,7 @@ public abstract class Odd
         Promo = promo;
     }
 
+    // FIXME: Make event attribute of this class
     public abstract bool HasWon(Event @event);
     public abstract string GetName();
 }
