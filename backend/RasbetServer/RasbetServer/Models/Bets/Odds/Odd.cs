@@ -1,16 +1,18 @@
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using RasbetServer.Models.Events;
 
 namespace RasbetServer.Models.Bets.Odds;
 
 public abstract class Odd
 {
-    public ulong? Id { get; }
-    public float Price { get; }
+    [Key] [DatabaseGenerated(DatabaseGeneratedOption.Identity)] public string? Id { get; set; } = null;
+    [Required] public float Price { get; set; }
     public Promotion? Promo { get; set; }
+
+    public Odd() { }
     
-    public Odd(ulong? id, float price, Promotion? promo)
-    {
-        Id = id;
+    public Odd(float price, Promotion? promo) {
         Price = price;
         Promo = promo;
     }

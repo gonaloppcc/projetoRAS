@@ -1,12 +1,17 @@
+using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
+using RasbetServer.app;
+using RasbetServer.Repositories;
+using RasbetServer.Repositories.Contexts;
 
-var builder = WebApplication.CreateBuilder(args);
-builder.Services.AddControllers();
-builder.Services.AddEndpointsApiExplorer();
+var host = WebHost.CreateDefaultBuilder(args)
+    .UseStartup<Startup>()
+    .Build();
 
-var app = builder.Build();
-app.UseHttpsRedirection();
-app.UseAuthorization();
-app.MapControllers();
-app.Run();
+using (var scope = host.Services.CreateScope())
+using (var context = scope.ServiceProvider.GetService<AppDbContext>())
+    context?.Database.EnsureCreated();
+
+host.Run();

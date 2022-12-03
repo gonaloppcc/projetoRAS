@@ -1,3 +1,6 @@
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+using Newtonsoft.Json.Linq;
 using RasbetServer.Models.Events;
 using RasbetServer.Models.Events.Participants;
 using RasbetServer.Models.Events.Participants.Participant;
@@ -6,14 +9,16 @@ namespace RasbetServer.Models.Bets.Odds;
 
 public class ParticipantOdd : Odd
 {
-    public Participant Part;
+    [Required] [ForeignKey("PartId")] public string PartId { get; set; }
+    [Required] public Participant Part { get; set; }
 
+    public ParticipantOdd() : base() { }
+    
     public ParticipantOdd(
-        ulong? id,
         float price,
         Participant part,
         Promotion? promo
-    ) : base(id, price, promo)
+    ) : base(price, promo)
     {
         Part = part;
     }
@@ -43,4 +48,13 @@ public class ParticipantOdd : Odd
     }
 
     public override string GetName() => Part.Name;
+
+    public static ParticipantOdd FromJson(JObject json)
+    {
+        float price = json["Price"].Value<float>();
+        Participant participant = Participant.FromJson(json["Participant"].ToObject<JObject>());
+        Promotion? promotion = Promotion.FromJson(json["Promotion"].ToObject<JObject>());
+
+        return new ParticipantOdd(price, participant, promotion);
+    }
 }
