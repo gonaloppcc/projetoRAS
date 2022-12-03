@@ -1,5 +1,5 @@
 import {InputForm} from '@components/createBetter/inputForm';
-import React, {useState, useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import Image from 'next/image';
 
 export const PaymentMethod = (props) => {
@@ -9,14 +9,14 @@ export const PaymentMethod = (props) => {
     const [paymentMethod, setPaymentMethod] = useState<number>(0);
 
     const handleChange = (e) => {
-        const {name, value} = e.target;
+        const {value} = e.target;
         if (value === '') {
             setChange(0);
         } else setChange(parseFloat(value));
         setIsSubmitting(false);
     };
 
-    const clickedPaymentMethod = (pos: int) => {
+    const clickedPaymentMethod = (pos: number) => {
         setPaymentMethod(pos);
     };
 
@@ -38,7 +38,7 @@ export const PaymentMethod = (props) => {
         );
     };
 
-    const validate = (change: int) => {
+    const validate = (change) => {
         // TODO: Se for levantar verificar se não é superior ao balanço
         // FIXME
         if (change <= 0) return 'Invalid value';
@@ -108,7 +108,7 @@ export const PaymentMethod = (props) => {
                 />
             </div>
             <InputForm
-                htmlFor="number"
+                type="number"
                 name="Montante"
                 // FIXME
                 id="montante"
