@@ -1,8 +1,9 @@
 export const FinishTransfer = (props) => {
     return (
         // FIXME
-        <div className="text-center w-1/2 h-1/3">
-            Transferência ocorreu com sucesso.
+        //<div className="bg-white w-fit text-xl text-center px-10 py-10  ">
+        <div className="bg-white flex items-center font-semibold justify-center px-5 py-10 ">
+            Transferência efetuada com sucesso!
         </div>
     );
 };

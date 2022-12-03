@@ -11,6 +11,7 @@ export const PaymentMethod = (props) => {
     const handleChange = (e) => {
         const {name, value} = e.target;
         setChange(parseFloat(value));
+        setIsSubmitting(false);
     };
 
     const clickedPaymentMethod = (pos: int) => {
@@ -34,28 +35,30 @@ export const PaymentMethod = (props) => {
             </button>
         );
     };
+
     const validate = (change: int) => {
         // TODO: Se for levantar verificar se não é superior ao balanço
         // FIXME
         if (change <= 0) return 'Invalid value';
         else return '';
     };
+
     const handleSubmit = (e) => {
         e.preventDefault();
         var errors = validate(change);
         setChangeError(errors);
         setIsSubmitting(true);
-        console.log('Clicou em submeter');
     };
+
     const submit = () => {
-        console.log('Submissão feita');
         props.isDepositing
             ? props.changeBalance(props.balance + change)
             : props.changeBalance(props.balance - change);
         console.log('O valor novo é:');
         console.log(props.balance);
-        props.setMenu(2);
+        props.setMenu(3);
     };
+
     useEffect(() => {
         console.log('Vai submeter?');
         console.log(changeError === '' && isSubmitting);
@@ -63,7 +66,7 @@ export const PaymentMethod = (props) => {
         if (changeError === '' && isSubmitting) {
             submit();
         }
-    }, [changeError]);
+    }, [isSubmitting]);
 
     const RedButton = (props) => {
         return (

@@ -39,7 +39,7 @@ export const Navbar = () => {
             {open && currentMenu === 1 && (
                 <Modal
                     open={open}
-                    setOpen={closeModal}
+                    setOpen={(e) => console.log(e)}
                     content={
                         <PaymentMethod
                             changeBalance={setBalance}
