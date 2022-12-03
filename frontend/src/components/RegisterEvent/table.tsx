@@ -7,7 +7,7 @@ export interface OtherTableProps {
     maybeError: string;
 }
 
-export const OtherTable = ({
+export const Table = ({
     title,
     content,
     changeFunction,

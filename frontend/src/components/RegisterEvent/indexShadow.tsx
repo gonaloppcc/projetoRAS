@@ -1,7 +1,7 @@
 import {Sport} from 'pages/registerEvent';
 import React, {useEffect, useState} from 'react';
 import {SearchBox} from './searchBox';
-import {OtherTable} from './otherTable';
+import {OtherTable} from './table';
 import {PrimaryButton} from '@components/Button';
 import {ErrorSharp} from '@mui/icons-material';
 

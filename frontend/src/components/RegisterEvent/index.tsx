@@ -1,7 +1,7 @@
 import {Sport} from 'pages/registerEvent';
 import React, {useEffect, useState} from 'react';
 import {SearchBox} from './searchBox';
-import {OtherTable} from './otherTable';
+import {Table} from './table';
 import {PrimaryButton} from '@components/Button';
 import {ErrorSharp} from '@mui/icons-material';
 import {SucessPage} from './sucessPage';
@@ -182,7 +182,7 @@ export const RegisterEvent = ({data}: [Sport]) => {
                         <div className="w-full">
                             <div className="flex flex-row gap-1 star ">
                                 <div className="w-2/3">
-                                    <OtherTable
+                                    <Table
                                         title="Teams"
                                         changeFunction={changeTeams}
                                         //content={data.map((sport) => sport.name)}
