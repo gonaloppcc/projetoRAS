@@ -8,14 +8,18 @@ namespace RasbetServer.Models.Events.Participants;
 
 public class TwoParticipants : BaseParticipants
 {
-    [Required] [ForeignKey("HomeId")] public string? HomeId { get; set; } = null;
-    [Required] public Result Home { get; set; }
+    [Required]
+    [ForeignKey("HomeId")]
+    public string? HomeId { get; set; } = null;
+    public virtual Result Home { get; set; }
 
-    [Required] [ForeignKey("AwayId")] public string? AwayId { get; set; } = null;
-    [Required] public Result Away { get; set; }
+    [Required]
+    [ForeignKey("AwayId")]
+    public string? AwayId { get; set; } = null;
+    public virtual Result Away { get; set; }
 
     [ForeignKey("TieId")] public string? TieId { get; set; } = null;
-    public TieOdd? Tie { get; set; }
+    public virtual TieOdd? Tie { get; set; }
 
     public TwoParticipants() : base() { }
     

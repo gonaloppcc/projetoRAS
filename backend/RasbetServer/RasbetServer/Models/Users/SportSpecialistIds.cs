@@ -1,35 +1,28 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Newtonsoft.Json.Linq;
+using RasbetServer.Models.Events;
 
-namespace RasbetServer.Models.Events;
+namespace RasbetServer.Models.Users;
 
-public class Competition
+public class SportSpecialistIds
 {
     [Key]
     [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
     public string? Id { get; set; } = null;
-
+    
     [Required]
-    [MaxLength(40)]
-    public string Name { get; set; }
-
+    public string SpecialistId { get; set; }
+    
     [Required]
-    [ForeignKey("SportId")]
     public string SportId { get; set; }
     public virtual Sport Sport { get; set; }
 
-    public Competition(string name, string sportId)
+    public static SportSpecialistIds FromJson(JObject json)
     {
-        Name = name;
-        SportId = sportId;
-    }
-
-    public static Competition FromJson(JObject json)
-    {
-        string name = json[nameof(Name)].Value<string>();
         string sportId = json[nameof(SportId)].Value<string>();
+        string specialistId = json[nameof(SpecialistId)].Value<string>();
 
-        return new Competition(name, sportId);
+        return new SportSpecialistIds { SpecialistId = specialistId, SportId = sportId };
     }
 }

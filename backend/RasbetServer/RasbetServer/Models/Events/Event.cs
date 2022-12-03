@@ -8,12 +8,17 @@ public abstract class Event
 {
     [Key] [DatabaseGenerated(DatabaseGeneratedOption.Identity)] public string? Id { get; set; } = null;
 
-    [Required] [ForeignKey("ParticipantId")] public string? ParticipantsId { get; set; } = null;
+    [Required]
+    [ForeignKey("ParticipantId")]
+    public string? ParticipantsId { get; set; } = null;
     public BaseParticipants Participants { get; set; }
+    
     [Required] public DateTime Date { get; set; }
 
-    [Required] [ForeignKey("CompetitionId")] public string CompetitionId { get; set; }
-    public Competition Competition { get; set; }
+    [Required]
+    [ForeignKey("CompetitionId")]
+    public string CompetitionId { get; set; }
+    public virtual Competition Competition { get; set; }
     
     [Required] public bool Completed { get; set; }
 

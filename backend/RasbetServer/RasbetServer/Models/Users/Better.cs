@@ -4,11 +4,23 @@ using Newtonsoft.Json.Linq;
 namespace RasbetServer.Models.Users;
 
 public class Better : User {
-    [Required] [StringLength(9)] public string Nif { get; set; }
-    [Required] [StringLength(9)] public string Cc { get; set; }
-    [Required] [StringLength(9)] public string Cellphone { get; set; }
-    [Required] public float Balance { get; set; }
-    [Required] public List<Transaction> TransactionHist { get; set; }
+    [Required]
+    [StringLength(9)]
+    public string Nif { get; set; }
+    
+    [Required]
+    [StringLength(9)]
+    public string Cc { get; set; }
+    
+    [Required]
+    [StringLength(9)]
+    public string Cellphone { get; set; }
+    
+    [Required]
+    public float Balance { get; set; }
+    
+    [Required]
+    public virtual List<Transaction> TransactionHist { get; set; }
 
     public Better(): base() {
     }

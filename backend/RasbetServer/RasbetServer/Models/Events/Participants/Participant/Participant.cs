@@ -7,8 +7,13 @@ namespace RasbetServer.Models.Events.Participants.Participant;
 
 public class Participant
 {
-    [Key] [DatabaseGenerated(DatabaseGeneratedOption.Identity)] public string? Id { get; set; } = null;
-    [Required] [MaxLength(30)] public string Name { get; set; }
+    [Key]
+    [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+    public string? Id { get; set; } = null;
+    
+    [Required]
+    [MaxLength(30)]
+    public string Name { get; set; }
 
     public Participant() { }
     

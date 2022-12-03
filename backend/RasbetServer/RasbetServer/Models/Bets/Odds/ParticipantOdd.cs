@@ -10,7 +10,7 @@ namespace RasbetServer.Models.Bets.Odds;
 public class ParticipantOdd : Odd
 {
     [Required] [ForeignKey("PartId")] public string PartId { get; set; }
-    [Required] public Participant Part { get; set; }
+    [Required] public virtual Participant Part { get; set; }
 
     public ParticipantOdd() : base() { }
     

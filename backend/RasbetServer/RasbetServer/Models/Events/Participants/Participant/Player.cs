@@ -5,8 +5,8 @@ namespace RasbetServer.Models.Events.Participants.Participant;
 
 public class Player : Participant
 {
-    [ForeignKey("TeamId")] public string? TeamId { get; set; }
-    //public Team? Team { get; set; }
+    [ForeignKey("TeamId")]
+    public string? TeamId { get; set; }
     
     public Player() : base() {}
     

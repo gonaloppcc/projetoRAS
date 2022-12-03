@@ -4,7 +4,8 @@ using Newtonsoft.Json.Linq;
 namespace RasbetServer.Models.Events.Participants.Participant;
 
 public class Team : Participant {
-    [Required] public List<Player> Players { get; set; }
+    [Required]
+    public virtual List<Player> Players { get; set; }
 
     public Team() : base() { }
     

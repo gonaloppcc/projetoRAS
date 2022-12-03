@@ -7,7 +7,10 @@ namespace RasbetServer.Models.Events;
 
 public class Sport
 {
-    [Key] [DatabaseGenerated(DatabaseGeneratedOption.Identity)] public string? Id { get; set; } = null;
+    [Key]
+    [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+    public string? Id { get; set; } = null;
+    
     [Required]
     [MaxLength(40)]
     public string Name { get; set; }

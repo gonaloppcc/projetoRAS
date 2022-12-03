@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using RasbetServer.Models.Bets;
 using RasbetServer.Models.Bets.Odds;
 using RasbetServer.Models.Events;
 using RasbetServer.Models.Events.Participants;
@@ -16,6 +17,7 @@ public class AppDbContext : DbContext {
     public DbSet<FootballEvent> FootballEvents { get; set; }
     public DbSet<Competition> Competitions { get; set; }
     public DbSet<Sport> Sports { get; set; }
+    public DbSet<SportSpecialistIds> SportSpecialistIds { get; set; }
 
     public DbSet<BaseParticipants> BaseParticipants { get; set; }
     public DbSet<TwoParticipants> TwoParticipants { get; set; }
@@ -29,6 +31,11 @@ public class AppDbContext : DbContext {
     public DbSet<ParticipantOdd> ParticipantOdds { get; set; }
     public DbSet<TieOdd> TieOdds { get; set; }
     public DbSet<Promotion> Promotions { get; set; }
+    
+    public DbSet<Bet> Bets { get; set; }
+    public DbSet<MultiBet> MultiBets { get; set; }
+    public DbSet<SimpleBet> SimpleBets { get; set; }
+    public DbSet<OddBetIds> EventIdBets { get; set; }
 
     public AppDbContext(DbContextOptions<AppDbContext> options)
         : base(options) {
@@ -36,7 +43,7 @@ public class AppDbContext : DbContext {
 
     protected override void OnModelCreating(ModelBuilder modelBuilder) {
         base.OnModelCreating(modelBuilder);
-
+        
         modelBuilder.Entity<Better>()
             .HasData(
                 new Better("0", "marco@gmail.com", "marco", "marco123", "123456789", "123456789", "123456789", 20,

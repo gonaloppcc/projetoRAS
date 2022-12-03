@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using RasbetServer.Repositories;
+using RasbetServer.Repositories.BetRepository;
 using RasbetServer.Repositories.CompetitionRepository;
 using RasbetServer.Repositories.Contexts;
 using RasbetServer.Repositories.EventRepository;
@@ -27,12 +27,13 @@ public class Startup {
         services.AddMvc(options => options.EnableEndpointRouting = false);
         services.AddControllers();
 
-        services.AddDbContext<AppDbContext>(options => options.UseMySQL(ConnectionString));
+        services.AddDbContext<AppDbContext>(options => options.UseLazyLoadingProxies().UseMySQL(ConnectionString));
 
         services.AddScoped<IUserRepository, UserRepository>();
         services.AddScoped<IEventRepository, EventRepository>();
         services.AddScoped<ISportRepository, SportRepository>();
         services.AddScoped<ICompetitionRepository, CompetitionRepository>();
+        services.AddScoped<IBetRepository, BetRepository>();
     }
 
     public void Configure(IApplicationBuilder app, IWebHostEnvironment env) {

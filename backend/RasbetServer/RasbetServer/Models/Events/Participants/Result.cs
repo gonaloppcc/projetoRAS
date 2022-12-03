@@ -6,10 +6,17 @@ namespace RasbetServer.Models.Events.Participants;
 
 public class Result
 {
-    [Key] [DatabaseGenerated(DatabaseGeneratedOption.Identity)] public string? Id { get; set; } = null;
-    [Required] [ForeignKey("ParticipantOddId")] public string? ParticipantId { get; set; } = null;
-    public ParticipantOdd Participant { get; set; }
-    [Required] public int? Score { get; set; }
+    [Key]
+    [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+    public string? Id { get; set; } = null;
+    
+    [Required]
+    [ForeignKey("ParticipantOddId")]
+    public string? ParticipantId { get; set; } = null;
+    public virtual ParticipantOdd Participant { get; set; }
+    
+    [Required]
+    public int? Score { get; set; }
 
     public Result() { }
     
