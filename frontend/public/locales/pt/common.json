@@ -37,6 +37,7 @@
   "BettingSlip.singles":"Simples",
   "BettingSlip.multiples":"Múltiplas",
   "BettingSlipInfo.Bet.now":"Apostar",
-  "createBetter.AlreadyRegistered":"Já estás registado? Inicie Sessão aqui."
+  "createBetter.AlreadyRegistered":"Já estás registado? Inicie Sessão aqui.",
+  "MultipleBetBettingSlipInfo":"Montante"
 
 }

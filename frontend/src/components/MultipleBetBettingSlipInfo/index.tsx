@@ -26,9 +26,9 @@ export const MultipleBetBettingSlipInfo = ({
 
     const intl = useIntl();
     const featureOdds = intl.formatMessage({id: 'OnGoingBetRecord.Odds'});
-    const featureWinnings = intl.formatMessage({id: 'BetRecord.winnings'});
+    const featureWinnings = intl.formatMessage({id: 'OnGoingBetRecord.Possible.Winnings'});
     const featureBetnow = intl.formatMessage({id: 'BettingSlipInfo.Bet.now'});
-    const featureStake = intl.formatMessage({id: 'OnGoingBetRecord.Stake'});
+    const featureStake = intl.formatMessage({id: 'MultipleBetBettingSlipInfo'});
 
     return (
         <div className="w-full flex flex-col items-start p-2 gap-2 bg-WHITE shadow rounded">
