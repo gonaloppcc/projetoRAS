@@ -1,5 +1,10 @@
 import React from 'react';
-import {SportsBasketball, SportsSoccer} from '@mui/icons-material';
+import {
+    SportsBaseball,
+    SportsBasketball,
+    SportsSoccer,
+    SportsTennis,
+} from '@mui/icons-material';
 
 export interface SportIconProps {
     eventType: string; // TODO: Change to enum
@@ -12,6 +17,12 @@ export const SportIcon = ({eventType}: SportIconProps) => {
 
         case 'basketball':
             return <SportsBasketball />;
+
+        case 'baseball':
+            return <SportsBaseball />;
+
+        case 'tennis':
+            return <SportsTennis />;
 
         default:
             return <></>;
