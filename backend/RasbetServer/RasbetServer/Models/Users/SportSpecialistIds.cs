@@ -7,10 +7,6 @@ namespace RasbetServer.Models.Users;
 
 public class SportSpecialistIds
 {
-    [Key]
-    [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-    public string? Id { get; set; } = null;
-    
     [Required]
     public string SpecialistId { get; set; }
     

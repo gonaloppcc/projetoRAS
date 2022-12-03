@@ -7,10 +7,6 @@ namespace RasbetServer.Models.Bets;
 
 public class OddBetIds
 {
-    [Key]
-    [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-    public string? Id { get; set; } = null;
-
     [ForeignKey("OddId")]
     public string OddId { get; set; }
     public virtual Odd Odd { get; set; }
