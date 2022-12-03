@@ -1,7 +1,15 @@
 import create from 'zustand';
 import {v4 as uuidv4} from 'uuid';
 
-export type BetType = 'Simple' | 'Multiple';
+export enum Currency {
+    EUR = '€',
+    USD = '$',
+}
+
+export enum BetType {
+    Simple,
+    Multiple,
+}
 
 export interface Odd {
     name: string;
@@ -12,6 +20,7 @@ export interface BetState {
     id: string;
     eventId: string;
     eventName: string;
+    eventType: string;
     odd: Odd;
     bettingAmount?: number; // Undefined when betType is Multiple
 }
@@ -19,6 +28,7 @@ export interface BetState {
 export type BetWithNoId = Omit<BetState, 'id'>;
 
 interface ReportState {
+    currency?: Currency;
     bets: BetState[];
     betType: BetType;
     bettingAmount?: number; // Undefined when betType is Single
@@ -26,9 +36,11 @@ interface ReportState {
     // Handlers
     addBet: (bet: BetWithNoId) => void;
     removeBet: (id: string) => void;
+    setBetAmount: (id: string, amount: number) => void;
+
     setBetType: (betType: BetType) => void;
 
-    changeBettingAmount: (bettingAmount: number) => void;
+    setBettingAmount: (bettingAmount: number) => void;
 
     submitReport: () => void;
 }
@@ -38,21 +50,46 @@ const initialBets: BetState[] = [
         id: uuidv4(),
         eventId: '1',
         eventName: 'Liverpool - Porto',
+        eventType: 'football',
         odd: {
-            name: 'Resultado Final: Liverpool',
+            name: 'Liverpool',
             price: 1.5,
         },
     },
 ];
 
-const initialBetType: BetType = 'Simple';
+const initialBetType: BetType = BetType.Simple;
 
 export const useBettingSlip = create<ReportState>((set) => ({
+    currency: Currency.EUR /* FIXME: Currency is hardcoded for now! */,
     bettingAmount: 0,
     bets: initialBets,
     betType: initialBetType,
     addBet: (bet) =>
-        set((state) => ({bets: [...state.bets, {id: uuidv4(), ...bet}]})),
+        set((state) => {
+            if (state.betType === BetType.Simple) {
+                bet = {
+                    ...bet,
+                    bettingAmount: 0, // Initial betting amount is 0
+                };
+            }
+            return {bets: [...state.bets, {id: uuidv4(), ...bet}]};
+        }),
+    setBetAmount: (id, amount) => {
+        set((state) => {
+            const index = state.bets.findIndex((bet) => bet.id === id);
+            if (index === -1) {
+                return {bets: state.bets};
+            }
+            console.log({amount});
+            const newBets = [...state.bets];
+            newBets[index].bettingAmount = amount;
+
+            console.log({newBets});
+
+            return {bets: newBets};
+        });
+    },
     removeBet: (id) =>
         set((state) => {
             const index = state.bets.findIndex((bet) => bet.id === id);
@@ -66,7 +103,7 @@ export const useBettingSlip = create<ReportState>((set) => ({
         }),
     setBetType: (betType: BetType) => set({betType}),
 
-    changeBettingAmount: (bettingAmount: number) => set({bettingAmount}),
+    setBettingAmount: (bettingAmount: number) => set({bettingAmount}),
 
     submitReport: async () =>
         set(() => {

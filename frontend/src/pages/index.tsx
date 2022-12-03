@@ -6,6 +6,7 @@ import {PageLayout} from '@components/PageLayout';
 const MOCK_EVENT: EventCardProps = {
     eventId: '1',
     eventName: 'Real Madrid vs Barcelona',
+    eventType: 'football',
     commenceTime: new Date().toString(),
     odds: [
         {

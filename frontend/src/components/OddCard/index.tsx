@@ -1,5 +1,5 @@
 import React from 'react';
-import {formatMoney} from '../../utils/formatters';
+import {formatNumber} from '../../utils/formatters';
 
 interface OddCardProps {
     name: string;
@@ -22,7 +22,7 @@ export const OddCard = ({
             <span className="font-sans font-thin text-xs text-center">
                 {name}
             </span>
-            <span className="font-semibold text-sm">{formatMoney(price)}</span>
+            <span className="font-semibold text-sm">{formatNumber(price)}</span>
         </div>
     );
 };
