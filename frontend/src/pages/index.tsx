@@ -4,20 +4,22 @@ import {PageLayout} from '@components/PageLayout';
 
 /* FIXME Mock data hardcoded */
 const MOCK_EVENT: EventCardProps = {
+    eventId: '1',
     eventName: 'Real Madrid vs Barcelona',
-    date: 'Hoje 20:15',
+    eventType: 'football',
+    commenceTime: new Date().toString(),
     odds: [
         {
             name: 'Real Madrid',
-            price: 1.5,
+            price: 1.54,
         },
         {
             name: 'Empate',
-            price: 2.5,
+            price: 2.57,
         },
         {
             name: 'Barcelona',
-            price: 3.5,
+            price: 3.59,
         },
     ],
 };
@@ -32,30 +34,14 @@ const MOCK_EVENTS: EventCardProps[] = [
     MOCK_EVENT,
     MOCK_EVENT,
 ];
+
 const Home: NextPage = () => {
-    const listOdds = [
-        {name: 'Porto', price: 32},
-        {name: 'Empate', price: 32},
-        {name: 'Benfica', price: 22},
-    ];
     return (
         <PageLayout>
             <div className="flex flex-col justify-start gap-3 w-full">
-                <EventCard
-                    eventName={'Porto - Benfica'}
-                    date={'Hoje 20:15'}
-                    odds={listOdds}
-                />
-                <EventCard
-                    eventName={'Porto - Benfica'}
-                    date={'Hoje 20:15'}
-                    odds={listOdds}
-                />
-                <EventCard
-                    eventName={'Porto - Benfica'}
-                    date={'Hoje 20:15'}
-                    odds={listOdds}
-                />
+                {MOCK_EVENTS.map((event) => (
+                    <EventCard key={event.eventId} {...event} />
+                ))}
             </div>
         </PageLayout>
     );

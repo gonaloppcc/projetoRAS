@@ -6,8 +6,8 @@ module.exports = {
             colors: {
                 WHITE: '#ffffff',
                 CULTURED: '#F5F3F4',
-                BLACK_SHADOW: '#B1A7A6',
                 LIGHT_GRAY: '#D3D3D3',
+                BLACK_SHADOW: '#B1A7A6',
                 IMPERIAL_RED: '#E5383B',
                 CARNELIAN: '#BA181B',
                 RUBY_RED: '#A4161A',

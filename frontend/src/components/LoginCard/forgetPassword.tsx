@@ -1,8 +1,4 @@
-import React, {useRef, useState} from 'react';
-import emailjs from '@emailjs/browser';
-import {InputForm} from '@components/createBetter/inputForm';
-import {REGEX_MAIL} from 'utils/regex';
-import {RedButton} from './RedButton';
+import React, {useState} from 'react';
 import {InsertMailBody} from './insertMailBody';
 import {InsertCodeBody} from './insertCodeBody';
 

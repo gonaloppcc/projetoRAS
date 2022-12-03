@@ -6,7 +6,7 @@ import {SportIcon} from '@components/SportIcon';
 export interface CompetitionProps {
     name: string;
     eventType: string; // TODO: Change to enum
-    isFavorite: boolean;
+    isFavorite?: boolean;
 }
 
 export const CompetitionCard = ({
