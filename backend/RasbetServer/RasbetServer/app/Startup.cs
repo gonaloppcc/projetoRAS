@@ -1,9 +1,12 @@
-﻿using Microsoft.AspNetCore.Builder;
+﻿using System.Text;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.IdentityModel.Tokens;
 using RasbetServer.Repositories;
 using RasbetServer.Repositories.Contexts;
 
@@ -23,9 +26,23 @@ public class Startup {
         services.AddMvc(options => options.EnableEndpointRouting = false);
         services.AddControllers();
 
-        services.AddDbContext<AppDbContext>(options => options.UseInMemoryDatabase(ConnectionString));
+        services.AddDbContext<AppDbContext>(options => options.UseMySQL(ConnectionString));
 
         services.AddScoped<IUserRepository, UserRepository>();
+
+        services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+            .AddJwtBearer(options => {
+                options.TokenValidationParameters = new TokenValidationParameters {
+                    ValidateIssuer = true,
+                    ValidateAudience = true,
+                    ValidateLifetime = true,
+                    ValidateIssuerSigningKey = true,
+                    ValidIssuer = "", //Configuration["Jwt:Issuer"],
+                    ValidAudience = "", //Configuration["Jwt:Issuer"],
+                    IssuerSigningKey =
+                        new SymmetricSecurityKey(Encoding.UTF8.GetBytes("marco" /*Configuration["Jwt:Key"]*/))
+                };
+            });
     }
 
     public void Configure(IApplicationBuilder app, IWebHostEnvironment env) {
@@ -35,6 +52,10 @@ public class Startup {
             app.UseHsts();
 
         app.UseHttpsRedirection();
+
+        app.UseAuthentication();
+        app.UseAuthorization();
+
         app.UseMvc();
     }
 }

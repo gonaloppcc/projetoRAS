@@ -1,5 +1,9 @@
+using System.IdentityModel.Tokens.Jwt;
+using System.Text;
 using System.Text.Json;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.IdentityModel.Tokens;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using RasbetServer.Models.Users;
@@ -32,11 +36,28 @@ public class UserController : ControllerBase {
 
         try {
             var user = _userRepository.LoginUser(email, password);
+
+            var tokenString = GenerateJsonWebToken(user);
+            return Ok(new { token = tokenString });
+
             return Ok(JsonConvert.SerializeObject(user));
         }
-        catch (Exception e) {
+        catch (ArgumentNullException e) {
             return NotFound("User not found");
         }
+    }
+
+    private string GenerateJsonWebToken(User user) {
+        var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("marco és grandeeeeeeeeee"));
+        var credentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);
+
+        var token = new JwtSecurityToken("",
+            "",
+            null,
+            expires: DateTime.Now.AddMinutes(120),
+            signingCredentials: credentials);
+
+        return new JwtSecurityTokenHandler().WriteToken(token);
     }
 
 
@@ -79,6 +100,7 @@ public class UserController : ControllerBase {
     /// <param name="id">User's id</param>
     /// <param name="json">Json object with the new password</param>
     /// <returns>The user with the updated password or BadRequest if the user does not exist</returns>
+    [Authorize]
     [HttpPatch(Name = "ChangePassword")]
     public ActionResult<User> ChangePassword([FromQuery] string id, [FromBody] JsonElement json) {
         if (id == "MockInvalidId")
