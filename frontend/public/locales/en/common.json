@@ -29,7 +29,7 @@
   "better/bets.Cancel":"Cancel",
   "OnGoingBetRecord.Cancel":"Cancel",
   "OnGoingBetRecord.Date":"Date",
-  "OnGoingBetRecord.Odds":"Total odds",
+  "OnGoingBetRecord.Odds":"Odd",
   "OnGoingBetRecord.Stake":"Total stake",
   "OnGoingBetRecord.Possible.Winnings":"Potential winnings",
   "BetRecord.winnings":"Winnings",
