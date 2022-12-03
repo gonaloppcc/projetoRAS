@@ -37,10 +37,11 @@ public class Startup {
                     ValidateAudience = true,
                     ValidateLifetime = true,
                     ValidateIssuerSigningKey = true,
-                    ValidIssuer = "", //Configuration["Jwt:Issuer"],
-                    ValidAudience = "", //Configuration["Jwt:Issuer"],
+                    ValidIssuer = "issuer", //Configuration["Jwt:Issuer"],
+                    ValidAudience = "issuer", //Configuration["Jwt:Issuer"],
                     IssuerSigningKey =
-                        new SymmetricSecurityKey(Encoding.UTF8.GetBytes("marco" /*Configuration["Jwt:Key"]*/))
+                        new SymmetricSecurityKey(
+                            Encoding.UTF8.GetBytes("marco és grandeeeeeeeeee" /*Configuration["Jwt:Key"]*/))
                 };
             });
     }
@@ -54,7 +55,9 @@ public class Startup {
         app.UseHttpsRedirection();
 
         app.UseAuthentication();
+        app.UseRouting();
         app.UseAuthorization();
+        app.UseEndpoints(endpoints => { endpoints.MapControllers(); });
 
         app.UseMvc();
     }

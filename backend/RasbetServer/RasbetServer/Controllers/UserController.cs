@@ -51,8 +51,8 @@ public class UserController : ControllerBase {
         var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("marco és grandeeeeeeeeee"));
         var credentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);
 
-        var token = new JwtSecurityToken("",
-            "",
+        var token = new JwtSecurityToken("issuer",
+            "issuer",
             null,
             expires: DateTime.Now.AddMinutes(120),
             signingCredentials: credentials);
