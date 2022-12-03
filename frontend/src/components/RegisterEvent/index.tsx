@@ -4,15 +4,14 @@ import {SearchBox} from './searchBox';
 import {OtherTable} from './otherTable';
 import {PrimaryButton} from '@components/Button';
 import {ErrorSharp} from '@mui/icons-material';
+import {SucessPage} from './sucessPage';
 
 export interface RegisterEventProps {
     data: React.ReactNode;
 }
 
 export const RegisterEvent = ({data}: [Sport]) => {
-    /*
-    Get Sports available
-    */
+    const [sucessPage, setSucessPage] = useState<boolean>(false);
 
     const [sport, setSport] = useState<string>('');
     const [sportSelected, setSportSelected] = useState<boolean>(false);
@@ -41,7 +40,18 @@ export const RegisterEvent = ({data}: [Sport]) => {
         setPossibleTeams(thing.participants);
         return thing.participants;
     };
-    // Necessary to update the leagues associated to the sport
+
+    const changeTeams = (team: string, value: boolean) => {
+        value
+            ? setSelectedTeams((current) => [...current, team])
+            : setSelectedTeams((current) =>
+                  current.filter((element: string) => {
+                      return element !== team;
+                  })
+              );
+    };
+
+    // Necessary to update the leagues and teams associated to the sport
     useEffect(() => {
         if (sportSelected) {
             getLeagues();
@@ -61,8 +71,19 @@ export const RegisterEvent = ({data}: [Sport]) => {
         setHour(e.target.value);
     };
 
+    // Handle submit part
     const [formErrors, setFormErrors] = useState({});
     const [isSubmitting, setIsSubmitting] = useState(false);
+
+    // Necessary when we go back to this page
+    useEffect(() => {
+        setSport('');
+        setSportSelected(false);
+        setLeague('');
+        setSelectedTeams([]);
+        setHour('');
+        setHour('');
+    }, [sucessPage]);
 
     //form submission handler
     const handleSubmit = (e) => {
@@ -78,7 +99,6 @@ export const RegisterEvent = ({data}: [Sport]) => {
     }, [formErrors]);
 
     // FIXME
-    const submitButtonContent = <div>Submeter</div>;
 
     const submit = () => {
         console.log('Submit');
@@ -87,6 +107,7 @@ export const RegisterEvent = ({data}: [Sport]) => {
         console.log(sport);
         console.log(league);
         console.log(selectedTeams);
+        setSucessPage(true);
     };
 
     const validate = () => {
@@ -124,113 +145,112 @@ export const RegisterEvent = ({data}: [Sport]) => {
 
         return errors;
     };
-    const changeTeams = (team, value) => {
-        value
-            ? setSelectedTeams((current) => [...current, team])
-            : setSelectedTeams((current) =>
-                  current.filter((element) => {
-                      return element !== team;
-                  })
-              );
-    };
+
+    const submitButtonContent = <div>Submeter</div>;
+
     return (
-        <div className="h-screen w-screen justify-center flex items-center bg-CULTURED">
-            <div className="bg-white  flex flex-col items-center px-10 py-10 h-auto  relative gap-2">
-                <div className="w-fit h-10  text-4xl ">
-                    {/* FIXME */}
-                    Adicionar evento
-                </div>
-                <div className="flex flex-row gap-5 space-evenly">
-                    {/* FIXME  Títulos das searchBoxes*/}
-                    <SearchBox
-                        content={data.map((sport: Sport) => sport.name)}
-                        title={'Modalidades'}
-                        currentSearch={sport}
-                        changeCurrentSearch={setSport}
-                        selected={sportSelected}
-                        changeSelected={setSportSelected}
-                        maybeError={formErrors.sport}
-                    />
-                    <SearchBox
-                        content={possibleLeagues}
-                        title={'Ligas'}
-                        currentSearch={league}
-                        changeCurrentSearch={setLeague}
-                        selected={leagueSelected}
-                        changeSelected={setLeagueSelected}
-                        maybeError={formErrors.league}
-                    />
-                </div>
-                <div className="w-full">
-                    <div className="flex flex-row gap-1 star ">
-                        <div className="w-2/3">
-                            <OtherTable
-                                title="Teams"
-                                changeFunction={changeTeams}
-                                //content={data.map((sport) => sport.name)}
-                                content={possibleTeams}
-                                //maybeError={formErrors.sport}
-                                maybeError={formErrors.teams}
+        <>
+            {sucessPage && <SucessPage changePage={setSucessPage} />}
+            {!sucessPage && (
+                <div className="h-screen w-screen justify-center flex items-center bg-CULTURED">
+                    <div className="bg-white  flex flex-col items-center px-10 py-10 h-auto  relative gap-2">
+                        <div className="w-fit h-10  text-4xl ">
+                            {/* FIXME */}
+                            Adicionar evento
+                        </div>
+                        <div className="flex flex-row gap-5 space-evenly">
+                            {/* FIXME  Títulos das searchBoxes*/}
+                            <SearchBox
+                                content={data.map((sport: Sport) => sport.name)}
+                                title={'Modalidades'}
+                                currentSearch={sport}
+                                changeCurrentSearch={setSport}
+                                selected={sportSelected}
+                                changeSelected={setSportSelected}
+                                maybeError={formErrors.sport}
+                            />
+                            <SearchBox
+                                content={possibleLeagues}
+                                title={'Ligas'}
+                                currentSearch={league}
+                                changeCurrentSearch={setLeague}
+                                selected={leagueSelected}
+                                changeSelected={setLeagueSelected}
+                                maybeError={formErrors.league}
                             />
                         </div>
-                        <div className="w-1/3 flex flex-col px-3">
-                            <div className="datepicker w-full relative form-floating mb-3 ">
-                                <input
-                                    type="date"
-                                    className="form-control block w-full  py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
-                                    placeholder="Select a date"
-                                    onChange={changeDate}
-                                    id={'Calendar'}
-                                    min={today}
-                                />
-                                <div className="flex flex-row justify-between">
-                                    <label
-                                        htmlFor="floatingInput"
-                                        className="text-gray-700"
-                                    >
-                                        {/* FIXME */}
-                                        Game Day
-                                    </label>
-                                    {formErrors.date && (
-                                        <div className="text-red-500 font-semibold">
-                                            Erro
-                                        </div>
-                                    )}
-                                </div>
-                            </div>
-                            <div className="w-full">
-                                <div className="timepicker relative form-floating mb-3 ">
-                                    <input
-                                        type="time"
-                                        className="form-control block w-full  py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
-                                        placeholder="Select a date"
-                                        onChange={changeHour}
+                        <div className="w-full">
+                            <div className="flex flex-row gap-1 star ">
+                                <div className="w-2/3">
+                                    <OtherTable
+                                        title="Teams"
+                                        changeFunction={changeTeams}
+                                        //content={data.map((sport) => sport.name)}
+                                        content={possibleTeams}
+                                        //maybeError={formErrors.sport}
+                                        maybeError={formErrors.teams}
                                     />
-                                    <div className="flex flex-row justify-between">
-                                        <label
-                                            htmlFor="floatingInput"
-                                            className="text-gray-700"
-                                        >
-                                            Match Hour
-                                        </label>
-                                        {formErrors.hour && (
-                                            <div className="text-red-500 font-semibold">
-                                                Erro
+                                </div>
+                                <div className="w-1/3 flex flex-col px-3">
+                                    <div className="  datepicker w-full relative form-floating mb-3 ">
+                                        <input
+                                            type="date"
+                                            className="bg-CULTURED border-2 form-control block w-full  py-1.5 text-base font-normal text-gray-700  bg-clip-padding rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
+                                            placeholder="Select a date"
+                                            onChange={changeDate}
+                                            id={'Calendar'}
+                                            min={today}
+                                        />
+                                        <div className="flex flex-row justify-between">
+                                            <label
+                                                htmlFor="floatingInput"
+                                                className="text-gray-700"
+                                            >
+                                                {/* FIXME */}
+                                                Game Day
+                                            </label>
+                                            {formErrors.date && (
+                                                <div className="text-red-500 font-semibold">
+                                                    {formErrors.date}
+                                                </div>
+                                            )}
+                                        </div>
+                                    </div>
+                                    <div className="w-full">
+                                        <div className="timepicker relative form-floating mb-3 ">
+                                            <input
+                                                type="time"
+                                                className="bg-CULTURED border-2 form-control block w-full  py-1.5 text-base font-normal text-gray-700 bg-clip-padding rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
+                                                placeholder="Select a date"
+                                                onChange={changeHour}
+                                            />
+                                            <div className="flex flex-row justify-between">
+                                                <label
+                                                    htmlFor="floatingInput"
+                                                    className="text-gray-700"
+                                                >
+                                                    Match Hour
+                                                </label>
+                                                {formErrors.hour && (
+                                                    <div className="text-red-500 font-semibold">
+                                                        {formErrors.hour}
+                                                    </div>
+                                                )}
                                             </div>
-                                        )}
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
+                        <div>
+                            <PrimaryButton
+                                children={submitButtonContent}
+                                onClick={handleSubmit}
+                            />
+                        </div>
                     </div>
                 </div>
-                <div>
-                    <PrimaryButton
-                        children={submitButtonContent}
-                        onClick={handleSubmit}
-                    />
-                </div>
-            </div>
-        </div>
+            )}
+        </>
     );
 };

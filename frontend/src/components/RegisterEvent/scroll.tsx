@@ -5,7 +5,7 @@ export const Scroll = (props) => {
 
     return (
         <div>
-            <div className="text-lg border-grey-300 border-b-2 text-slate-400">
+            <div className="text-lg  border-grey-300 border-b-2 text-slate-400">
                 {props.title}
             </div>
 
