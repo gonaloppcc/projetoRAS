@@ -45,18 +45,7 @@ interface ReportState {
     submitReport: () => void;
 }
 
-const initialBets: BetState[] = [
-    {
-        id: uuidv4(),
-        eventId: '1',
-        eventName: 'Liverpool - Porto',
-        eventType: 'football',
-        odd: {
-            name: 'Liverpool',
-            price: 1.5,
-        },
-    },
-];
+const initialBets: BetState[] = [];
 
 const initialBetType: BetType = BetType.Simple;
 
