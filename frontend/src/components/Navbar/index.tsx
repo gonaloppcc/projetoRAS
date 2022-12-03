@@ -25,42 +25,27 @@ export const Navbar = () => {
     return (
         <div>
             {open && currentMenu === 0 && (
-                <Modal
-                    open={open}
-                    setOpen={closeModal}
-                    content={
-                        <DepositOrWithdraw
-                            setMenu={setCurrentMenu}
-                            setDepositing={setDeposit}
-                        />
-                    }
-                />
+                <Modal open={open} setOpen={closeModal}>
+                    <DepositOrWithdraw
+                        setMenu={setCurrentMenu}
+                        setDepositing={setDeposit}
+                    />
+                </Modal>
             )}
             {open && currentMenu === 1 && (
-                <Modal
-                    open={open}
-                    setOpen={(e) => console.log(e)}
-                    content={
-                        <PaymentMethod
-                            changeBalance={setBalance}
-                            balance={balance}
-                            setMenu={setCurrentMenu}
-                            isDepositing={deposit}
-                        />
-                    }
-                />
+                <Modal open={open} setOpen={(e) => console.log(e)}>
+                    <PaymentMethod
+                        changeBalance={setBalance}
+                        balance={balance}
+                        setMenu={setCurrentMenu}
+                        isDepositing={deposit}
+                    />
+                </Modal>
             )}
             {open && currentMenu === 3 && (
-                <Modal
-                    open={open}
-                    setOpen={closeModal}
-                    content={
-                        <FinishTransfer
-                            setOpen={setOpen}
-                            isDepositing={deposit}
-                        />
-                    }
-                />
+                <Modal open={open} setOpen={closeModal}>
+                    <FinishTransfer setOpen={setOpen} isDepositing={deposit} />
+                </Modal>
             )}
             <NavBarBody setOpen={closeModal} />
         </div>
