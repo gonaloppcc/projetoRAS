@@ -1,7 +1,8 @@
 import ExitToAppIcon from '@mui/icons-material/ExitToApp';
 import OutputIcon from '@mui/icons-material/Output';
 
-export const DepositOrwithdraw = (props) => {
+// @ts-ignore
+export const DepositOrWithdraw = (props) => {
     const clicked = (deposit: boolean) => {
         props.setMenu(1);
         deposit ? props.setDepositing(true) : props.setDepositing(false);

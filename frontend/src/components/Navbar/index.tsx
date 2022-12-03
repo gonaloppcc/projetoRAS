@@ -1,8 +1,8 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState} from 'react';
 import {Modal} from '@components/Modal';
 import {NavBarBody} from './navbarBody';
 import {PaymentMethod} from './paymentMethod';
-import {DepositOrwithdraw} from './depositOrwithdraw';
+import {DepositOrWithdraw} from './depositOrWithdraw';
 import {FinishTransfer} from './finishTransfer';
 
 const BALANCE = 100; // FIXME: This should be the user's balance
@@ -11,7 +11,7 @@ export const Navbar = () => {
     const [open, setOpen] = useState<boolean>(false);
     /*
     Menu 0: Choose between deposit and wihdraw
-    Menu 1: Choose transfer method 
+    Menu 1: Choose transfer method
     Menu 3: Say congratulations
     */
     const [currentMenu, setCurrentMenu] = useState<number>(0);
@@ -29,7 +29,7 @@ export const Navbar = () => {
                     open={open}
                     setOpen={closeModal}
                     content={
-                        <DepositOrwithdraw
+                        <DepositOrWithdraw
                             setMenu={setCurrentMenu}
                             setDepositing={setDeposit}
                         />
