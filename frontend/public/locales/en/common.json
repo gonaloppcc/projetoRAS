@@ -36,7 +36,8 @@
   "BettingSlip.mybet":"MY BET",
   "BettingSlip.singles":"Singles",
   "BettingSlip.multiples":"Multiples",
-  "BettingSlipInfo.Bet.now":"Bet now"
+  "BettingSlipInfo.Bet.now":"Bet now",
+  "createBetter.AlreadyRegistered":"Already registered? Login here."
 
 
 }

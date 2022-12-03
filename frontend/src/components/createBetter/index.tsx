@@ -44,6 +44,7 @@ export const CreateBetter = () => {
     const featurenif = intl.formatMessage({id: 'loginCard.nif'});
     const featurephone = intl.formatMessage({id: 'loginCard.phone'});
     const featurecc = intl.formatMessage({id: 'loginCard.cc'});
+    const featureAlreadyRegistered = intl.formatMessage({id: 'createBetter.AlreadyRegistered'});
 
     const submit = () => {
         // TODO: Backend call
@@ -176,7 +177,7 @@ export const CreateBetter = () => {
                             <div className="flex flex-col items-start self-stretch flex-none order-1 px-20 py-3">
                                 <div className=" text-white text-center h-12 p-2 w-24 gap-5 bg-red-600 rounded justify-center ">
                                     {/*  FIXME Em todos */}
-                                    <button type="submit">Registar</button>
+                                    <button type="submit">{featureregister}</button>
                                 </div>
                             </div>
                             <div className="flex-none order-2  ">
@@ -186,7 +187,7 @@ export const CreateBetter = () => {
                                         className="flex-none order-2 h text-lg"
                                     >
                                         {/*  FIXME Em todos */}
-                                        Já tem conta? Faça login!
+                                        {featureAlreadyRegistered}
                                     </a>
                                 </div>
                             </div>

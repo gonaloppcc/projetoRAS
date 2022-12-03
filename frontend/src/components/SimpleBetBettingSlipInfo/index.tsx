@@ -1,6 +1,5 @@
 import React from 'react';
 import {formatNumber} from '../../utils/formatters';
-
 import {useRouter} from 'next/router';
 import {FormattedMessage, useIntl} from 'react-intl';
 
@@ -15,6 +14,7 @@ export const SimpleBetBettingSlipInfo = ({
     amount,
     possibleWinnings,
     placeBetOnClick,
+    currency = '€',
 }: BettingSlipInfoProps) => {
     const intl = useIntl();
     const featureStake = intl.formatMessage({id: 'OnGoingBetRecord.Stake'});

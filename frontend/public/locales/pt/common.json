@@ -36,6 +36,7 @@
   "BettingSlip.mybet":"BOLETIM",
   "BettingSlip.singles":"Simples",
   "BettingSlip.multiples":"Múltiplas",
-  "BettingSlipInfo.Bet.now":"Apostar"
+  "BettingSlipInfo.Bet.now":"Apostar",
+  "createBetter.AlreadyRegistered":"Já estás registado? Inicie Sessão aqui."
 
 }
