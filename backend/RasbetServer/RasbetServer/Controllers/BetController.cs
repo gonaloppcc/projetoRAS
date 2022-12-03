@@ -20,15 +20,23 @@ public class BetController : ControllerBase
 
     [HttpGet("{id}", Name = "GetBet")]
     public ActionResult<Bet> GetBet(string id)
-        => Ok(JsonConvert.SerializeObject(_betRepository.GetBet(id)));
+    {
+        try
+        {
+            return Ok(JsonConvert.SerializeObject(_betRepository.GetBet(id)));
+        }
+        catch (Exception e)
+        {
+            return BadRequest();
+        } 
+    }
 
     [HttpGet(Name = "GetAllBets")]
     public ActionResult<IEnumerable<Bet>> GetAllBets([FromQuery] string userId)
     {
         try
         {
-            var bets = _betRepository.GetBets(userId);
-            return Ok(JsonConvert.SerializeObject(bets));
+            return Ok(JsonConvert.SerializeObject(_betRepository.GetBets(userId)));
         }
         catch (Exception e)
         {
@@ -39,7 +47,14 @@ public class BetController : ControllerBase
     [HttpPost(Name = "AddBet")]
     public ActionResult<Bet> AddBet(JsonElement json)
     {
-        var bet = Bet.FromJson(JObject.Parse(json.ToString()));
-        return Ok(JsonConvert.SerializeObject(_betRepository.MakeBet(bet)));
+        try
+        {
+            var bet = Bet.FromJson(JObject.Parse(json.ToString()));
+            return Ok(JsonConvert.SerializeObject(_betRepository.MakeBet(bet)));
+        }
+        catch (Exception e)
+        {
+            return BadRequest();
+        }
     }
 }

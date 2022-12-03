@@ -23,9 +23,7 @@ public class SportController : ControllerBase
         try
         {
             var sport = Sport.FromJson(JObject.Parse(json.ToString()));
-            var newSport = _sportRepository.AddSport(sport);
-
-            return Ok(JsonConvert.SerializeObject(newSport));
+            return Ok(JsonConvert.SerializeObject(_sportRepository.AddSport(sport)));
         }
         catch (Exception e)
         {
@@ -38,8 +36,7 @@ public class SportController : ControllerBase
     {
         try
         {
-            var sport = _sportRepository.GetSport(id);
-            return Ok(JsonConvert.SerializeObject(sport));
+            return Ok(JsonConvert.SerializeObject(_sportRepository.GetSport(id)));
         }
         catch (Exception e)
         {
@@ -49,5 +46,14 @@ public class SportController : ControllerBase
 
     [HttpGet(Name = "GetAllSports")]
     public ActionResult<List<Sport>> GetAllSports()
-        => Ok(JsonConvert.SerializeObject(_sportRepository.GetAllSports()));
+    {
+        try
+        { 
+            return Ok(JsonConvert.SerializeObject(_sportRepository.GetAllSports()));
+        }
+        catch (Exception e)
+        {
+            return NotFound();
+        }
+    }
 }

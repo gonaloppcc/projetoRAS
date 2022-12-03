@@ -21,11 +21,16 @@ public class CompetitionController : ControllerBase
     [HttpPost(Name = "AddCompetition")]
     public ActionResult<Competition> AddCompetition(JsonElement json)
     {
-        var comp = Competition.FromJson(JObject.Parse(json.ToString()));
-
-        var newComp = _competitionRepository.AddCompetition(comp);
-
-        return Ok(JsonConvert.SerializeObject(newComp));
+        try
+        {
+            var comp = Competition.FromJson(JObject.Parse(json.ToString()));
+            var newComp = _competitionRepository.AddCompetition(comp);
+            return Ok(JsonConvert.SerializeObject(newComp));
+        }
+        catch (Exception e)
+        {
+            return BadRequest();
+        }
     }
 
     [HttpGet("{id}", Name = "GetCompetition")]

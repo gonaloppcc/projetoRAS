@@ -6,5 +6,6 @@ public interface IUserRepository {
     User GetUser(string id);
     User LoginUser(string email, string password);
     User AddUser(User user);
-    bool ChangePassword(string id, string password);
+    void DeleteUser(string id);
+    void ChangePassword(string id, string password);
 }

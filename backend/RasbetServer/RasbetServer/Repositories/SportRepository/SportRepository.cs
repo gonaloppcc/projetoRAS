@@ -1,3 +1,4 @@
+using Microsoft.EntityFrameworkCore;
 using RasbetServer.Models.Events;
 using RasbetServer.Repositories.Contexts;
 
@@ -14,7 +15,10 @@ public class SportRepository : BaseRepository, ISportRepository
         var sport = _context.Sports.Add(s);
         _context.SaveChanges();
 
-        return sport.Entity;
+        // Refresh _context cache
+        sport.State = EntityState.Detached;
+        return _context.Sports.Find(sport.Entity.Id) 
+               ?? throw new InvalidOperationException();
     }
 
     public Sport GetSport(string id)

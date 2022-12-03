@@ -1,9 +1,11 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json.Linq;
 
 namespace RasbetServer.Models.Events;
 
+[Index(nameof(Name), IsUnique = true)]
 public class Competition
 {
     [Key]

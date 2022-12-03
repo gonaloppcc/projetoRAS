@@ -11,6 +11,8 @@ namespace RasbetServer.Repositories.Contexts;
 public class AppDbContext : DbContext {
     public DbSet<User> Users { get; set; }
     public DbSet<Better> Betters { get; set; }
+    public DbSet<Specialist> Specialists { get; set; }
+    public DbSet<Administrator> Administrators { get; set; }
     public DbSet<Transaction> Transactions { get; set; }
     
     public DbSet<Event> Events { get; set; }

@@ -1,3 +1,4 @@
+using Microsoft.EntityFrameworkCore;
 using RasbetServer.Models.Bets;
 using RasbetServer.Models.Users;
 using RasbetServer.Repositories.Contexts;
@@ -18,7 +19,10 @@ public class BetRepository : BaseRepository, IBetRepository
         user.TransactionHist.Add(new Transaction(-bet.Amount));
         _context.SaveChanges();
 
-        return newBet.Entity;
+        // Refresh _context cache
+        newBet.State = EntityState.Detached;
+        return _context.Bets.Find(newBet.Entity.Id) 
+               ?? throw new InvalidOperationException();
     }
 
     public Bet GetBet(string id)

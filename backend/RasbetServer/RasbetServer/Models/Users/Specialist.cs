@@ -8,6 +8,8 @@ namespace RasbetServer.Models.Users;
 public class Specialist : User {
     [Required]
     public virtual List<SportSpecialistIds> Specialties { get; set; }
+    
+    public Specialist() : base() { }
 
     public Specialist(
         string? id,

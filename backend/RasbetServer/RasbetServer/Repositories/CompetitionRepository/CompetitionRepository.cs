@@ -1,3 +1,4 @@
+using Microsoft.EntityFrameworkCore;
 using RasbetServer.Models.Events;
 using RasbetServer.Repositories.Contexts;
 
@@ -12,8 +13,11 @@ public class CompetitionRepository : BaseRepository, ICompetitionRepository
     {
         var comp = _context.Competitions.Add(c);
         _context.SaveChanges();
-
-        return comp.Entity;
+        
+        // Refresh _context cache
+        comp.State = EntityState.Detached;
+        return _context.Competitions.Find(comp.Entity.Id) 
+               ?? throw new InvalidOperationException();
     }
 
     public Competition GetCompetition(string id)

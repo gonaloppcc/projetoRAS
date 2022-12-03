@@ -21,8 +21,7 @@ public class SportSpecialistIds
     public static SportSpecialistIds FromJson(JObject json)
     {
         string sportId = json[nameof(SportId)].Value<string>();
-        string specialistId = json[nameof(SpecialistId)].Value<string>();
 
-        return new SportSpecialistIds { SpecialistId = specialistId, SportId = sportId };
+        return new SportSpecialistIds { SportId = sportId };
     }
 }

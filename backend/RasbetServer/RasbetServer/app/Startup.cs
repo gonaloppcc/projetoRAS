@@ -19,8 +19,11 @@ public class Startup {
 
     public Startup(IConfiguration configuration) {
         Configuration = configuration;
-        ConnectionString = "server=localhost;database=rasbet;user=root;password=root";
-        //ConnectionString = Configuration.GetConnectionString("DefaultCon") ?? throw new InvalidOperationException();
+        ConnectionString = new ConfigurationBuilder()
+            .SetBasePath($"{Directory.GetCurrentDirectory()}/app")
+            .AddJsonFile("appsettings.json")
+            .Build()
+            .GetConnectionString("MySQLConnection");
     }
 
     public void ConfigureServices(IServiceCollection services) {

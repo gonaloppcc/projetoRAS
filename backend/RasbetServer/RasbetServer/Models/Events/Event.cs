@@ -6,10 +6,12 @@ namespace RasbetServer.Models.Events;
 
 public abstract class Event
 {
-    [Key] [DatabaseGenerated(DatabaseGeneratedOption.Identity)] public string? Id { get; set; } = null;
+    [Key]
+    [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+    public string? Id { get; set; } = null;
 
     [Required]
-    [ForeignKey("ParticipantId")]
+    [ForeignKey("ParticipantsId")]
     public string? ParticipantsId { get; set; } = null;
     public BaseParticipants Participants { get; set; }
     

@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace RasbetServer.Models.Users;
 
+[Index(nameof(Email), IsUnique = true)]
 public abstract class User {
     [Key]
     [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
