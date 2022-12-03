@@ -20,6 +20,21 @@ const MOCK_COMPETITIONS: CompetitionProps[] = [
         eventType: 'basketball',
         isFavorite: false,
     },
+    {
+        name: 'EUA - MLB',
+        eventType: 'baseball',
+        isFavorite: false,
+    },
+    {
+        name: 'Maia - Challenger',
+        eventType: 'tennis',
+        isFavorite: false,
+    },
+    {
+        name: 'Vila do Conde - Challenger',
+        eventType: 'tennis',
+        isFavorite: true,
+    },
 ];
 
 export interface PageLayoutProps {
@@ -31,13 +46,13 @@ export const PageLayout = ({children}: PageLayoutProps) => {
         <div className="w-screen h-screen flex flex-col">
             <Navbar />
             <div className="w-full h-full p-8 bg-CULTURED flex flex-row justify-center gap-8">
-                <div className="hidden md:flex flex-row justify-start w-1/5">
+                <div className="hidden md:flex flex-row justify-start w-3/12">
                     <Competitions competitions={MOCK_COMPETITIONS} />
                 </div>
-                <div className="flex flex-row justify-center w-3/5">
+                <div className="flex flex-row justify-center w-6/12">
                     {children}
                 </div>
-                <div className="hidden md:flex flex-row justify-center w-1/5">
+                <div className="hidden md:flex flex-row justify-center w-3/12 max-h-full">
                     <BettingSlip />
                 </div>
             </div>

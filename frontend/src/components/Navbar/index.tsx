@@ -1,58 +1,53 @@
-import React from 'react';
-import Image from 'next/image';
-import {Navlink} from '@components/Navlink';
-import Link from 'next/link';
-
-import {useRouter} from 'next/router';
-import {FormattedMessage, useIntl} from 'react-intl';
+import React, {useState} from 'react';
+import {Modal} from '@components/Modal';
+import {NavBarBody} from './navbarBody';
+import {PaymentMethod} from './paymentMethod';
+import {DepositOrWithdraw} from './depositOrWithdraw';
+import {FinishTransfer} from './finishTransfer';
 
 const BALANCE = 100; // FIXME: This should be the user's balance
-
 export const Navbar = () => {
-    const intl = useIntl();
-    const featureSports = intl.formatMessage({id: 'navbar.sports'});
-    const featurePromotion = intl.formatMessage({id: 'navbar.promotion'});
-    const featureBets = intl.formatMessage({id: 'navbar.bets'});
+    const [balance, setBalance] = useState(BALANCE);
+    const [open, setOpen] = useState<boolean>(false);
+    /*
+    Menu 0: Choose between deposit and wihdraw
+    Menu 1: Choose transfer method
+    Menu 3: Say congratulations
+    */
+    const [currentMenu, setCurrentMenu] = useState<number>(0);
+    const [deposit, setDeposit] = useState<boolean>(true);
 
-    const navlinks = [
-
-        {
-            name: featureSports, // FIXME: Name is in portuguese, needs to be generic
-            href: '/', // FIXME: Change this href to the sports page
-            isActive: false, // FIXME Change this to true if the current page is the sports page
-        },
-        {
-            name: featurePromotion, // FIXME: Same as above
-            href: '/',
-            isActive: true,
-        },
-    ];
+    const closeModal = (open: boolean) => {
+        setOpen(open);
+        setCurrentMenu(0);
+    };
 
     return (
-        <div className="hidden md:flex flex-row justify-between items-center px-8 h-12 gap-3 bg-IMPERIAL_RED">
-            <div className="h-full flex flex-row items-center gap-8">
-                <Image src={'/logo.png'} width={50} height={50} />
-                <div className="h-full flex flex-row ">
-                    {navlinks.map((navlink) => (
-                        <Navlink key={navlink.name} {...navlink} />
-                    ))}
-                </div>
-            </div>
-            <div className="flex flex-row justify-end items-center p-0 gap-12">
-                <span className="text-WHITE rounded-2xl bg-RUBY_RED px-4 py-2">
-                    {BALANCE} €
-                </span>
-
-                <Link href="better/bets" className="text-WHITE">
-                    {featureBets /* FIXME Hardcoded for now */}
-                </Link>
-                <div className="flex flex-row items-center gap-2">
-                    <div className="w-8 h-8 rounded-full bg-LIGHT_GRAY" />
-                    <span className="text-WHITE">
-                        {'Marco Costa' /* FIXME Hardcoded for now */}
-                    </span>
-                </div>
-            </div>
+        <div>
+            {open && currentMenu === 0 && (
+                <Modal open={open} setOpen={closeModal}>
+                    <DepositOrWithdraw
+                        setMenu={setCurrentMenu}
+                        setDepositing={setDeposit}
+                    />
+                </Modal>
+            )}
+            {open && currentMenu === 1 && (
+                <Modal open={open} setOpen={(e) => console.log(e)}>
+                    <PaymentMethod
+                        changeBalance={setBalance}
+                        balance={balance}
+                        setMenu={setCurrentMenu}
+                        isDepositing={deposit}
+                    />
+                </Modal>
+            )}
+            {open && currentMenu === 3 && (
+                <Modal open={open} setOpen={closeModal}>
+                    <FinishTransfer setOpen={setOpen} isDepositing={deposit} />
+                </Modal>
+            )}
+            <NavBarBody setOpen={closeModal} />
         </div>
     );
 };
