@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using RasbetServer.Models.Users;
-using RasbetServer.Repositories;
+using RasbetServer.Repositories.UserRepository;
 
 namespace RasbetServer.Controllers;
 

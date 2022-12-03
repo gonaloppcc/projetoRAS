@@ -4,28 +4,31 @@ using RasbetServer.Models.Events.Participants;
 
 namespace RasbetServer.Models.Events;
 
-public abstract class Event {
-    [Key] public ulong? Id { get; }
-    [Required] public IParticipants Participants { get; }
-    [Required] public DateTime Date { get; }
+public abstract class Event
+{
+    [Key] [DatabaseGenerated(DatabaseGeneratedOption.Identity)] public string? Id { get; set; } = null;
 
-    [Required]
-    [ForeignKey("CompetitionId")]
-    public string Competition { get; }
+    [Required] [ForeignKey("ParticipantId")] public string? ParticipantsId { get; set; } = null;
+    public BaseParticipants Participants { get; set; }
+    [Required] public DateTime Date { get; set; }
 
+    [Required] [ForeignKey("CompetitionId")] public string CompetitionId { get; set; }
+    public Competition Competition { get; set; }
+    
     [Required] public bool Completed { get; set; }
 
+    public Event() { }
+    
     public Event(
-        ulong? id,
-        IParticipants participants,
+        BaseParticipants participants,
         DateTime date,
-        string competition,
+        string competitionId,
         bool completed
-    ) {
-        Id = id;
+    )
+    {
         Participants = participants;
         Date = date;
-        Competition = competition;
+        CompetitionId = competitionId;
         Completed = completed;
     }
 }

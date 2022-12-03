@@ -1,7 +1,7 @@
 ﻿using RasbetServer.Models.Users;
 using RasbetServer.Repositories.Contexts;
 
-namespace RasbetServer.Repositories;
+namespace RasbetServer.Repositories.UserRepository;
 
 public class UserRepository : BaseRepository, IUserRepository {
     public UserRepository(AppDbContext context) : base(context) {

@@ -1,6 +1,6 @@
 ﻿using RasbetServer.Models.Users;
 
-namespace RasbetServer.Repositories;
+namespace RasbetServer.Repositories.UserRepository;
 
 public interface IUserRepository {
     User GetUser(string id);
