@@ -10,7 +10,9 @@ export const PaymentMethod = (props) => {
 
     const handleChange = (e) => {
         const {name, value} = e.target;
-        setChange(parseFloat(value));
+        if (value === '') {
+            setChange(0);
+        } else setChange(parseFloat(value));
         setIsSubmitting(false);
     };
 
