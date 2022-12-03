@@ -1,5 +1,6 @@
 import type {NextPage} from 'next';
 import {EventCard, EventCardProps} from '@components/EventCard';
+import {useEvents} from '@hooks/useEvents';
 import {PageLayout} from '@components/PageLayout';
 
 /* FIXME Mock data hardcoded */
@@ -33,6 +34,8 @@ const MOCK_EVENTS: EventCardProps[] = [
     MOCK_EVENT,
 ];
 const Home: NextPage = () => {
+    const {isSuccess, isLoading, isError, events, error} = useEvents('0');
+
     const listOdds = [
         {name: 'Porto', price: 32},
         {name: 'Empate', price: 32},
