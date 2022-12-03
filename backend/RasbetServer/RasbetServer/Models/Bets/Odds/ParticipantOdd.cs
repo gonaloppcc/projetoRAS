@@ -1,3 +1,4 @@
+using System.ComponentModel.DataAnnotations;
 using RasbetServer.Models.Events;
 using RasbetServer.Models.Events.Participants;
 using RasbetServer.Models.Events.Participants.Participant;
@@ -6,7 +7,7 @@ namespace RasbetServer.Models.Bets.Odds;
 
 public class ParticipantOdd : Odd
 {
-    public Participant Part;
+    [Required] public Participant Part;
 
     public ParticipantOdd(
         ulong? id,

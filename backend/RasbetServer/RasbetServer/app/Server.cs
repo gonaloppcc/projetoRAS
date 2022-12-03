@@ -1,27 +1,20 @@
 using System.Text;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
+using RasbetServer.app;
+using RasbetServer.Repositories;
+using RasbetServer.Repositories.Contexts;
 
-var builder = WebApplication.CreateBuilder(args);
-builder.Services.AddControllers();
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-    .AddJwtBearer(options => {
-        options.TokenValidationParameters = new TokenValidationParameters {
-            ValidateIssuer = true,
-            ValidateAudience = true,
-            ValidateLifetime = true,
-            ValidateIssuerSigningKey = true,
-            //ValidIssuer = Configuration["Jwt:Issuer"],
-            //ValidAudience = Configuration["Jwt:Issuer"],
-            //IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["Jwt:Key"]))
-        };
-    });
+var host = WebHost.CreateDefaultBuilder(args)
+    .UseStartup<Startup>()
+    .Build();
 
-var app = builder.Build();
-app.UseHttpsRedirection();
-app.UseAuthorization();
-app.MapControllers();
-app.Run();
+using (var scope = host.Services.CreateScope())
+using (var context = scope.ServiceProvider.GetService<AppDbContext>())
+    context?.Database.EnsureCreated();
+
+host.Run();
