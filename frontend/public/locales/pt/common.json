@@ -4,6 +4,11 @@
   "coisa" : "Aceder",
   "loginCard.register": "Registar",
   "loginCard.ForgetPassword": "Esqueci-me da palavra-passe",
+  "loginCard.EnterMail": "Introduza um email para recuperar o acesso à conta.",
+  "loginCard.SendMail": "Enviar email",
+  "loginCard.Message": "Introduza o código que foi enviado para o seu email.",
+  "loginCard.Code": "Código",
+  "loginCard.CheckCode": "Verificar Código",
   "loginCard.error.min4car": "A palavra-passe não é válida!",
   "loginCard.errorpassword": "A palavra-passe está incorreta!",
   "loginCard.Required":"Campo obrigatório!",
@@ -38,6 +43,14 @@
   "BettingSlip.multiples":"Múltiplas",
   "BettingSlipInfo.Bet.now":"Apostar",
   "createBetter.AlreadyRegistered":"Já estás registado? Inicie Sessão aqui.",
-  "MultipleBetBettingSlipInfo":"Montante"
+  "MultipleBetBettingSlipInfo.Stake":"Montante",
+  "Main.Draw":"Empate",
+  "MoneyOperation.Deposit":"Depósito",
+  "MoneyOperation.Withdraw":"Levantamento",
+  "MoneyOperation.WinningBet":"Aposta Ganha",
+  "MoneyOperation.LostBet":"Aposta Perdida",
+  "MoneyOperation.Operation":"Operação",
+  "MoneyOperation.Balance":"Saldo após movimento"
+  
 
 }

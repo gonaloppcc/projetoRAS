@@ -3,6 +3,11 @@
   "coisa" : "Login",
   "loginCard.register": "Register",
   "loginCard.ForgetPassword": "Forget my password",
+  "loginCard.EnterMail": "Enter a email to regain access to the account.",
+  "loginCard.SendMail": "Send email",
+  "loginCard.Message": "Enter the code that was sent to your email.",
+  "loginCard.Code": "Code",
+  "loginCard.CheckCode": "Check Code",
   "loginCard.error.min4car": "The password is not valid!",
   "loginCard.errorpassword": "The password is wrong!",
   "loginCard.Required":"Required field!",
@@ -38,7 +43,13 @@
   "BettingSlip.multiples":"Multiples",
   "BettingSlipInfo.Bet.now":"Bet now",
   "createBetter.AlreadyRegistered":"Already registered? Login here.",
-  "MultipleBetBettingSlipInfo":"Stake"
-
+  "MultipleBetBettingSlipInfo.Stake":"Stake",
+  "Main.Draw":"Draw",
+  "MoneyOperation.Deposit":"Deposit",
+  "MoneyOperation.Withdraw":"Withdraw",
+  "MoneyOperation.WinningBet":"Winning Bet",
+  "MoneyOperation.LostBet":"Lost Bet",
+  "MoneyOperation.Operation":"Operation",
+  "MoneyOperation.Balance":"Balance after transaction"
 
 }

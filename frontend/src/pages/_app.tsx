@@ -7,8 +7,8 @@ import en from '../../public/locales/en/common.json';
 import '../styles/globals.css';
 
 const messages = {
-    en,
     pt,
+    en,
 };
 
 function getDirection(locale) {

@@ -1,41 +1,46 @@
 import type {NextPage} from 'next';
 import {EventCard, EventCardProps} from '@components/EventCard';
 import {PageLayout} from '@components/PageLayout';
-
-/* FIXME Mock data hardcoded */
-const MOCK_EVENT: EventCardProps = {
-    eventId: '1',
-    eventName: 'Real Madrid vs Barcelona',
-    eventType: 'football',
-    commenceTime: new Date().toString(),
-    odds: [
-        {
-            name: 'Real Madrid',
-            price: 1.54,
-        },
-        {
-            name: 'Empate',
-            price: 2.57,
-        },
-        {
-            name: 'Barcelona',
-            price: 3.59,
-        },
-    ],
-};
-
-const MOCK_EVENTS: EventCardProps[] = [
-    MOCK_EVENT,
-    MOCK_EVENT,
-    MOCK_EVENT,
-    MOCK_EVENT,
-    MOCK_EVENT,
-    MOCK_EVENT,
-    MOCK_EVENT,
-    MOCK_EVENT,
-];
+import {FormattedMessage, useIntl} from 'react-intl';
 
 const Home: NextPage = () => {
+    const intl = useIntl();
+    const featureDraw = intl.formatMessage({id: 'Main.Draw'});
+
+        /* FIXME Mock data hardcoded */
+    const MOCK_EVENT: EventCardProps = {
+        eventId: '1',
+        eventName: 'Real Madrid vs Barcelona',
+        eventType: 'football',
+        commenceTime: new Date().toString(),
+        odds: [
+            {
+                name: 'Real Madrid',
+                price: 1.54,
+            },
+            {
+                name: featureDraw,
+                price: 2.57,
+            },
+            {
+                name: 'Barcelona',
+                price: 3.59,
+            },
+        ],
+    };
+
+    const MOCK_EVENTS: EventCardProps[] = [
+        MOCK_EVENT,
+        MOCK_EVENT,
+        MOCK_EVENT,
+        MOCK_EVENT,
+        MOCK_EVENT,
+        MOCK_EVENT,
+        MOCK_EVENT,
+        MOCK_EVENT,
+    ];
+
+
     return (
         <PageLayout>
             <div className="flex flex-col justify-start gap-3 w-full">
