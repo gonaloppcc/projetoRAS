@@ -32,9 +32,9 @@ const MOCK_EVENTS = [
 
 const Home: NextPage = () => {
     return (
-        <div className="gap-8 h-screen w-screen justify-center flex items-center bg-CULTURED">
+        <div className="gap-8 h-screen w-screen justify-center pt-5 flex items-center bg-CULTURED">
             <div className=" flex flex-col gap-5 items-top pt-10  min-h-screen w-max  ">
-                <div className="bg-white h-fit pl-5  text-xl inline-block py-2 ">
+                <div className="bg-white h-fit pl-5   text-xl inline-block py-2 ">
                     {/* TODO: Alterar*/}
                     JOGOS
                 </div>
