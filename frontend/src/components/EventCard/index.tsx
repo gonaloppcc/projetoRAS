@@ -1,20 +1,9 @@
 import React from 'react';
 import {OddCard} from '../OddCard';
 import {useBettingSlip} from '@state/useBettingSlip';
-import {Event} from '../../domain/Event';
-
-interface Odd {
-    name: string;
-    price: number;
-}
-
-export interface EventCardProps {
-    eventId: string;
-    eventName: string;
-    eventType: string;
-    commenceTime: string;
-    odds: Odd[];
-}
+import {Event} from '@domain/Event';
+import {formatDate} from '../../utils/formatters';
+import {Odd} from '@domain/Bet';
 
 export const EventCard = ({
     Id,
@@ -32,16 +21,22 @@ export const EventCard = ({
 
     const eventType = Competition.Sport.Name;
 
-    const odds = [
+    const odds: Odd[] = [
         {
+            Id: Participants.Home.Participant.Id,
+            PartId: '',
             name: homeName,
             price: Participants.Home.Participant.Price,
         },
         {
+            Id: Participants.Away.Participant.Id + '2', // FIXME: This is not correct, the Id should be the Tie Odd Id
+            PartId: '',
             name: 'Empate',
             price: 2.57, // FIME: Hardcoded for now
         },
         {
+            Id: Participants.Away.Participant.Id,
+            PartId: '',
             name: awayName,
             price: Participants.Away.Participant.Price,
         },
@@ -54,11 +49,7 @@ export const EventCard = ({
     };
 
     // TODO: Improve the date format
-    const dateString = new Date(date).toLocaleDateString('pt-PT', {
-        minute: 'numeric',
-        hour: 'numeric',
-        weekday: 'long',
-    });
+    const dateString = formatDate(date);
     return (
         <div className="flex flex-row justify-between items-center px-4 min-w-min w-full h-20 drop-shadow-sm rounded bg-WHITE gap-5">
             <div className="flex flex-row items-center gap-1">
@@ -71,9 +62,9 @@ export const EventCard = ({
                 </div>
             </div>
             <div className="h-full flex flex-row justify-end items-center gap-2">
-                {odds.map((odd) => (
+                {odds.map((odd, index) => (
                     <OddCard
-                        key={odd.name}
+                        key={odd.Id}
                         {...odd}
                         placeOddHandler={addBetHandler(odd)}
                     />

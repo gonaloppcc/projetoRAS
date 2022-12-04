@@ -1,5 +1,5 @@
 import {useQuery} from '@tanstack/react-query';
-import {getEvent} from '../services/event';
+import {getEvent} from '../services/backend/event';
 
 export interface useEventsProps {
     isSuccess: boolean;

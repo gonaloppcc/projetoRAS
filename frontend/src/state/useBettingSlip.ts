@@ -1,5 +1,7 @@
 import create from 'zustand';
 import {v4 as uuidv4} from 'uuid';
+import {addSimpleBet, AddSimpleBetProps} from '../services/backend/bet';
+import {Odd} from '@domain/Bet';
 
 export enum Currency {
     EUR = '€',
@@ -9,11 +11,6 @@ export enum Currency {
 export enum BetType {
     Simple,
     Multiple,
-}
-
-export interface Odd {
-    name: string;
-    price: number;
 }
 
 export interface BetState {
@@ -95,9 +92,31 @@ export const useBettingSlip = create<ReportState>((set) => ({
     setBettingAmount: (bettingAmount: number) => set({bettingAmount}),
 
     submitReport: async () =>
-        set(() => {
+        set(({betType, bets}) => {
+            if (bets.length === 0) {
+                return {};
+            }
             // TODO: Connect to backend
+            switch (betType) {
+                case BetType.Simple:
+                    console.log({odd: bets[0].odd});
+                    const simpleBet: AddSimpleBetProps = {
+                        Date: '2022-11-26T16:01:17.0065405+00:00',
+                        OddId: bets[0].odd.Id,
+                        BetterId: '0',
+                        Amount: bets[0].bettingAmount as number,
+                        EventId: '',
+                    };
+                    console.log({simpleBet});
 
-            return {bets: []}; // Just clearing the bets for now
+                    addSimpleBet(simpleBet);
+                    break;
+                case BetType.Multiple:
+                    break;
+                default:
+                    break;
+            }
+
+            return {bets: []}; // Just clearing the bets
         }),
 }));

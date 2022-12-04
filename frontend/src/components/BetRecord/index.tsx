@@ -1,5 +1,8 @@
 import React from 'react';
 import {SportsSoccer} from '@mui/icons-material';
+import {formatDate} from '../../utils/formatters';
+import {SportIcon} from '@components/SportIcon';
+import {Bet} from '@domain/Bet';
 
 export interface BetRecordProps {
     eventName: string;
@@ -13,19 +16,32 @@ export interface BetRecordProps {
 }
 
 export const BetRecord = ({
-    eventName,
-    eventDate,
-    eventType,
-    betName,
-    betOdd,
-    betAmount,
-    betWinnings,
-}: BetRecordProps) => {
+    Id,
+    Odd: {Id: OddId, PartId, Price},
+    EventId,
+    Date,
+    Closed,
+    BetterId,
+    Amount,
+}: Bet) => {
     // FIXME: Hardcoded text in this component
+    const betName = `Resultado Final: ${PartId}`;
+
+    const eventType = 'Football';
+
+    const eventName = 'FC Porto vs. Benfica';
+
+    const betWinnings = Amount * Price; // FIXME: This is not correct, the better could lose the bet
+
+    const cancelBetHandler = () => {
+        console.log('Aposta cancelada');
+    };
+
+    const dateFormatted = formatDate(Date);
     return (
         <div className="flex flex-row justify-between items-center px-4 gap-8 bg-WHITE rounded">
             <div className="flex flex-row justify-center items-center gap-4">
-                <SportsSoccer />
+                <SportIcon eventType={eventType} />
                 <div className="flex flex-col items-start p-0 gap-1">
                     <span className="text-EERIE_BLACK text-base font-semibold">
                         {betName}
@@ -35,13 +51,15 @@ export const BetRecord = ({
             </div>
             <div className="flex flex-col items-start p-0 gap-2">
                 <span className="text-LIGHT_GRAY text-sm">{'Data'}</span>
-                <span className="text-EERIE_BLACK text-base">{eventDate}</span>
+                <span className="text-EERIE_BLACK text-base">
+                    {dateFormatted}
+                </span>
             </div>
 
             <div className="flex flex-col items-start p-0 gap-2">
                 <span className="text-LIGHT_GRAY text-sm">{'Cota'}</span>
                 <span className="text-SPECIAL text-base font-semibold">
-                    {betOdd}
+                    {Price}
                 </span>
             </div>
 
@@ -50,7 +68,7 @@ export const BetRecord = ({
                     {'Valor apostado'}
                 </span>
                 <span className="text-EERIE_BLACK text-base font-semibold">
-                    {betAmount} €{' '}
+                    {Amount} €{' '}
                     {/* FIXME: Money currency is hardcoded and can vary */}
                 </span>
             </div>
