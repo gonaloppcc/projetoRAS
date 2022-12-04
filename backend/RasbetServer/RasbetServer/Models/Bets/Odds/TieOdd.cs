@@ -35,8 +35,10 @@ public class TieOdd : Odd
     public override string GetName()
         => "Tie";
 
-    public static TieOdd FromJson(JObject json)
+    public static TieOdd? FromJson(JObject? json)
     {
+        if (json is null)
+            return null;
         float price = json[nameof(Price)].Value<float>();
         Promotion? promotion = Promotion.FromJson(json[nameof(Promo)].ToObject<JObject>());
 
