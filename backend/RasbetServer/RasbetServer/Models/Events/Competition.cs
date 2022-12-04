@@ -9,10 +9,6 @@ namespace RasbetServer.Models.Events;
 public class Competition
 {
     [Key]
-    [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-    public string? Id { get; set; } = null;
-
-    [Required]
     [MaxLength(40)]
     public string Name { get; set; }
 
@@ -21,13 +17,6 @@ public class Competition
     public string SportId { get; set; }
     public virtual Sport Sport { get; set; }
 
-    public Competition(string id, string name, string sportId)
-    {
-        Id = id;
-        Name = name;
-        SportId = sportId;
-    }
-    
     public Competition(string name, string sportId)
     {
         Name = name;

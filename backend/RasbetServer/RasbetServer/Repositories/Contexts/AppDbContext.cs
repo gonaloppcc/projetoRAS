@@ -54,30 +54,30 @@ public class AppDbContext : DbContext {
 
     private void SeedSports()
     {
-        Sports.Add(new Sport ("0", "Football"));
-        Sports.Add(new Sport("1", "Basketball"));
-        Sports.Add(new Sport("2", "Tennis"));
-        Sports.Add(new Sport("3", "Volleyball"));
-        Sports.Add(new Sport("4", "Hockey"));
-        Sports.Add(new Sport("5", "Baseball"));
-        Sports.Add(new Sport("6", "Handball"));
-        Sports.Add(new Sport("7", "Rugby"));
-        Sports.Add(new Sport("8", "Cricket"));
-        Sports.Add(new Sport("9", "American Football"));
-        Sports.Add(new Sport("10", "Ice Hockey"));
+        Sports.Add(new Sport("Football"));
+        Sports.Add(new Sport("Basketball"));
+        Sports.Add(new Sport("Tennis"));
+        Sports.Add(new Sport("Volleyball"));
+        Sports.Add(new Sport("Hockey"));
+        Sports.Add(new Sport("Baseball"));
+        Sports.Add(new Sport("Handball"));
+        Sports.Add(new Sport("Rugby"));
+        Sports.Add(new Sport("Cricket"));
+        Sports.Add(new Sport("American Football"));
+        Sports.Add(new Sport("Ice Hockey"));
     }
 
     private void SeedCompetitions()
     {
-        Competitions.Add(new Competition("0", "Premier League", "0"));
-        Competitions.Add(new Competition("1", "Championship", "0"));
-        Competitions.Add(new Competition("2", "League One", "0"));
-        Competitions.Add(new Competition("3", "League Two", "0"));
-        Competitions.Add(new Competition("4", "National League", "0"));
-        Competitions.Add(new Competition("5", "National League North", "0"));
-        Competitions.Add(new Competition("6", "National League South", "0"));
-        Competitions.Add(new Competition("7", "NBA", "1"));
-        Competitions.Add(new Competition("8", "NCAA", "1"));
+        Competitions.Add(new Competition("Premier League", "Football"));
+        Competitions.Add(new Competition("Championship", "Football"));
+        Competitions.Add(new Competition("League One", "Football"));
+        Competitions.Add(new Competition("League Two", "Football"));
+        Competitions.Add(new Competition("National League", "Football"));
+        Competitions.Add(new Competition("National League North", "Football"));
+        Competitions.Add(new Competition("National League South", "Football"));
+        Competitions.Add(new Competition("NBA", "Basketball"));
+        Competitions.Add(new Competition("NCAA", "Basketball"));
     }
 
     private void SeedParticipants()
