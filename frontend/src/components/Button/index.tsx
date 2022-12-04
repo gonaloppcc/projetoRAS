@@ -4,7 +4,7 @@ interface ButtonProps {
     children: React.ReactNode;
     disabled?: boolean;
     onClick?: React.MouseEventHandler<HTMLButtonElement>;
-    type?: ButtonHTMLAttributes<HTMLButtonElement>;
+    type?: ButtonHTMLAttributes<HTMLButtonElement>['type'];
 }
 
 export const PrimaryButton = ({

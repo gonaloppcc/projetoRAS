@@ -1,5 +1,5 @@
 import {PrimaryButton} from '@components/Button';
-import {InputForm} from '@components/createBetter/inputForm';
+import {HandleChangeProps, InputForm} from '@components/createBetter/inputForm';
 import React, {useState} from 'react';
 
 export interface ForgetPasswordProps {
@@ -9,8 +9,7 @@ export interface ForgetPasswordProps {
 export const InsertCodeBody = ({code}: ForgetPasswordProps) => {
     const [insertedCode, setInsertedCode] = useState<string>('');
 
-    const codeInserted = (e) => {
-        const {name, value} = e.target;
+    const codeInserted = ({value}: HandleChangeProps) => {
         setInsertedCode(value);
     };
     const compareCodes = () => {
@@ -31,7 +30,7 @@ export const InsertCodeBody = ({code}: ForgetPasswordProps) => {
             <div>Introduza o código que foi enviado para o seu mail.</div>
             <div className=" relative z-0">
                 <InputForm
-                    htmlForm="number"
+                    type="number"
                     name="Code"
                     id="code"
                     value={insertedCode}
