@@ -1,10 +1,11 @@
 import React from 'react';
 import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
 import {FormattedMessage, useIntl} from 'react-intl';
+import { AddAPhotoOutlined } from '@mui/icons-material';
 
-
+    
 export enum OperationType {
-    DEPOSIT = 'Depósito',
+    DEPOSIT = 'Depositar',
     WITHDRAW = 'Retiro',
     BET_WIN = 'Aposta Ganha',
     BET_LOSS = 'Aposta Perdida',
@@ -28,11 +29,6 @@ export const MoneyOperation = ({
 }: MoneyOperationProps) => {
 
     const intl = useIntl();
-
-    const featureDeposit = intl.formatMessage({id: 'MoneyOperation.Deposit'});
-    const featureWithdraw = intl.formatMessage({id: 'MoneyOperation.Withdraw'});
-    const featureWinningBet = intl.formatMessage({id: 'MoneyOperation.WinningBet'});
-    const featureLostBet = intl.formatMessage({id: 'MoneyOperation.LostBet'});
     const featureDate = intl.formatMessage({id: 'OnGoingBetRecord.Date'});
     const featureOperation = intl.formatMessage({id: 'MoneyOperation.Operation'});
     const featureBalance = intl.formatMessage({id: 'MoneyOperation.Balance'});
@@ -56,7 +52,7 @@ export const MoneyOperation = ({
 
             {operationType === OperationType.DEPOSIT && (
                 <div className={`${OPERATION_STYLES} bg-RIGHT_GREEN`}>
-                    <span className="text-xs">Operação</span>
+                    <span className="text-xs">{featureOperation}</span>
                     <span className="text-base font-semibold">
                         + {operationAmount} €
                         {/* FIXME: Money currency is hardcoded and can vary */}
