@@ -16,12 +16,12 @@ public class CompetitionRepository : BaseRepository, ICompetitionRepository
         
         // Refresh _context cache
         comp.State = EntityState.Detached;
-        return _context.Competitions.Find(comp.Entity.Id) 
+        return _context.Competitions.Find(comp.Entity.Name) 
                ?? throw new InvalidOperationException();
     }
 
-    public Competition GetCompetition(string id)
-        => (from c in _context.Competitions where c.Id == id select c).Single();
+    public Competition GetCompetition(string name)
+        => (from c in _context.Competitions where c.Name == name select c).Single();
 
     public IEnumerable<Competition> GetAllCompetitions(string sportId)
         => (from c in _context.Competitions where c.SportId == sportId select c).ToList();

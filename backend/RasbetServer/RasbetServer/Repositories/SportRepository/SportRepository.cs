@@ -17,12 +17,12 @@ public class SportRepository : BaseRepository, ISportRepository
 
         // Refresh _context cache
         sport.State = EntityState.Detached;
-        return _context.Sports.Find(sport.Entity.Id) 
+        return _context.Sports.Find(sport.Entity.Name) 
                ?? throw new InvalidOperationException();
     }
 
-    public Sport GetSport(string id)
-        => (from s in _context.Sports where s.Id == id select s).Single();
+    public Sport GetSport(string name)
+        => (from s in _context.Sports where s.Name == name select s).Single();
 
     public IEnumerable<Sport> GetAllSports()
         => _context.Sports.ToList();

@@ -1,5 +1,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using RasbetServer.Models.Events.Participants;
 
 namespace RasbetServer.Models.Events;
@@ -37,5 +39,14 @@ public abstract class Event
         Date = date;
         CompetitionId = competitionId;
         Completed = completed;
+    }
+
+    public static Event FromJson(JObject json)
+    {
+        return json["Sport"].Value<string>() switch
+        {
+            FootballEvent.Sport => FootballEvent.FromJson(json),
+            _ => throw new JsonException()
+        };
     }
 }
