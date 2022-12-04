@@ -3,17 +3,12 @@ import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
 import {FormattedMessage, useIntl} from 'react-intl';
 import { AddAPhotoOutlined } from '@mui/icons-material';
 
-const intl = useIntl();
-const featureDeposit = intl.formatMessage({id: 'MoneyOperation.Deposit'});
-const featureWithdraw = intl.formatMessage({id: 'MoneyOperation.Withdraw'});
-const featureBetWin = intl.formatMessage({id: 'MoneyOperation.WinningBet'});
-const featureBetLoss = intl.formatMessage({id: 'MoneyOperation.LostBet'});
     
 export enum OperationType {
-    DEPOSIT = featureDeposit,
-    WITHDRAW = featureWithdraw,
-    BET_WIN = featureBetWin,
-    BET_LOSS = featureBetLoss,
+    DEPOSIT = 'Depósito',
+    WITHDRAW = 'Retiro',
+    BET_WIN = 'Aposta Ganha',
+    BET_LOSS = 'Aposta Perdida',
 }
 
 export interface MoneyOperationProps {
