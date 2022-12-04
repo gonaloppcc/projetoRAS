@@ -9,6 +9,10 @@ public class Team : Participant {
 
     public Team() : base() { }
     
+    public Team(string id, string name, IEnumerable<Player> players) : base(id, name) {
+        Players = players.ToList();
+    }
+    
     public Team(string name, IEnumerable<Player> players) : base(name) {
         Players = players.ToList();
     }

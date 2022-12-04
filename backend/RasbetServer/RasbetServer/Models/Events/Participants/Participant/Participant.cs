@@ -7,7 +7,7 @@ using Newtonsoft.Json.Linq;
 namespace RasbetServer.Models.Events.Participants.Participant;
 
 [Index(nameof(Name), IsUnique = true)]
-public class Participant
+public abstract class Participant
 {
     [Key]
     [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
@@ -19,7 +19,14 @@ public class Participant
 
     public Participant() { }
     
-    public Participant(string name) {
+    public Participant(string name)
+    {
+        Name = name;
+    }
+    
+    public Participant(string id, string name)
+    {
+        Id = id;
         Name = name;
     }
 

@@ -26,6 +26,24 @@ public class Better : User {
     }
     
     public Better(
+        string id,
+        string email,
+        string username,
+        string password,
+        string nif,
+        string cc,
+        string cellphone,
+        float balance,
+        IEnumerable<Transaction> transactionHist
+    ) : base(id, email, username, password) {
+        Nif = nif;
+        Cc = cc;
+        Cellphone = cellphone;
+        Balance = balance;
+        TransactionHist = transactionHist.ToList();
+    }
+    
+    public Better(
         string email,
         string username,
         string password,

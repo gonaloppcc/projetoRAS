@@ -17,6 +17,12 @@ public class Sport
     [MaxLength(40)]
     public string Name { get; set; }
 
+    public Sport(string id, string name)
+    {
+        Id = id;
+        Name = name;
+    }
+    
     public Sport(string name)
     {
         Name = name;
