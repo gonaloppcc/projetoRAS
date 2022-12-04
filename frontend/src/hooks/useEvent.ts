@@ -1,30 +1,28 @@
 import {useQuery} from '@tanstack/react-query';
-import {getEvents} from '../services/event';
+import {getEvent} from '../services/event';
 
 export interface useEventsProps {
-    limit?: number;
-    offset?: number;
     isSuccess: boolean;
     isLoading: boolean;
     isError: boolean;
-    events: Event[];
+    event: Event;
     error: string;
 }
 
-export const useEvents = (sportId: string): useEventsProps => {
+export const useEvent = (eventId: string): useEventsProps => {
     const {
         isSuccess,
         isLoading,
         isError,
-        data: events,
+        data: event,
         error,
-    } = useQuery(['events', sportId], () => getEvents({sportId}));
+    } = useQuery(['event', eventId], () => getEvent(eventId));
 
     return {
         isSuccess,
         isLoading,
         isError,
-        events,
+        event,
         error: error as string,
     };
 };

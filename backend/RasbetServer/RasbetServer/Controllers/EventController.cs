@@ -1,4 +1,5 @@
 using System.Text.Json;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
@@ -13,15 +14,16 @@ namespace RasbetServer.Controllers;
 public class EventController : ControllerBase
 {
     private readonly IEventRepository _eventRepository;
-    
+
     public EventController(IEventRepository eventRepository)
     {
         _eventRepository = eventRepository;
     }
-    
+
     // TODO: Implement this properly
     [HttpGet(Name = "GetPage")]
-    public ActionResult<List<Event>> GetPage([FromQuery] string sportId, [FromQuery] int pageNum, [FromQuery] int pageSize)
+    public ActionResult<List<Event>> GetPage([FromQuery] string sportId, [FromQuery] int pageNum,
+        [FromQuery] int pageSize)
     {
         try
         {

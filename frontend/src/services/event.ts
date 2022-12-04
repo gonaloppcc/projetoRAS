@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const BASE_URL = 'http://localhost:3001/events';
+const BASE_URL = 'http://localhost:5000';
 
 export const getEvents = async ({
     sportId,
@@ -11,11 +11,14 @@ export const getEvents = async ({
     pageNum?: number;
     pageSize?: number;
 }): Promise<Event[]> => {
-    pageNum = pageNum ?? 0;
-    pageSize = pageSize ?? 20;
-
     const response = await axios.get(`${BASE_URL}/events`, {
         params: {sportId, pageNum, pageSize},
     });
     return response.data as Event[];
+};
+
+export const getEvent = async (eventId: string): Promise<Event> => {
+    console.log(`${BASE_URL}/events/${eventId}`);
+    const response = await axios.get(`${BASE_URL}/events/${eventId}`);
+    return response.data as Event;
 };

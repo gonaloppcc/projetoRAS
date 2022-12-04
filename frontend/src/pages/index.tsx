@@ -1,7 +1,7 @@
 import type {NextPage} from 'next';
 import {EventCard, EventCardProps} from '@components/EventCard';
-import {useEvents} from '@hooks/useEvents';
 import {PageLayout} from '@components/PageLayout';
+import {useEvents} from '@hooks/useEvents';
 
 /* FIXME Mock data hardcoded */
 const MOCK_EVENT: EventCardProps = {
@@ -36,8 +36,13 @@ const MOCK_EVENTS: EventCardProps[] = [
     MOCK_EVENT,
 ];
 
+const PRIMARY_SPORT_ID = '0'; // Football
+
+const EVENT_ID = '08508dce-5873-4c44-8df0-f1df13187225';
+
 const Home: NextPage = () => {
-    const {isSuccess, isLoading, isError, events, error} = useEvents('0');
+    const {isSuccess, isLoading, isError, events, error} =
+        useEvents(PRIMARY_SPORT_ID);
 
     return (
         <PageLayout>

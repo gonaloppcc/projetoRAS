@@ -13,12 +13,14 @@ using RasbetServer.Repositories.UserRepository;
 
 namespace RasbetServer.app;
 
-public class Startup {
+public class Startup
+{
     public IConfiguration Configuration { get; }
-    public string ConnectionString { get; } 
-    private string MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
+    public string ConnectionString { get; }
+    private readonly string MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
 
-    public Startup(IConfiguration configuration) {
+    public Startup(IConfiguration configuration)
+    {
         Configuration = configuration;
         ConnectionString = new ConfigurationBuilder()
             .SetBasePath($"{Directory.GetCurrentDirectory()}/app")
@@ -27,17 +29,20 @@ public class Startup {
             .GetConnectionString("MySQLConnection");
     }
 
-    public void ConfigureServices(IServiceCollection services) {
+    public void ConfigureServices(IServiceCollection services)
+    {
         services.AddMvc(options => options.EnableEndpointRouting = false);
-        services.AddControllers();
         services.AddCors(options =>
         {
-            options.AddPolicy(name: MyAllowSpecificOrigins, policy =>
-            {
-                policy.WithOrigins("http://localhost:3000", "*");
-            });
+            options.AddPolicy(name: MyAllowSpecificOrigins,
+                policy =>
+                {
+                    policy.AllowAnyOrigin()
+                        .SetIsOriginAllowedToAllowWildcardSubdomains().AllowAnyHeader()
+                        .WithMethods("GET", "PUT", "POST", "DELETE", "OPTIONS");
+                });
         });
-
+        services.AddControllers();
         services.AddDbContext<AppDbContext>(options => options.UseLazyLoadingProxies().UseMySQL(ConnectionString));
 
         services.AddScoped<IUserRepository, UserRepository>();
@@ -47,14 +52,15 @@ public class Startup {
         services.AddScoped<IBetRepository, BetRepository>();
     }
 
-    public void Configure(IApplicationBuilder app, IWebHostEnvironment env) {
+    public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+    {
+        app.UseCors(MyAllowSpecificOrigins);
         if (env.IsDevelopment())
             app.UseDeveloperExceptionPage();
         else
             app.UseHsts();
 
         app.UseHttpsRedirection();
-        app.UseCors(MyAllowSpecificOrigins);
         app.UseMvc();
     }
 }
