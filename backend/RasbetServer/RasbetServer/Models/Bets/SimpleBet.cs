@@ -11,8 +11,6 @@ public class SimpleBet : Bet {
     [ForeignKey("OddId")]
     public string OddId { get; set; }
     public virtual Odd Odd { get; set; }
-    
-    [Required] public string EventId { get; set; }
 
     public SimpleBet() : base() { }
     
@@ -21,10 +19,8 @@ public class SimpleBet : Bet {
         bool closed,
         string oddId,
         string betterId,
-        float amount,
-        string eventId
+        float amount
     ) : base(date, closed, betterId, amount) {
-        EventId = eventId;
         OddId = oddId;
     }
 
@@ -34,9 +30,8 @@ public class SimpleBet : Bet {
         string oddId = json[nameof(OddId)].Value<string>();
         string betterId = json[nameof(BetterId)].Value<string>();
         float amount = json[nameof(Amount)].Value<float>();
-        string eventId = json[nameof(EventId)].Value<string>();
 
-        return new SimpleBet(date, false, oddId, betterId, amount, eventId);
+        return new SimpleBet(date, false, oddId, betterId, amount);
     }
 
     public override float CalcCashOut()
