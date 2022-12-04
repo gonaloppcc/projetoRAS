@@ -3,8 +3,6 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
 using RasbetServer.app;
-using RasbetServer.Models.Users;
-using RasbetServer.Repositories;
 using RasbetServer.Repositories.Contexts;
 
 var host = WebHost.CreateDefaultBuilder(args)
