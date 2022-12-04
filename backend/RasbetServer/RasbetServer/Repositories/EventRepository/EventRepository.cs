@@ -22,6 +22,8 @@ public class EventRepository : BaseRepository, IEventRepository
 
     public Event AddEvent(Event e)
     {
+        FindAndReplaceParticipants(e);
+        
         var @event = _context.Events.Add(e);
         _context.SaveChanges();
 
@@ -29,5 +31,21 @@ public class EventRepository : BaseRepository, IEventRepository
         @event.State = EntityState.Detached;
         return _context.Events.Find(@event.Entity.Id) 
                ?? throw new InvalidOperationException();
+    }
+
+    private void FindAndReplaceParticipants(Event e)
+    {
+        var results = e.Participants.GetParticipants();
+
+        foreach (var result in results)
+        {
+            var participant = (from p in _context.Participants where p.Name == result.Participant.Part.Name select p)
+                .ToList();
+            if (participant.Count == 0)
+                continue;
+            
+            result.Participant.Part = null;
+            result.Participant.PartId = participant[0].Id;
+        }
     }
 }
