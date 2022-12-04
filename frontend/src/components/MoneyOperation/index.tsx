@@ -5,10 +5,10 @@ import { AddAPhotoOutlined } from '@mui/icons-material';
 
     
 export enum OperationType {
-    DEPOSIT = 'Depósito',
-    WITHDRAW = 'Retiro',
-    BET_WIN = 'Aposta Ganha',
-    BET_LOSS = 'Aposta Perdida',
+    DEPOSIT = 'Deposit',
+    WITHDRAW = 'Withdraw',
+    BET_WIN = 'Winning Bet',
+    BET_LOSS = 'Lost Bet',
 }
 
 export interface MoneyOperationProps {
