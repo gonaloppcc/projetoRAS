@@ -70,6 +70,7 @@ public class AppDbContext : DbContext {
     private void SeedCompetitions()
     {
         Competitions.Add(new Competition("Premier League", "Football"));
+        Competitions.Add(new Competition("Portuguese First League", "Football"));
         Competitions.Add(new Competition("Championship", "Football"));
         Competitions.Add(new Competition("League One", "Football"));
         Competitions.Add(new Competition("League Two", "Football"));

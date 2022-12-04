@@ -23,7 +23,7 @@ public class TwoParticipants : BaseParticipants
 
     public TwoParticipants() : base() { }
     
-    public TwoParticipants(ParticipantOdd home, int homeScore, ParticipantOdd away, int awayScore, TieOdd tie) {
+    public TwoParticipants(ParticipantOdd home, int homeScore, ParticipantOdd away, int awayScore, TieOdd? tie) {
         Home = new Result(home, homeScore);
         Away = new Result(away, awayScore);
         Tie = tie;
@@ -43,7 +43,7 @@ public class TwoParticipants : BaseParticipants
     {
         ParticipantOdd home = ParticipantOdd.FromJson(json[nameof(Home)].ToObject<JObject>());
         ParticipantOdd away = ParticipantOdd.FromJson(json[nameof(Away)].ToObject<JObject>());
-        TieOdd tieOdd = TieOdd.FromJson(json[nameof(Tie)].ToObject<JObject>());
+        TieOdd? tieOdd = TieOdd.FromJson(json[nameof(Tie)].ToObject<JObject>());
 
         return new TwoParticipants(home, 0, away, 0, tieOdd);
     }
