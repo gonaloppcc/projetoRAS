@@ -21,11 +21,11 @@ public class EventController : ControllerBase
     
     // TODO: Implement this properly
     [HttpGet(Name = "GetPage")]
-    public ActionResult<List<Event>> GetPage([FromQuery] string sportId, [FromQuery] int pageNum, [FromQuery] int pageSize)
+    public ActionResult<List<Event>> GetPage([FromQuery] string compId, [FromQuery] int pageNum, [FromQuery] int pageSize)
     {
         try
         {
-            return Ok(JsonConvert.SerializeObject(_eventRepository.GetPage(sportId, pageNum, pageSize)));
+            return Ok(JsonConvert.SerializeObject(_eventRepository.GetPage(compId, pageNum, pageSize)));
         }
         catch (Exception e)
         {
