@@ -18,7 +18,7 @@ public class EventRepository : BaseRepository, IEventRepository
 
     public IEnumerable<Event> GetPage(string competitionId, int pageNum, int pageSize) 
         => (from e in _context.Events where e.CompetitionId == competitionId select e)
-            .Skip(pageNum * pageSize).Take(pageSize);
+            .Skip(pageNum * pageSize).Take(pageSize).ToList();
 
     public Event AddEvent(Event e)
     {

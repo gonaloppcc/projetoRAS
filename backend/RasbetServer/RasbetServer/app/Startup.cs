@@ -15,7 +15,8 @@ namespace RasbetServer.app;
 
 public class Startup {
     public IConfiguration Configuration { get; }
-    public string ConnectionString { get; }
+    public string ConnectionString { get; } 
+    private string MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
 
     public Startup(IConfiguration configuration) {
         Configuration = configuration;
@@ -29,6 +30,13 @@ public class Startup {
     public void ConfigureServices(IServiceCollection services) {
         services.AddMvc(options => options.EnableEndpointRouting = false);
         services.AddControllers();
+        services.AddCors(options =>
+        {
+            options.AddPolicy(name: MyAllowSpecificOrigins, policy =>
+            {
+                policy.WithOrigins("http://localhost:3000", "*");
+            });
+        });
 
         services.AddDbContext<AppDbContext>(options => options.UseLazyLoadingProxies().UseMySQL(ConnectionString));
 
@@ -46,6 +54,7 @@ public class Startup {
             app.UseHsts();
 
         app.UseHttpsRedirection();
+        app.UseCors(MyAllowSpecificOrigins);
         app.UseMvc();
     }
 }

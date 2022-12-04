@@ -6,7 +6,7 @@ public class TieOdd : Odd
 {
     public TieOdd() : base() { }
     
-    public TieOdd(float price, Promotion promo) : base(price, promo)
+    public TieOdd(float price, Promotion? promo) : base(price, promo)
     { }
 
     public override bool HasWon(Event @event)
