@@ -37,19 +37,22 @@ const MOCK_EVENTS: EventCardProps[] = [
 ];
 
 const PRIMARY_SPORT_ID = '0'; // Football
+const PRIMARY_COMPETITION_ID = '0'; // Football
 
 const EVENT_ID = '08508dce-5873-4c44-8df0-f1df13187225';
 
 const Home: NextPage = () => {
-    const {isSuccess, isLoading, isError, events, error} =
-        useEvents(PRIMARY_SPORT_ID);
+    const {isSuccess, isLoading, isError, events, error} = useEvents(
+        PRIMARY_COMPETITION_ID
+    );
 
     return (
         <PageLayout>
             <div className="flex flex-col justify-start gap-3 w-full">
-                {MOCK_EVENTS.map((event) => (
-                    <EventCard key={event.eventId} {...event} />
-                ))}
+                {isSuccess &&
+                    events.map((event) => (
+                        <EventCard key={event.Id} {...event} />
+                    ))}
             </div>
         </PageLayout>
     );
