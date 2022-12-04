@@ -50,10 +50,11 @@ public class AppDbContext : DbContext {
             .HasKey(obi => new { obi.MultiBetId, obi.OddId });
         modelBuilder.Entity<SportSpecialistIds>()
             .HasKey(ssi => new { ssi.SpecialistId, ssi.SportId });
-        
-        modelBuilder.Entity<Better>()
-            .HasData(
-                new Better("0", "marco@gmail.com", "marco", "marco123", "123456789", "123456789", "123456789", 20,
-                    new List<Transaction>()));
+    }
+
+    public void Seed()
+    {
+        Users.Add(new Administrator("admin@rasbet.com", "Admin", "RasbetAdmin123"));
+        SaveChanges();
     }
 }

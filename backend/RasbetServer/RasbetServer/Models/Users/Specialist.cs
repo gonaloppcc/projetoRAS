@@ -12,18 +12,16 @@ public class Specialist : User {
     public Specialist() : base() { }
 
     public Specialist(
-        string? id,
         string email,
         string username,
         string password,
         IEnumerable<SportSpecialistIds> specialties
-    ) : base(id, email, username, password) {
+    ) : base(email, username, password) {
         Specialties = specialties.ToList();
     }
 
 
     public static Specialist FromJson(JObject json) {
-        string? id = null;
         var email = json[nameof(Email)].Value<string>();
         var username = json[nameof(Username)].Value<string>();
         var password = json[nameof(Password)].Value<string>();
@@ -36,6 +34,6 @@ public class Specialist : User {
             specialties.Add(SportSpecialistIds.FromJson(specialty.ToObject<JObject>()));
         }
 
-        return new Specialist(id, email, username, password, specialties);
+        return new Specialist(email, username, password, specialties);
     }
 }

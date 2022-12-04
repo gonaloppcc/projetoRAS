@@ -26,7 +26,6 @@ public class Better : User {
     }
     
     public Better(
-        string? id,
         string email,
         string username,
         string password,
@@ -35,7 +34,7 @@ public class Better : User {
         string cellphone,
         float balance,
         IEnumerable<Transaction> transactionHist
-    ) : base(id, email, username, password) {
+    ) : base(email, username, password) {
         Nif = nif;
         Cc = cc;
         Cellphone = cellphone;
@@ -44,7 +43,6 @@ public class Better : User {
     }
 
     public static Better FromJson(JObject json) {
-        string? id = null;
         var email = json[nameof(Email)].Value<string>();
         var username = json[nameof(Username)].Value<string>();
         var password = json[nameof(Password)].Value<string>();
@@ -53,6 +51,6 @@ public class Better : User {
         var cellphone = json[nameof(Cellphone)].Value<string>();
         List<Transaction> transactions = new();
 
-        return new Better(id, email, username, password, nif, cc, cellphone, 0, transactions);
+        return new Better(email, username, password, nif, cc, cellphone, 0, transactions);
     }
 }

@@ -1,15 +1,15 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Runtime.CompilerServices;
 using Microsoft.EntityFrameworkCore;
 
 namespace RasbetServer.Models.Users;
 
 [Index(nameof(Email), IsUnique = true)]
-public abstract class User {
+public abstract class User
+{
     [Key]
     [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-    public string? Id { get; set; }
+    public string? Id { get; set; } = null;
 
     // TODO: Index this
     [Required] public string Email { get; set; }
@@ -22,12 +22,10 @@ public abstract class User {
     }
 
     public User(
-        string? id,
         string email,
         string username,
         string password
     ) {
-        Id = id;
         Email = email;
         Username = username;
         Password = password;
