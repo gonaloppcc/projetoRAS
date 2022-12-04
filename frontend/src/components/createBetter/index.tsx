@@ -1,43 +1,52 @@
-import {ClassNames} from '@emotion/react';
 import React, {useEffect, useState} from 'react';
-import {InputForm} from './inputForm';
+import {HandleChangeProps, InputForm} from '@components/createBetter/inputForm';
 import {REGEX_MAIL, REGEX_NUMBERS, REGEX_USERNAME} from '../../utils/regex';
-export const CreateBetter = () => {
-    const intialValues = {
-        username: '',
-        mail: '',
-        password: '',
-        nif: '',
-        phone: '',
-        numberCC: '',
-    };
 
-    const [formValues, setFormValues] = useState(intialValues);
-    const [formErrors, setFormErrors] = useState({});
+interface ValuesProps {
+    password: string;
+    mail: string;
+    phone: string;
+    numberCC: string;
+    nif: string;
+    username: string;
+}
+
+type ErrorsProps = ValuesProps;
+
+const initialValues: ValuesProps = {
+    username: '',
+    mail: '',
+    password: '',
+    nif: '',
+    phone: '',
+    numberCC: '',
+};
+
+export const CreateBetter = () => {
+    const [values, setValues] = useState<ValuesProps>(initialValues);
+    const [errors, setErrors] = useState<ErrorsProps>(initialValues);
     const [isSubmitting, setIsSubmitting] = useState(false);
 
     const submit = () => {
-        console.log('Submissão feita');
-        console.log(formValues);
+        // TODO: Backend call
     };
 
     //input change handler
-    const handleChange = (e) => {
-        const {name, value} = e.target;
-        setFormValues({...formValues, [name]: value});
+    const handleChange = ({name, value}: HandleChangeProps) => {
+        setValues({...values, [name]: value});
     };
 
     //form submission handler
-    const handleSubmit = (e) => {
+    const handleSubmit: React.FormEventHandler<HTMLFormElement> = (e) => {
         e.preventDefault();
-        setFormErrors(validate(formValues));
+        setErrors(validate());
         setIsSubmitting(true);
     };
 
     //form validation handler
     // FIXME Em todos
-    const validate = (values) => {
-        let errors = {};
+    const validate = () => {
+        let errors: ErrorsProps = {...initialValues};
         // Phone numbers, cc, nifs all with 9 numbers
 
         if (!values.username) {
@@ -78,10 +87,10 @@ export const CreateBetter = () => {
     };
 
     useEffect(() => {
-        if (Object.keys(formErrors).length === 0 && isSubmitting) {
+        if (Object.keys(errors).length === 0 && isSubmitting) {
             submit();
         }
-    }, [formErrors]);
+    }, [errors]);
 
     return (
         <div className="h-screen w-screen justify-center flex items-center bg-CULTURED">
@@ -98,55 +107,55 @@ export const CreateBetter = () => {
                         >
                             {/*  FIXME Em todos */}
                             <InputForm
-                                htmlFor="text"
+                                type="text"
                                 name="Nome de utilizador"
                                 id="username"
-                                value={formValues.username}
+                                value={values.username}
                                 handleChange={handleChange}
-                                error={formErrors.username}
+                                error={errors.username}
                             />
 
                             <InputForm
-                                htmlFor="password"
+                                type="password"
                                 name="Palavra-passe"
                                 id="password"
-                                value={formValues.password}
+                                value={values.password}
                                 handleChange={handleChange}
-                                error={formErrors.password}
+                                error={errors.password}
                             />
                             <InputForm
-                                htmlFor="email"
+                                type="email"
                                 name="Email"
                                 id="mail"
-                                value={formValues.mail}
+                                value={values.mail}
                                 handleChange={handleChange}
-                                error={formErrors.mail}
+                                error={errors.mail}
                             />
                             <InputForm
-                                htmlFor="number"
+                                type="number"
                                 name="NIF"
                                 id="nif"
-                                value={formValues.nif}
+                                value={values.nif}
                                 handleChange={handleChange}
-                                error={formErrors.nif}
+                                error={errors.nif}
                             />
                             <InputForm
-                                htmlFor="tel"
+                                type="tel"
                                 name="Número telemóvel"
                                 id="phone"
-                                value={formValues.phone}
+                                value={values.phone}
                                 handleChange={handleChange}
-                                error={formErrors.phone}
+                                error={errors.phone}
                             />
                             <InputForm
-                                htmlFor="text"
+                                type="number"
                                 name="Número Cartão de Cidadão"
                                 id="numberCC"
-                                value={formValues.numberCC}
+                                value={values.numberCC}
                                 handleChange={handleChange}
-                                error={formErrors.numberCC}
+                                error={errors.numberCC}
                             />
-                            <div className="flex flex-col items-start self-stretch flex-none order-1 px-20 justify-center pt-1 pb-10">
+                            <div className="flex flex-col items-start self-stretch flex-none order-1 px-20 py-3">
                                 <div className=" text-white text-center h-12 p-2 w-24 gap-5 bg-red-600 rounded justify-center ">
                                     {/*  FIXME Em todos */}
                                     <button type="submit">Registar</button>

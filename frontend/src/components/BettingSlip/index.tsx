@@ -1,27 +1,100 @@
 import React from 'react';
-import {Bets} from '@components/Bets';
-import {BettingSlipInfo} from '@components/BettingSlipInfo';
+import {MultipleBetBettingSlipInfo} from '@components/MultipleBetBettingSlipInfo';
+import {BetType, useBettingSlip} from '@state/useBettingSlip';
+import {MultipleBetCard} from '@components/MultipleBetCard';
+import {Tabs} from '@components/Tabs';
+import {SimpleBetCard} from '@components/SimpleBetCard';
+import {SimpleBetBettingSlipInfo} from '@components/SimpleBetBettingSlipInfo';
+
+const TABS = [
+    {
+        name: 'Simples',
+    },
+    {
+        name: 'Múltipla',
+    },
+];
 
 export const BettingSlip = () => {
+    const {
+        currency,
+        bettingAmount,
+        setBettingAmount,
+        setBetAmount,
+        betType,
+        setBetType,
+        bets,
+        removeBet,
+        submitReport,
+    } = useBettingSlip();
+
+    const getRemoveBetHandler = (id: string) => () => {
+        removeBet(id);
+    };
+
     return (
         <div className="w-full flex flex-col items-start p-0 gap-1 bg-WHITE rounded">
-            <div className="w-full flex flex-col items-start p-2 gap-2 bg-WHITE shadow rounded-t">
+            <div className="w-full flex flex-col items-start p-4 gap-2 bg-WHITE shadow rounded-t">
                 {'BOLETIM' /* FIXME Text hardcoded for now!! */}
-                <div className="w-full flex flex-row justify-start items-center p-0 gap-2">
-                    <div className="p-2 border-b-2 border-RICH_BLACK">
-                        {'Simples' /* FIXME Text hardcoded for now!! */}
-                    </div>
-                    <div className="p-2 border-RICH_BLACK">
-                        {'Múltipla' /* FIXME Text hardcoded for now!! */}
-                    </div>
-                </div>
+                <Tabs
+                    tabs={TABS}
+                    selectedTabIndex={betType}
+                    setSelectedTabIndex={setBetType}
+                />
             </div>
-            <Bets></Bets>
-            <BettingSlipInfo
-                amount={5}
-                possibleWinnings={20}
-                placeBetOnClick={() => {}}
-            ></BettingSlipInfo>
+            {betType === BetType.Simple && (
+                <>
+                    <div className="w-full h-full flex flex-col items-start p-4 gap-2 overflow-y-auto">
+                        {bets.map((bet) => (
+                            <SimpleBetCard
+                                key={bet.id}
+                                {...bet}
+                                bettingAmount={bet.bettingAmount as number}
+                                removeBetHandler={getRemoveBetHandler(bet.id)}
+                                setBettingAmount={(amount) =>
+                                    setBetAmount(bet.id, amount)
+                                }
+                                currency={currency}
+                            />
+                        ))}
+                    </div>
+                    <SimpleBetBettingSlipInfo
+                        amount={bets.reduce((acc, bet) => {
+                            return acc + (bet.bettingAmount as number);
+                        }, 0)}
+                        possibleWinnings={bets.reduce((acc, bet) => {
+                            return (
+                                acc +
+                                (bet.bettingAmount as number) * bet.odd.price
+                            );
+                        }, 0)}
+                        placeBetOnClick={submitReport}
+                        currency={currency}
+                    />
+                </>
+            )}
+            {betType === BetType.Multiple && (
+                <>
+                    <div className="w-full h-full flex flex-col items-start p-4 gap-2 overflow-y-auto">
+                        {bets.map((bet) => (
+                            <MultipleBetCard
+                                key={bet.id}
+                                {...bet}
+                                removeBetHandler={getRemoveBetHandler(bet.id)}
+                            />
+                        ))}
+                    </div>
+                    <MultipleBetBettingSlipInfo
+                        odd={bets.reduce((acc, bet) => acc * bet.odd.price, 1)}
+                        placeBetOnClick={submitReport}
+                        bettingAmount={
+                            bettingAmount as number /* bettingAmount is always defined when the bet is Multiple */
+                        }
+                        setBettingAmount={setBettingAmount}
+                        currency={currency}
+                    />
+                </>
+            )}
         </div>
     );
 };

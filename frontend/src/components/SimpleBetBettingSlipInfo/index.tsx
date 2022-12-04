@@ -1,29 +1,32 @@
 import React from 'react';
+import {formatNumber} from '../../utils/formatters';
 
-interface BettingSlipInfoProps {
+interface SimpleBettingSlipInfoProps {
     amount: number;
     possibleWinnings: number;
     placeBetOnClick: () => void;
+    currency?: string;
 }
 
-export const BettingSlipInfo = ({
+export const SimpleBetBettingSlipInfo = ({
     amount,
     possibleWinnings,
     placeBetOnClick,
-}: BettingSlipInfoProps) => {
+    currency = '€',
+}: SimpleBettingSlipInfoProps) => {
     return (
-        <div className="w-full flex flex-col items-start p-2 gap-2 bg-WHITE shadow">
+        <div className="w-full flex flex-col items-start p-2 gap-2 bg-WHITE shadow rounded">
             <div className="w-full flex flex-row justify-between items-start p-0">
                 <span>
                     {'Montante Total' /* FIXME Text hardcoded for now!! */}
                 </span>
-                <span>{amount}</span>
+                <span>{`${formatNumber(amount)}  ${currency}`}</span>
             </div>
-            <div className="w-full flex flex-row justify-between items-start p-0">
+            <div className="w-full flex flex-row justify-between items-start p-0 font-semibold text-lg">
                 <span>
                     {'Total de Ganhos' /* FIXME Text hardcoded for now!! */}
                 </span>
-                <span>{possibleWinnings}</span>
+                <span>{`${formatNumber(possibleWinnings)} ${currency}`}</span>
             </div>
             <button
                 className="w-full py-1.5 bg-IMPERIAL_RED rounded-xl shadow-2xl text-WHITE"
