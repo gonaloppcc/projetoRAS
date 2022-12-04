@@ -4,9 +4,13 @@ namespace RasbetServer.Models.Bets.Odds;
 
 public class TieOdd : Odd
 {
-    public TieOdd(ulong? id, float price, Promotion promo) : base(id, price, promo)
-    {
-    }
+    public TieOdd() : base() { }
+    
+    public TieOdd(string id, float price, Promotion? promo) : base(id, price, promo)
+    { }
+    
+    public TieOdd(float price, Promotion? promo) : base(price, promo)
+    { }
 
     public override bool HasWon(Event @event)
     {
