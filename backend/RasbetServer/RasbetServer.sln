@@ -2,6 +2,8 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RasbetServer", "RasbetServer\RasbetServer.csproj", "{45D58972-1BE1-434A-AAD4-3981BCE25DBD}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "APICache", "APICache\APICache.csproj", "{AFA747AF-F875-4FCF-A025-A184658FDC38}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -12,5 +14,9 @@ Global
 		{45D58972-1BE1-434A-AAD4-3981BCE25DBD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{45D58972-1BE1-434A-AAD4-3981BCE25DBD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{45D58972-1BE1-434A-AAD4-3981BCE25DBD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AFA747AF-F875-4FCF-A025-A184658FDC38}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AFA747AF-F875-4FCF-A025-A184658FDC38}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AFA747AF-F875-4FCF-A025-A184658FDC38}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AFA747AF-F875-4FCF-A025-A184658FDC38}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
