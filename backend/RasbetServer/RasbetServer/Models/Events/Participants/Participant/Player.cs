@@ -10,10 +10,6 @@ public class Player : Participant
     
     public Player() : base() {}
     
-    public Player(string id, string name) : base(id, name)
-    {
-    }
-    
     public Player(string name) : base(name)
     {
     }
