@@ -82,40 +82,40 @@ public class AppDbContext : DbContext {
 
     private void SeedParticipants()
     {
-        Participants.Add(new Team("0", "Manchester United", new List<Player>()));
-        Participants.Add(new Team("1", "Manchester City", new List<Player>()));
-        Participants.Add(new Team("2", "Liverpool", new List<Player>()));
-        Participants.Add(new Team("3", "Chelsea", new List<Player>()));
-        Participants.Add(new Team("4", "Arsenal", new List<Player>()));
-        Participants.Add(new Team("5", "Tottenham", new List<Player>()));
-        Participants.Add(new Team("6", "Everton", new List<Player>()));
-        Participants.Add(new Team("7", "Leicester", new List<Player>()));
-        Participants.Add(new Team("8", "West Ham", new List<Player>()));
-        Participants.Add(new Team("9", "Wolves", new List<Player>()));
-        Participants.Add(new Team("10", "Crystal Palace", new List<Player>()));
-        Participants.Add(new Team("11", "Southampton", new List<Player>()));
-        Participants.Add(new Team("12", "Burnley", new List<Player>()));
-        Participants.Add(new Team("13", "Brighton", new List<Player>()));
-        Participants.Add(new Team("14", "Newcastle", new List<Player>()));
-        Participants.Add(new Team("15", "Bournemouth", new List<Player>()));
-        Participants.Add(new Team("16", "Aston Villa", new List<Player>()));
-        Participants.Add(new Team("17", "Sheffield United", new List<Player>()));
-        Participants.Add(new Team("18", "Norwich", new List<Player>()));
-        Participants.Add(new Team("19", "Watford", new List<Player>()));
-        Participants.Add(new Team("20", "Brentford", new List<Player>()));
+        Participants.Add(new Team("Manchester United", new List<Player>()));
+        Participants.Add(new Team("Manchester City", new List<Player>()));
+        Participants.Add(new Team("Liverpool", new List<Player>()));
+        Participants.Add(new Team("Chelsea", new List<Player>()));
+        Participants.Add(new Team("Arsenal", new List<Player>()));
+        Participants.Add(new Team("Tottenham", new List<Player>()));
+        Participants.Add(new Team("Everton", new List<Player>()));
+        Participants.Add(new Team("Leicester", new List<Player>()));
+        Participants.Add(new Team("West Ham", new List<Player>()));
+        Participants.Add(new Team("Wolves", new List<Player>()));
+        Participants.Add(new Team("Crystal Palace", new List<Player>()));
+        Participants.Add(new Team("Southampton", new List<Player>()));
+        Participants.Add(new Team("Burnley", new List<Player>()));
+        Participants.Add(new Team("Brighton", new List<Player>()));
+        Participants.Add(new Team("Newcastle", new List<Player>()));
+        Participants.Add(new Team("Bournemouth", new List<Player>()));
+        Participants.Add(new Team("Aston Villa", new List<Player>()));
+        Participants.Add(new Team("Sheffield United", new List<Player>()));
+        Participants.Add(new Team("Norwich", new List<Player>()));
+        Participants.Add(new Team("Watford", new List<Player>()));
+        Participants.Add(new Team("Brentford", new List<Player>()));
     }
 
     private void SeedOdds()
     {
-        Odds.Add(new ParticipantOdd("0", 1.90f, "0", null));
-        Odds.Add(new ParticipantOdd("1", 2.20f, "1", null));
-        Odds.Add(new ParticipantOdd("2", 3.60f, "2", null));
-        Odds.Add(new ParticipantOdd("3", 4.20f, "3", null));
-        Odds.Add(new ParticipantOdd("4", 4.58f, "4", null));
-        Odds.Add(new ParticipantOdd("5", 5.20f, "5", null));
-        Odds.Add(new ParticipantOdd("6", 5.60f, "6", null));
-        Odds.Add(new ParticipantOdd("7", 6.20f, "7", null));
-        Odds.Add(new ParticipantOdd("8", 6.60f, "8", null));
+        Odds.Add(new ParticipantOdd("0", 1.90f, "Manchester United", null));
+        Odds.Add(new ParticipantOdd("1", 2.20f, "Manchester City", null));
+        Odds.Add(new ParticipantOdd("2", 3.60f, "Liverpool", null));
+        Odds.Add(new ParticipantOdd("3", 4.20f, "Chelsea", null));
+        Odds.Add(new ParticipantOdd("4", 4.58f, "Arsenal", null));
+        Odds.Add(new ParticipantOdd("5", 5.20f, "Tottenham", null));
+        Odds.Add(new ParticipantOdd("6", 5.60f, "Everton", null));
+        Odds.Add(new ParticipantOdd("7", 6.20f, "Leicester", null));
+        Odds.Add(new ParticipantOdd("8", 6.60f, "West Ham", null));
 
         Odds.Add(new TieOdd("100", 3.20f, null));
         Odds.Add(new TieOdd("101", 3.20f, null));

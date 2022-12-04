@@ -45,7 +45,7 @@ public class EventRepository : BaseRepository, IEventRepository
                 continue;
             
             result.Participant.Part = null;
-            result.Participant.PartId = participant[0].Id;
+            result.Participant.PartId = participant[0].Name;
         }
     }
 }

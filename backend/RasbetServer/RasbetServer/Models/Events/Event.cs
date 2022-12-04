@@ -27,6 +27,21 @@ public abstract class Event
     public Event() { }
     
     public Event(
+        string id,
+        BaseParticipants participants,
+        DateTime date,
+        string competitionId,
+        bool completed
+    )
+    {
+        Id = id;
+        Participants = participants;
+        Date = date;
+        CompetitionId = competitionId;
+        Completed = completed;
+    }
+    
+    public Event(
         BaseParticipants participants,
         DateTime date,
         string competitionId,

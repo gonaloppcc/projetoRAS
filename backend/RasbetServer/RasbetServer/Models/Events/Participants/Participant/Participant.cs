@@ -10,10 +10,6 @@ namespace RasbetServer.Models.Events.Participants.Participant;
 public abstract class Participant
 {
     [Key]
-    [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-    public string? Id { get; set; } = null;
-    
-    [Required]
     [MaxLength(30)]
     public string Name { get; set; }
 
@@ -21,12 +17,6 @@ public abstract class Participant
     
     public Participant(string name)
     {
-        Name = name;
-    }
-    
-    public Participant(string id, string name)
-    {
-        Id = id;
         Name = name;
     }
 
