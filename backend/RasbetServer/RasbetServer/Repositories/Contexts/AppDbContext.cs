@@ -55,6 +55,12 @@ public class AppDbContext : DbContext {
     public void Seed()
     {
         Users.Add(new Administrator("admin@rasbet.com", "Admin", "RasbetAdmin123"));
+        var entity = Sports.Add(new Sport("Football"));
+        Competitions.Add(new Competition("PortugueseFirstLeague", entity.Entity.Id));
+        Competitions.Add(new Competition("EnglishFirstLeague", entity.Entity.Id));
+        Competitions.Add(new Competition("ChampionsLeague", entity.Entity.Id));
+        Competitions.Add(new Competition("EuropaLeague", entity.Entity.Id));
+
         SaveChanges();
     }
 }
