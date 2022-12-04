@@ -12,16 +12,16 @@ export interface SportIconProps {
 
 export const SportIcon = ({eventType}: SportIconProps) => {
     switch (eventType) {
-        case 'football':
+        case 'Football':
             return <SportsSoccer />;
 
-        case 'basketball':
+        case 'Basketball':
             return <SportsBasketball />;
 
-        case 'baseball':
+        case 'Baseball':
             return <SportsBaseball />;
 
-        case 'tennis':
+        case 'Tennis':
             return <SportsTennis />;
 
         default:
