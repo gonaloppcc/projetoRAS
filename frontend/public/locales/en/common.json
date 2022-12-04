@@ -50,6 +50,11 @@
   "MoneyOperation.WinningBet":"Winning Bet",
   "MoneyOperation.LostBet":"Lost Bet",
   "MoneyOperation.Operation":"Operation",
-  "MoneyOperation.Balance":"Balance after transaction"
+  "MoneyOperation.Balance":"Balance after transaction",
+  "Navbar.finishTransfer":"Transfer successfully completed!",
+  "Navbar.finishDeposit":"Select the payment method",
+  "Navbar.finishWithdraw":"Select the cash withdrawal method",
+  "Navbar.finishMontante":"Amount",
+  "Navbar.finishMoney":"Check the amount"
 
 }
