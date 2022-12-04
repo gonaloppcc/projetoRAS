@@ -53,7 +53,7 @@ public class EventController : ControllerBase
     {
         try
         {
-            var e = FootballEvent.FromJson(JObject.Parse(json.ToString()));
+            var e = Event.FromJson(JObject.Parse(json.ToString()));
             return Ok(JsonConvert.SerializeObject(_eventRepository.AddEvent(e)));
         }
         catch (Exception exception)

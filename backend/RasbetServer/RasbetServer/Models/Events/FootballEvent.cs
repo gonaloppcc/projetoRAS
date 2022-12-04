@@ -4,7 +4,10 @@ using RasbetServer.Models.Events.Participants;
 
 namespace RasbetServer.Models.Events;
 
-public class FootballEvent : Event {
+public class FootballEvent : Event
+{
+    public const string Sport = "Football";
+
     public FootballEvent() : base() { }
     
     public FootballEvent(
