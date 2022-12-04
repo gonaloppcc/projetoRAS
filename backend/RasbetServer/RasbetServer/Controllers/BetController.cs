@@ -57,4 +57,18 @@ public class BetController : ControllerBase
             return BadRequest();
         }
     }
+
+    [HttpDelete("{id}", Name = "DeleteBet")]
+    public IActionResult DeleteBet(string id)
+    {
+        try
+        {
+            _betRepository.DeleteBet(id);
+            return Ok("Bet deleted successfully");
+        }
+        catch (Exception e)
+        {
+            return NotFound("Bet not found");
+        }
+    }
 }

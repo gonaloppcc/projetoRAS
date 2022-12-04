@@ -30,4 +30,11 @@ public class BetRepository : BaseRepository, IBetRepository
 
     public IEnumerable<Bet> GetBets(string userId)
         => (from b in _context.Bets where b.BetterId == userId select b).ToList();
+
+    public void DeleteBet(string id)
+    {
+        var bet = (from b in _context.Bets where b.Id == id select b).Single();
+        _context.Bets.Remove(bet);
+        _context.SaveChanges();
+    }
 }
