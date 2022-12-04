@@ -13,7 +13,7 @@ public abstract class Event
     [Required]
     [ForeignKey("ParticipantsId")]
     public string? ParticipantsId { get; set; } = null;
-    public BaseParticipants Participants { get; set; }
+    public virtual BaseParticipants Participants { get; set; }
     
     [Required] public DateTime Date { get; set; }
 
