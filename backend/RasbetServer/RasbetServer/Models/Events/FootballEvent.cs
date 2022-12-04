@@ -8,6 +8,15 @@ public class FootballEvent : Event {
     public FootballEvent() : base() { }
     
     public FootballEvent(
+        string id,
+        TwoParticipants participants,
+        DateTime date,
+        string competition,
+        bool completed
+    ) : base(id, participants, date, competition, completed) {
+    }
+    
+    public FootballEvent(
         TwoParticipants participants,
         DateTime date,
         string competition,

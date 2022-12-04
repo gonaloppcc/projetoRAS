@@ -1,7 +1,13 @@
-﻿using System.Globalization;
+﻿using Microsoft.EntityFrameworkCore;
 using MySqlConnector;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using RasbetServer.Models.Bets.Odds;
+using RasbetServer.Models.Events;
+using RasbetServer.Models.Events.Participants;
+using RasbetServer.Models.Events.Participants.Participant;
+using RasbetServer.Repositories.Contexts;
+using RasbetServer.Repositories.EventRepository;
 
 namespace APICache.lib;
 
@@ -38,9 +44,14 @@ public class Api {
             float priceHome = 0;
             float priceAway = 0;
             float priceDraw = 0;
+            DateTime commenceTime;
+            bool completed;
             
             
             away = jobject["awayTeam"].Value<string>();
+            home = jobject["homeTeam"].Value<string>();
+            commenceTime = jobject["commenceTime"].Value<DateTime>();
+            completed = jobject["completed"].Value<bool>();
 
             var outcomes = jobject["bookmakers"].ToObject<JArray>()
                 .First["markets"]
@@ -51,47 +62,39 @@ public class Api {
             {
                 var team = odd["name"].Value<string>();
                 var price = odd["price"].Value<float>();
-
-                if (team == away)
-                    priceAway = price;
-                else if (team == "Draw")
-                    priceDraw = price;
-                else
-                {
-                    home = team;
+                
+                if (team == home)
                     priceHome = price;
-                }
+                else if (team == away)
+                    priceAway = price;
+                else
+                    priceDraw = price;
             }
 
             if (home is null || away is null)
                 throw new JsonException();
 
+            var partHome = new Team(home, new List<Player>());
+            var partAway = new Team(away, new List<Player>());
+            var partOddHome = new ParticipantOdd(priceHome, partHome, null);
+            var partOddAway = new ParticipantOdd(priceAway, partAway, null);
+            var tieOdd = new TieOdd(priceDraw, null);
+            var participants = new TwoParticipants(partOddHome, 0, partOddAway, 0, tieOdd);
+            var match = new FootballEvent(id, participants, commenceTime, "0", completed);
+            
+            var options = new DbContextOptionsBuilder<AppDbContext>()
+                .UseMySQL(ConnectionString)
+                .Options;
+            var context = new EventRepository(new AppDbContext(options));
             try
             {
-                ExecuteInsert(id, home, priceHome, away, priceAway, priceDraw);
+                context.AddEvent(match);
                 dbChanged = true;
             }
-            catch (MySqlException e)
+            catch (DbUpdateException e)
             { }
         }
 
         return dbChanged;
-    }
-
-    private void ExecuteInsert(string id, string home, float homePrice, string away, float awayPrice, float drawPrice)
-    {
-        var insert = 
-            "INSERT INTO TwoTeamParticipants(id, Home, HomePrice, Away, AwayPrice, DrawPrice)" +
-                "VALUES (" +
-                $"'{id}'," +
-                $"'{home}'," +
-                $"{homePrice.ToString(CultureInfo.InvariantCulture)}," +
-                $"'{away}'," +
-                $"{awayPrice.ToString(CultureInfo.InvariantCulture)}," +
-                $"{drawPrice.ToString(CultureInfo.InvariantCulture)}" +
-            ")";
-        
-        var cmd = new MySqlCommand(insert, _dataSource);
-        cmd.ExecuteNonQuery();
     }
 }
