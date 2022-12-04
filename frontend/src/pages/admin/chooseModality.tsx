@@ -2,7 +2,7 @@ import {SportIcon} from '@components/SportIcon';
 import type {NextPage} from 'next';
 
 // FIXME
-const MOCK_Modalities = ['Futebol', 'basketball', 'Marathon'];
+const MOCK_Modalities = ['football', 'basketball', 'Marathon'];
 
 const Home: NextPage = () => {
     const sportSelected = (sport) => {

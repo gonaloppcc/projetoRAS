@@ -14,6 +14,6 @@ export const SportIcon = ({eventType}: SportIconProps) => {
             return <SportsBasketball />;
 
         default:
-            return <SportsSoccer />;
+            return <></>;
     }
 };
