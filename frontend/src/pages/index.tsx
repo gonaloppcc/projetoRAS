@@ -4,7 +4,7 @@ import {PageLayout} from '@components/PageLayout';
 import {useEvents} from '@hooks/useEvents';
 import {CircularProgress} from '@mui/material';
 
-const PRIMARY_COMPETITION_ID = '0'; // Football
+const PRIMARY_COMPETITION_ID = 'National League'; // Football
 
 const Home: NextPage = () => {
     const {isSuccess, isLoading, isError, events, error} = useEvents(

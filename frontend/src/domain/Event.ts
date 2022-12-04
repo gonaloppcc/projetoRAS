@@ -8,13 +8,11 @@ export interface Event {
 }
 
 export interface Competition {
-    Id: string;
     Name: string;
     Sport: Sport;
 }
 
 export interface Sport {
-    Id: string;
     Name: string;
 }
 
@@ -42,12 +40,10 @@ export interface Participant {
 }
 
 export interface Part {
-    Id: string;
     Name: string;
     Players: Player[];
 }
 
 export interface Player {
-    Id: string;
     Name: string;
 }
