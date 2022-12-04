@@ -12,6 +12,16 @@ public class Specialist : User {
     public Specialist() : base() { }
 
     public Specialist(
+        string id,
+        string email,
+        string username,
+        string password,
+        IEnumerable<SportSpecialistIds> specialties
+    ) : base(id, email, username, password) {
+        Specialties = specialties.ToList();
+    }
+    
+    public Specialist(
         string email,
         string username,
         string password,

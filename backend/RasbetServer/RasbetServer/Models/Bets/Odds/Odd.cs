@@ -12,6 +12,13 @@ public abstract class Odd
 
     public Odd() { }
     
+    public Odd(string id, float price, Promotion? promo)
+    {
+        Id = id;
+        Price = price;
+        Promo = promo;
+    }
+    
     public Odd(float price, Promotion? promo) {
         Price = price;
         Promo = promo;

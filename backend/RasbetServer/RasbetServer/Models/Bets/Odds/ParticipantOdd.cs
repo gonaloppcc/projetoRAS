@@ -15,6 +15,16 @@ public class ParticipantOdd : Odd
     public ParticipantOdd() : base() { }
     
     public ParticipantOdd(
+        string id,
+        float price, 
+        string partId,
+        Promotion? promo
+    ) : base(id, price, promo)
+    {
+        PartId = partId;
+    }
+    
+    public ParticipantOdd(
         float price,
         Participant part,
         Promotion? promo

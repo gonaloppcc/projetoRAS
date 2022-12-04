@@ -22,6 +22,19 @@ public abstract class User
     }
 
     public User(
+        string id,
+        string email,
+        string username,
+        string password
+    )
+    {
+        Id = id;
+        Email = email;
+        Username = username;
+        Password = password;
+    }
+    
+    public User(
         string email,
         string username,
         string password

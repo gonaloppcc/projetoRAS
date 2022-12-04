@@ -10,6 +10,12 @@ public class Promotion
 
     [Required] public float Value { get; set; }
 
+    public Promotion(string id, float value)
+    {
+        Id = id;
+        Value = value;
+    }
+    
     public Promotion(float value)
     {
         Value = value;
