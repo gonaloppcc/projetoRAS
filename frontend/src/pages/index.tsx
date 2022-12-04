@@ -1,5 +1,6 @@
 import type {NextPage} from 'next';
 import {EventCard, EventCardProps} from '@components/EventCard';
+import {useEvents} from '@hooks/useEvents';
 import {PageLayout} from '@components/PageLayout';
 
 /* FIXME Mock data hardcoded */
@@ -36,6 +37,8 @@ const MOCK_EVENTS: EventCardProps[] = [
 ];
 
 const Home: NextPage = () => {
+    const {isSuccess, isLoading, isError, events, error} = useEvents('0');
+
     return (
         <PageLayout>
             <div className="flex flex-col justify-start gap-3 w-full">
