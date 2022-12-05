@@ -50,7 +50,12 @@
   "MoneyOperation.WinningBet":"Aposta Ganha",
   "MoneyOperation.LostBet":"Aposta Perdida",
   "MoneyOperation.Operation":"Operação",
-  "MoneyOperation.Balance":"Saldo após movimento"
+  "MoneyOperation.Balance":"Saldo após movimento",
+  "Navbar.finishTransfer":"Transferência efetuada com sucesso!",
+  "Navbar.finishDeposit":"Selecione o método de pagamento",
+  "Navbar.finishWithdraw":"Selecione o método de levantamento",
+  "Navbar.finishMontante":"Montante",
+  "Navbar.finishMoney":"Confirmar o montante"
   
 
 }
