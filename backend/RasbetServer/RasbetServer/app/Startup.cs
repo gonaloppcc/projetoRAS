@@ -50,6 +50,8 @@ public class Startup
         services.AddScoped<ISportRepository, SportRepository>();
         services.AddScoped<ICompetitionRepository, CompetitionRepository>();
         services.AddScoped<IBetRepository, BetRepository>();
+
+        services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
     }
 
     public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

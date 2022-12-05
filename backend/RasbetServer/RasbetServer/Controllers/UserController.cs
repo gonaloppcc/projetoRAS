@@ -1,9 +1,11 @@
 using System.Text.Json;
+using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using RasbetServer.Models.Users;
 using RasbetServer.Repositories.UserRepository;
+using RasbetServer.Resources.Users;
 using Exception = System.Exception;
 
 namespace RasbetServer.Controllers;
@@ -14,10 +16,12 @@ namespace RasbetServer.Controllers;
 public class UserController : ControllerBase
 {
     private readonly IUserRepository _userRepository;
+    private readonly IMapper _mapper;
 
-    public UserController(IUserRepository userRepository)
+    public UserController(IUserRepository userRepository, IMapper mapper)
     {
         _userRepository = userRepository;
+        _mapper = mapper;
     }
 
     /// <summary>
@@ -36,7 +40,8 @@ public class UserController : ControllerBase
 
         try {
             var user = _userRepository.LoginUser(email, password);
-            return Ok(JsonConvert.SerializeObject(user));
+            var resource = _mapper.Map<User, UserResource>(user);
+            return Ok(JsonConvert.SerializeObject(resource));
         }
         catch (Exception e) {
             return NotFound("User not found");
@@ -49,7 +54,8 @@ public class UserController : ControllerBase
         try
         {
             var better = _userRepository.UpdateBalance(id, balance);
-            return Ok(JsonConvert.SerializeObject(better));
+            var resource = _mapper.Map<User, UserResource>(better);
+            return Ok(JsonConvert.SerializeObject(resource));
         }
         catch (Exception e)
         {
@@ -71,7 +77,9 @@ public class UserController : ControllerBase
         try
         {
             var better = Better.FromJson(JObject.Parse(json.ToString()));
-            return Ok(JsonConvert.SerializeObject(_userRepository.AddUser(better)));
+            var newBetter = _userRepository.AddUser(better);
+            var resource = _mapper.Map<User, UserResource>(newBetter);
+            return Ok(JsonConvert.SerializeObject(resource));
         }
         catch (Exception e)
         {
@@ -94,7 +102,8 @@ public class UserController : ControllerBase
         {
             var specialist = Specialist.FromJson(JObject.Parse(json.ToString()));
             var newSpecialist = _userRepository.AddUser(specialist);
-            return Ok(JsonConvert.SerializeObject(newSpecialist));
+            var resource = _mapper.Map<User, UserResource>(newSpecialist);
+            return Ok(JsonConvert.SerializeObject(resource));
         }
         catch (Exception e)
         {
