@@ -2,6 +2,8 @@ import React, {useState} from 'react';
 import {HandleChangeProps, InputForm} from '@components/createBetter/inputForm';
 import {REGEX_MAIL} from '../../utils/regex';
 import {PrimaryButton} from '@components/Button';
+import {useProfileState} from '@state/useProfileState';
+import {useRouter} from 'next/router';
 
 // Receives a function that opens the Modal of "ForgetPassword"
 export interface LoginBodyProps {
@@ -29,10 +31,24 @@ export const LoginBody = ({setOpen}: LoginBodyProps) => {
     const [values, setValues] = useState<ValuesProps>(initialValues);
     const [errors, setErrors] = useState<ErrorsProps>(initialErrors);
 
+    const router = useRouter();
+    const {login} = useProfileState();
+
     //form submission handler
-    const handleSubmit: React.FormEventHandler<HTMLFormElement> = (e) => {
+    const handleSubmit: React.FormEventHandler<HTMLFormElement> = async (e) => {
         e.preventDefault();
         validate();
+
+        if (hasErrors()) return;
+
+        // Do something with the values
+        await login(values.mail, values.password);
+
+        await router.push('/');
+    };
+
+    const hasErrors = () => {
+        return Object.values(errors).some((err) => err !== '');
     };
 
     //input change handler

@@ -3,6 +3,8 @@ import Link from 'next/link';
 import Image from 'next/image';
 import AddCircleOutlinedIcon from '@mui/icons-material/AddCircleOutlined';
 import {useProfileState} from '@state/useProfileState';
+import {PrimaryButton, SecondaryButton} from '@components/Button';
+import {useRouter} from 'next/router';
 
 const navlinks = [
     {
@@ -44,7 +46,19 @@ const Balance = ({
 };
 
 export const NavBarBody = (props) => {
-    const {Username, Balance: balance} = useProfileState();
+    const {Id, Username, Balance: balance} = useProfileState();
+
+    const router = useRouter();
+
+    const isLoggedIn = Id !== '';
+
+    const loginHandler = async () => {
+        await router.push('/login');
+    };
+
+    const signupHandler = async () => {
+        await router.push('/register');
+    };
 
     return (
         <div className="hidden md:flex flex-row justify-between items-center px-8 h-12 gap-3 bg-IMPERIAL_RED">
@@ -56,17 +70,27 @@ export const NavBarBody = (props) => {
                     ))}
                 </div>
             </div>
-            <div className="flex flex-row justify-end items-center p-0 gap-12">
-                <Balance setOpen={props.setOpen} balance={balance} />
+            {isLoggedIn && (
+                <div className="flex flex-row justify-end items-center p-0 gap-12">
+                    <Balance setOpen={props.setOpen} balance={balance} />
 
-                <Link href="/better/bets" className="text-WHITE">
-                    {'Apostas' /* FIXME Hardcoded for now */}
-                </Link>
-                <div className="flex flex-row items-center gap-2">
-                    <div className="w-8 h-8 rounded-full bg-LIGHT_GRAY" />
-                    <span className="text-WHITE">{Username}</span>
+                    <Link href="/better/bets" className="text-WHITE">
+                        {'Apostas' /* FIXME Hardcoded for now */}
+                    </Link>
+                    <div className="flex flex-row items-center gap-2">
+                        <div className="w-8 h-8 rounded-full bg-LIGHT_GRAY" />
+                        <span className="text-WHITE">{Username}</span>
+                    </div>
                 </div>
-            </div>
+            )}
+            {!isLoggedIn && (
+                <div className="flex flex-row justify-end items-center p-0 gap-12">
+                    <PrimaryButton onClick={loginHandler}>Login</PrimaryButton>
+                    <SecondaryButton onClick={signupHandler}>
+                        Sign Up
+                    </SecondaryButton>
+                </div>
+            )}
         </div>
     );
 };

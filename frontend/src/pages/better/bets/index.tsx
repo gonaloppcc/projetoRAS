@@ -7,12 +7,12 @@ import {useBets} from '@hooks/useBets';
 import {Bet} from '@domain/Bet';
 import {CircularProgress} from '@mui/material';
 import {deleteBet} from '../../../services/backend/bet';
-
-const USER_ID = '0';
+import {useProfileState} from '@state/useProfileState';
 
 const Bets = () => {
-    const {isSuccess, isLoading, isError, bets, error, refetch} =
-        useBets(USER_ID);
+    const {Id} = useProfileState();
+
+    const {isSuccess, isLoading, isError, bets, error, refetch} = useBets(Id);
 
     let onGoingBets: Bet[] = [];
     let finishedBets: Bet[] = [];

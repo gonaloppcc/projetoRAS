@@ -21,7 +21,7 @@ export const useBets = (userId: string): useBetsProps => {
         isSuccess,
         isLoading,
         isError,
-        bets: bets as unknown as Bet[],
+        bets: (bets || []) as unknown as Bet[],
         error: error as string,
         refetch,
     };

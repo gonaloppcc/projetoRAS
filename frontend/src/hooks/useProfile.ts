@@ -11,8 +11,8 @@ export const useProfile = () => {
 
     // FIXME: This is just for demo purposes
     React.useEffect(() => {
-        login(LOGIN_CREDENTIALS.email, LOGIN_CREDENTIALS.password);
-        console.log('Login with credentials: ', LOGIN_CREDENTIALS);
+        //login(LOGIN_CREDENTIALS.email, LOGIN_CREDENTIALS.password);
+        //console.log('Login with credentials: ', LOGIN_CREDENTIALS);
     }, []);
 
     return {...props};

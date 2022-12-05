@@ -14,10 +14,6 @@ export const addBalance = async (
     userId: string,
     amount: number
 ): Promise<User> => {
-    console.log(
-        'Patch url',
-        `${BASE_URL}/users/balance?id=${userId}&balance=${amount}`
-    );
     const response = await axios.patch(
         `${BASE_URL}/users/balance?id=${userId}&balance=${amount}`
     );
