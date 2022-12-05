@@ -1,19 +1,21 @@
-import {InputForm} from '@components/createBetter/inputForm';
+import {HandleChangeProps, InputForm} from '@components/createBetter/inputForm';
 import React, {useEffect, useState} from 'react';
 import Image from 'next/image';
 import {PrimaryButton} from '@components/Button';
+import {useProfile} from '@hooks/useProfile';
 
 export const PaymentMethod = (props) => {
-    const [change, setChange] = useState<number>(0);
+    const [amount, setAmount] = useState<number>(0);
     const [changeError, setChangeError] = useState('');
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [paymentMethod, setPaymentMethod] = useState<number>(0);
 
-    const handleChange = (e) => {
-        const {value} = e.target;
+    const {deposit, withdraw} = useProfile();
+
+    const handleChange = ({value}: HandleChangeProps) => {
         if (value === '') {
-            setChange(0);
-        } else setChange(parseFloat(value));
+            setAmount(0);
+        } else setAmount(parseFloat(value));
         setIsSubmitting(false);
     };
 
@@ -48,22 +50,17 @@ export const PaymentMethod = (props) => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        const errors = validate(change);
+        const errors = validate(amount);
         setChangeError(errors);
         setIsSubmitting(true);
     };
 
     const submit = () => {
-        props.isDepositing
-            ? props.changeBalance(props.balance + change)
-            : props.changeBalance(props.balance - change);
+        props.isDepositing ? deposit(amount) : withdraw(amount);
         props.setMenu(3);
     };
 
     useEffect(() => {
-        console.log('Vai submeter?');
-        console.log(changeError === '' && isSubmitting);
-        console.log(change);
         if (changeError === '' && isSubmitting) {
             submit();
         }
@@ -101,7 +98,7 @@ export const PaymentMethod = (props) => {
                 name="Montante"
                 // FIXME
                 id="montante"
-                value={change}
+                value={String(amount)}
                 handleChange={handleChange}
                 error={changeError}
             />

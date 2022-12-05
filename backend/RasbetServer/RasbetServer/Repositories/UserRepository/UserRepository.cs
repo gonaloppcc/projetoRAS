@@ -37,4 +37,13 @@ public class UserRepository : BaseRepository, IUserRepository {
         user.Password = password;
         _context.SaveChanges();
     }
+
+    public Better UpdateBalance(string id, float amount)
+    {
+        var user = (from u in _context.Betters where u.Id == id select u).Single();
+        user.Balance += amount;
+        _context.SaveChanges();
+
+        return user;
+    }
 }

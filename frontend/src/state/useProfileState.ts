@@ -1,15 +1,17 @@
 import create from 'zustand';
 import {User} from '@domain/User';
-import {login} from '../services/backend/user';
+import {addBalance, login} from '../services/backend/user';
 
 export interface ProfileState extends User {
     // Handlers
     login: (email: string, password: string) => void;
     setProfile: (id: string) => void;
     setBalance: (balance: number) => void;
+    deposit: (amount: number) => void;
+    withdraw: (amount: number) => void;
 }
 
-export const useProfileState = create<ProfileState>((set) => ({
+export const useProfileState = create<ProfileState>((set, get) => ({
     Id: '',
     Nif: '',
     Cc: '',
@@ -22,7 +24,6 @@ export const useProfileState = create<ProfileState>((set) => ({
     login: async (email, password) => {
         const user = await login(email, password);
 
-        console.log(user);
         set((state) => {
             return {...state, ...user};
         });
@@ -32,6 +33,18 @@ export const useProfileState = create<ProfileState>((set) => ({
     setBalance: (balance) => {
         set((state) => {
             return {...state, Balance: balance};
+        });
+    },
+    deposit: async (amount) => {
+        const user = await addBalance(get().Id, amount);
+        set((state) => {
+            return {...state, ...user};
+        });
+    },
+    withdraw: async (amount) => {
+        const user = await addBalance(get().Id, -amount);
+        set((state) => {
+            return {...state, ...user};
         });
     },
 }));

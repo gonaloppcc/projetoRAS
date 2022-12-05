@@ -43,6 +43,19 @@ public class UserController : ControllerBase
         }
     }
 
+    [HttpPatch("balance", Name = "UpdateBalance")]
+    public IActionResult UpdateBalance([FromQuery] string id, [FromQuery] float balance)
+    {
+        try
+        {
+            var better = _userRepository.UpdateBalance(id, balance);
+            return Ok(JsonConvert.SerializeObject(better));
+        }
+        catch (Exception e)
+        {
+            return NotFound("User not found");
+        }
+    }
 
     /// <summary>
     ///     Registers a better in the system
