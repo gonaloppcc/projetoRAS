@@ -105,7 +105,6 @@ export const useBettingSlip = create<ReportState>((set) => ({
                         OddId: bets[0].odd.Id,
                         BetterId: '0',
                         Amount: bets[0].bettingAmount as number,
-                        EventId: '',
                     };
                     console.log({simpleBet});
 

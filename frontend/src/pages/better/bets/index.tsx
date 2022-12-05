@@ -1,52 +1,18 @@
 import React from 'react';
-import {BetRecord, BetRecordProps} from '@components/BetRecord';
+import {BetRecord} from '@components/BetRecord';
 import {PageLayout} from '@components/PageLayout';
 import {Accordion} from '@components/Accordion';
-import {
-    OnGoingBetRecord,
-    OnGoingBetRecordProps,
-} from '@components/OnGoingBetRecord';
+import {OnGoingBetRecord} from '@components/OnGoingBetRecord';
 import {useBets} from '@hooks/useBets';
 import {Bet} from '@domain/Bet';
 import {CircularProgress} from '@mui/material';
-
-const MOCK_WIN_BET_RECORD: BetRecordProps = {
-    eventName: 'Manchester United vs. Liverpool',
-    eventDate: '21-10-2022',
-    eventType: 'football',
-    betAmount: 1.0,
-    betName: 'Resultado Final: United',
-    betOdd: 1.54,
-    betWinnings: 1.54,
-};
-
-const MOCK_LOST_BET_RECORD: BetRecordProps = {
-    eventName: 'Manchester United vs. Liverpool',
-    eventDate: '21-10-2022',
-    eventType: 'football',
-    betAmount: 1.0,
-    betName: 'Resultado Final: United',
-    betOdd: 1.54,
-    betWinnings: 0,
-};
-
-const MOCK_ON_GOIN_BET_RECORD: OnGoingBetRecordProps = {
-    eventName: 'Manchester United vs. Liverpool',
-    eventDate: '21-10-2022',
-    eventType: 'football',
-    betAmount: 1.0,
-    betName: 'Resultado Final: United',
-    betOdd: 1.54,
-    betPossibleWinnings: 1.54,
-    cancelBetHandler: () => {
-        console.log('Aposta cancelada');
-    },
-};
+import {deleteBet} from '../../../services/backend/bet';
 
 const USER_ID = '0';
 
 const Bets = () => {
-    const {isSuccess, isLoading, isError, bets, error} = useBets(USER_ID);
+    const {isSuccess, isLoading, isError, bets, error, refetch} =
+        useBets(USER_ID);
 
     let onGoingBets: Bet[] = [];
     let finishedBets: Bet[] = [];
@@ -57,6 +23,14 @@ const Bets = () => {
         finishedBets = bets.filter((bet) => bet.Closed);
     }
 
+    const cancelBetHandler = (betId: string) => {
+        return async () => {
+            console.log('BetId:', betId);
+            await deleteBet(betId);
+            refetch();
+        };
+    };
+
     return (
         <PageLayout>
             <div className="w-full flex flex-col gap-4">
@@ -65,7 +39,11 @@ const Bets = () => {
                         {isLoading && <CircularProgress />}
                         {isSuccess &&
                             onGoingBets.map((bet) => (
-                                <OnGoingBetRecord key={bet.Id} {...bet} />
+                                <OnGoingBetRecord
+                                    key={bet.Id}
+                                    {...bet}
+                                    cancelBetHandler={cancelBetHandler(bet.Id)}
+                                />
                             ))}
                     </div>
                 </Accordion>

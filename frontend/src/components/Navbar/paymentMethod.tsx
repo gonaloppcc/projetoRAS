@@ -1,6 +1,7 @@
 import {InputForm} from '@components/createBetter/inputForm';
 import React, {useEffect, useState} from 'react';
 import Image from 'next/image';
+import {PrimaryButton} from '@components/Button';
 
 export const PaymentMethod = (props) => {
     const [change, setChange] = useState<number>(0);
@@ -47,7 +48,7 @@ export const PaymentMethod = (props) => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        var errors = validate(change);
+        const errors = validate(change);
         setChangeError(errors);
         setIsSubmitting(true);
     };
@@ -56,8 +57,6 @@ export const PaymentMethod = (props) => {
         props.isDepositing
             ? props.changeBalance(props.balance + change)
             : props.changeBalance(props.balance - change);
-        console.log('O valor novo é:');
-        console.log(props.balance);
         props.setMenu(3);
     };
 
@@ -69,16 +68,6 @@ export const PaymentMethod = (props) => {
             submit();
         }
     }, [isSubmitting]);
-
-    const RedButton = (props) => {
-        return (
-            <div className=" items-start text-white	align-baseline	 w-fit h-12 p-2 w-24  bg-red-600 text-center	rounded">
-                <button onClick={props.onClick} type="submit">
-                    {props.text}
-                </button>
-            </div>
-        );
-    };
 
     return (
         <div className="p-2">
@@ -120,7 +109,13 @@ export const PaymentMethod = (props) => {
                 {/*
                 FIXME texto
                 */}
-                <RedButton onClick={handleSubmit} text="Depositar dinheiro" />
+
+                <PrimaryButton onClick={handleSubmit} type="submit">
+                    {props.isDepositing
+                        ? // FIXME
+                          'Depositar Montante'
+                        : 'Levantar Montante'}
+                </PrimaryButton>
             </div>
         </div>
     );

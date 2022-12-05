@@ -5,4 +5,5 @@ export interface FetcherProps {
     isLoading: boolean;
     isError: boolean;
     error: string;
+    refetch: () => void;
 }

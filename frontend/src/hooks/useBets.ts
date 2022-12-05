@@ -14,7 +14,8 @@ export const useBets = (userId: string): useBetsProps => {
         isError,
         data: bets,
         error,
-    } = useQuery(['events', userId], () => getBets({userId}));
+        refetch,
+    } = useQuery(['bets', userId], () => getBets({userId}));
 
     return {
         isSuccess,
@@ -22,5 +23,6 @@ export const useBets = (userId: string): useBetsProps => {
         isError,
         bets: bets as unknown as Bet[],
         error: error as string,
+        refetch,
     };
 };

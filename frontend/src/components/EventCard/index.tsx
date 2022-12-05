@@ -21,7 +21,7 @@ export const EventCard = ({
 
     const eventType = Competition.Sport.Name;
 
-    const odds: Odd[] = [
+    const odds = [
         {
             Id: Participants.Home.Participant.Id,
             PartId: '',
@@ -42,8 +42,6 @@ export const EventCard = ({
         },
     ];
 
-    console.log({odds});
-
     const addBetHandler = (odd: Odd) => {
         return () => addBet({eventType, eventId: Id, eventName, odd});
     };
@@ -62,7 +60,7 @@ export const EventCard = ({
                 </div>
             </div>
             <div className="h-full flex flex-row justify-end items-center gap-2">
-                {odds.map((odd, index) => (
+                {odds.map((odd) => (
                     <OddCard
                         key={odd.Id}
                         {...odd}

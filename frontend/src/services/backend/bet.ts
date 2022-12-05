@@ -7,7 +7,6 @@ export interface AddSimpleBetProps {
     OddId: string;
     BetterId: string;
     Amount: number;
-    EventId: string;
 }
 
 export const addSimpleBet = async (
@@ -23,4 +22,8 @@ export const addSimpleBet = async (
 export const getBets = async ({userId}: {userId: string}): Promise<Bet[]> => {
     const response = await axios.get(`${BASE_URL}/bets?userId=${userId}`);
     return response.data as Bet[];
+};
+
+export const deleteBet = async (betId: string): Promise<void> => {
+    await axios.delete(`${BASE_URL}/bets/${betId}`);
 };

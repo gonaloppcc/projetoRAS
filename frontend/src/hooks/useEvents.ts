@@ -14,6 +14,7 @@ export const useEvents = (compId: string): useEventsProps => {
         isError,
         data: events,
         error,
+        refetch,
     } = useQuery(['events', compId], () => getEvents({compId}));
 
     return {
@@ -22,5 +23,6 @@ export const useEvents = (compId: string): useEventsProps => {
         isError,
         events: events as unknown as Event[],
         error: error as string,
+        refetch,
     };
 };

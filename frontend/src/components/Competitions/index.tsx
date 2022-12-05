@@ -13,7 +13,7 @@ export const Competitions = ({competitions}: CompetitionsProps) => {
             </div>
             <div className="w-full flex flex-col items-center p-0 gap-0.5">
                 {competitions.map((props) => (
-                    <CompetitionCard key={props.name} {...props} />
+                    <CompetitionCard key={props.Name} {...props} />
                 ))}
             </div>
         </div>

@@ -1,15 +1,22 @@
 import ExitToAppIcon from '@mui/icons-material/ExitToApp';
 import OutputIcon from '@mui/icons-material/Output';
 
-// @ts-ignore
-export const DepositOrWithdraw = (props) => {
+interface DepositOrWithdrawProps {
+    setMenu: (menu: number) => void;
+    setDepositing: (depositing: boolean) => void;
+}
+
+export const DepositOrWithdraw = ({
+    setMenu,
+    setDepositing,
+}: DepositOrWithdrawProps) => {
     const clicked = (deposit: boolean) => {
-        props.setMenu(1);
-        deposit ? props.setDepositing(true) : props.setDepositing(false);
+        setMenu(1);
+        setDepositing(deposit);
     };
 
-    const DepositCard = () => {
-        return (
+    return (
+        <div className="flex flex-row justify-around gap-2">
             <div
                 onClick={() => clicked(true)}
                 className="p-5 w-fit h-fit flex flex-col gap-2 cursor-pointer"
@@ -17,10 +24,6 @@ export const DepositOrWithdraw = (props) => {
                 <ExitToAppIcon sx={{fontSize: 70}} />
                 <button>Depositar</button>
             </div>
-        );
-    };
-    const WithdrawCard = () => {
-        return (
             <div
                 onClick={() => clicked(false)}
                 className="p-5 w-fit h-fit flex flex-col gap-2 cursor-pointer"
@@ -28,12 +31,6 @@ export const DepositOrWithdraw = (props) => {
                 <OutputIcon sx={{fontSize: 70}} />
                 <button>Levantar</button>
             </div>
-        );
-    };
-    return (
-        <div className="flex flex-row justify-around	 gap-2 ">
-            <DepositCard />
-            <WithdrawCard />
         </div>
     );
 };

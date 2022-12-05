@@ -1,17 +1,9 @@
 import React from 'react';
 import {SportIcon} from '@components/SportIcon';
 import {Bet} from '@domain/Bet';
-import {formatDate} from '../../utils/formatters';
+import {formatDate, formatNumber} from '../../utils/formatters';
 
-export interface OnGoingBetRecordProps {
-    eventName: string;
-    eventDate: string;
-    eventType: string; // FIXME Change to enum
-
-    betName: string;
-    betOdd: number;
-    betAmount: number;
-    betPossibleWinnings: number;
+export interface OnGoingBetRecordProps extends Bet {
     cancelBetHandler: () => void;
 }
 
@@ -23,21 +15,18 @@ export const OnGoingBetRecord = ({
     Closed,
     BetterId,
     Amount,
-}: Bet) => {
+    cancelBetHandler,
+}: OnGoingBetRecordProps) => {
     // FIXME: Hardcoded text in this component
     const betName = `Resultado Final: ${PartId}`; // FIXME: Only valid to Participant Bets
 
     const eventType = 'Football'; // FIXME: Event type is hardcoded
 
-    const eventName = 'FC Porto vs. Benfica';
-
     const betPossibleWinnings = Amount * Price;
 
-    const cancelBetHandler = () => {
-        console.log('Aposta cancelada');
-    };
-
     const dateFormatted = formatDate(Date);
+
+    const eventName = 'Dummy Event Name'; // FIXME: Event name is hardcoded
 
     return (
         <div className="flex flex-row justify-between items-center px-4 gap-8 bg-WHITE rounded">
@@ -67,7 +56,7 @@ export const OnGoingBetRecord = ({
                     {'Valor apostado'}
                 </span>
                 <span className="text-EERIE_BLACK text-base font-semibold">
-                    {Amount} €
+                    {formatNumber(Amount)} €
                 </span>
             </div>
             <div className="flex flex-col items-start py-4 gap-2">
@@ -75,7 +64,7 @@ export const OnGoingBetRecord = ({
                     {'Potenciais Ganhos'}
                 </span>
                 <span className="text-base font-semibold">
-                    {betPossibleWinnings} €
+                    {formatNumber(betPossibleWinnings)} €
                 </span>
             </div>
 

@@ -2,20 +2,25 @@ import React, {Fragment, useRef} from 'react';
 import {Dialog, Transition} from '@headlessui/react';
 
 interface ModalProps {
-    open: boolean;
-    setOpen: (value: boolean) => void;
+    isOpen: boolean;
+    setIsOpen: (value: boolean) => void;
     children: React.ReactNode;
 }
 
-export const Modal = ({open, setOpen, children}: ModalProps) => {
+export const Modal = ({isOpen, setIsOpen, children}: ModalProps) => {
     const cancelButtonRef = useRef(null);
+
+    const closeModalHandler = () => {
+        setIsOpen(false);
+    };
+
     return (
-        <Transition.Root show={open} as={Fragment}>
+        <Transition.Root show={isOpen} as={Fragment}>
             <Dialog
                 as="div"
                 className="relative z-10"
                 initialFocus={cancelButtonRef}
-                onClose={setOpen}
+                onClose={closeModalHandler}
             >
                 <Transition.Child
                     as={Fragment}
