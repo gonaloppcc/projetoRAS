@@ -1,33 +1,37 @@
 import React from 'react';
-import {SportsSoccer} from '@mui/icons-material';
+import {SportIcon} from '@components/SportIcon';
+import {Bet} from '@domain/Bet';
+import {formatDate, formatNumber} from '../../utils/formatters';
 
-export interface OnGoingBetRecordProps {
-    eventName: string;
-    eventDate: string;
-    eventType: string; // FIXME Change to enum
-
-    betName: string;
-    betOdd: number;
-    betAmount: number;
-    betPossibleWinnings: number;
+export interface OnGoingBetRecordProps extends Bet {
     cancelBetHandler: () => void;
 }
 
 export const OnGoingBetRecord = ({
-    eventName,
-    eventDate,
-    eventType,
-    betName,
-    betOdd,
-    betAmount,
-    betPossibleWinnings,
+    Id,
+    Odd: {Id: OddId, PartId, Price},
+    EventId,
+    Date,
+    Closed,
+    BetterId,
+    Amount,
     cancelBetHandler,
 }: OnGoingBetRecordProps) => {
     // FIXME: Hardcoded text in this component
+    const betName = `Resultado Final: ${PartId}`; // FIXME: Only valid to Participant Bets
+
+    const eventType = 'Football'; // FIXME: Event type is hardcoded
+
+    const betPossibleWinnings = Amount * Price;
+
+    const dateFormatted = formatDate(Date);
+
+    const eventName = 'Dummy Event Name'; // FIXME: Event name is hardcoded
+
     return (
         <div className="flex flex-row justify-between items-center px-4 gap-8 bg-WHITE rounded">
             <div className="flex flex-row justify-center items-center gap-4">
-                <SportsSoccer />
+                <SportIcon eventType={eventType} />
                 <div className="flex flex-col items-start p-0 gap-1">
                     <span className="text-EERIE_BLACK text-base font-semibold">
                         {betName}
@@ -37,12 +41,14 @@ export const OnGoingBetRecord = ({
             </div>
             <div className="flex flex-col items-start p-0 gap-2">
                 <span className="text-LIGHT_GRAY text-sm">{'Data'}</span>
-                <span className="text-EERIE_BLACK text-base">{eventDate}</span>
+                <span className="text-EERIE_BLACK text-base">
+                    {dateFormatted}
+                </span>
             </div>
 
             <div className="flex flex-col items-start p-0 gap-2">
                 <span className="text-LIGHT_GRAY text-sm">{'Cota'}</span>
-                <span className="text-SPECIAL text-base">{betOdd}</span>
+                <span className="text-SPECIAL text-base">{Price}</span>
             </div>
 
             <div className="flex flex-col items-start p-0 gap-2">
@@ -50,7 +56,7 @@ export const OnGoingBetRecord = ({
                     {'Valor apostado'}
                 </span>
                 <span className="text-EERIE_BLACK text-base font-semibold">
-                    {betAmount} €
+                    {formatNumber(Amount)} €
                 </span>
             </div>
             <div className="flex flex-col items-start py-4 gap-2">
@@ -58,7 +64,7 @@ export const OnGoingBetRecord = ({
                     {'Potenciais Ganhos'}
                 </span>
                 <span className="text-base font-semibold">
-                    {betPossibleWinnings} €
+                    {formatNumber(betPossibleWinnings)} €
                 </span>
             </div>
 

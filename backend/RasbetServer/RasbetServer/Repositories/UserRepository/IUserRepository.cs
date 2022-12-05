@@ -8,4 +8,5 @@ public interface IUserRepository {
     User AddUser(User user);
     void DeleteUser(string id);
     void ChangePassword(string id, string password);
+    Better UpdateBalance(string id, float amount);
 }

@@ -5,6 +5,7 @@ import {MultipleBetCard} from '@components/MultipleBetCard';
 import {Tabs} from '@components/Tabs';
 import {SimpleBetCard} from '@components/SimpleBetCard';
 import {SimpleBetBettingSlipInfo} from '@components/SimpleBetBettingSlipInfo';
+import {useProfileState} from '@state/useProfileState';
 
 const TABS = [
     {
@@ -28,8 +29,15 @@ export const BettingSlip = () => {
         submitReport,
     } = useBettingSlip();
 
+    const {Email, Password, login} = useProfileState();
+
     const getRemoveBetHandler = (id: string) => () => {
         removeBet(id);
+    };
+
+    const submitReportHandler = async () => {
+        await submitReport();
+        await login(Email, Password);
     };
 
     return (
@@ -68,7 +76,7 @@ export const BettingSlip = () => {
                                 (bet.bettingAmount as number) * bet.odd.price
                             );
                         }, 0)}
-                        placeBetOnClick={submitReport}
+                        placeBetOnClick={submitReportHandler}
                         currency={currency}
                     />
                 </>
@@ -85,8 +93,8 @@ export const BettingSlip = () => {
                         ))}
                     </div>
                     <MultipleBetBettingSlipInfo
-                        odd={bets.reduce((acc, bet) => acc * bet.odd.price, 1)}
-                        placeBetOnClick={submitReport}
+                        odd={bets.reduce((acc, bet) => acc * bet.odd.Price, 1)}
+                        placeBetOnClick={submitReportHandler}
                         bettingAmount={
                             bettingAmount as number /* bettingAmount is always defined when the bet is Multiple */
                         }

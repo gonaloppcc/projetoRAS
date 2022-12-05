@@ -1,15 +1,10 @@
 import {useQuery} from '@tanstack/react-query';
-import {getEvents} from '../services/event';
-import {Event} from '../domain/Event';
+import {getEvents} from '../services/backend/event';
+import {Event} from '@domain/Event';
+import {FetcherProps} from '@hooks/Fetcher';
 
-export interface useEventsProps {
-    limit?: number;
-    offset?: number;
-    isSuccess: boolean;
-    isLoading: boolean;
-    isError: boolean;
+export interface useEventsProps extends FetcherProps {
     events: Event[];
-    error: string;
 }
 
 export const useEvents = (compId: string): useEventsProps => {
@@ -19,6 +14,7 @@ export const useEvents = (compId: string): useEventsProps => {
         isError,
         data: events,
         error,
+        refetch,
     } = useQuery(['events', compId], () => getEvents({compId}));
 
     return {
@@ -27,5 +23,6 @@ export const useEvents = (compId: string): useEventsProps => {
         isError,
         events: events as unknown as Event[],
         error: error as string,
+        refetch,
     };
 };

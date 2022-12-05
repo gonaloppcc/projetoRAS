@@ -8,7 +8,7 @@ export const LoginCard = () => {
     return (
         <div>
             {open && (
-                <Modal open={open} setOpen={setOpen}>
+                <Modal isOpen={open} setIsOpen={setOpen}>
                     <ForgetPassword />
                 </Modal>
             )}

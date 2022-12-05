@@ -39,7 +39,7 @@ public class Startup
                 {
                     policy.AllowAnyOrigin()
                         .SetIsOriginAllowedToAllowWildcardSubdomains().AllowAnyHeader()
-                        .WithMethods("GET", "PUT", "POST", "DELETE", "OPTIONS");
+                        .WithMethods("GET", "PUT", "POST", "DELETE", "OPTIONS", "PATCH");
                 });
         });
         services.AddControllers();

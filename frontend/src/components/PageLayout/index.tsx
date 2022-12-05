@@ -1,53 +1,25 @@
 import React from 'react';
 import {Navbar} from '@components/Navbar';
 import {Competitions} from '@components/Competitions';
-import {CompetitionProps} from '@components/CompetitionCard';
 import {BettingSlip} from '@components/BettingSlip';
-
-const MOCK_COMPETITIONS: CompetitionProps[] = [
-    {
-        name: 'Portugal - Primeira Liga',
-        eventType: 'football',
-        isFavorite: true,
-    },
-    {
-        name: 'Portugal - Segunda Liga',
-        eventType: 'football',
-        isFavorite: false,
-    },
-    {
-        name: 'EUA - NBA',
-        eventType: 'basketball',
-        isFavorite: false,
-    },
-    {
-        name: 'EUA - MLB',
-        eventType: 'baseball',
-        isFavorite: false,
-    },
-    {
-        name: 'Maia - Challenger',
-        eventType: 'tennis',
-        isFavorite: false,
-    },
-    {
-        name: 'Vila do Conde - Challenger',
-        eventType: 'tennis',
-        isFavorite: true,
-    },
-];
+import {useCompetitions} from '@hooks/useCompetitions';
 
 export interface PageLayoutProps {
     children: React.ReactNode;
 }
 
+const MAIN_SPORT = 'Football';
+
 export const PageLayout = ({children}: PageLayoutProps) => {
+    const {isSuccess, isLoading, competitions, error, isError, refetch} =
+        useCompetitions(MAIN_SPORT);
+
     return (
         <div className="w-screen h-screen flex flex-col">
             <Navbar />
             <div className="w-full h-full p-8 bg-CULTURED flex flex-row justify-center gap-8">
                 <div className="hidden md:flex flex-row justify-start w-3/12">
-                    <Competitions competitions={MOCK_COMPETITIONS} />
+                    {isSuccess && <Competitions competitions={competitions} />}
                 </div>
                 <div className="flex flex-row justify-center w-6/12">
                     {children}
