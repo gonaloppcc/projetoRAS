@@ -14,8 +14,11 @@ public class BetRepository : BaseRepository, IBetRepository
     public Bet MakeBet(Bet bet)
     {
         var user = (from b in _context.Betters where b.Id == bet.BetterId select b).Single();
-        var newBet = _context.Bets.Add(bet);
+        if (user.Balance < bet.Amount)
+            throw new InvalidOperationException();
         
+        var newBet = _context.Bets.Add(bet);
+        user.Balance -= bet.Amount;
         user.TransactionHist.Add(new Transaction(-bet.Amount));
         _context.SaveChanges();
 

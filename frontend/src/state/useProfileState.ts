@@ -21,6 +21,8 @@ export const useProfileState = create<ProfileState>((set) => ({
     TransactionHist: [],
     login: async (email, password) => {
         const user = await login(email, password);
+
+        console.log(user);
         set((state) => {
             return {...state, ...user};
         });
