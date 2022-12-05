@@ -24,7 +24,7 @@ export const PageLayout = ({children}: PageLayoutProps) => {
                 <div className="flex flex-row justify-center w-6/12">
                     {children}
                 </div>
-                <div className="hidden md:flex flex-row justify-center w-3/12 max-h-full">
+                <div className="hidden md:flex flex-row justify-center w-3/12 h-full">
                     <BettingSlip />
                 </div>
             </div>

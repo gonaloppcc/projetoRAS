@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
-import {InsertMailBody} from './insertMailBody';
-import {InsertCodeBody} from './insertCodeBody';
+import {InsertMailBody} from '@components/RegisterSpecialist/insertMailBody';
+import {InsertCodeBody} from '@components/RegisterSpecialist/insertCodeBody';
 
 export const ForgetPassword = () => {
     // This var is only for debugging purposes.
