@@ -1,30 +1,52 @@
-using RasbetServer.Models.Bets.Odds;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 
 namespace RasbetServer.Models.Bets;
 
 public abstract class Bet
 {
-    public ulong? Id { get; }
-    public DateTime Date { get; }
-    public bool Closed { get; }
-    public Odd Target { get; }
-    public float Amount { get; }
+    [Key]
+    [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+    public string? Id { get; set; } = null;
+    
+    [Required]
+    public DateTime Date { get; set; }
+    
+    [Required]
+    public bool Closed { get; set; }
+    
+    [Required] 
+    [ForeignKey("BetterId")]
+    public string BetterId { get; set; }
+    
+    [Required]
+    public float Amount { get; set; }
+
+    public Bet() { }
     
     public Bet(
-        ulong? id,
         DateTime date,
         bool closed,
-        Odd odd,
+        string betterId,
         float amount
-    )
-    {
-        Id = id;
+    ) {
         Date = date;
         Closed = closed;
-        Target = odd;
+        BetterId = betterId;
         Amount = amount;
     }
 
-    public float CalcCashOut()
-        => Amount * Target.Price;
+    public abstract float CalcCashOut();
+
+    public static Bet FromJson(JObject json)
+    {
+        return json["Type"].Value<string>() switch
+        {
+            nameof(MultiBet) => MultiBet.FromJson(json),
+            nameof(SimpleBet) => SimpleBet.FromJson(json),
+            _ => throw new JsonException()
+        };
+    }
 }

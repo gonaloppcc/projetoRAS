@@ -1,21 +1,39 @@
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+using Newtonsoft.Json.Linq;
 using RasbetServer.Models.Bets.Odds;
-using RasbetServer.Models.Events;
 
 namespace RasbetServer.Models.Bets;
 
-public class SimpleBet : Bet
-{
-    public Event Event { get; }
+public class SimpleBet : Bet {
+    
+    [Required]
+    [ForeignKey("OddId")]
+    public string OddId { get; set; }
+    public virtual Odd Odd { get; set; }
+
+    public SimpleBet() : base() { }
     
     public SimpleBet(
-        ulong? id,
         DateTime date,
         bool closed,
-        Odd odd,
-        float amount,
-        Event @event
-    ) : base(id, date, closed , odd, amount)
-    {
-        Event = @event;
+        string oddId,
+        string betterId,
+        float amount
+    ) : base(date, closed, betterId, amount) {
+        OddId = oddId;
     }
+
+    public new static SimpleBet FromJson(JObject json)
+    {
+        DateTime date = json[nameof(Date)].Value<DateTime>();
+        string oddId = json[nameof(OddId)].Value<string>();
+        string betterId = json[nameof(BetterId)].Value<string>();
+        float amount = json[nameof(Amount)].Value<float>();
+
+        return new SimpleBet(date, false, oddId, betterId, amount);
+    }
+
+    public override float CalcCashOut()
+        => Amount * Odd.Price;
 }

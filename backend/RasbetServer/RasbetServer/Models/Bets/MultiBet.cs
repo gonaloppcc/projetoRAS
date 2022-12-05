@@ -1,21 +1,43 @@
-using RasbetServer.Models.Bets.Odds;
-using RasbetServer.Models.Events;
+using System.ComponentModel.DataAnnotations;
+using Newtonsoft.Json.Linq;
 
 namespace RasbetServer.Models.Bets;
 
-public class MultiBet : Bet
-{
-    public List<Event> Events { get; }
+public class MultiBet : Bet {
+    [Required] 
+    public virtual List<OddBetIds> Odds { get; set; }
+
+    public MultiBet() : base() { }
     
     public MultiBet(
-        ulong? id,
         DateTime date,
         bool closed,
-        Odd odd,
+        string betterId,
         float amount,
-        IEnumerable<Event> events
-    ) : base(id, date, closed, odd, amount)
+        IEnumerable<OddBetIds> odds
+    ) : base(date, closed, betterId, amount) {
+        Odds = odds.ToList();
+    }
+
+    public override float CalcCashOut()
     {
-        Events = events.ToList();
+        float multiplier = 1;
+        foreach (var odd in Odds)
+            multiplier *= odd.Odd.Price;
+
+        return Amount * multiplier;
+    }
+
+    public new static MultiBet FromJson(JObject json)
+    {
+        DateTime date = json[nameof(Date)].Value<DateTime>();
+        string betterId = json[nameof(BetterId)].Value<string>();
+        float amount = json[nameof(Amount)].Value<float>();
+        List<OddBetIds> eventIds = new();
+        
+        foreach (var eventId in json[nameof(Odds)].Value<JArray>())
+            eventIds.Add(OddBetIds.FromJson(eventId.ToObject<JObject>()));
+
+        return new MultiBet(date, false, betterId, amount, eventIds);
     }
 }

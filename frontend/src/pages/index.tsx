@@ -1,52 +1,28 @@
 import type {NextPage} from 'next';
-import {EventCard, EventCardProps} from '@components/EventCard';
+import {EventCard} from '@components/EventCard';
 import {PageLayout} from '@components/PageLayout';
-import {FormattedMessage, useIntl} from 'react-intl';
+import {useEvents} from '@hooks/useEvents';
+import {CircularProgress} from '@mui/material';
+
+const PRIMARY_COMPETITION_ID = 'National League'; // Football
 
 const Home: NextPage = () => {
-    const intl = useIntl();
-    const featureDraw = intl.formatMessage({id: 'Main.Draw'});
-
-        /* FIXME Mock data hardcoded */
-    const MOCK_EVENT: EventCardProps = {
-        eventId: '1',
-        eventName: 'Real Madrid vs Barcelona',
-        eventType: 'football',
-        commenceTime: new Date().toString(),
-        odds: [
-            {
-                name: 'Real Madrid',
-                price: 1.54,
-            },
-            {
-                name: featureDraw,
-                price: 2.57,
-            },
-            {
-                name: 'Barcelona',
-                price: 3.59,
-            },
-        ],
-    };
-
-    const MOCK_EVENTS: EventCardProps[] = [
-        MOCK_EVENT,
-        MOCK_EVENT,
-        MOCK_EVENT,
-        MOCK_EVENT,
-        MOCK_EVENT,
-        MOCK_EVENT,
-        MOCK_EVENT,
-        MOCK_EVENT,
-    ];
-
+    const {isSuccess, isLoading, isError, events, error} = useEvents(
+        PRIMARY_COMPETITION_ID
+    );
 
     return (
         <PageLayout>
-            <div className="flex flex-col justify-start gap-3 w-full">
-                {MOCK_EVENTS.map((event) => (
-                    <EventCard key={event.eventId} {...event} />
-                ))}
+            <div className="flex flex-col justify-start items-center gap-3 w-full">
+                {isLoading && <CircularProgress />}
+                {isSuccess &&
+                    events.map((event) => (
+                        <EventCard key={event.Id} {...event} />
+                    ))}
+                {isSuccess && events.length === 0 && (
+                    <span>Não há jogos por agora</span>
+                )}
+                {isError && <span>{error}</span>}
             </div>
         </PageLayout>
     );
