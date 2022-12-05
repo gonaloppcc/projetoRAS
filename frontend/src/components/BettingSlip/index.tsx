@@ -6,16 +6,23 @@ import {Tabs} from '@components/Tabs';
 import {SimpleBetCard} from '@components/SimpleBetCard';
 import {SimpleBetBettingSlipInfo} from '@components/SimpleBetBettingSlipInfo';
 
-const TABS = [
-    {
-        name: 'Simples',
-    },
-    {
-        name: 'Múltipla',
-    },
-];
+import {useRouter} from 'next/router';
+import {FormattedMessage, useIntl} from 'react-intl';
 
 export const BettingSlip = () => {
+    const intl = useIntl();
+    const featureMybet = intl.formatMessage({id: 'BettingSlip.mybet'});
+    const featureSingle = intl.formatMessage({id: 'BettingSlip.singles'});
+    const featureMultiple = intl.formatMessage({id: 'BettingSlip.multiples'});
+
+    const TABS = [
+        {
+            name: featureSingle,
+        },
+        {
+            name: featureMultiple,
+        },
+    ];
     const {
         currency,
         bettingAmount,
@@ -35,7 +42,7 @@ export const BettingSlip = () => {
     return (
         <div className="w-full flex flex-col items-start p-0 gap-1 bg-WHITE rounded">
             <div className="w-full flex flex-col items-start p-4 gap-2 bg-WHITE shadow rounded-t">
-                {'BOLETIM' /* FIXME Text hardcoded for now!! */}
+                {featureMybet}
                 <Tabs
                     tabs={TABS}
                     selectedTabIndex={betType}

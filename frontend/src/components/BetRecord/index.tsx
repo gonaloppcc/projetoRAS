@@ -1,6 +1,9 @@
 import React from 'react';
 import {SportsSoccer} from '@mui/icons-material';
 
+import {useRouter} from 'next/router';
+import {FormattedMessage, useIntl} from 'react-intl';
+
 export interface BetRecordProps {
     eventName: string;
     eventDate: string;
@@ -21,6 +24,12 @@ export const BetRecord = ({
     betAmount,
     betWinnings,
 }: BetRecordProps) => {
+    const intl = useIntl();
+    const featureDate = intl.formatMessage({id: 'OnGoingBetRecord.Date'});
+    const featureOdds = intl.formatMessage({id: 'OnGoingBetRecord.Odds'});
+    const featureStake = intl.formatMessage({id: 'OnGoingBetRecord.Stake'});
+    const featureWin = intl.formatMessage({id: 'BetRecord.winnings'});
+
     // FIXME: Hardcoded text in this component
     return (
         <div className="flex flex-row justify-between items-center px-4 gap-8 bg-WHITE rounded">
@@ -34,12 +43,12 @@ export const BetRecord = ({
                 </div>
             </div>
             <div className="flex flex-col items-start p-0 gap-2">
-                <span className="text-LIGHT_GRAY text-sm">{'Data'}</span>
+                <span className="text-LIGHT_GRAY text-sm">{featureDate}</span>
                 <span className="text-EERIE_BLACK text-base">{eventDate}</span>
             </div>
 
             <div className="flex flex-col items-start p-0 gap-2">
-                <span className="text-LIGHT_GRAY text-sm">{'Cota'}</span>
+                <span className="text-LIGHT_GRAY text-sm">{featureOdds}</span>
                 <span className="text-SPECIAL text-base font-semibold">
                     {betOdd}
                 </span>
@@ -47,7 +56,7 @@ export const BetRecord = ({
 
             <div className="flex flex-col items-start p-0 gap-2">
                 <span className="text-LIGHT_GRAY text-sm">
-                    {'Valor apostado'}
+                    {featureStake}
                 </span>
                 <span className="text-EERIE_BLACK text-base font-semibold">
                     {betAmount} €{' '}
@@ -57,7 +66,7 @@ export const BetRecord = ({
 
             {betWinnings > 0 && (
                 <div className="h-full flex flex-col items-start w-20 p-4 gap-2 bg-RIGHT_GREEN text-WHITE">
-                    <span className="text-xs">{'Ganhos'}</span>
+                    <span className="text-xs">{featureWin}</span>
                     <span className="text-base font-semibold">
                         {betWinnings} €
                         {/* FIXME: Money currency is hardcoded and can vary */}
@@ -66,7 +75,7 @@ export const BetRecord = ({
             )}
             {betWinnings === 0 && (
                 <div className="flex flex-col items-start w-20 p-4 gap-2 bg-IMPERIAL_RED text-WHITE">
-                    <span className="text-xs">{'Ganhos'}</span>
+                    <span className="text-xs">{featureWin}</span>
                     <span className="text-base">
                         {betWinnings} €
                         {/* FIXME: Money currency is hardcoded and can vary */}

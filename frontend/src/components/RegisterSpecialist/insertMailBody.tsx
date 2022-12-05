@@ -3,6 +3,7 @@ import {REGEX_MAIL} from 'utils/regex';
 import emailjs from '@emailjs/browser';
 import {HandleChangeProps, InputForm} from '@components/createBetter/inputForm';
 import {PrimaryButton} from '@components/Button';
+import {FormattedMessage, useIntl} from 'react-intl';
 
 export interface ForgetPasswordProps {
     code: number;
@@ -18,6 +19,14 @@ export const InsertMailBody = ({
     mail,
     mailSent,
 }: ForgetPasswordProps) => {
+    const intl = useIntl();
+
+    const featureRequired = intl.formatMessage({id: 'loginCard.Required'});
+    const errorMail = intl.formatMessage({id: 'loginCard.error.mail'});
+    const featureForget = intl.formatMessage({id: 'loginCard.ForgetPassword'});
+    const featureMail = intl.formatMessage({id: 'loginCard.EnterMail'});
+    const featureSend = intl.formatMessage({id: 'loginCard.SendMail'});
+
     const [mailError, setMailError] = useState<string>('');
 
     const sendMail: boolean = false; // Constant, to prevent sending too many mails while testing.
@@ -34,10 +43,10 @@ export const InsertMailBody = ({
     const sendEmailClicked = () => {
         let canSendMail: boolean = true;
         if (!mail) {
-            setMailError('Obrigatório');
+            setMailError(featureRequired);
             canSendMail = false;
         } else if (!REGEX_MAIL.test(mail)) {
-            setMailError('Mail incorreto');
+            setMailError(errorMail);
             canSendMail = false;
         }
         if (canSendMail) {
@@ -72,9 +81,9 @@ export const InsertMailBody = ({
     return (
         <div className="flex flex-col gap-3 p-5">
             <div className="text-lg font-semibold pb-2 border-b">
-                Esqueci-me da password
+                {featureForget}
             </div>
-            <div>Introduza um mail para recuperar o acesso à conta.</div>
+            <div>{featureMail}</div>
             <div className=" relative z-0">
                 <InputForm
                     type="mail"
@@ -88,7 +97,7 @@ export const InsertMailBody = ({
 
             <div className="flex items-center justify-center gap-10">
                 <PrimaryButton onClick={sendEmailClicked}>
-                    <div>Send Mail</div>
+                    <div>{featureSend}</div>
                 </PrimaryButton>
             </div>
         </div>

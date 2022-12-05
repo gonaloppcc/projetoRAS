@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import {HandleChangeProps, InputForm} from '@components/createBetter/inputForm';
 import {REGEX_MAIL, REGEX_NUMBERS, REGEX_USERNAME} from '../../utils/regex';
+import {FormattedMessage, useIntl} from 'react-intl';
 
 interface ValuesProps {
     password: string;
@@ -27,6 +28,24 @@ export const CreateBetter = () => {
     const [errors, setErrors] = useState<ErrorsProps>(initialValues);
     const [isSubmitting, setIsSubmitting] = useState(false);
 
+    const intl = useIntl();
+
+    const featureregister = intl.formatMessage({id: 'loginCard.register'});
+    const error4char = intl.formatMessage({id: 'loginCard.error.min4car'});
+    const required = intl.formatMessage({id: 'loginCard.Required'});
+    const errormail = intl.formatMessage({id: 'loginCard.error.mail'});
+    const errorname = intl.formatMessage({id: 'loginCard.error.name'});
+    const errornif = intl.formatMessage({id: 'loginCard.error.nif'});
+    const errormobile = intl.formatMessage({id: 'loginCard.error.mobile'});
+    const errorcc = intl.formatMessage({id: 'loginCard.error.cc'});
+    const featurename = intl.formatMessage({id: 'loginCard.usernane'});
+    const featurepass = intl.formatMessage({id: 'loginCard.password'});
+    const featuremail = intl.formatMessage({id: 'loginCard.mail'});
+    const featurenif = intl.formatMessage({id: 'loginCard.nif'});
+    const featurephone = intl.formatMessage({id: 'loginCard.phone'});
+    const featurecc = intl.formatMessage({id: 'loginCard.cc'});
+    const featureAlreadyRegistered = intl.formatMessage({id: 'createBetter.AlreadyRegistered'});
+
     const submit = () => {
         // TODO: Backend call
     };
@@ -50,38 +69,38 @@ export const CreateBetter = () => {
         // Phone numbers, cc, nifs all with 9 numbers
 
         if (!values.username) {
-            errors.username = 'Obrigatório';
+            errors.username = required;
         } else if (!REGEX_USERNAME.test(values.username)) {
-            errors.username = 'Nome inválido';
+            errors.username = errorname;
         }
 
         if (!values.password) {
-            errors.password = 'Obrigatório';
+            errors.password = required;
         } else if (values.password.length < 4) {
-            errors.password = 'Password tem de ter mais de 4 carateres';
+            errors.password = error4char;
         }
 
         if (!values.mail) {
-            errors.mail = 'Obrigatório';
+            errors.mail = required;
         } else if (!REGEX_MAIL.test(values.mail)) {
-            errors.mail = 'Mail incorreto';
+            errors.mail = errormail;
         }
 
         if (!values.nif) {
-            errors.nif = 'Obrigatório';
+            errors.nif = required;
         } else if (!REGEX_NUMBERS.test(values.nif)) {
-            errors.nif = 'NIF inválido (9 carateres)';
+            errors.nif = errornif;
         }
 
         if (!values.phone) {
-            errors.phone = 'Obrigatório';
+            errors.phone = required;
         } else if (!REGEX_NUMBERS.test(values.phone)) {
-            errors.phone = 'Número de telemóvel errado';
+            errors.phone = errormobile;
         }
         if (!values.numberCC) {
-            errors.numberCC = 'Obrigatório';
+            errors.numberCC = required;
         } else if (!REGEX_NUMBERS.test(values.numberCC)) {
-            errors.numberCC = 'Número de telemóvel errado';
+            errors.numberCC = errorcc;
         }
         return errors;
     };
@@ -96,7 +115,7 @@ export const CreateBetter = () => {
         <div className="h-screen w-screen justify-center flex items-center bg-CULTURED">
             <div className="bg-white w-auto flex flex-col items-center px-10 pt-10 pb-10 h-auto gap-10 relative ">
                 <div className="w-24 h-10  not-italic font-normal text-3xl leading-10 text-black flex-none order-none flex-grow-0">
-                    Registo
+                    {featureregister}
                 </div>
                 <div className="flex flex-col items-start flex-none order-1">
                     <div className="flex-none order-none  ">
@@ -107,8 +126,8 @@ export const CreateBetter = () => {
                         >
                             {/*  FIXME Em todos */}
                             <InputForm
-                                type="text"
-                                name="Nome de utilizador"
+                                htmlFor="text"
+                                name = {featurename}
                                 id="username"
                                 value={values.username}
                                 handleChange={handleChange}
@@ -116,40 +135,40 @@ export const CreateBetter = () => {
                             />
 
                             <InputForm
-                                type="password"
-                                name="Palavra-passe"
+                                htmlFor="password"
+                                name={featurepass}
                                 id="password"
                                 value={values.password}
                                 handleChange={handleChange}
                                 error={errors.password}
                             />
                             <InputForm
-                                type="email"
-                                name="Email"
+                                htmlFor="email"
+                                name={featuremail}
                                 id="mail"
                                 value={values.mail}
                                 handleChange={handleChange}
                                 error={errors.mail}
                             />
                             <InputForm
-                                type="number"
-                                name="NIF"
+                                htmlFor="number"
+                                name={featurenif}
                                 id="nif"
                                 value={values.nif}
                                 handleChange={handleChange}
                                 error={errors.nif}
                             />
                             <InputForm
-                                type="tel"
-                                name="Número telemóvel"
+                                htmlFor="tel"
+                                name={featurephone}
                                 id="phone"
                                 value={values.phone}
                                 handleChange={handleChange}
                                 error={errors.phone}
                             />
                             <InputForm
-                                type="number"
-                                name="Número Cartão de Cidadão"
+                                htmlFor="number"
+                                name={featurecc}
                                 id="numberCC"
                                 value={values.numberCC}
                                 handleChange={handleChange}
@@ -158,7 +177,7 @@ export const CreateBetter = () => {
                             <div className="flex flex-col items-start self-stretch flex-none order-1 px-20 py-3">
                                 <div className=" text-white text-center h-12 p-2 w-24 gap-5 bg-red-600 rounded justify-center ">
                                     {/*  FIXME Em todos */}
-                                    <button type="submit">Registar</button>
+                                    <button type="submit">{featureregister}</button>
                                 </div>
                             </div>
                             <div className="flex-none order-2  ">
@@ -168,7 +187,7 @@ export const CreateBetter = () => {
                                         className="flex-none order-2 h text-lg"
                                     >
                                         {/*  FIXME Em todos */}
-                                        Já tem conta? Faça login!
+                                        {featureAlreadyRegistered}
                                     </a>
                                 </div>
                             </div>

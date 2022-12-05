@@ -2,6 +2,7 @@ import React, {useState} from 'react';
 import {HandleChangeProps, InputForm} from '@components/createBetter/inputForm';
 import {REGEX_MAIL} from '../../utils/regex';
 import {PrimaryButton} from '@components/Button';
+import {FormattedMessage, useIntl} from 'react-intl';
 
 // Receives a function that opens the Modal of "ForgetPassword"
 export interface LoginBodyProps {
@@ -28,6 +29,18 @@ const initialErrors = {
 export const LoginBody = ({setOpen}: LoginBodyProps) => {
     const [values, setValues] = useState<ValuesProps>(initialValues);
     const [errors, setErrors] = useState<ErrorsProps>(initialErrors);
+    const intl = useIntl();
+
+    const featureRequired = intl.formatMessage({id: 'loginCard.Required'});
+    const errorMail = intl.formatMessage({id: 'loginCard.error.mail'});
+    const errorPassword = intl.formatMessage({id: 'loginCard.errorpassword'});
+    const featureMail = intl.formatMessage({id: 'loginCard.mail'});
+    const featurePassword = intl.formatMessage({id: 'loginCard.password'});
+    const featureLogin = intl.formatMessage({id: 'coisa'});
+    const featureButtonLogin = intl.formatMessage({id: 'loginCard.button.login'});
+    const featureCreate = intl.formatMessage({id: 'loginCard.login'});
+    const featureForgetPass = intl.formatMessage({id: 'loginCard.ForgetPassword'});
+
 
     //form submission handler
     const handleSubmit: React.FormEventHandler<HTMLFormElement> = (e) => {
@@ -49,15 +62,15 @@ export const LoginBody = ({setOpen}: LoginBodyProps) => {
         };
 
         if (!values.mail) {
-            errors.mail = 'Obrigatório';
+            errors.mail = featureRequired;
         } else if (!REGEX_MAIL.test(values.mail)) {
-            errors.mail = 'Mail incorreto';
+            errors.mail = errorMail;
         }
 
         if (!values.password) {
-            errors.password = 'Obrigatório';
+            errors.password = featureRequired;
         } else if (values.password.length < 4) {
-            errors.password = 'Password tem de ter mais de 4 carateres';
+            errors.password = errorPassword;
         }
 
         setErrors(errors);
@@ -67,7 +80,7 @@ export const LoginBody = ({setOpen}: LoginBodyProps) => {
         <div className="h-screen w-screen justify-center flex items-center bg-CULTURED">
             <div className="bg-white w-auto flex flex-col items-center px-10 pt-10 h-auto gap-3 relative pb-10">
                 <div className="w-24 h-10 not-italic font-normal text-3xl leading-10 text-black flex-none order-none flex-grow-0">
-                    Entrar
+                    {featureLogin}
                 </div>
                 <div className="flex flex-col items-start flex-none order-1">
                     <div className="flex-none order-none">
@@ -79,7 +92,7 @@ export const LoginBody = ({setOpen}: LoginBodyProps) => {
                             {/*  FIXME Em todos */}
                             <InputForm
                                 type="mail"
-                                name="Mail"
+                                name={featureMail}
                                 id="mail"
                                 handleChange={handleChange}
                                 value={values.mail}
@@ -88,7 +101,7 @@ export const LoginBody = ({setOpen}: LoginBodyProps) => {
 
                             <InputForm
                                 type="password"
-                                name="Palavra-passe"
+                                name={featurePassword}
                                 id="password"
                                 handleChange={handleChange}
                                 value={values.password}
@@ -98,7 +111,7 @@ export const LoginBody = ({setOpen}: LoginBodyProps) => {
                             <div className="flex flex-col center px-20 py-3">
                                 {/*  FIXME Em todos */}
                                 <PrimaryButton type="submit">
-                                    Aceder
+                                    {featureButtonLogin}
                                 </PrimaryButton>
                             </div>
                             <div className="flex-none order-2  text-center	">
@@ -107,13 +120,13 @@ export const LoginBody = ({setOpen}: LoginBodyProps) => {
                                     className="flex-none order-2 h text-lg"
                                 >
                                     {/*  FIXME Em todos */}
-                                    Não tem conta? Registe-se agora!
+                                    {featureCreate}
                                 </a>
                                 <div
                                     onClick={() => setOpen(true)}
                                     className="cursor-pointer"
                                 >
-                                    Esqueci-me da palavra-passe
+                                    {featureForgetPass}
                                 </div>
                             </div>
                         </form>

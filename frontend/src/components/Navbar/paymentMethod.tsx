@@ -1,6 +1,7 @@
 import {InputForm} from '@components/createBetter/inputForm';
 import React, {useEffect, useState} from 'react';
 import Image from 'next/image';
+import {FormattedMessage, useIntl} from 'react-intl';
 
 export const PaymentMethod = (props) => {
     const [change, setChange] = useState<number>(0);
@@ -21,6 +22,7 @@ export const PaymentMethod = (props) => {
     };
 
     const PaymentCard = (props) => {
+        
         return (
             <button
                 onClick={() => clickedPaymentMethod(props.pos)}
@@ -79,13 +81,17 @@ export const PaymentMethod = (props) => {
             </div>
         );
     };
-
+    const intl = useIntl();
+    const featureDeposit = intl.formatMessage({id: 'Navbar.finishDeposit'});
+    const featureWithdraw = intl.formatMessage({id: 'Navbar.finishWithdraw'});
+    const featureStake = intl.formatMessage({id: 'Navbar.finishMontante'});
+    const featuredeposit = intl.formatMessage({id: 'Navbar.finishMoney'});
     return (
         <div className="p-2">
             {props.isDepositing
                 ? // FIXME
-                  'Selecione o método de pagamento'
-                : 'Selecione o método de levantamento'}
+                  featureDeposit
+                : featureWithdraw}
 
             <div className="flex flex-row gap-5 justify-around	">
                 <PaymentCard
@@ -109,7 +115,7 @@ export const PaymentMethod = (props) => {
             </div>
             <InputForm
                 type="number"
-                name="Montante"
+                name={featureStake}
                 // FIXME
                 id="montante"
                 value={change}
@@ -120,7 +126,7 @@ export const PaymentMethod = (props) => {
                 {/*
                 FIXME texto
                 */}
-                <RedButton onClick={handleSubmit} text="Depositar dinheiro" />
+                <RedButton onClick={handleSubmit} text={featuredeposit} />
             </div>
         </div>
     );

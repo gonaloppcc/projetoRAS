@@ -1,6 +1,7 @@
 import React from 'react';
 import {formatNumber} from '../../utils/formatters';
 import {Input} from '@components/Input';
+import {FormattedMessage, useIntl} from 'react-intl';
 
 interface MultipleBettingSlipInfoProps {
     odd: number;
@@ -23,11 +24,17 @@ export const MultipleBetBettingSlipInfo = ({
         setBettingAmount(Number(amount));
     };
 
+    const intl = useIntl();
+    const featureOdds = intl.formatMessage({id: 'OnGoingBetRecord.Odds'});
+    const featureWinnings = intl.formatMessage({id: 'OnGoingBetRecord.Possible.Winnings'});
+    const featureBetnow = intl.formatMessage({id: 'BettingSlipInfo.Bet.now'});
+    const featureStake = intl.formatMessage({id: 'MultipleBetBettingSlipInfo.Satke'});
+
     return (
         <div className="w-full flex flex-col items-start p-2 gap-2 bg-WHITE shadow rounded">
             <div className="w-full flex flex-row justify-between items-start p-0">
                 <div className="flex flex-row justify-center items-center gap-2">
-                    <span>{'Cota' /* FIXME Text hardcoded for now!! */}</span>
+                    <span>{featureOdds /* FIXME Text hardcoded for now!! */}</span>
                     <span className="bg-SPECIAL p-2 text-EERIE_BLACK rounded font-semibold">
                         {formatNumber(odd)}
                     </span>
@@ -36,7 +43,7 @@ export const MultipleBetBettingSlipInfo = ({
                     <Input
                         type="number"
                         placeholder={
-                            'Montante' /* FIXME Text hardcoded for now!! */
+                            featureStake /* FIXME Text hardcoded for now!! */
                         }
                         value={bettingAmountAsString}
                         onChange={setBettingAmountHandler}
@@ -46,7 +53,7 @@ export const MultipleBetBettingSlipInfo = ({
             </div>
             <div className="w-full flex flex-row justify-between items-start p-0 font-semibold text-lg">
                 <span>
-                    {'Total de Ganhos' /* FIXME Text hardcoded for now!! */}
+                    {featureWinnings /* FIXME Text hardcoded for now!! */}
                 </span>
                 <span>{`${formatNumber(
                     odd * bettingAmount
@@ -56,7 +63,7 @@ export const MultipleBetBettingSlipInfo = ({
                 className="w-full py-1.5 bg-IMPERIAL_RED rounded-xl shadow-2xl text-WHITE"
                 onClick={placeBetOnClick}
             >
-                {'APOSTAR' /* FIXME Text hardcoded for now!! */}
+                {featureBetnow /* FIXME Text hardcoded for now!! */}
             </button>
         </div>
     );

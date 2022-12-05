@@ -1,6 +1,9 @@
 import React from 'react';
 import {SportsSoccer} from '@mui/icons-material';
 
+import {useRouter} from 'next/router';
+import {FormattedMessage, useIntl} from 'react-intl';
+
 export interface OnGoingBetRecordProps {
     eventName: string;
     eventDate: string;
@@ -23,6 +26,12 @@ export const OnGoingBetRecord = ({
     betPossibleWinnings,
     cancelBetHandler,
 }: OnGoingBetRecordProps) => {
+    const intl = useIntl();
+    const featureCancel = intl.formatMessage({id: 'OnGoingBetRecord.Cancel'});
+    const featureDate = intl.formatMessage({id: 'OnGoingBetRecord.Date'});
+    const featureOdds = intl.formatMessage({id: 'OnGoingBetRecord.Odds'});
+    const featureStake = intl.formatMessage({id: 'OnGoingBetRecord.Stake'});
+    const featureWinnings = intl.formatMessage({id: 'OnGoingBetRecord.Possible.Winnings'});
     // FIXME: Hardcoded text in this component
     return (
         <div className="flex flex-row justify-between items-center px-4 gap-8 bg-WHITE rounded">
@@ -36,18 +45,18 @@ export const OnGoingBetRecord = ({
                 </div>
             </div>
             <div className="flex flex-col items-start p-0 gap-2">
-                <span className="text-LIGHT_GRAY text-sm">{'Data'}</span>
+                <span className="text-LIGHT_GRAY text-sm">{featureDate}</span>
                 <span className="text-EERIE_BLACK text-base">{eventDate}</span>
             </div>
 
             <div className="flex flex-col items-start p-0 gap-2">
-                <span className="text-LIGHT_GRAY text-sm">{'Cota'}</span>
+                <span className="text-LIGHT_GRAY text-sm">{featureOdds}</span>
                 <span className="text-SPECIAL text-base">{betOdd}</span>
             </div>
 
             <div className="flex flex-col items-start p-0 gap-2">
                 <span className="text-LIGHT_GRAY text-sm">
-                    {'Valor apostado'}
+                    {featureStake}
                 </span>
                 <span className="text-EERIE_BLACK text-base font-semibold">
                     {betAmount} €
@@ -55,7 +64,7 @@ export const OnGoingBetRecord = ({
             </div>
             <div className="flex flex-col items-start py-4 gap-2">
                 <span className="text-LIGHT_GRAY text-xs">
-                    {'Potenciais Ganhos'}
+                    {featureWinnings}
                 </span>
                 <span className="text-base font-semibold">
                     {betPossibleWinnings} €
@@ -67,7 +76,7 @@ export const OnGoingBetRecord = ({
                     onClick={cancelBetHandler}
                     className="bg-SPECIAL hover:bg-SPECIAL_DARK p-3 rounded font-semibold"
                 >
-                    Cancelar
+                    {featureCancel}
                 </button>
             </div>
         </div>
