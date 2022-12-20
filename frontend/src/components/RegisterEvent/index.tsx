@@ -6,11 +6,11 @@ import {PrimaryButton} from '@components/Button';
 import {SucessPage} from './sucessPage';
 
 export interface RegisterEventProps {
-    data: React.ReactNode;
+    data: Sport[];
 }
 
-export const RegisterEvent = ({data}: [Sport]) => {
-    const [sucessPage, setSucessPage] = useState<boolean>(false);
+export const RegisterEvent = ({data}: RegisterEventProps) => {
+    const [successPage, setSuccessPage] = useState<boolean>(false);
 
     const [sport, setSport] = useState<string>('');
     const [sportSelected, setSportSelected] = useState<boolean>(false);
@@ -82,7 +82,7 @@ export const RegisterEvent = ({data}: [Sport]) => {
         setSelectedTeams([]);
         setHour('');
         setHour('');
-    }, [sucessPage]);
+    }, [successPage]);
 
     //form submission handler
     const handleSubmit = (e) => {
@@ -100,7 +100,7 @@ export const RegisterEvent = ({data}: [Sport]) => {
         console.log(sport);
         console.log(league);
         console.log(selectedTeams);
-        setSucessPage(true);
+        setSuccessPage(true);
     };
 
     useEffect(() => {
@@ -147,8 +147,8 @@ export const RegisterEvent = ({data}: [Sport]) => {
 
     return (
         <>
-            {sucessPage && <SucessPage changePage={setSucessPage} />}
-            {!sucessPage && (
+            {successPage && <SucessPage changePage={setSuccessPage} />}
+            {!successPage && (
                 <div className="h-screen w-screen justify-center flex items-center bg-CULTURED">
                     <div className="bg-white  flex flex-col items-center px-10 py-10 h-auto  relative gap-2">
                         <div className="w-fit h-10  text-4xl ">
@@ -158,22 +158,24 @@ export const RegisterEvent = ({data}: [Sport]) => {
                         <div className="flex flex-row gap-5 space-evenly">
                             {/* FIXME  Títulos das searchBoxes*/}
                             <SearchBox
-                                content={data.map((sport: Sport) => sport.name)}
+                                allResults={data.map(
+                                    (sport: Sport) => sport.name
+                                )}
                                 title={'Modalidades'}
                                 currentSearch={sport}
                                 changeCurrentSearch={setSport}
                                 selected={sportSelected}
                                 changeSelected={setSportSelected}
-                                maybeError={formErrors.sport}
+                                error={formErrors.sport}
                             />
                             <SearchBox
-                                content={possibleLeagues}
+                                allResults={possibleLeagues}
                                 title={'Ligas'}
                                 currentSearch={league}
                                 changeCurrentSearch={setLeague}
                                 selected={leagueSelected}
                                 changeSelected={setLeagueSelected}
-                                maybeError={formErrors.league}
+                                error={formErrors.league}
                             />
                         </div>
                         <div className="w-full">
@@ -181,11 +183,11 @@ export const RegisterEvent = ({data}: [Sport]) => {
                                 <div className="w-2/3">
                                     <Table
                                         title="Teams"
-                                        changeFunction={changeTeams}
+                                        changeValueHandler={changeTeams}
                                         //content={data.map((sport) => sport.name)}
                                         content={possibleTeams}
                                         //maybeError={formErrors.sport}
-                                        maybeError={formErrors.teams}
+                                        error={formErrors.teams}
                                     />
                                 </div>
                                 <div className="w-1/3 flex flex-col px-3">

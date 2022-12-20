@@ -1,18 +1,18 @@
 import {CheckCard} from './checkCard';
 
-export interface OtherTableProps {
+export interface TableProps {
     title: string;
     content: [string];
-    changeFunction;
-    maybeError: string;
+    changeValueHandler: () => void;
+    error?: string;
 }
 
 export const Table = ({
     title,
     content,
-    changeFunction,
-    maybeError,
-}: OtherTableProps) => {
+    changeValueHandler,
+    error,
+}: TableProps) => {
     return (
         <div className="w-full max-w-md">
             <div className="bg-CULTURED border-2 rounded-lg px-3 py-2 mb-4">
@@ -29,14 +29,14 @@ export const Table = ({
                             >
                                 <CheckCard
                                     word={word}
-                                    changeFunction={changeFunction}
+                                    changeFunction={changeValueHandler}
                                 />
                             </div>
                         );
                     })}
                 </div>
             </div>
-            <div className="text-red-500 font-semibold">{maybeError}</div>
+            <div className="text-red-500 font-semibold">{error}</div>
         </div>
     );
 };

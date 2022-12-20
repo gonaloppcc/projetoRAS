@@ -143,22 +143,22 @@ export const RegisterEvent = ({data}: [Sport]) => {
                 <div className="flex flex-row gap-5 space-evenly">
                     {/* FIXME  Títulos das searchBoxes*/}
                     <SearchBox
-                        content={data.map((sport: Sport) => sport.name)}
+                        allResults={data.map((sport: Sport) => sport.name)}
                         title={'Modalidades'}
                         currentSearch={sport}
                         changeCurrentSearch={setSport}
                         selected={sportSelected}
                         changeSelected={setSportSelected}
-                        maybeError={formErrors.sport}
+                        error={formErrors.sport}
                     />
                     <SearchBox
-                        content={possibleLeagues}
+                        allResults={possibleLeagues}
                         title={'Ligas'}
                         currentSearch={league}
                         changeCurrentSearch={setLeague}
                         selected={leagueSelected}
                         changeSelected={setLeagueSelected}
-                        maybeError={formErrors.league}
+                        error={formErrors.league}
                     />
                 </div>
                 <div className="w-full">

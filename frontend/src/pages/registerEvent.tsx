@@ -1,10 +1,8 @@
 import type {NextPage} from 'next';
-import Head from 'next/head';
-import Image from 'next/image';
 import {RegisterEvent} from '@components/RegisterEvent';
 
 /* FIXME Mock data hardcoded */
-const MOCK_SPORTS: [Sport] = [
+const MOCK_SPORTS: Sport[] = [
     {
         name: 'Football',
         leagues: [
@@ -37,8 +35,8 @@ const MOCK_SPORTS: [Sport] = [
 
 export interface Sport {
     name: string;
-    leagues: [string];
-    participants: [string];
+    leagues: string[];
+    participants: string[];
     maxParticipants: number;
     minParticipants: number;
 }
