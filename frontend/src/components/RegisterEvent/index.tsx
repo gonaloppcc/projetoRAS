@@ -3,7 +3,6 @@ import React, {useEffect, useState} from 'react';
 import {SearchBox} from './searchBox';
 import {Table} from './table';
 import {PrimaryButton} from '@components/Button';
-import {ErrorSharp} from '@mui/icons-material';
 import {SucessPage} from './sucessPage';
 
 export interface RegisterEventProps {
@@ -59,7 +58,7 @@ export const RegisterEvent = ({data}: [Sport]) => {
             getTeams();
             setSportSelected(true);
         }
-    }, [sport]);
+    }, [getLeagues, getTeams, sport, sportSelected]);
 
     const today = new Date().toISOString().split('T')[0];
     const [date, setDate] = useState<string>('');
@@ -92,12 +91,6 @@ export const RegisterEvent = ({data}: [Sport]) => {
         setIsSubmitting(true);
     };
 
-    useEffect(() => {
-        if (Object.keys(formErrors).length === 0 && isSubmitting) {
-            submit();
-        }
-    }, [formErrors]);
-
     // FIXME
 
     const submit = () => {
@@ -109,6 +102,12 @@ export const RegisterEvent = ({data}: [Sport]) => {
         console.log(selectedTeams);
         setSucessPage(true);
     };
+
+    useEffect(() => {
+        if (Object.keys(formErrors).length === 0 && isSubmitting) {
+            submit();
+        }
+    }, [formErrors, isSubmitting, submit]);
 
     const validate = () => {
         let errors = {};
@@ -145,8 +144,6 @@ export const RegisterEvent = ({data}: [Sport]) => {
 
         return errors;
     };
-
-    const submitButtonContent = <div>Submeter</div>;
 
     return (
         <>
@@ -243,10 +240,9 @@ export const RegisterEvent = ({data}: [Sport]) => {
                             </div>
                         </div>
                         <div>
-                            <PrimaryButton
-                                children={submitButtonContent}
-                                onClick={handleSubmit}
-                            />
+                            <PrimaryButton onClick={handleSubmit}>
+                                Submeter
+                            </PrimaryButton>
                         </div>
                     </div>
                 </div>

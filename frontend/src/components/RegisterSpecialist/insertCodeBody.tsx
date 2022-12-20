@@ -20,8 +20,6 @@ export const InsertCodeBody = ({code}: ForgetPasswordProps) => {
         console.log(parseInt(insertedCode) === code);
     };
 
-    const TextCheckCodeBTN = () => <div>Check code</div>;
-
     return (
         <div className="flex flex-col gap-3 p-5">
             <div className="text-lg font-semibold pb-2 border-b">
@@ -39,10 +37,7 @@ export const InsertCodeBody = ({code}: ForgetPasswordProps) => {
                 />
             </div>
             <div className="flex items-center justify-center gap-10">
-                <PrimaryButton
-                    children={<TextCheckCodeBTN />}
-                    onClick={compareCodes}
-                />
+                <PrimaryButton onClick={compareCodes}>Check code</PrimaryButton>
             </div>
         </div>
     );

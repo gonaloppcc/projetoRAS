@@ -3,7 +3,6 @@ import React, {useEffect, useState} from 'react';
 import {SearchBox} from './searchBox';
 import {OtherTable} from './table';
 import {PrimaryButton} from '@components/Button';
-import {ErrorSharp} from '@mui/icons-material';
 
 export interface RegisterEventProps {
     data: React.ReactNode;
@@ -56,7 +55,7 @@ export const RegisterEvent = ({data}: [Sport]) => {
             getTeams();
             setSportSelected(true);
         }
-    }, [sport]);
+    }, [getLeagues, getTeams, sport, sportSelected]);
 
     const today = new Date().toISOString().split('T')[0];
     const [date, setDate] = useState<string>('');
@@ -83,7 +82,7 @@ export const RegisterEvent = ({data}: [Sport]) => {
         if (Object.keys(formErrors).length === 0 && isSubmitting) {
             submit();
         }
-    }, [formErrors]);
+    }, [formErrors, isSubmitting, submit]);
 
     // FIXME
 
@@ -132,7 +131,7 @@ export const RegisterEvent = ({data}: [Sport]) => {
         return errors;
     };
 
-    const submitButtonContent = <div>Submeter</div>;
+    const submitButtonContent = <div></div>;
 
     return (
         <div className="h-screen w-screen justify-center flex items-center bg-CULTURED">
@@ -226,10 +225,9 @@ export const RegisterEvent = ({data}: [Sport]) => {
                     </div>
                 </div>
                 <div>
-                    <PrimaryButton
-                        children={submitButtonContent}
-                        onClick={handleSubmit}
-                    />
+                    <PrimaryButton onClick={handleSubmit}>
+                        Submeter
+                    </PrimaryButton>
                 </div>
             </div>
         </div>

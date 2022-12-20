@@ -64,7 +64,7 @@ export const PaymentMethod = (props) => {
         if (changeError === '' && isSubmitting) {
             submit();
         }
-    }, [isSubmitting]);
+    }, [changeError, isSubmitting, submit]);
 
     return (
         <div className="p-2">
