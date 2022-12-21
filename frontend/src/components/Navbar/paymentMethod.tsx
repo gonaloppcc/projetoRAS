@@ -4,7 +4,12 @@ import Image from 'next/image';
 import {PrimaryButton} from '@components/Button';
 import {useProfile} from '@hooks/useProfile';
 
-export const PaymentMethod = (props) => {
+export interface PaymentMethodProps {
+    isDepositing: boolean;
+    setMenu: (menuIndex: number) => void;
+}
+
+export const PaymentMethod = ({isDepositing, setMenu}: PaymentMethodProps) => {
     const [amount, setAmount] = useState<number>(0);
     const [changeError, setChangeError] = useState('');
     const [isSubmitting, setIsSubmitting] = useState(false);
@@ -23,32 +28,42 @@ export const PaymentMethod = (props) => {
         setPaymentMethod(pos);
     };
 
-    const PaymentCard = (props) => {
+    const PaymentCard = ({
+        pos,
+        pathPhoto,
+        width,
+        height,
+    }: {
+        pos: number;
+        pathPhoto: string;
+        width: number;
+        height: number;
+    }) => {
         return (
             <button
-                onClick={() => clickedPaymentMethod(props.pos)}
+                onClick={() => clickedPaymentMethod(pos)}
                 className={`bg-white border-pink-600  w-fit h-fit delay-75 p-5  ${
-                    props.pos === paymentMethod ? 'border-4' : 'border-0'
+                    pos === paymentMethod ? 'border-4' : 'border-0'
                 }`}
             >
                 <Image
-                    src={props.pathPhoto}
-                    width={props.width}
-                    height={props.height}
+                    src={pathPhoto}
+                    width={width}
+                    height={height}
                     alt="Paypal"
                 />
             </button>
         );
     };
 
-    const validate = (change) => {
+    const validate = (change: number) => {
         // TODO: Se for levantar verificar se não é superior ao balanço
         // FIXME
         if (change <= 0) return 'Invalid value';
         else return '';
     };
 
-    const handleSubmit = (e) => {
+    const submitHandler: React.MouseEventHandler<HTMLButtonElement> = (e) => {
         e.preventDefault();
         const errors = validate(amount);
         setChangeError(errors);
@@ -56,8 +71,8 @@ export const PaymentMethod = (props) => {
     };
 
     const submit = () => {
-        props.isDepositing ? deposit(amount) : withdraw(amount);
-        props.setMenu(3);
+        isDepositing ? deposit(amount) : withdraw(amount);
+        setMenu(3);
     };
 
     useEffect(() => {
@@ -68,20 +83,20 @@ export const PaymentMethod = (props) => {
 
     return (
         <div className="p-2">
-            {props.isDepositing
+            {isDepositing
                 ? // FIXME
                   'Selecione o método de pagamento'
                 : 'Selecione o método de levantamento'}
 
             <div className="flex flex-row gap-5 justify-around	">
                 <PaymentCard
-                    pathPhoto={'/paypal.png'}
+                    pathPhoto="/paypal.png"
                     width={100}
                     height={100}
                     pos={0}
                 />
                 <PaymentCard
-                    pathPhoto={'/multibanco.png'}
+                    pathPhoto="/multibanco.png"
                     width={100}
                     height={100}
                     pos={1}
@@ -107,8 +122,8 @@ export const PaymentMethod = (props) => {
                 FIXME texto
                 */}
 
-                <PrimaryButton onClick={handleSubmit} type="submit">
-                    {props.isDepositing
+                <PrimaryButton onClick={submitHandler} type="submit">
+                    {isDepositing
                         ? // FIXME
                           'Depositar Montante'
                         : 'Levantar Montante'}

@@ -1,7 +1,4 @@
-import {ClassNames} from '@emotion/react';
-import {ErrorSharp} from '@mui/icons-material';
-import React, {useEffect, useState} from 'react';
-import {InputForm} from '../createBetter/inputForm';
+import React from 'react';
 
 export const SuspendedGameCard = (props) => {
     const column = (header, body) => {

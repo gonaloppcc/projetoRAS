@@ -1,99 +1,109 @@
-import {ClassNames} from '@emotion/react';
-import {ErrorSharp} from '@mui/icons-material';
-import React, {useEffect, useState} from 'react';
-import {InputForm} from '../createBetter/inputForm';
+import React, {useState} from 'react';
+import {HandleChangeProps, InputForm} from '../createBetter/inputForm';
 import {ScrollModalities} from './scrollModalities';
 import {REGEX_MAIL, REGEX_USERNAME} from 'utils/regex';
 import {PrimaryButton} from '@components/Button';
 
-export const RegisterSpecialist = (props) => {
-    /*
-    Get Sports available
-    */
+export interface FormErrors {
+    username: string;
+    mail: string;
+    password: string;
+    modalities: string;
+}
 
-    // Depois passa para estruturas com nomes e ícones, em cada posição da lista
-    const [modalities, setModalities] = useState([]);
-    const changeModalities = (modality, value) => {
-        console.log('Change state');
+const initialValueFormErrors: FormErrors = {
+    username: '',
+    mail: '',
+    password: '',
+    modalities: '',
+};
 
-        value
-            ? setModalities((current) => [...current, modality])
-            : setModalities((current) =>
-                  current.filter((element) => {
-                      return element !== modality;
-                  })
-              );
-    };
-    /*
-    Form Part
-    */
-    const intialValues = {
-        mail: '',
-        username: '',
-        password: '',
-    };
+//export interface
+export interface RegisterSpecialistProps {
+    modalities: string[];
+}
 
-    const [formValues, setFormValues] = useState(intialValues);
-    const [formErrors, setFormErrors] = useState({});
-    const [isSubmitting, setIsSubmitting] = useState(false);
+const intialValues = {
+    mail: '',
+    username: '',
+    password: '',
+};
+
+interface valuesProps {
+    mail: string;
+    username: string;
+    password: string;
+}
+
+export const RegisterSpecialist = ({modalities}: RegisterSpecialistProps) => {
+    const [formValues, setFormValues] = useState<valuesProps>(intialValues);
+    const [modalitiesSelected, setModalitiesSelected] = useState<string[]>([]);
+    const [formErrors, setFormErrors] = useState(initialValueFormErrors);
 
     const submit = () => {
         console.log('Submissão feita');
         console.log(formValues);
-        console.log(modalities);
+        console.log(modalitiesSelected);
+    };
+
+    const changeModalities = (team: string, selected: boolean) => {
+        if (selected) {
+            setModalitiesSelected([...modalitiesSelected, team]);
+        } else {
+            setModalitiesSelected(modalitiesSelected.filter((t) => t !== team));
+        }
     };
 
     //input change handler
-    const handleChange = (e) => {
-        const {name, value} = e.target;
+    const handleChange = ({name, value}: HandleChangeProps) => {
+        console.log({name, value});
         setFormValues({...formValues, [name]: value});
     };
 
+    const hasErrors = () => {
+        return Object.values(formErrors).some((err) => err !== '');
+    };
     //form submission handler
-    const handleSubmit = (e) => {
+    const handleSubmit: React.FormEventHandler<HTMLFormElement> = (e) => {
+        console.log('handle submit');
+        console.log(formErrors);
+        validate();
         e.preventDefault();
-        setFormErrors(validate(formValues));
-        setIsSubmitting(true);
+        if (!hasErrors()) {
+            submit();
+        }
     };
 
     //form validation handler
     // FIXME Em todos
-    const validate = (values) => {
-        let errors = {};
+    const validate = () => {
+        let errors: FormErrors = {...initialValueFormErrors};
         // FIXME todos
         // E regex
 
-        if (!values.username) {
-            errors.username = 'Cannot be blank';
-        } else if (!REGEX_USERNAME.test(values.username)) {
-            errors.username = 'Invalid username format';
+        if (!formValues.username) {
+            errors.username = 'Obrigatório';
+        } else if (!REGEX_USERNAME.test(formValues.username)) {
+            errors.username = 'Formato inválido';
         }
 
-        if (!values.password) {
+        if (!formValues.password) {
             errors.password = 'Obrigatório';
-        } else if (values.password.length < 4) {
+        } else if (formValues.password.length < 4) {
             errors.password = 'Password tem de ter mais de 4 carateres';
         }
 
-        if (!values.mail) {
+        if (!formValues.mail) {
             errors.mail = 'Obrigatório';
-        } else if (!REGEX_MAIL.test(values.mail)) {
+        } else if (!REGEX_MAIL.test(formValues.mail)) {
             errors.mail = 'Mail incorreto';
         }
 
-        if (modalities.length === 0) {
-            errors.modalities = 'Choose at least one.';
+        if (modalitiesSelected.length === 0) {
+            errors.modalities = 'Escolha um.';
         }
-        return errors;
+        setFormErrors(errors);
     };
-
-    useEffect(() => {
-        if (Object.keys(formErrors).length === 0 && isSubmitting) {
-            submit();
-        }
-    }, [formErrors]);
-
-    const RegSpecTextBTN = () => <div>Registar</div>;
 
     return (
         <div className="h-screen w-screen justify-center flex items-center bg-CULTURED">
@@ -113,7 +123,7 @@ export const RegisterSpecialist = (props) => {
                             {/*  FIXME Em todos */}
 
                             <InputForm
-                                htmlFor="email"
+                                type="email"
                                 name="Email"
                                 id="mail"
                                 value={formValues.mail}
@@ -121,7 +131,7 @@ export const RegisterSpecialist = (props) => {
                                 error={formErrors.mail}
                             />
                             <InputForm
-                                htmlFor="text"
+                                type="text"
                                 name="Username"
                                 id="username"
                                 value={formValues.username}
@@ -129,7 +139,7 @@ export const RegisterSpecialist = (props) => {
                                 error={formErrors.username}
                             />
                             <InputForm
-                                htmlFor="password"
+                                type="password"
                                 name="Palavra-passe"
                                 id="password"
                                 value={formValues.password}
@@ -139,15 +149,13 @@ export const RegisterSpecialist = (props) => {
                             <ScrollModalities
                                 key="Scroll_Mod"
                                 changeModality={changeModalities}
-                                modalities={props.modalities}
+                                modalities={modalities}
                                 maybeError={formErrors.modalities}
                             />
 
                             <div className="flex flex-col items-start self-stretch flex-none order-1 h-12 px-20 justify-center   pt-10">
-                                <PrimaryButton
-                                    type="submit"
-                                    children={<RegSpecTextBTN />}
-                                >
+                                <PrimaryButton type="submit">
+                                    Registar
                                     {/* FIXME Todos */}
                                 </PrimaryButton>
                             </div>

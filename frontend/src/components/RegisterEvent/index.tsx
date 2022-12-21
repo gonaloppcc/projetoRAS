@@ -3,12 +3,11 @@ import React, {useEffect, useState} from 'react';
 import {SearchBox} from './searchBox';
 import {Table} from './table';
 import {PrimaryButton} from '@components/Button';
+import {useRouter} from 'next/router';
 
 export interface RegisterEventProps {
     sports: Sport[];
 }
-
-interface FormValues {}
 
 interface FormErrors {
     sport: string;
@@ -27,73 +26,55 @@ const initialFormErrors: FormErrors = {
 };
 
 export const RegisterEvent = ({sports}: RegisterEventProps) => {
-    const [sport, setSport] = useState<string>(sports[0].name);
+    const [sportName, setSportName] = useState<string>(sports[0].name);
     const [sportSelected, setSportSelected] = useState<boolean>(false);
 
-    const [possibleLeagues, setPossibleLeagues] = useState<string[]>(
-        sports[0].leagues
-    );
     const [league, setLeague] = useState<string>('');
     const [leagueSelected, setLeagueSelected] = useState<boolean>(false);
 
-    const [possibleTeams, setPossibleTeams] = useState<string[]>([]);
     const [selectedTeams, setSelectedTeams] = useState<string[]>([]);
 
     // Handle submit part
     const [errors, setErrors] = useState<FormErrors>(initialFormErrors);
-    const [isSubmitting, setIsSubmitting] = useState(false);
 
     const [date, setDate] = useState<string>('');
     const [hour, setHour] = useState<string>('');
 
-    const getLeagues = () => {
-        console.log('getLeagues');
-        let thing = sportSelected
-            ? sports.filter((sportInfo: Sport) => sportInfo.name == sport)[0]
-            : [];
-        setPossibleLeagues(thing.leagues);
-        return thing.leagues;
+    const router = useRouter();
+
+    let possibleLeagues = sportSelected
+        ? sports.filter((sportInfo: Sport) => sportInfo.name == sportName)[0]
+              .leagues
+        : [];
+
+    let possibleTeams = sportSelected
+        ? sports.filter((sportInfo: Sport) => sportInfo.name == sportName)[0]
+              .participants
+        : [];
+
+    const changeTeams = (team: string, selected: boolean) => {
+        if (selected) {
+            setSelectedTeams([...selectedTeams, team]);
+        } else {
+            setSelectedTeams(selectedTeams.filter((t) => t !== team));
+        }
     };
 
-    const getTeams = () => {
-        console.log('getTeams');
-        let thing = sportSelected
-            ? sports.filter((sportInfo: Sport) => sportInfo.name == sport)[0]
-            : sports[0];
-        setPossibleTeams(thing.participants);
-        return thing.participants;
-    };
-
-    const changeTeams = (team: string, value: boolean) => {
-        console.log('changeTeams');
-        value
-            ? setSelectedTeams((current) => [...current, team])
-            : setSelectedTeams((current) =>
-                  current.filter((element: string) => {
-                      return element !== team;
-                  })
-              );
-    };
-
-    // Necessary to update the leagues and teams associated to the sport
+    // Necessary to update the leagues and teams associated to the sportName
     useEffect(() => {
         if (sportSelected) {
-            getLeagues();
             setSelectedTeams([]);
-            getTeams();
             setSportSelected(true);
         }
-    }, [sport]);
+    }, [sportSelected]);
 
     const today = new Date().toISOString().split('T')[0];
 
     const changeDate: React.ChangeEventHandler<HTMLInputElement> = (e) => {
-        console.log('changeDate');
         setDate(e.target.value);
     };
 
     const changeHour: React.ChangeEventHandler<HTMLInputElement> = (e) => {
-        console.log('changeHour');
         setHour(e.target.value);
     };
 
@@ -101,16 +82,19 @@ export const RegisterEvent = ({sports}: RegisterEventProps) => {
         return Object.values(errors).some((err) => err !== '');
     };
 
-    const handleSubmit: React.MouseEventHandler<HTMLButtonElement> = (e) => {
+    const handleSubmit: React.MouseEventHandler<
+        HTMLButtonElement
+    > = async () => {
         validate();
 
         if (hasErrors()) {
-            console.log('has errors');
             return;
         }
-    };
 
-    // FIXME
+        // TODO: Make the request to the backend here
+
+        await router.push('/success');
+    };
 
     const validate = () => {
         let errors: FormErrors = {...initialFormErrors};
@@ -118,30 +102,27 @@ export const RegisterEvent = ({sports}: RegisterEventProps) => {
         // FIXME em todos
         if (!sportSelected) {
             errors.sport = 'Obrigatório';
+        } else {
+            if (selectedTeams.length === 0) {
+                errors.teams = 'Número de equipas insuficiente.';
+            }
         }
+
         if (!leagueSelected) {
             errors.league = 'Obrigatório';
         }
         const sportInfo = sports.filter(
-            (sportInList) => sportInList.name === sport
+            (sportInList) => sportInList.name === sportName
         )[0];
 
         if (leagueSelected && !sportInfo.leagues.includes(league)) {
             errors.league = 'Liga não disponível na modalidade';
         }
 
-        if (sportSelected) {
-            const numSelectedTeams = selectedTeams.length;
-            if (numSelectedTeams > sportInfo.maxParticipants) {
-                errors.teams = 'Número de equipas ultrapassa máximo.';
-            }
-            if (numSelectedTeams < sportInfo.minParticipants) {
-                errors.teams = 'Número de equipas insuficiente.';
-            }
-        }
         if (!date) {
             errors.date = 'Obrigatório';
         }
+
         if (!hour) {
             errors.hour = 'Obrigatório';
         }
@@ -161,8 +142,8 @@ export const RegisterEvent = ({sports}: RegisterEventProps) => {
                     <SearchBox
                         allResults={sports.map((sport: Sport) => sport.name)}
                         title={'Modalidades'}
-                        currentSearch={sport}
-                        changeCurrentSearch={setSport}
+                        currentSearch={sportName}
+                        changeCurrentSearch={setSportName}
                         selected={sportSelected}
                         changeSelected={setSportSelected}
                         error={errors.sport}
@@ -182,8 +163,8 @@ export const RegisterEvent = ({sports}: RegisterEventProps) => {
                         <div className="w-2/3">
                             <Table
                                 title="Teams"
-                                changeValueHandler={changeTeams}
-                                content={possibleTeams}
+                                setValue={changeTeams}
+                                results={possibleTeams}
                                 error={errors.teams}
                             />
                         </div>

@@ -1,8 +1,4 @@
-import {ClassNames} from '@emotion/react';
-import {ErrorSharp} from '@mui/icons-material';
-import {duration} from '@mui/material';
-import React, {useEffect, useState} from 'react';
-import {InputForm} from '../createBetter/inputForm';
+import React, {useState} from 'react';
 import {SuspendedGameCard} from '../SuspendedGameCard';
 
 export const OpenGameCard = (props) => {

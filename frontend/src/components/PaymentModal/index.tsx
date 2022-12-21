@@ -43,8 +43,6 @@ export const PaymentModal = ({
             {isOpen && currentMenu === 1 && (
                 <Modal isOpen={isOpen} setIsOpen={closeModal}>
                     <PaymentMethod
-                        changeBalance={setBalance}
-                        balance={balance}
                         setMenu={setCurrentMenu}
                         isDepositing={deposit}
                     />

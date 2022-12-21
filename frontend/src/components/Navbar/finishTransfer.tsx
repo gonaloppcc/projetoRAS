@@ -1,4 +1,12 @@
-export const FinishTransfer = (props) => {
+export interface finishTransferProps {
+    setOpen: (open: boolean) => void;
+    isDepositing: boolean;
+}
+
+export const FinishTransfer = ({
+    setOpen,
+    isDepositing,
+}: finishTransferProps) => {
     return (
         // FIXME
         //<div className="bg-white w-fit text-xl text-center px-10 py-10  ">

@@ -5,7 +5,7 @@ import type {NextPage} from 'next';
 const MOCK_Modalities = ['football', 'basketball', 'Marathon'];
 
 const Home: NextPage = () => {
-    const sportSelected = (sport) => {
+    const sportSelected = (sport: string) => {
         console.log('Selected sport');
         console.log(sport);
     };
