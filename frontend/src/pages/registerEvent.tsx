@@ -45,7 +45,7 @@ const Home: NextPage = () => {
     /* FIXME DUMMY MAIN PAGE!! */
     return (
         <div className="flex flex-col justify-start gap-3 w-full">
-            <RegisterEvent data={MOCK_SPORTS} />
+            <RegisterEvent sports={MOCK_SPORTS} />
         </div>
     );
 };

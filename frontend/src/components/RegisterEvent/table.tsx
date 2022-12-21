@@ -2,7 +2,7 @@ import {CheckCard} from './checkCard';
 
 export interface TableProps {
     title: string;
-    content: [string];
+    content: string[];
     changeValueHandler: () => void;
     error?: string;
 }
