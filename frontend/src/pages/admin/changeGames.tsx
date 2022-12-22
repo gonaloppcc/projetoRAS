@@ -1,6 +1,7 @@
 import type {NextPage} from 'next';
 import {SuspendedGameCard} from '../../components/SuspendedGameCard';
 import {OpenGameCard} from '../../components/OpenGameCard';
+import {PageLayout} from '@components/PageLayout';
 // FIXME
 /* FIXME Mock data hardcoded */
 const MOCK_GAME_OPEN = {
@@ -39,21 +40,22 @@ const MOCK_EVENTS = [
 
 const Home: NextPage = () => {
     return (
-        <div className="gap-8 h-screen w-screen justify-center pt-5 flex items-center bg-CULTURED">
-            <div className=" flex flex-col gap-5 items-top pt-10  min-h-screen w-max  ">
-                <div className="bg-white h-fit pl-5   text-xl inline-block py-2 ">
-                    {/* TODO: Alterar*/}
-                    JOGOS
+        <PageLayout>
+            <div className="gap-8 h-screen w-screen justify-center flex items-center">
+                <div className=" flex flex-col gap-5 items-top min-h-screen w-max">
+                    {MOCK_EVENTS.map((game) =>
+                        game.open ? (
+                            <OpenGameCard key={game.eventName} game={game} />
+                        ) : (
+                            <SuspendedGameCard
+                                key={game.eventName}
+                                game={game}
+                            />
+                        )
+                    )}
                 </div>
-                {MOCK_EVENTS.map((game) =>
-                    game.open ? (
-                        <OpenGameCard key={game.eventName} game={game} />
-                    ) : (
-                        <SuspendedGameCard key={game.eventName} game={game} />
-                    )
-                )}
             </div>
-        </div>
+        </PageLayout>
     );
 };
 
