@@ -1,13 +1,13 @@
 import React from 'react';
 
-export interface GameInfo {
+export interface SuspendedGameInfo {
     eventName: string;
     date: string;
     open: boolean;
 }
 
 export interface SuspendedGameCardProps {
-    game: GameInfo;
+    game: SuspendedGameInfo;
 }
 
 export const SuspendedGameCard = ({game}: SuspendedGameCardProps) => {
