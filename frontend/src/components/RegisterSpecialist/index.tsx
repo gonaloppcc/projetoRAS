@@ -5,6 +5,7 @@ import {REGEX_MAIL, REGEX_USERNAME} from 'utils/regex';
 import {PrimaryButton} from '@components/Button';
 import {Specialist} from '@domain/User';
 import {postSpecialist} from '../../services/backend/user';
+import {Sport} from '@domain/Event';
 
 export interface FormErrors {
     username: string;
@@ -22,7 +23,7 @@ const initialValueFormErrors: FormErrors = {
 
 //export interface
 export interface RegisterSpecialistProps {
-    modalities: string[];
+    modalities: Sport[];
 }
 
 const intialValues = {
@@ -160,7 +161,9 @@ export const RegisterSpecialist = ({modalities}: RegisterSpecialistProps) => {
                             <ScrollModalities
                                 key="Scroll_Mod"
                                 changeModality={changeModalities}
-                                modalities={modalities}
+                                modalities={modalities.map(
+                                    (modality) => modality.Name
+                                )}
                                 maybeError={formErrors.modalities}
                             />
 
