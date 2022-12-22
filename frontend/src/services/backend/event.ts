@@ -5,7 +5,7 @@ import {BASE_URL} from './constants';
 export const getEvents = async ({
     compId,
     pageNum = 0,
-    pageSize = 5,
+    pageSize = 10,
 }: {
     compId: string;
     pageNum?: number;
