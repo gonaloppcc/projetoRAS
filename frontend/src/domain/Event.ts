@@ -24,7 +24,7 @@ export interface TwoParticipantsPost {
 export interface ParticipantOddPost {
     Price: number;
     Participant: ParticipantPost;
-    Promotion?: number;
+    Promotion: number | null;
 }
 
 export interface ParticipantPost {

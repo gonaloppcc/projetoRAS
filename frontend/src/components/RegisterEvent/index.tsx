@@ -106,7 +106,7 @@ export const RegisterEvent = ({sports}: RegisterEventProps) => {
 
         console.log('Vai submeter');
         // TODO: Make the request to the backend here
-        const dateAndHour: string = `${date}-${hour}`;
+        const dateAndHour: string = `${date}T${hour}:17.0065405+00:00`;
         const partipantHome: ParticipantPost = {
             Type: 'Team',
             Name: selectedTeams[0],
@@ -115,6 +115,7 @@ export const RegisterEvent = ({sports}: RegisterEventProps) => {
         const participantHomeOdd: ParticipantOddPost = {
             Price: 0,
             Participant: partipantHome,
+            Promotion: null,
         };
         const partipantAway: ParticipantPost = {
             Type: 'Team',
@@ -124,6 +125,7 @@ export const RegisterEvent = ({sports}: RegisterEventProps) => {
         const participantAwayOdd: ParticipantOddPost = {
             Price: 0,
             Participant: partipantAway,
+            Promotion: null,
         };
         const valuePromo: ValuePromo = {
             Value: 0,
@@ -146,6 +148,7 @@ export const RegisterEvent = ({sports}: RegisterEventProps) => {
 
         console.log('Vai fazer post de:');
         console.log(newEvent);
+        console.log(JSON.stringify(newEvent));
         await postEvent(newEvent);
         //await router.push('/success');
     };
