@@ -1,3 +1,4 @@
+import {EventPost} from '@domain/Event';
 import axios from 'axios';
 import {BASE_URL} from './constants';
 
@@ -22,7 +23,7 @@ export const getEvent = async (eventId: string): Promise<Event> => {
     return response.data as Event;
 };
 
-export const postEvent = async (event: Event): Promise<Event> => {
+export const postEvent = async (event: EventPost): Promise<Event> => {
     const response = await axios.post(`${BASE_URL}/events`, event);
     // TODO: To Be tested
     return response.data as Event;

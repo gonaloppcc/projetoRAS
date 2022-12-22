@@ -5,14 +5,15 @@ import {Table} from './table';
 import {PrimaryButton} from '@components/Button';
 import {useRouter} from 'next/router';
 import {
-    Event,
-    Competition,
-    Participant,
-    TwoParticipant,
-    ParticipantOdd,
-    Sport,
+    EventPost,
+    TwoParticipantsPost,
+    TieOdd,
+    ValuePromo,
+    ParticipantOddPost,
+    ParticipantPost,
+    Player,
 } from '@domain/Event';
-import {addEvent} from '@hooks/addEvent';
+import {postEvent} from 'services/backend/event';
 
 export interface RegisterEventProps {
     sports: AllSport[];
@@ -99,58 +100,53 @@ export const RegisterEvent = ({sports}: RegisterEventProps) => {
 
         if (hasErrors()) {
             console.log('Has errors');
+            console.log(errors);
             return;
         }
 
         console.log('Vai submeter');
         // TODO: Make the request to the backend here
         const dateAndHour: string = `${date}-${hour}`;
-        const sport: Sport = {
-            Name: sportName,
+        const partipantHome: ParticipantPost = {
+            Type: 'Team',
+            Name: selectedTeams[0],
+            Players: [],
         };
-        const competition: Competition = {
-            Name: league,
-            Sport: sport,
-        };
-        const partipantHome: Participant = {
-            Id: selectedTeams[0],
-            Price: 1,
-            Player: [],
-        };
-        const participantHomeOdd: ParticipantOdd = {
-            Id: `${selectedTeams[0]}-Odd`,
+        const participantHomeOdd: ParticipantOddPost = {
+            Price: 0,
             Participant: partipantHome,
         };
-        const partipantAway: Participant = {
-            Id: selectedTeams[1],
-            Price: 1,
-            Player: [],
+        const partipantAway: ParticipantPost = {
+            Type: 'Team',
+            Name: selectedTeams[1],
+            Players: [],
         };
-        const participantAwayOdd: ParticipantOdd = {
-            Id: `${selectedTeams[1]}-Odd`,
+        const participantAwayOdd: ParticipantOddPost = {
+            Price: 0,
             Participant: partipantAway,
         };
-        const twoParticipant: TwoParticipant = {
-            Id: 'ids',
+        const valuePromo: ValuePromo = {
+            Value: 0,
+        };
+        const tieOdd: TieOdd = {
+            Price: 0,
+            Promo: valuePromo,
+        };
+        const twoParticipant: TwoParticipantsPost = {
             Home: participantHomeOdd,
             Away: participantAwayOdd,
+            Tie: tieOdd,
         };
-        const newEvent: Event = {
-            Id: '123',
+        const newEvent: EventPost = {
+            Sport: sportName,
             Date: dateAndHour,
-            Competition: competition,
+            CompetitionId: league,
             Participants: twoParticipant,
-            Completed: false,
         };
 
-        const {isSuccess, isLoading, isError, error} = addEvent(newEvent);
-        console.log('Erro?');
-
-        console.log(isError);
-        console.log(error);
-        console.log('Sucesso?');
-        console.log(isSuccess);
-
+        console.log('Vai fazer post de:');
+        console.log(newEvent);
+        await postEvent(newEvent);
         //await router.push('/success');
     };
 

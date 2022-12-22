@@ -5,8 +5,6 @@ import {useSports} from '@hooks/useSports';
 //const MOCK_MODALITIES = ['Futebol', 'Basket', 'Marathon'];
 const Home: NextPage = () => {
     const {isSuccess, isLoading, isError, sports, error} = useSports();
-    console.log('Recebeu');
-    console.log(sports);
     return (
         <>
             {isLoading && <CircularProgress />}
