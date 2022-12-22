@@ -7,11 +7,17 @@ const MOCK_GAME_OPEN = {
     eventName: 'Porto - Benfica',
     date: '10/11/2022',
     open: true,
+    oddHome: 2,
+    oddAway: 2,
+    oddTie: 3,
 };
 const MOCK_GAME_OPEN2 = {
     eventName: 'Nome comprido - Outro nome grande',
     date: '10/11/2022',
     open: true,
+    oddHome: 2,
+    oddAway: 2,
+    oddTie: 3,
 };
 const MOCK_GAME_SUSPENDED2 = {
     eventName: 'Nome comprido - Outro nome grande2',
@@ -23,6 +29,7 @@ const MOCK_GAME_SUSPENDED = {
     date: '10/11/2022',
     open: false,
 };
+
 const MOCK_EVENTS = [
     MOCK_GAME_OPEN,
     MOCK_GAME_SUSPENDED,

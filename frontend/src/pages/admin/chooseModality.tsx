@@ -2,17 +2,20 @@ import {SportIcon} from '@components/SportIcon';
 import type {NextPage} from 'next';
 import {useSports} from '@hooks/useSports';
 import {CircularProgress} from '@mui/material';
+import {Sport} from '@domain/Event';
 
 // FIXME
 //const MOCK_Modalities = ['football', 'basketball', 'Marathon'];
 
 const Home: NextPage = () => {
     const {isSuccess, isLoading, isError, sports, error} = useSports();
-    const sportSelected = (sport: string) => {
+    const sportSelected = (sport: Sport) => {
         console.log('Selected sport');
         console.log(sport);
     };
 
+    console.log('Foi buscar');
+    console.log(sports);
     return (
         <>
             {isLoading && <CircularProgress />}
@@ -23,17 +26,17 @@ const Home: NextPage = () => {
                             {/* TODO: Alterar*/}
                             Selecione uma modalidade
                         </div>
-                        {sports.map((mod) => (
+                        {sports.map((mod: Sport) => (
                             <div
                                 className="flex flex-row gap-1 bg-white text-gl py-2 rounded cursor-pointer"
                                 onClick={() => sportSelected(mod)}
-                                key={`${mod}-3`}
+                                key={`${mod.Name}-3`}
                             >
                                 <div className="pr-0">
                                     {/* TODO: Alterar*/}
-                                    <SportIcon eventType={mod} />
+                                    <SportIcon eventType={mod.Name} />
                                 </div>
-                                <div className="pl-0">{mod}</div>
+                                <div className="pl-0">{mod.Name}</div>
                             </div>
                         ))}
                     </div>
