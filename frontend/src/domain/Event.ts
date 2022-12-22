@@ -36,7 +36,7 @@ export interface Participant {
     Price: number;
     Player: Player[];
     Promo?: boolean; // FIXME I don't know if this is the correct type
-    Part: Part;
+    Part?: Part;
 }
 
 export interface Part {

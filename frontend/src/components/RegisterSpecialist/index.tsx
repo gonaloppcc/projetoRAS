@@ -3,6 +3,8 @@ import {HandleChangeProps, InputForm} from '../createBetter/inputForm';
 import {ScrollModalities} from './scrollModalities';
 import {REGEX_MAIL, REGEX_USERNAME} from 'utils/regex';
 import {PrimaryButton} from '@components/Button';
+import {Specialist} from '@domain/User';
+import {postSpecialist} from '../../services/backend/user';
 
 export interface FormErrors {
     username: string;
@@ -40,10 +42,19 @@ export const RegisterSpecialist = ({modalities}: RegisterSpecialistProps) => {
     const [modalitiesSelected, setModalitiesSelected] = useState<string[]>([]);
     const [formErrors, setFormErrors] = useState(initialValueFormErrors);
 
-    const submit = () => {
+    const submit = async () => {
         console.log('Submissão feita');
         console.log(formValues);
         console.log(modalitiesSelected);
+        const specialist: Specialist = {
+            Email: formValues.mail,
+            Username: formValues.username,
+            Password: formValues.password,
+            // TODO: Falta este, mas tenho de ter o get
+            Specialties: [],
+        };
+        await postSpecialist(specialist);
+        console.log('Conseguiu?');
     };
 
     const changeModalities = (team: string, selected: boolean) => {

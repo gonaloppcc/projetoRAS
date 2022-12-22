@@ -22,7 +22,7 @@ export const getEvent = async (eventId: string): Promise<Event> => {
     return response.data as Event;
 };
 
-export const addEvent = async (event: Event): Promise<Event> => {
+export const postEvent = async (event: Event): Promise<Event> => {
     const response = await axios.post(`${BASE_URL}/events`, event);
     // TODO: To Be tested
     return response.data as Event;

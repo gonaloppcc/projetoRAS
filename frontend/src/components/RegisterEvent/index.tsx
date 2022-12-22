@@ -1,12 +1,21 @@
-import {Sport} from 'pages/registerEvent';
+import {AllSport} from 'pages/registerEvent';
 import React, {useEffect, useState} from 'react';
 import {SearchBox} from './searchBox';
 import {Table} from './table';
 import {PrimaryButton} from '@components/Button';
 import {useRouter} from 'next/router';
+import {
+    Event,
+    Competition,
+    Participant,
+    TwoParticipant,
+    ParticipantOdd,
+    Sport,
+} from '@domain/Event';
+import {addEvent} from '@hooks/addEvent';
 
 export interface RegisterEventProps {
-    sports: Sport[];
+    sports: AllSport[];
 }
 
 interface FormErrors {
@@ -43,12 +52,12 @@ export const RegisterEvent = ({sports}: RegisterEventProps) => {
     const router = useRouter();
 
     let possibleLeagues = sportSelected
-        ? sports.filter((sportInfo: Sport) => sportInfo.name == sportName)[0]
+        ? sports.filter((sportInfo: AllSport) => sportInfo.name == sportName)[0]
               .leagues
         : [];
 
     let possibleTeams = sportSelected
-        ? sports.filter((sportInfo: Sport) => sportInfo.name == sportName)[0]
+        ? sports.filter((sportInfo: AllSport) => sportInfo.name == sportName)[0]
               .participants
         : [];
 
@@ -85,15 +94,64 @@ export const RegisterEvent = ({sports}: RegisterEventProps) => {
     const handleSubmit: React.MouseEventHandler<
         HTMLButtonElement
     > = async () => {
+        console.log('AQUI!!!');
         validate();
 
         if (hasErrors()) {
+            console.log('Has errors');
             return;
         }
 
+        console.log('Vai submeter');
         // TODO: Make the request to the backend here
+        const dateAndHour: string = `${date}-${hour}`;
+        const sport: Sport = {
+            Name: sportName,
+        };
+        const competition: Competition = {
+            Name: league,
+            Sport: sport,
+        };
+        const partipantHome: Participant = {
+            Id: selectedTeams[0],
+            Price: 1,
+            Player: [],
+        };
+        const participantHomeOdd: ParticipantOdd = {
+            Id: `${selectedTeams[0]}-Odd`,
+            Participant: partipantHome,
+        };
+        const partipantAway: Participant = {
+            Id: selectedTeams[1],
+            Price: 1,
+            Player: [],
+        };
+        const participantAwayOdd: ParticipantOdd = {
+            Id: `${selectedTeams[1]}-Odd`,
+            Participant: partipantAway,
+        };
+        const twoParticipant: TwoParticipant = {
+            Id: 'ids',
+            Home: participantHomeOdd,
+            Away: participantAwayOdd,
+        };
+        const newEvent: Event = {
+            Id: '123',
+            Date: dateAndHour,
+            Competition: competition,
+            Participants: twoParticipant,
+            Completed: false,
+        };
 
-        await router.push('/success');
+        const {isSuccess, isLoading, isError, error} = addEvent(newEvent);
+        console.log('Erro?');
+
+        console.log(isError);
+        console.log(error);
+        console.log('Sucesso?');
+        console.log(isSuccess);
+
+        //await router.push('/success');
     };
 
     const validate = () => {
@@ -140,7 +198,7 @@ export const RegisterEvent = ({sports}: RegisterEventProps) => {
                 <div className="flex flex-row gap-5 space-evenly">
                     {/* FIXME  Títulos das searchBoxes*/}
                     <SearchBox
-                        allResults={sports.map((sport: Sport) => sport.name)}
+                        allResults={sports.map((sport: AllSport) => sport.name)}
                         title={'Modalidades'}
                         currentSearch={sportName}
                         changeCurrentSearch={setSportName}

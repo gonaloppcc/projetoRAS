@@ -2,7 +2,7 @@ import type {NextPage} from 'next';
 import {RegisterEvent} from '@components/RegisterEvent';
 
 /* FIXME Mock data hardcoded */
-const MOCK_SPORTS: Sport[] = [
+const MOCK_SPORTS: AllSport[] = [
     {
         name: 'Football',
         leagues: ['Premier League', 'La Liga', 'Serie A', 'Bundesliga'],
@@ -25,7 +25,7 @@ const MOCK_SPORTS: Sport[] = [
     },
 ];
 
-export interface Sport {
+export interface AllSport {
     name: string;
     leagues: string[];
     participants: string[];
