@@ -21,7 +21,6 @@ const initialValueFormErrors: FormErrors = {
     modalities: '',
 };
 
-//export interface
 export interface RegisterSpecialistProps {
     modalities: Sport[];
 }
@@ -44,18 +43,13 @@ export const RegisterSpecialist = ({modalities}: RegisterSpecialistProps) => {
     const [formErrors, setFormErrors] = useState(initialValueFormErrors);
 
     const submit = async () => {
-        console.log('Submissão feita');
-        console.log(formValues);
-        console.log(modalitiesSelected);
         const specialist: Specialist = {
             Email: formValues.mail,
             Username: formValues.username,
             Password: formValues.password,
-            // TODO: Falta este, mas tenho de ter o get
-            Specialties: [],
+            Specialties: [], // TODO: Falta este, mas tenho de ter o get
         };
         await postSpecialist(specialist);
-        console.log('Conseguiu?');
     };
 
     const changeModalities = (team: string, selected: boolean) => {
@@ -68,7 +62,6 @@ export const RegisterSpecialist = ({modalities}: RegisterSpecialistProps) => {
 
     //input change handler
     const handleChange = ({name, value}: HandleChangeProps) => {
-        console.log({name, value});
         setFormValues({...formValues, [name]: value});
     };
 
@@ -76,17 +69,14 @@ export const RegisterSpecialist = ({modalities}: RegisterSpecialistProps) => {
         return Object.values(formErrors).some((err) => err !== '');
     };
     //form submission handler
-    const handleSubmit: React.FormEventHandler<HTMLFormElement> = (e) => {
-        console.log('handle submit');
-        console.log(formErrors);
+    const handleSubmit: React.FormEventHandler<HTMLFormElement> = async (e) => {
         validate();
         e.preventDefault();
         if (!hasErrors()) {
-            submit();
+            await submit();
         }
     };
 
-    //form validation handler
     // FIXME Em todos
     const validate = () => {
         let errors: FormErrors = {...initialValueFormErrors};
@@ -161,10 +151,8 @@ export const RegisterSpecialist = ({modalities}: RegisterSpecialistProps) => {
                             <ScrollModalities
                                 key="Scroll_Mod"
                                 changeModality={changeModalities}
-                                modalities={modalities.map(
-                                    (modality) => modality.Name
-                                )}
-                                maybeError={formErrors.modalities}
+                                modalities={modalities}
+                                error={formErrors.modalities}
                             />
 
                             <div className="flex flex-col items-start self-stretch flex-none order-1 h-12 px-20 justify-center   pt-10">

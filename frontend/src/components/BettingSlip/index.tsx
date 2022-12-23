@@ -73,7 +73,7 @@ export const BettingSlip = () => {
                         possibleWinnings={bets.reduce((acc, bet) => {
                             return (
                                 acc +
-                                (bet.bettingAmount as number) * bet.odd.price
+                                (bet.bettingAmount as number) * bet.odd.Price
                             );
                         }, 0)}
                         placeBetOnClick={submitReportHandler}

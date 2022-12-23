@@ -14,8 +14,8 @@ export const EventCard = ({
 }: Event) => {
     const {addBet} = useBettingSlip();
 
-    const awayName = Participants.Away.Participant.Part.Name;
-    const homeName = Participants.Home.Participant.Part.Name;
+    const awayName = Participants.Away.Participant.Part?.Name || '';
+    const homeName = Participants.Home.Participant.Part?.Name || '';
 
     const eventName = `${homeName} - ${awayName}`;
 
@@ -24,26 +24,29 @@ export const EventCard = ({
     const odds = [
         {
             Id: Participants.Home.Participant.Id,
-            PartId: '',
-            name: homeName,
-            price: Participants.Home.Participant.Price,
+            PartId: homeName,
+            Price: Participants.Home.Participant.Price,
         },
         {
             Id: Participants.Away.Participant.Id + '2', // FIXME: This is not correct, the Id should be the Tie Odd Id
-            PartId: '',
-            name: 'Empate',
-            price: 2.57, // FIME: Hardcoded for now
+            PartId: 'Empate',
+            Price: 2.57, // FIME: Hardcoded for now
         },
         {
             Id: Participants.Away.Participant.Id,
-            PartId: '',
-            name: awayName,
-            price: Participants.Away.Participant.Price,
+            PartId: awayName,
+            Price: Participants.Away.Participant.Price,
         },
     ];
 
     const addBetHandler = (odd: Odd) => {
-        return () => addBet({eventType, eventId: Id, eventName, odd});
+        return () =>
+            addBet({
+                eventId: Id,
+                eventName,
+                eventType,
+                odd,
+            });
     };
 
     // TODO: Improve the date format
