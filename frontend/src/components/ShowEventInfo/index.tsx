@@ -1,9 +1,11 @@
-import React, {useEffect, useState} from 'react';
+import React, {useState} from 'react';
 import {PrimaryButton} from '@components/Button';
-import {useRouter} from 'next/router';
 import {Sport, Participant} from '@domain/Event';
 import {postEvent} from 'services/backend/event';
 import {SportIcon} from '@components/SportIcon';
+import {Modal} from '@components/Modal';
+import {UpdateOdd} from './updateOdd';
+import {Accordion} from '@components/Accordion';
 
 export interface Part {
     Players: Participant[];
@@ -65,39 +67,72 @@ export interface Competition {
 
 export const ShowEventInfo = ({info}: ShowEventInfoProps) => {
     //const [sportName, setSportName] = useState<string>(sports[0].name);
-    console.log('O que recebe2?');
-    console.log(info);
+    const [open, setOpen] = useState(false);
+    const [updateOdd, setUpdateOdd] = useState('');
+
     const gameDay = info.Date.split('T')[0];
     const regex = /\d+:\d+/g;
     const hour = info.Date.split('T')[1].split('.')[0].match(regex);
     const homeTeam = info.Participants.Home.Participant.PartId;
     const awayTeam = info.Participants.Away.Participant.PartId;
 
-    const clickOdd = () => {
+    const clickOdd = (content: string) => {
         console.log('Clicou');
+        console.log(content);
+        setUpdateOdd(content);
+        setOpen(true);
+    };
+
+    const line = (name: string, value: number) => {
+        return (
+            <div className="relative flex gap-3 items-center bg-white py-2 px-3">
+                <div className="text-lg">{name}</div>
+                <div className="flex-grow border-t border-gray-400 px-5"></div>
+                <PrimaryButton onClick={() => clickOdd(name)}>
+                    {value}
+                </PrimaryButton>
+            </div>
+        );
     };
 
     return (
-        <div className="h-screen w-screen justify-center flex flex-col items-center  bg-CULTURED gap-3">
-            <div className="bg-white  flex flex-col items-center px-10 py-10 h-auto w-1/2 relative gap-2 rounded">
-                <div className="flex flex-row gap-2 w-fit h-10 pl-2  ">
-                    <SportIcon eventType={info.Competition.Sport.Name} />
-                    <div className="text-sm">{`${info.Competition.Sport.Name} - ${info.CompetitionId}`}</div>
+        <div className="w-full">
+            {open && (
+                <Modal isOpen={open} setIsOpen={setOpen}>
+                    <UpdateOdd odd={updateOdd} />
+                </Modal>
+            )}
+            <div className="w-full justify-center flex flex-col  bg-CULTURED gap-3">
+                <div className="bg-white  flex flex-col items-center px-10 py-5 h-auto relative gap-2 rounded">
+                    <div className="content-start   w-full flex flex-row gap-2 h-10 pl-2  ">
+                        <SportIcon eventType={info.Competition.Sport.Name} />
+                        <div className="text-sm">{`${info.Competition.Sport.Name} - ${info.CompetitionId}`}</div>
+                    </div>
+                    <div className="text-xl font-semibold">{`${homeTeam} - ${awayTeam}`}</div>
+                    <div>{`${gameDay} - ${hour}`}</div>
                 </div>
-                <div className="text-xl font-semibold">{`${homeTeam} - ${awayTeam}`}</div>
-                <div>{`${gameDay} - ${hour}`}</div>
-            </div>
-            <div className="flex flex-col w-1/2">
-                <div className="bg-gray-400 w-full pl-2 py-5 rounded-t-lg">
-                    Resultado Final
+                <div className="flex flex-col w-full">
+                    <div className="bg-gray-400 w-full pl-2 py-5 font-bold rounded-t-lg">
+                        Resultado Final
+                    </div>
+
+                    {line(homeTeam, info.Participants.Home.Participant.Price)}
+                    {line('Tie', info.Participants.Tie.Price)}
+                    {line(awayTeam, info.Participants.Home.Participant.Price)}
                 </div>
-                <div className="relative flex py-5 items-center bg-white">
-                    <div>{homeTeam}</div>
-                    <div className="flex-grow border-t border-gray-400 px-5"></div>
-                    <PrimaryButton onClick={clickOdd}>
-                        {info.Participants.Home.Participant.Price}
-                    </PrimaryButton>
-                </div>
+                <Accordion header={'Resultado final'}>
+                    <div className="w-full flex flex-col justify-start gap-1">
+                        {line(
+                            homeTeam,
+                            info.Participants.Home.Participant.Price
+                        )}
+                        {line('Tie', info.Participants.Tie.Price)}
+                        {line(
+                            awayTeam,
+                            info.Participants.Home.Participant.Price
+                        )}
+                    </div>
+                </Accordion>
             </div>
         </div>
     );

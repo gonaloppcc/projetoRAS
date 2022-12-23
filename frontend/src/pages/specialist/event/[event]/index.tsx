@@ -3,7 +3,7 @@ import {PageLayout} from '@components/PageLayout';
 import {useRouter} from 'next/router';
 import {useEvent} from '@hooks/useEvent';
 import {CircularProgress} from '@mui/material';
-import {ShowEventInfo} from '@components/ShowEventInfo';
+import {ShowEventInfo, ShowEventInfoProps} from '@components/ShowEventInfo';
 
 export default function PostPage() {
     const router = useRouter();
@@ -14,11 +14,13 @@ export default function PostPage() {
     console.log(JSON.stringify(event));
 
     return (
-        <>
+        <PageLayout>
             {isLoading && <CircularProgress />}
 
-            {isSuccess && <ShowEventInfo info={event} />}
+            {isSuccess && (
+                <ShowEventInfo info={event as unknown as ShowEventInfoProps} />
+            )}
             {isError && <span>{error}</span>}
-        </>
+        </PageLayout>
     );
 }
