@@ -27,7 +27,7 @@ public class BetController : ControllerBase
         }
         catch (Exception e)
         {
-            return BadRequest();
+            return Problem(e.Message);
         } 
     }
 
@@ -40,7 +40,7 @@ public class BetController : ControllerBase
         }
         catch (Exception e)
         {
-            return NotFound("Better not found");
+            return Problem(e.Message);
         }
     }
 
@@ -54,7 +54,7 @@ public class BetController : ControllerBase
         }
         catch (Exception e)
         {
-            return BadRequest();
+            return Problem(e.Message);
         }
     }
 
@@ -68,7 +68,7 @@ public class BetController : ControllerBase
         }
         catch (Exception e)
         {
-            return NotFound("Bet not found");
+            return Problem(e.Message);
         }
     }
 }
