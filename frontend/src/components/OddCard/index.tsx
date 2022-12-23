@@ -15,9 +15,17 @@ export const OddCard = ({
     placeOddHandler,
     selected,
 }: OddCardProps) => {
+    const onClickHandler: React.MouseEventHandler<HTMLDivElement> = (event) => {
+        event.stopPropagation();
+
+        if (placeOddHandler) {
+            placeOddHandler();
+        }
+    };
+
     return (
         <div
-            onClick={placeOddHandler}
+            onClick={onClickHandler}
             className="flex flex-col justify-center items-center w-24 p-1 bg-SPECIAL hover:bg-SPECIAL_DARK cursor-pointer rounded backdrop-blur-sm active:translate-y-0.5"
         >
             <span className="font-sans font-thin text-xs text-center">
