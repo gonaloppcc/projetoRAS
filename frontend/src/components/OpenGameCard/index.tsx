@@ -73,11 +73,6 @@ export const OpenGameCard = ({game}: OpenGameCardProps) => {
                     </div>
                 </div>
             </div>
-            <ChangeOdds
-                homeOdd={game.oddHome}
-                tieOdd={game.oddTie}
-                awayOdd={game.oddAway}
-            />
         </div>
     );
 };
