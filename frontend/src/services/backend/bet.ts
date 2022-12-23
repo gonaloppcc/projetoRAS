@@ -9,6 +9,8 @@ export interface AddSimpleBetProps {
     Amount: number;
 }
 
+interface AddMultipleBetProps {}
+
 export const addSimpleBet = async (
     betProps: AddSimpleBetProps
 ): Promise<Bet> => {
@@ -26,4 +28,14 @@ export const getBets = async ({userId}: {userId: string}): Promise<Bet[]> => {
 
 export const deleteBet = async (betId: string): Promise<void> => {
     await axios.delete(`${BASE_URL}/bets/${betId}`);
+};
+
+export const addMultipleBet = async (
+    betProps: AddMultipleBetProps
+): Promise<Bet> => {
+    const response = await axios.post(`${BASE_URL}/bets`, {
+        Type: 'MultipleBet',
+        ...betProps,
+    });
+    return response.data as Bet;
 };
