@@ -1,5 +1,4 @@
 import React from 'react';
-import {SportsSoccer} from '@mui/icons-material';
 import {formatDate} from '../../utils/formatters';
 import {SportIcon} from '@components/SportIcon';
 import {Bet} from '@domain/Bet';

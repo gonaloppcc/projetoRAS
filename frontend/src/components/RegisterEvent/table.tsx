@@ -1,18 +1,13 @@
-import {CheckCard} from './checkCard';
+import {CheckCard} from '../CheckCard/checkCard';
 
-export interface OtherTableProps {
+export interface TableProps {
     title: string;
-    content: [string];
-    changeFunction;
-    maybeError: string;
+    results: string[];
+    setValue: (name: string, checked: boolean) => void;
+    error?: string;
 }
 
-export const Table = ({
-    title,
-    content,
-    changeFunction,
-    maybeError,
-}: OtherTableProps) => {
+export const Table = ({title, results, setValue, error}: TableProps) => {
     return (
         <div className="w-full max-w-md">
             <div className="bg-CULTURED border-2 rounded-lg px-3 py-2 mb-4">
@@ -21,7 +16,7 @@ export const Table = ({
                 </div>
 
                 <div className="  flex flex-row flex-wrap  border-solid pt-3 gap-2 h-28 overflow-auto ">
-                    {content.map((word: string) => {
+                    {results.map((word: string) => {
                         return (
                             <div
                                 className="w-fit p-1"
@@ -29,14 +24,14 @@ export const Table = ({
                             >
                                 <CheckCard
                                     word={word}
-                                    changeFunction={changeFunction}
+                                    changeFunction={setValue}
                                 />
                             </div>
                         );
                     })}
                 </div>
             </div>
-            <div className="text-red-500 font-semibold">{maybeError}</div>
+            <div className="text-red-500 font-semibold">{error}</div>
         </div>
     );
 };

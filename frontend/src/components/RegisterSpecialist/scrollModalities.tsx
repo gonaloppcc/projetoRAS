@@ -1,3 +1,7 @@
+export interface ScrollModalitiesProps {
+    changeModality: (modality: string) => void;
+}
+
 export const ScrollModalities = (props) => {
     const checkBoxClicked = (args, mod) => {
         props.changeModality(args, mod.target.checked);

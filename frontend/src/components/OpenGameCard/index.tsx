@@ -1,11 +1,21 @@
-import {ClassNames} from '@emotion/react';
-import {ErrorSharp} from '@mui/icons-material';
-import {duration} from '@mui/material';
-import React, {useEffect, useState} from 'react';
-import {InputForm} from '../createBetter/inputForm';
+import React, {useState} from 'react';
 import {SuspendedGameCard} from '../SuspendedGameCard';
+import {ChangeOdds} from '@components/ChangeOdds';
 
-export const OpenGameCard = (props) => {
+export interface GameInfo {
+    eventName: string;
+    date: string;
+    open: boolean;
+    oddHome: number;
+    oddAway: number;
+    oddTie: number;
+}
+
+export interface OpenGameCardProps {
+    game: GameInfo;
+}
+
+export const OpenGameCard = ({game}: OpenGameCardProps) => {
     const initialValues = {
         duration: 0,
         multiplier: 0,
@@ -18,7 +28,7 @@ export const OpenGameCard = (props) => {
         setValues({...values, [name]: value});
     };
 
-    const inputBox = (placeholder, name) => {
+    const inputBox = (placeholder: string, name: string) => {
         return (
             <input
                 type="number"
@@ -59,7 +69,7 @@ export const OpenGameCard = (props) => {
 
     return (
         <div className="bg-white flex flex-col gap-3">
-            <SuspendedGameCard game={props.game} />
+            <SuspendedGameCard game={game} />
             <div className="pl-5 pb-3  ">
                 <div className="pr-10 m-auto text-xl content-between grow rounded-lg w-full ">
                     {/*FIXME*/}

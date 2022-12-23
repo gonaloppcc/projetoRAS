@@ -1,11 +1,11 @@
 export interface CheckCardPros {
     word: string;
-    changeFunction;
+    changeFunction: (string: string, checked: boolean) => void;
 }
 
 export const CheckCard = ({word, changeFunction}: CheckCardPros) => {
-    const checkBoxClicked = (args, mod) => {
-        changeFunction(args, mod.target.checked);
+    const checkBoxClicked: React.ChangeEventHandler<HTMLInputElement> = (e) => {
+        changeFunction(word, e.target.checked);
     };
 
     return (
@@ -21,9 +21,8 @@ export const CheckCard = ({word, changeFunction}: CheckCardPros) => {
             <input
                 id={word}
                 key={word}
-                target={word}
                 type="checkbox"
-                onChange={checkBoxClicked.bind(this, word)}
+                onChange={checkBoxClicked}
             />
         </div>
     );

@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import {HandleChangeProps, InputForm} from '@components/createBetter/inputForm';
 import {REGEX_MAIL, REGEX_NUMBERS, REGEX_USERNAME} from '../../utils/regex';
+import Link from 'next/link';
 
 interface ValuesProps {
     password: string;
@@ -90,7 +91,7 @@ export const CreateBetter = () => {
         if (Object.keys(errors).length === 0 && isSubmitting) {
             submit();
         }
-    }, [errors]);
+    }, [errors, isSubmitting]);
 
     return (
         <div className="h-screen w-screen justify-center flex items-center bg-CULTURED">
@@ -163,13 +164,13 @@ export const CreateBetter = () => {
                             </div>
                             <div className="flex-none order-2  ">
                                 <div className="text-center	">
-                                    <a
+                                    <Link
                                         href="/login"
                                         className="flex-none order-2 h text-lg"
                                     >
                                         {/*  FIXME Em todos */}
                                         Já tem conta? Faça login!
-                                    </a>
+                                    </Link>
                                 </div>
                             </div>
                         </form>
