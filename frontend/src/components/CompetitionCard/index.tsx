@@ -3,6 +3,7 @@ import StarBorderIcon from '@mui/icons-material/StarBorder';
 import StarIcon from '@mui/icons-material/Star';
 import {SportIcon} from '@components/SportIcon';
 import {Sport} from '@domain/Event';
+import {useRouter} from 'next/router';
 
 export interface CompetitionProps {
     Name: string;
@@ -15,8 +16,17 @@ export const CompetitionCard = ({
     Sport: {Name: sportName},
     isFavorite,
 }: CompetitionProps) => {
+    const router = useRouter();
+
+    const onClickHandler = async () => {
+        await router.push(`/competition/${Name}`);
+    };
+
     return (
-        <div className="flex flex-row justify-between items-center w-full px-5 py-2.5 gap-1 bg-WHITE rounded cursor-pointer">
+        <div
+            onClick={onClickHandler}
+            className="flex flex-row justify-between items-center w-full px-5 py-2.5 gap-1 bg-WHITE rounded cursor-pointer"
+        >
             <div className="flex flex-row justify-between items-center p-0 gap-2">
                 <SportIcon eventType={sportName} />
                 {Name}

@@ -23,8 +23,6 @@ export const SimpleBetCard = ({
 }: SimpleBetCardProps) => {
     const bettingAmountAsString = String(bettingAmount);
 
-    console.log('PartId:', PartId);
-
     const setBettingAmountHandler = (amount: string) => {
         setBettingAmount(Number(amount));
     };
