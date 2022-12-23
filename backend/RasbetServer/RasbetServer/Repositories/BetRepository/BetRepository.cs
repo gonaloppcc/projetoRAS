@@ -15,7 +15,7 @@ public class BetRepository : BaseRepository, IBetRepository
     {
         var user = (from b in _context.Betters where b.Id == bet.BetterId select b).Single();
         if (user.Balance < bet.Amount)
-            throw new InvalidOperationException();
+            throw new InvalidOperationException("Not enough balance");
         
         var newBet = _context.Bets.Add(bet);
         user.Balance -= bet.Amount;
