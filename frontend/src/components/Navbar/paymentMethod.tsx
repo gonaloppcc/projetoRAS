@@ -1,5 +1,5 @@
 import {HandleChangeProps, InputForm} from '@components/createBetter/inputForm';
-import React, {useEffect, useState} from 'react';
+import React, {useCallback, useEffect, useState} from 'react';
 import Image from 'next/image';
 import {PrimaryButton} from '@components/Button';
 import {useProfile} from '@hooks/useProfile';
@@ -16,6 +16,11 @@ export const PaymentMethod = ({isDepositing, setMenu}: PaymentMethodProps) => {
     const [paymentMethod, setPaymentMethod] = useState<number>(0);
 
     const {deposit, withdraw} = useProfile();
+
+    const submit = useCallback(() => {
+        isDepositing ? deposit(amount) : withdraw(amount);
+        setMenu(3);
+    }, [amount, deposit, isDepositing, setMenu, withdraw]);
 
     const handleChange = ({value}: HandleChangeProps) => {
         if (value === '') {
@@ -68,11 +73,6 @@ export const PaymentMethod = ({isDepositing, setMenu}: PaymentMethodProps) => {
         const errors = validate(amount);
         setChangeError(errors);
         setIsSubmitting(true);
-    };
-
-    const submit = () => {
-        isDepositing ? deposit(amount) : withdraw(amount);
-        setMenu(3);
     };
 
     useEffect(() => {
