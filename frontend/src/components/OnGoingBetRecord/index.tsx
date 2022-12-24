@@ -8,12 +8,9 @@ export interface OnGoingBetRecordProps extends Bet {
 }
 
 export const OnGoingBetRecord = ({
-    Id,
-    Odd: {Id: OddId, PartId, Price},
-    EventId,
+    Odd: {PartId, Price},
+    Event: {Participants},
     Date,
-    Closed,
-    BetterId,
     Amount,
     cancelBetHandler,
 }: OnGoingBetRecordProps) => {
@@ -26,7 +23,10 @@ export const OnGoingBetRecord = ({
 
     const dateFormatted = formatDate(Date);
 
-    const eventName = 'Dummy Event Name'; // FIXME: Event name is hardcoded
+    const awayName = Participants.Away.Participant.Part?.Name || '';
+    const homeName = Participants.Home.Participant.Part?.Name || '';
+
+    const eventName = `${homeName} - ${awayName}`;
 
     return (
         <div className="flex flex-row justify-between items-center px-4 gap-8 bg-WHITE rounded">

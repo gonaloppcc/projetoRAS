@@ -1,7 +1,9 @@
+import {Event} from '@domain/Event';
+
 export interface Bet {
     Id: string;
     Odd: Odd;
-    EventId: string;
+    Event: Event;
     Date: string;
     Closed: boolean;
     BetterId: string;
