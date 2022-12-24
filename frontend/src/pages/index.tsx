@@ -11,6 +11,8 @@ const Home: NextPage = () => {
         PRIMARY_COMPETITION_ID
     );
 
+    console.log('events', events);
+
     return (
         <PageLayout>
             <div className="flex flex-col justify-start items-center gap-3 w-full">

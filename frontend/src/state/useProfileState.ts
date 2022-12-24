@@ -9,6 +9,8 @@ export interface ProfileState extends User {
     setBalance: (balance: number) => void;
     deposit: (amount: number) => void;
     withdraw: (amount: number) => void;
+
+    isLogged: boolean;
 }
 
 export const useProfileState = create<ProfileState>((set, get) => ({
@@ -21,11 +23,13 @@ export const useProfileState = create<ProfileState>((set, get) => ({
     Username: '',
     Password: '',
     TransactionHist: [],
+    role: '',
+    isLogged: false,
     login: async (email, password) => {
         const user = await login(email, password);
 
         set((state) => {
-            return {...state, ...user};
+            return {...state, ...user, isLogged: true};
         });
     },
     setProfile: (id) => {},

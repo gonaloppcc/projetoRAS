@@ -7,13 +7,23 @@ export interface AddSimpleBetProps {
     OddId: string;
     BetterId: string;
     Amount: number;
+    EventId: string;
 }
 
-interface AddMultipleBetProps {}
+interface AddMultipleBetProps {
+    Date: string;
+    BetterId: string;
+    Amount: number;
+    Odds: {
+        OddId: string;
+        EventId: string;
+    }[];
+}
 
 export const addSimpleBet = async (
     betProps: AddSimpleBetProps
 ): Promise<Bet> => {
+    console.log('simple bet props', betProps);
     const response = await axios.post(`${BASE_URL}/bets`, {
         Type: 'SimpleBet',
         ...betProps,
