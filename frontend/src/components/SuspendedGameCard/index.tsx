@@ -35,15 +35,9 @@ export const SuspendedGameCard = ({game}: SuspendedGameCardProps) => {
         );
     };
 
-    const openBet = () => {
-        console.log('Abrir bet');
-        console.log(game.eventName);
-    };
+    const openBet = () => {};
 
-    const closeBet = () => {
-        console.log('Fechar bet');
-        console.log(game.eventName);
-    };
+    const closeBet = () => {};
 
     return (
         <>

@@ -23,7 +23,6 @@ interface AddMultipleBetProps {
 export const addSimpleBet = async (
     betProps: AddSimpleBetProps
 ): Promise<Bet> => {
-    console.log('simple bet props', betProps);
     const response = await axios.post(`${BASE_URL}/bets`, {
         Type: 'SimpleBet',
         ...betProps,

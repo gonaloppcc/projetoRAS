@@ -4,18 +4,10 @@ import {useSports} from '@hooks/useSports';
 import {CircularProgress} from '@mui/material';
 import {Sport} from '@domain/Event';
 
-// FIXME
-//const MOCK_Modalities = ['football', 'basketball', 'Marathon'];
-
 const Home: NextPage = () => {
     const {isSuccess, isLoading, isError, sports, error} = useSports();
-    const sportSelected = (sport: Sport) => {
-        console.log('Selected sport');
-        console.log(sport);
-    };
+    const sportSelected = (sport: Sport) => {};
 
-    console.log('Foi buscar');
-    console.log(sports);
     return (
         <>
             {isLoading && <CircularProgress />}

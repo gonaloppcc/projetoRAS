@@ -71,11 +71,8 @@ export const useBettingSlip = create<ReportState>((set, get) => ({
             if (index === -1) {
                 return {bets: state.bets};
             }
-            console.log({amount});
             const newBets = [...state.bets];
             newBets[index].bettingAmount = amount;
-
-            console.log({newBets});
 
             return {bets: newBets};
         });

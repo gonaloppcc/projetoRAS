@@ -20,9 +20,7 @@ export const addBalance = async (
 
     return response.data as User;
 };
-export const postSpecialist = async (specialist: Specialist): Promise<User> => {
-    console.log('Vai enviar');
-    console.log(specialist);
+export const addSpecialist = async (specialist: Specialist): Promise<User> => {
     const response = await axios.post(
         `${BASE_URL}/users/specialists`,
         specialist

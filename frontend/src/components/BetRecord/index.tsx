@@ -33,7 +33,7 @@ export const BetRecord = ({
     const betWinnings = Amount * Price; // FIXME: This is not correct, the better could lose the bet
 
     const cancelBetHandler = () => {
-        console.log('Aposta cancelada');
+        // FIXME: These bets are already closed, so we should not be able to cancel them
     };
 
     const dateFormatted = formatDate(Date);

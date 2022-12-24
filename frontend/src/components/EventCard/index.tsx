@@ -30,9 +30,9 @@ export const EventCard = ({
             Price: Participants.Home.Participant.Price,
         },
         {
-            Id: Participants.Tie?.Id, // FIXME: This is not correct, the Id should be the Tie Odd Id
+            Id: Participants.Tie.Id,
             PartId: 'Empate',
-            Price: Participants.Tie?.Price, // FIME: Hardcoded for now
+            Price: Participants.Tie.Price,
         },
         {
             Id: Participants.Away.Participant.Id,

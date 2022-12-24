@@ -18,7 +18,7 @@ export const OnGoingBetRecord = ({
     cancelBetHandler,
 }: OnGoingBetRecordProps) => {
     // FIXME: Hardcoded text in this component
-    const betName = `Resultado Final: ${PartId}`; // FIXME: Only valid to Participant Bets
+    const betName = `Resultado Final: ${PartId ?? 'Empate'}`; // FIXME: Only valid to Participant Bets
 
     const eventType = 'Football'; // FIXME: Event type is hardcoded
 

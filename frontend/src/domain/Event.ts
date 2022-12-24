@@ -45,7 +45,7 @@ export interface TwoParticipant {
     Id: string;
     Home: ParticipantOdd;
     Away: ParticipantOdd;
-    Tie?: TieOdd;
+    Tie: TieOdd;
 }
 
 export interface ParticipantOdd {

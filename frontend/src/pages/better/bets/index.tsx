@@ -25,7 +25,6 @@ const Bets = () => {
 
     const cancelBetHandler = (betId: string) => {
         return async () => {
-            console.log('BetId:', betId);
             await deleteBet(betId);
             refetch();
         };

@@ -12,13 +12,7 @@ export const InsertCodeBody = ({code}: ForgetPasswordProps) => {
     const codeInserted = ({value}: HandleChangeProps) => {
         setInsertedCode(value);
     };
-    const compareCodes = () => {
-        console.log('Code inserted');
-        console.log(code);
-        console.log(insertedCode);
-        console.log('Is equal?');
-        console.log(parseInt(insertedCode) === code);
-    };
+    const compareCodes = () => {};
 
     return (
         <div className="flex flex-col gap-3 p-5">
