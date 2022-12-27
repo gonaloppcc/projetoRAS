@@ -9,4 +9,5 @@ public interface IUserService
     Task DeleteUserAsync(string id);
     Task ChangePasswordAsync(string id, string newPassword);
     Task<float> UpdateBalanceAsync(string id, float amount);
+    Task<IEnumerable<Models.Users.Transaction>> GetTransactionHist(string id);
 }

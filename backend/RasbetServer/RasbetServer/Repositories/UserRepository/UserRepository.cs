@@ -52,7 +52,7 @@ public class UserRepository : BaseRepository, IUserRepository {
     public async Task AddUserAsync(User user) {
         if (user is Specialist specialist)
         {
-            specialist.Specialties.ForEach(sport => _context.Attach(sport));
+            specialist.Specialties.ToList().ForEach(sport => _context.Attach(sport));
         }
         
         var newUser = _context.Users.Add(user);

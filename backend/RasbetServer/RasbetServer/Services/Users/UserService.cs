@@ -65,4 +65,13 @@ public class UserService : IUserService
         await _userRepository.UpdateUserAsync(better);
         return better.Balance;
     }
+
+    public async Task<IEnumerable<Transaction>> GetTransactionHist(string id)
+    {
+        var user = await _userRepository.GetUserAsync(id);
+        if (user is not Better better)
+            throw new InvalidUserTypeException("User is not a better");
+
+        return better.TransactionHist;
+    }
 }

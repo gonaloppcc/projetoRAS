@@ -45,11 +45,11 @@ public class BetController : ControllerBase
     }
 
     [HttpPost(Name = "AddBet")]
-    public ActionResult<Bet> AddBet(JsonElement json)
+    public ActionResult<Bet> AddBet(JObject json)
     {
         try
         {
-            var bet = Bet.FromJson(JObject.Parse(json.ToString()));
+            var bet = Bet.FromJson(json);
             return Ok(JsonConvert.SerializeObject(_betRepository.MakeBet(bet)));
         }
         catch (Exception e)

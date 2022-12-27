@@ -7,6 +7,7 @@ using RasbetServer.Models.Users;
 using RasbetServer.Repositories.UserRepository;
 using RasbetServer.Resources.Users;
 using RasbetServer.Resources.Users.Better;
+using RasbetServer.Resources.Users.Better.Transaction;
 using RasbetServer.Resources.Users.Specialist;
 using RasbetServer.Services.Users;
 using Exception = System.Exception;
@@ -114,8 +115,8 @@ public class UserController : ControllerBase
     /// <param name="id">User's id</param>
     /// <param name="json">Json object with the new password</param>
     /// <returns>The user with the updated password or BadRequest if the user does not exist</returns>
-    [HttpPatch(Name = "ChangePassword")]
-    public async Task<ActionResult<User>> ChangePassword([FromQuery] string id, [FromBody] JsonElement json)
+    [HttpPatch("{id}/password", Name = "ChangePassword")]
+    public async Task<ActionResult<User>> ChangePassword(string id, [FromBody] JsonElement json)
     {
         var password = json.GetProperty("password").GetString();
         if (password is null)
@@ -149,5 +150,14 @@ public class UserController : ControllerBase
         {
             return NotFound("User not found");
         }
+    }
+
+    [HttpGet("{id}/transactionHist", Name = "GetTransactionHist")]
+    public async Task<IActionResult> GetTransactionHist(string id)
+    {
+        var transactionHist = await _userService.GetTransactionHist(id);
+        var transactionResource =
+            _mapper.Map<IEnumerable<Transaction>, IEnumerable<TransactionResource>>(transactionHist);
+        return Ok(transactionResource);
     }
 }
