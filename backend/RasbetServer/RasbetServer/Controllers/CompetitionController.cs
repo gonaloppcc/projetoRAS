@@ -1,9 +1,11 @@
 using System.Text.Json;
+using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using RasbetServer.Models.Events;
 using RasbetServer.Repositories.CompetitionRepository;
+using RasbetServer.Resources.Events.Competitions;
 
 namespace RasbetServer.Controllers;
 
@@ -12,20 +14,23 @@ namespace RasbetServer.Controllers;
 public class CompetitionController : ControllerBase
 {
     private readonly ICompetitionRepository _competitionRepository;
+    private readonly IMapper _mapper;
 
-    public CompetitionController(ICompetitionRepository competitionRepository)
+    public CompetitionController(ICompetitionRepository competitionRepository, IMapper mapper)
     {
         _competitionRepository = competitionRepository;
+        _mapper = mapper;
     }
     
     [HttpPost(Name = "AddCompetition")]
-    public ActionResult<Competition> AddCompetition(JsonElement json)
+    public ActionResult<Competition> AddCompetition([FromBody] SaveCompetitionResource competitionResource)
     {
         try
         {
-            var comp = Competition.FromJson(JObject.Parse(json.ToString()));
+            var comp = _mapper.Map<SaveCompetitionResource, Competition>(competitionResource);
             var newComp = _competitionRepository.AddCompetition(comp);
-            return Ok(JsonConvert.SerializeObject(newComp));
+            var mapped = _mapper.Map<Competition, CompetitionResource>(newComp);
+            return Ok(JsonConvert.SerializeObject(mapped));
         }
         catch (Exception e)
         {
@@ -35,9 +40,17 @@ public class CompetitionController : ControllerBase
 
     [HttpGet("{id}", Name = "GetCompetition")]
     public ActionResult<Competition> GetCompetition(string id)
-        => Ok(JsonConvert.SerializeObject(_competitionRepository.GetCompetition(id)));
+    {
+        var comp = _competitionRepository.GetCompetition(id);
+        var compResource = _mapper.Map<Competition, CompetitionResource>(comp);
+        return Ok(JsonConvert.SerializeObject(compResource));   
+    }
 
     [HttpGet(Name = "GetAllCompetitions")]
     public ActionResult<List<Competition>> GetAllCompetitions([FromQuery] string sportId)
-        => Ok(JsonConvert.SerializeObject(_competitionRepository.GetAllCompetitions(sportId)));
+    {
+        var comps = _competitionRepository.GetAllCompetitions(sportId);
+        var compsResource = _mapper.Map<IEnumerable<Competition>, IEnumerable<CompetitionResource>>(comps);
+        return Ok(JsonConvert.SerializeObject(compsResource));
+    }
 }

@@ -6,6 +6,9 @@ using Newtonsoft.Json.Linq;
 using RasbetServer.Models.Users;
 using RasbetServer.Repositories.UserRepository;
 using RasbetServer.Resources.Users;
+using RasbetServer.Resources.Users.Better;
+using RasbetServer.Resources.Users.Specialist;
+using RasbetServer.Services.Users;
 using Exception = System.Exception;
 
 namespace RasbetServer.Controllers;
@@ -15,31 +18,25 @@ namespace RasbetServer.Controllers;
 [Route("users")]
 public class UserController : ControllerBase
 {
-    private readonly IUserRepository _userRepository;
+    private readonly IUserService _userService;
     private readonly IMapper _mapper;
 
-    public UserController(IUserRepository userRepository, IMapper mapper)
+    public UserController(IUserService userService, IMapper mapper)
     {
-        _userRepository = userRepository;
+        _userService = userService;
         _mapper = mapper;
     }
 
     /// <summary>
     ///     Logs in a user
     /// </summary>
-    /// <param name="json">Json object in the GET body. Must have an email and password</param>
+    /// <param name="creds">Credentials necessary for login</param>
     /// <returns>The logged in user or an error when the user either has invalid credentials or does not exist</returns>
     [HttpPost(Name = "Login")]
-    public IActionResult Login([FromBody] JsonElement json)
+    public async Task<IActionResult> Login([FromBody] Credentials creds)
     {
-        var email = json.GetProperty("email").GetString();
-        var password = json.GetProperty("password").GetString();
-
-        if (email is null || password is null)
-            return BadRequest();
-
         try {
-            var user = _userRepository.LoginUser(email, password);
+            var user = await _userService.LoginAsync(creds.Email, creds.Password);
             var resource = _mapper.Map<User, UserResource>(user);
             return Ok(JsonConvert.SerializeObject(resource));
         }
@@ -49,13 +46,13 @@ public class UserController : ControllerBase
     }
 
     [HttpPatch("balance", Name = "UpdateBalance")]
-    public IActionResult UpdateBalance([FromQuery] string id, [FromQuery] float balance)
+    public async Task<IActionResult> UpdateBalance([FromQuery] string id, [FromQuery] float balance)
     {
         try
         {
-            var better = _userRepository.UpdateBalance(id, balance);
-            var resource = _mapper.Map<User, UserResource>(better);
-            return Ok(JsonConvert.SerializeObject(resource));
+            var newBalance = await _userService.UpdateBalanceAsync(id, balance);
+            //var resource = _mapper.Map<User, UserResource>(better);
+            return Ok(JsonConvert.SerializeObject(newBalance));
         }
         catch (Exception e)
         {
@@ -66,18 +63,18 @@ public class UserController : ControllerBase
     /// <summary>
     ///     Registers a better in the system
     /// </summary>
-    /// <param name="json">Json with the info to register the new better</param>
+    /// <param name="betterResource">Better to register</param>
     /// <returns>
     ///     Ok in case the better was successfully registered
     ///     or BadRequest if the json is missing any attributes
     /// </returns>
     [HttpPost("betters", Name = "RegisterBetter")]
-    public IActionResult RegisterBetter([FromBody] JsonElement json)
+    public async Task<IActionResult> RegisterBetter([FromBody] SaveBetterResource betterResource)
     {
         try
         {
-            var better = Better.FromJson(JObject.Parse(json.ToString()));
-            var newBetter = _userRepository.AddUser(better);
+            var better = _mapper.Map<SaveBetterResource, Better>(betterResource);
+            var newBetter = await _userService.RegisterAsync(better);
             var resource = _mapper.Map<User, UserResource>(newBetter);
             return Ok(JsonConvert.SerializeObject(resource));
         }
@@ -90,24 +87,24 @@ public class UserController : ControllerBase
     /// <summary>
     ///     Registers a new specialist in the system
     /// </summary>
-    /// <param name="json">Json with the info to register the new specialist</param>
+    /// <param name="specialistResource">Specialist to register</param>
     /// <returns>
     ///     Ok in the case the specialist was successfully registered
     ///     or BadRequest if the json is missing any attributes
     /// </returns>
     [HttpPost("specialists", Name = "RegisterSpecialist")]
-    public IActionResult RegisterSpecialist([FromBody] JsonElement json)
+    public async Task<IActionResult> RegisterSpecialist([FromBody] SaveSpecialistResource specialistResource)
     {
         try
         {
-            var specialist = Specialist.FromJson(JObject.Parse(json.ToString()));
-            var newSpecialist = _userRepository.AddUser(specialist);
+            var specialist = _mapper.Map<SaveSpecialistResource, Specialist>(specialistResource);
+            var newSpecialist = await _userService.RegisterAsync(specialist);
             var resource = _mapper.Map<User, UserResource>(newSpecialist);
             return Ok(JsonConvert.SerializeObject(resource));
         }
         catch (Exception e)
         {
-            return BadRequest();
+            return Problem(e.Message);
         }
     }
 
@@ -118,15 +115,15 @@ public class UserController : ControllerBase
     /// <param name="json">Json object with the new password</param>
     /// <returns>The user with the updated password or BadRequest if the user does not exist</returns>
     [HttpPatch(Name = "ChangePassword")]
-    public ActionResult<User> ChangePassword([FromQuery] string id, [FromBody] JsonElement json)
+    public async Task<ActionResult<User>> ChangePassword([FromQuery] string id, [FromBody] JsonElement json)
     {
-        string? password = json.GetProperty("password").GetString();
+        var password = json.GetProperty("password").GetString();
         if (password is null)
             return BadRequest("No password provided");
 
         try
         {
-            _userRepository.ChangePassword(id, password);
+            await _userService.ChangePasswordAsync(id, password);
             return Ok("Password changed successfully");
         }
         catch (Exception e)
@@ -141,11 +138,11 @@ public class UserController : ControllerBase
     /// <param name="id">Id of the user to delete</param>
     /// <returns>Ok in case of a successful deletion or Not Found when the User does not exist</returns>
     [HttpDelete("{id}", Name = "DeleteUser")]
-    public IActionResult Delete(string id)
+    public async Task<IActionResult> Delete(string id)
     {
         try
         {
-            _userRepository.DeleteUser(id);
+            await _userService.DeleteUserAsync(id);
             return Ok("User successfully deleted");
         }
         catch (Exception e)

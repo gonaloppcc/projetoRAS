@@ -1,4 +1,4 @@
-namespace RasbetServer.Resources.Users;
+namespace RasbetServer.Resources.Users.Better;
 
 public class BetterResource : UserResource
 {

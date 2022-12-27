@@ -1,9 +1,12 @@
 using System.Text.Json;
+using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using RasbetServer.Models.Events;
 using RasbetServer.Repositories.SportRepository;
+using RasbetServer.Resources.Events.Sport;
+using RasbetServer.Services.Sports;
 
 namespace RasbetServer.Controllers;
 
@@ -11,19 +14,24 @@ namespace RasbetServer.Controllers;
 [Route("sports")]
 public class SportController : ControllerBase
 {
-    private readonly ISportRepository _sportRepository;
+    private readonly IMapper _mapper;
+    private readonly ISportService _sportService;
 
-    public SportController(ISportRepository sportRepository)
+    public SportController(ISportService sportService, IMapper mapper)
     {
-        _sportRepository = sportRepository;
+        _sportService = sportService;
+        _mapper = mapper;
     }
+    
     [HttpPost(Name = "AddSport")]
-    public IActionResult AddSport([FromBody] JsonElement json)
+    public async Task<IActionResult> AddSport([FromBody] SaveSportResource sportResource)
     {
         try
         {
-            var sport = Sport.FromJson(JObject.Parse(json.ToString()));
-            return Ok(JsonConvert.SerializeObject(_sportRepository.AddSport(sport)));
+            var sport = _mapper.Map<SaveSportResource, Sport>(sportResource);
+            var added = await _sportService.AddAsync(sport);
+            var response = _mapper.Map<Sport, SportResource>(added);
+            return Ok(JsonConvert.SerializeObject(response));
         }
         catch (Exception e)
         {
@@ -32,11 +40,12 @@ public class SportController : ControllerBase
     }
 
     [HttpGet("{id}", Name = "GetSport")]
-    public ActionResult<Sport> GetSport(string id)
+    public async Task<ActionResult<SportResource>> GetSport(string id)
     {
         try
         {
-            return Ok(JsonConvert.SerializeObject(_sportRepository.GetSport(id)));
+            var sportResource = _mapper.Map<Sport, SportResource>(await _sportService.GetAsync(id));
+            return Ok(sportResource);
         }
         catch (Exception e)
         {
@@ -45,11 +54,13 @@ public class SportController : ControllerBase
     }
 
     [HttpGet(Name = "GetAllSports")]
-    public ActionResult<List<Sport>> GetAllSports()
+    public async Task<ActionResult<IEnumerable<SportResource>>> GetAllSports()
     {
         try
-        { 
-            return Ok(JsonConvert.SerializeObject(_sportRepository.GetAllSports()));
+        {
+            var sports = await _sportService.ListAsync();
+            var sportsResources = _mapper.Map<IEnumerable<Sport>, IEnumerable<SportResource>>(sports);
+            return Ok(sportsResources);
         }
         catch (Exception e)
         {

@@ -7,7 +7,7 @@ namespace RasbetServer.Models.Users;
 
 public class Specialist : User {
     [Required]
-    public virtual List<SportSpecialistIds> Specialties { get; set; }
+    public virtual List<Sport> Specialties { get; set; }
     
     public Specialist() : base() { }
 
@@ -16,7 +16,7 @@ public class Specialist : User {
         string email,
         string username,
         string password,
-        IEnumerable<SportSpecialistIds> specialties
+        IEnumerable<Sport> specialties
     ) : base(id, email, username, password) {
         Specialties = specialties.ToList();
     }
@@ -25,12 +25,12 @@ public class Specialist : User {
         string email,
         string username,
         string password,
-        IEnumerable<SportSpecialistIds> specialties
+        IEnumerable<Sport> specialties
     ) : base(email, username, password) {
         Specialties = specialties.ToList();
     }
 
-
+/*
     public static Specialist FromJson(JObject json) {
         var email = json[nameof(Email)].Value<string>();
         var username = json[nameof(Username)].Value<string>();
@@ -45,5 +45,5 @@ public class Specialist : User {
         }
 
         return new Specialist(email, username, password, specialties);
-    }
+    }*/
 }

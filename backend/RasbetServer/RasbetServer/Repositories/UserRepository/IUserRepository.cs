@@ -3,10 +3,9 @@
 namespace RasbetServer.Repositories.UserRepository;
 
 public interface IUserRepository {
-    User GetUser(string id);
-    User LoginUser(string email, string password);
-    User AddUser(User user);
-    void DeleteUser(string id);
-    void ChangePassword(string id, string password);
-    Better UpdateBalance(string id, float amount);
+    Task<User> GetUserAsync(string id);
+    Task<User> GetUserByEmailAsync(string email);
+    Task AddUserAsync(User user);
+    Task DeleteUserAsync(User user);
+    Task UpdateUserAsync(User user);
 }

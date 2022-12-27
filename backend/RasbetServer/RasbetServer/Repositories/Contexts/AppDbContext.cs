@@ -19,7 +19,6 @@ public class AppDbContext : DbContext {
     public DbSet<FootballEvent> FootballEvents { get; set; }
     public DbSet<Competition> Competitions { get; set; }
     public DbSet<Sport> Sports { get; set; }
-    public DbSet<SportSpecialistIds> SportSpecialistIds { get; set; }
 
     public DbSet<BaseParticipants> BaseParticipants { get; set; }
     public DbSet<TwoParticipants> TwoParticipants { get; set; }
@@ -48,8 +47,6 @@ public class AppDbContext : DbContext {
 
         modelBuilder.Entity<OddBetIds>()
             .HasKey(obi => new { obi.MultiBetId, obi.OddId });
-        modelBuilder.Entity<SportSpecialistIds>()
-            .HasKey(ssi => new { ssi.SpecialistId, ssi.SportId });
     }
 
     private void SeedSports()
@@ -145,11 +142,11 @@ public class AppDbContext : DbContext {
 
     private void SeedSpecialists()
     {
-        Specialists.Add(new Specialist("5", "email1@email.com", "username1", "password1", new List<SportSpecialistIds>()));
-        Specialists.Add(new Specialist("6", "email2@email.com", "username2", "password2", new List<SportSpecialistIds>()));
-        Specialists.Add(new Specialist("7", "email3@email.com", "username3", "password3", new List<SportSpecialistIds>()));
-        Specialists.Add(new Specialist("8", "email4@email.com", "username4", "password4", new List<SportSpecialistIds>()));
-        Specialists.Add(new Specialist("9", "email5@email.com", "username5", "password5", new List<SportSpecialistIds>()));
+        Specialists.Add(new Specialist("5", "email1@email.com", "username1", "password1", new List<Sport>()));
+        Specialists.Add(new Specialist("6", "email2@email.com", "username2", "password2", new List<Sport>()));
+        Specialists.Add(new Specialist("7", "email3@email.com", "username3", "password3", new List<Sport>()));
+        Specialists.Add(new Specialist("8", "email4@email.com", "username4", "password4", new List<Sport>()));
+        Specialists.Add(new Specialist("9", "email5@email.com", "username5", "password5", new List<Sport>()));
     }
     
     public void Seed()

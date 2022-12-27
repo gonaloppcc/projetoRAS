@@ -10,6 +10,8 @@ using RasbetServer.Repositories.Contexts;
 using RasbetServer.Repositories.EventRepository;
 using RasbetServer.Repositories.SportRepository;
 using RasbetServer.Repositories.UserRepository;
+using RasbetServer.Services.Sports;
+using RasbetServer.Services.Users;
 
 namespace RasbetServer.app;
 
@@ -42,12 +44,19 @@ public class Startup
                         .WithMethods("GET", "PUT", "POST", "DELETE", "OPTIONS", "PATCH");
                 });
         });
-        services.AddControllers();
-        services.AddDbContext<AppDbContext>(options => options.UseLazyLoadingProxies().UseMySQL(ConnectionString));
+        services.AddControllers()
+            .AddNewtonsoftJson(options =>
+                options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
+        services.AddDbContext<AppDbContext>(options => options.UseMySQL(ConnectionString));//.UseLazyLoadingProxies().UseMySQL(ConnectionString));
 
         services.AddScoped<IUserRepository, UserRepository>();
+        services.AddScoped<IUserService, UserService>();
+        
         services.AddScoped<IEventRepository, EventRepository>();
+        
         services.AddScoped<ISportRepository, SportRepository>();
+        services.AddScoped<ISportService, SportService>();
+        
         services.AddScoped<ICompetitionRepository, CompetitionRepository>();
         services.AddScoped<IBetRepository, BetRepository>();
 

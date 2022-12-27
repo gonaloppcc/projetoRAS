@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using RasbetServer.Exceptions.Users;
 using RasbetServer.Models.Users;
 using RasbetServer.Repositories.Contexts;
 
@@ -8,42 +9,68 @@ public class UserRepository : BaseRepository, IUserRepository {
     public UserRepository(AppDbContext context) : base(context) {
     }
 
-    public User GetUser(string id)
-        => (from u in _context.Users where u.Id == id select u).Single();
+    public async Task<User> GetUserAsync(string id)
+    {
+        try
+        {
+            return await (
+                from u 
+                    in _context.Users
+                        .Include(user => ((Specialist)user).Specialties)
+                        .Include(user => ((Better)user).TransactionHist)
+                where u.Id == id 
+                select u
+            ).SingleAsync();
+        }
+        catch (InvalidOperationException e)
+        {
+            throw new UserNotFoundException("User with the specified Id does not exist", e);
+        }
+        
+    }
 
-    public User LoginUser(string email, string password)
-        => (from u in _context.Users where u.Email == email & u.Password == password select u).Single();
+    public async Task<User> GetUserByEmailAsync(string email)
+    {
+        try
+        {
+            return await (
+                from u 
+                    in _context.Users
+                        .Include(user => ((Specialist)user).Specialties)
+                        .Include(user => ((Better)user).TransactionHist)
+                where u.Email == email 
+                select u
+            ).SingleAsync();
+        }
+        catch (InvalidOperationException e)
+        {
+            throw new UserNotFoundException("User with the specified email does not exist", e);
+        }
+        
+    }
 
-    public User AddUser(User user) {
+    public async Task AddUserAsync(User user) {
+        if (user is Specialist specialist)
+        {
+            specialist.Specialties.ForEach(sport => _context.Attach(sport));
+        }
+        
         var newUser = _context.Users.Add(user);
-        _context.SaveChanges();
+        await _context.SaveChangesAsync();
 
         // Refresh _context cache
         newUser.State = EntityState.Detached;
-        return _context.Users.Find(newUser.Entity.Id) 
-               ?? throw new InvalidOperationException();
     }
 
-    public void DeleteUser(string id)
+    public async Task DeleteUserAsync(User user)
     {
-        var user = (from u in _context.Users where u.Id == id select u).Single();
         _context.Users.Remove(user);
-        _context.SaveChanges();
+        await _context.SaveChangesAsync();
     }
 
-    public void ChangePassword(string id, string password)
+    public async Task UpdateUserAsync(User user)
     {
-        var user = (from u in _context.Users where u.Id == id select u).Single();
-        user.Password = password;
-        _context.SaveChanges();
-    }
-
-    public Better UpdateBalance(string id, float amount)
-    {
-        var user = (from u in _context.Betters where u.Id == id select u).Single();
-        user.Balance += amount;
-        _context.SaveChanges();
-
-        return user;
+        _context.Update(user);
+        await _context.SaveChangesAsync();
     }
 }
