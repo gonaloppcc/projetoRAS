@@ -17,7 +17,7 @@ export interface BetRecordProps {
 export const BetRecord = ({
     Id,
     Odd: {Id: OddId, PartId, Price},
-    EventId,
+    Event: {Participants},
     Date,
     Closed,
     BetterId,
@@ -28,7 +28,10 @@ export const BetRecord = ({
 
     const eventType = 'Football';
 
-    const eventName = 'FC Porto vs. Benfica';
+    const awayName = Participants.Away.Participant.Part?.Name || '';
+    const homeName = Participants.Home.Participant.Part?.Name || '';
+
+    const eventName = `${homeName} - ${awayName}`;
 
     const betWinnings = Amount * Price; // FIXME: This is not correct, the better could lose the bet
 

@@ -25,10 +25,17 @@ export const PrimaryButton = ({
     );
 };
 
-export const SecondaryButton = ({children, disabled}: ButtonProps) => {
+export const SecondaryButton = ({
+    children,
+    disabled,
+    onClick,
+    type,
+}: ButtonProps) => {
     return (
         <button
             disabled={disabled}
+            onClick={onClick}
+            type={type}
             className="bg-WHITE hover:bg-CULTURED disabled:opacity-50 disable:cursor-not-allowed py-2 px-4 border border-IMPERIAL_RED text-IMPERIAL_RED rounded font-semibold"
         >
             {children}
@@ -36,10 +43,17 @@ export const SecondaryButton = ({children, disabled}: ButtonProps) => {
     );
 };
 
-export const TertiaryButton = ({children, disabled}: ButtonProps) => {
+export const TertiaryButton = ({
+    children,
+    disabled,
+    onClick,
+    type,
+}: ButtonProps) => {
     return (
         <button
             disabled={disabled}
+            onClick={onClick}
+            type={type}
             className="bg-white hover:bg-gray-100 disabled:opacity-50 disable:cursor-not-allowed text-EERIE_BLACK font-semibold py-2 px-4 border border-RICH_BLACK rounded shadow"
         >
             {children}
@@ -47,10 +61,17 @@ export const TertiaryButton = ({children, disabled}: ButtonProps) => {
     );
 };
 
-export const FullWidthButton = ({children, disabled}: ButtonProps) => {
+export const FullWidthButton = ({
+    children,
+    disabled,
+    onClick,
+    type,
+}: ButtonProps) => {
     return (
         <button
             disabled={disabled}
+            onClick={onClick}
+            type={type}
             className="w-full bg-IMPERIAL_RED hover:bg-CARNELIAN disabled:opacity-50 disable:cursor-not-allowed text-WHITE font-semibold py-2 px-4 rounded"
         >
             {children}

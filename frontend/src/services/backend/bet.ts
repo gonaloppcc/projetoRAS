@@ -43,7 +43,7 @@ export const addMultipleBet = async (
     betProps: AddMultipleBetProps
 ): Promise<Bet> => {
     const response = await axios.post(`${BASE_URL}/bets`, {
-        Type: 'MultipleBet',
+        Type: 'MultiBet',
         ...betProps,
     });
     return response.data as Bet;
