@@ -1,5 +1,4 @@
 import React from 'react';
-import {BetRecord} from '@components/BetRecord';
 import {PageLayout} from '@components/PageLayout';
 import {Accordion} from '@components/Accordion';
 import {OnGoingBetRecord} from '@components/OnGoingBetRecord';
@@ -18,8 +17,7 @@ const Bets = () => {
     let finishedBets: Bet[] = [];
 
     if (!isLoading) {
-        onGoingBets = bets.filter((bet) => !bet.Closed && 'Event' in bet); // FIXME: Only SimpleBets for now
-        console.log('onGoingBets', onGoingBets);
+        onGoingBets = bets.filter((bet) => !bet.Closed);
 
         finishedBets = bets.filter((bet) => bet.Closed);
     }
@@ -44,7 +42,7 @@ const Bets = () => {
                                     onGoingBets.map((bet) => (
                                         <OnGoingBetRecord
                                             key={bet.Id}
-                                            {...bet}
+                                            bet={bet}
                                             cancelBetHandler={cancelBetHandler(
                                                 bet.Id
                                             )}
@@ -56,7 +54,9 @@ const Bets = () => {
                             <div className="w-full flex flex-col justify-start gap-1">
                                 {isSuccess &&
                                     finishedBets.map((bet) => (
-                                        <BetRecord key={bet.Id} {...bet} />
+                                        <>
+
+                                        </> /*<BetRecord key={bet.Id} {...bet} />*/
                                     ))}
                             </div>
                         </Accordion>

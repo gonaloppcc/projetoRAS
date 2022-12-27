@@ -1,5 +1,5 @@
 import {FetcherProps} from '@hooks/Fetcher';
-import {Bet, SimpleBet} from '@domain/Bet';
+import {Bet} from '@domain/Bet';
 import {useQuery} from '@tanstack/react-query';
 import {getBets} from '../services/backend/bet';
 
@@ -21,7 +21,7 @@ export const useBets = (userId: string): useBetsProps => {
         isSuccess,
         isLoading,
         isError,
-        bets: (bets || []) as unknown as SimpleBet[],
+        bets: (bets || []) as unknown as Bet[],
         error: error as string,
         refetch,
     };

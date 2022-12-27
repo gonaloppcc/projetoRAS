@@ -18,6 +18,7 @@ export interface MultipleBet {
     Date: string;
     BetterId: string;
     Odds: MultiBetOdd[];
+    Amount: number;
 }
 
 export interface MultiBetOdd {
