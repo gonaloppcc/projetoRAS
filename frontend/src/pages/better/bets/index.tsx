@@ -18,7 +18,8 @@ const Bets = () => {
     let finishedBets: Bet[] = [];
 
     if (!isLoading) {
-        onGoingBets = bets.filter((bet) => !bet.Closed);
+        onGoingBets = bets.filter((bet) => !bet.Closed && 'Event' in bet); // FIXME: Only SimpleBets for now
+        console.log('onGoingBets', onGoingBets);
 
         finishedBets = bets.filter((bet) => bet.Closed);
     }

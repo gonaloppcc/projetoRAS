@@ -1,6 +1,8 @@
 import {Event} from '@domain/Event';
 
-export interface Bet {
+export type Bet = SimpleBet | MultipleBet;
+
+export interface SimpleBet {
     Id: string;
     Odd: Odd;
     Event: Event;
@@ -8,6 +10,19 @@ export interface Bet {
     Closed: boolean;
     BetterId: string;
     Amount: number;
+}
+
+export interface MultipleBet {
+    Id: string;
+    Closed: boolean;
+    Date: string;
+    BetterId: string;
+    Odds: MultiBetOdd[];
+}
+
+export interface MultiBetOdd {
+    Event: Event;
+    Odd: Odd;
 }
 
 export interface Odd {

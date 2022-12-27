@@ -15,7 +15,7 @@ const CompetitionPage: NextPage<PageProps> = ({competitionId}) => {
 
     return (
         <PageLayout>
-            <div className="flex flex-col justify-start items-center gap-3 w-full">
+            <div className="min-w-min flex flex-col justify-start items-center gap-3 w-full">
                 {isLoading && <CircularProgress />}
                 {isSuccess &&
                     events.map((event) => (

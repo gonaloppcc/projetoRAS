@@ -1,6 +1,6 @@
 import {BASE_URL} from './constants';
 import axios from 'axios';
-import {Bet} from '@domain/Bet';
+import {SimpleBet} from '@domain/Bet';
 
 export interface AddSimpleBetProps {
     Date: string;
@@ -22,17 +22,21 @@ interface AddMultipleBetProps {
 
 export const addSimpleBet = async (
     betProps: AddSimpleBetProps
-): Promise<Bet> => {
+): Promise<SimpleBet> => {
     const response = await axios.post(`${BASE_URL}/bets`, {
         Type: 'SimpleBet',
         ...betProps,
     });
-    return response.data as Bet;
+    return response.data as SimpleBet;
 };
 
-export const getBets = async ({userId}: {userId: string}): Promise<Bet[]> => {
+export const getBets = async ({
+    userId,
+}: {
+    userId: string;
+}): Promise<SimpleBet[]> => {
     const response = await axios.get(`${BASE_URL}/bets?userId=${userId}`);
-    return response.data as Bet[];
+    return response.data as SimpleBet[];
 };
 
 export const deleteBet = async (betId: string): Promise<void> => {
@@ -41,10 +45,10 @@ export const deleteBet = async (betId: string): Promise<void> => {
 
 export const addMultipleBet = async (
     betProps: AddMultipleBetProps
-): Promise<Bet> => {
+): Promise<SimpleBet> => {
     const response = await axios.post(`${BASE_URL}/bets`, {
         Type: 'MultiBet',
         ...betProps,
     });
-    return response.data as Bet;
+    return response.data as SimpleBet;
 };

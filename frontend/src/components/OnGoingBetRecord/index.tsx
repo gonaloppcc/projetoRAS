@@ -1,9 +1,9 @@
 import React from 'react';
 import {SportIcon} from '@components/SportIcon';
-import {Bet} from '@domain/Bet';
+import {SimpleBet} from '@domain/Bet';
 import {formatDate, formatNumber} from '../../utils/formatters';
 
-export interface OnGoingBetRecordProps extends Bet {
+export interface OnGoingBetRecordProps extends SimpleBet {
     cancelBetHandler: () => void;
 }
 
@@ -39,7 +39,7 @@ export const OnGoingBetRecord = ({
                     <span className="text-LIGHT_GRAY text-xs">{eventName}</span>
                 </div>
             </div>
-            <div className="flex flex-col items-start p-0 gap-2">
+            <div className="hidden xl:flex flex-col items-start p-0 gap-2 ">
                 <span className="text-LIGHT_GRAY text-sm">{'Data'}</span>
                 <span className="text-EERIE_BLACK text-base">
                     {dateFormatted}

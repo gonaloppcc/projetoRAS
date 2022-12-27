@@ -1,7 +1,7 @@
 import React from 'react';
 import {formatDate} from '../../utils/formatters';
 import {SportIcon} from '@components/SportIcon';
-import {Bet} from '@domain/Bet';
+import {SimpleBet} from '@domain/Bet';
 
 export interface BetRecordProps {
     eventName: string;
@@ -22,7 +22,7 @@ export const BetRecord = ({
     Closed,
     BetterId,
     Amount,
-}: Bet) => {
+}: SimpleBet) => {
     // FIXME: Hardcoded text in this component
     const betName = `Resultado Final: ${PartId}`;
 

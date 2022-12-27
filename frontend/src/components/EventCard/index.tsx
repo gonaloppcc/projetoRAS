@@ -61,13 +61,13 @@ export const EventCard = ({
     return (
         <div
             onClick={onClickHandler}
-            className="flex flex-row justify-between items-center px-4 min-w-min w-full h-20 drop-shadow-sm rounded bg-WHITE gap-5 cursor-pointer"
+            className="flex flex-row justify-between items-center px-4 min-w-min w-full h-24 drop-shadow-sm rounded bg-WHITE gap-5 cursor-pointer"
         >
             <div className="flex flex-row items-center gap-1">
                 {/* TODO: Add Promotion image here <div>Promotion image if needed</div>*/}
                 <div className="flex flex-col justify-start items-start">
                     <span>{eventName}</span>
-                    <span className="font-sans font-normal font-extralight text-xs">
+                    <span className="hidden lg:block font-sans font-normal font-extralight text-xs">
                         {dateString}
                     </span>
                 </div>
