@@ -74,8 +74,8 @@ public class Api {
             if (home is null || away is null)
                 throw new JsonException();
 
-            var partHome = new Team(home, new List<Player>());
-            var partAway = new Team(away, new List<Player>());
+            var partHome = new Team(home, "Football", new List<Player>());
+            var partAway = new Team(away, "Football", new List<Player>());
             var partOddHome = new ParticipantOdd(priceHome, partHome, null);
             var partOddAway = new ParticipantOdd(priceAway, partAway, null);
             var tieOdd = new TieOdd(priceDraw, null);

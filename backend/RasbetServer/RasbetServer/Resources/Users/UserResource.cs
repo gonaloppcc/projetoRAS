@@ -1,6 +1,6 @@
 namespace RasbetServer.Resources.Users;
 
-public class UserResource
+public abstract class UserResource
 {
     public string Id { get; set; }
     public string Email { get; set; }

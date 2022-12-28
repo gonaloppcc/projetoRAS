@@ -80,27 +80,27 @@ public class AppDbContext : DbContext {
 
     private void SeedParticipants()
     {
-        Participants.Add(new Team("Manchester United", new List<Player>()));
-        Participants.Add(new Team("Manchester City", new List<Player>()));
-        Participants.Add(new Team("Liverpool", new List<Player>()));
-        Participants.Add(new Team("Chelsea", new List<Player>()));
-        Participants.Add(new Team("Arsenal", new List<Player>()));
-        Participants.Add(new Team("Tottenham", new List<Player>()));
-        Participants.Add(new Team("Everton", new List<Player>()));
-        Participants.Add(new Team("Leicester", new List<Player>()));
-        Participants.Add(new Team("West Ham", new List<Player>()));
-        Participants.Add(new Team("Wolves", new List<Player>()));
-        Participants.Add(new Team("Crystal Palace", new List<Player>()));
-        Participants.Add(new Team("Southampton", new List<Player>()));
-        Participants.Add(new Team("Burnley", new List<Player>()));
-        Participants.Add(new Team("Brighton", new List<Player>()));
-        Participants.Add(new Team("Newcastle", new List<Player>()));
-        Participants.Add(new Team("Bournemouth", new List<Player>()));
-        Participants.Add(new Team("Aston Villa", new List<Player>()));
-        Participants.Add(new Team("Sheffield United", new List<Player>()));
-        Participants.Add(new Team("Norwich", new List<Player>()));
-        Participants.Add(new Team("Watford", new List<Player>()));
-        Participants.Add(new Team("Brentford", new List<Player>()));
+        Participants.Add(new Team("Manchester United", "Football", new List<Player>()));
+        Participants.Add(new Team("Manchester City", "Football", new List<Player>()));
+        Participants.Add(new Team("Liverpool", "Football", new List<Player>()));
+        Participants.Add(new Team("Chelsea", "Football", new List<Player>()));
+        Participants.Add(new Team("Arsenal", "Football", new List<Player>()));
+        Participants.Add(new Team("Tottenham", "Football", new List<Player>()));
+        Participants.Add(new Team("Everton", "Football", new List<Player>()));
+        Participants.Add(new Team("Leicester", "Football", new List<Player>()));
+        Participants.Add(new Team("West Ham", "Football", new List<Player>()));
+        Participants.Add(new Team("Wolves", "Football", new List<Player>()));
+        Participants.Add(new Team("Crystal Palace", "Football", new List<Player>()));
+        Participants.Add(new Team("Southampton", "Football", new List<Player>()));
+        Participants.Add(new Team("Burnley", "Football", new List<Player>()));
+        Participants.Add(new Team("Brighton", "Football", new List<Player>()));
+        Participants.Add(new Team("Newcastle", "Football", new List<Player>()));
+        Participants.Add(new Team("Bournemouth", "Football", new List<Player>()));
+        Participants.Add(new Team("Aston Villa", "Football", new List<Player>()));
+        Participants.Add(new Team("Sheffield United", "Football", new List<Player>()));
+        Participants.Add(new Team("Norwich", "Football", new List<Player>()));
+        Participants.Add(new Team("Watford", "Football", new List<Player>()));
+        Participants.Add(new Team("Brentford", "Football", new List<Player>()));
     }
 
     private void SeedOdds()

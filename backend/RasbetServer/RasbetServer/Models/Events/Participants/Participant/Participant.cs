@@ -12,12 +12,16 @@ public abstract class Participant
     [Key]
     [MaxLength(30)]
     public string Name { get; set; }
+    
+    [Required]
+    public string SportId { get; set; }
 
     public Participant() { }
     
-    public Participant(string name)
+    public Participant(string name, string sportId)
     {
         Name = name;
+        SportId = sportId;
     }
 
     public static Participant FromJson(JObject json)
