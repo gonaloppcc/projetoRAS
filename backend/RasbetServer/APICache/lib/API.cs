@@ -79,7 +79,7 @@ public class Api {
             var partOddHome = new ParticipantOdd(priceHome, partHome, null);
             var partOddAway = new ParticipantOdd(priceAway, partAway, null);
             var tieOdd = new TieOdd(priceDraw, null);
-            var participants = new TwoParticipants(partOddHome, 0, partOddAway, 0, tieOdd);
+            var participants = new TwoParticipants(new Result(partOddHome, 0), new Result(partOddAway, 0), tieOdd);
             var match = new FootballEvent(id, participants, commenceTime, "Portuguese First League", completed);
             
             var options = new DbContextOptionsBuilder<AppDbContext>()

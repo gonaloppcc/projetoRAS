@@ -3,7 +3,7 @@ using RasbetServer.Resources.Events.Event.BaseParticipants;
 
 namespace RasbetServer.Resources.Events.Event;
 
-public class EventResource
+public abstract class EventResource
 {
     public string Id { get; set; }
     public BaseParticipantsResource Participants { get; set; }

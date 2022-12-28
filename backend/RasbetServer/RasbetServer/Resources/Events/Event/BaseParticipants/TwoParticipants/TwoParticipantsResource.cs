@@ -1,6 +1,7 @@
+using RasbetServer.Resources.Events.Event.BaseParticipants.Result;
 using RasbetServer.Resources.Odds.TieOdd;
 
-namespace RasbetServer.Resources.Events.Event.BaseParticipants;
+namespace RasbetServer.Resources.Events.Event.BaseParticipants.TwoParticipants;
 
 public class TwoParticipantsResource : BaseParticipantsResource
 {

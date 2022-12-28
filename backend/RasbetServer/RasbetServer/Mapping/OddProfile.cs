@@ -10,8 +10,14 @@ public class OddProfile : Profile
 {
     public OddProfile()
     {
-        CreateMap<Odd, OddResource>().IncludeAllDerived();
+        CreateMap<Odd, OddResource>()
+            .IncludeAllDerived();
         CreateMap<ParticipantOdd, ParticipantOddResource>();
         CreateMap<TieOdd, TieOddResource>();
+
+        CreateMap<SaveOddResource, OddResource>()
+            .IncludeAllDerived();
+        CreateMap<SaveParticipantOddResource, ParticipantOdd>();
+        CreateMap<SaveTieOddResource, TieOdd>();
     }
 }

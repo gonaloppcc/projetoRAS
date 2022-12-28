@@ -1,6 +1,6 @@
 using RasbetServer.Resources.Odds.ParticipantOdd;
 
-namespace RasbetServer.Resources.Events.Event.BaseParticipants;
+namespace RasbetServer.Resources.Events.Event.BaseParticipants.Result;
 
 public class ResultResource
 {

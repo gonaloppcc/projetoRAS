@@ -1,3 +1,5 @@
+using RasbetServer.Resources.Promotions;
+
 namespace RasbetServer.Resources.Odds;
 
 public class OddResource

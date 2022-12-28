@@ -8,6 +8,7 @@ using RasbetServer.Models.Events;
 using RasbetServer.Models.Events.Participants;
 using RasbetServer.Repositories.EventRepository;
 using RasbetServer.Resources.Events.Event;
+using RasbetServer.Resources.Events.Event.FootballEvent;
 using RasbetServer.Services.Events;
 
 namespace RasbetServer.Controllers;
@@ -52,11 +53,11 @@ public class EventController : ControllerBase
 
     // TODO: Implement this properly
     [HttpPost(Name = "AddEvent")]
-    public async Task<IActionResult> AddEvent([FromBody] JsonElement json)
+    public async Task<IActionResult> AddEvent([FromBody] SaveFootballEventResource eventResource)
     {
         try
         {
-            var e = Event.FromJson(JObject.Parse(json.ToString()));
+            var e = _mapper.Map<SaveFootballEventResource, FootballEvent>(eventResource);
             var newEvent = await _eventService.AddAsync(e);
             return Ok(_mapper.Map<Event,EventResource>(newEvent));
         }

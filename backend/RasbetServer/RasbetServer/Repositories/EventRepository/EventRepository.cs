@@ -38,30 +38,10 @@ public class EventRepository : BaseRepository, IEventRepository
 
     public async Task AddAsync(Event e)
     {
-        //FindAndReplaceParticipants(e);
-        _context.AttachRange(e.Participants.GetParticipants());
-        _context.Attach(e.Competition);
-
         var @event = await _context.Events.AddAsync(e);
         await _context.SaveChangesAsync();
 
         // Refresh _context cache
         @event.State = EntityState.Detached;
-    }
-
-    private void FindAndReplaceParticipants(Event e)
-    {
-        var results = e.Participants.GetParticipants();
-
-        foreach (var result in results)
-        {
-            var participant = (from p in _context.Participants where p.Name == result.Participant.Part.Name select p)
-                .ToList();
-            if (participant.Count == 0)
-                continue;
-            
-            result.Participant.Part = null;
-            result.Participant.PartId = participant[0].Name;
-        }
     }
 }

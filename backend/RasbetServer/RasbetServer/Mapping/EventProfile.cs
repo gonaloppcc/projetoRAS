@@ -12,5 +12,7 @@ public class EventProfile : Profile
         CreateMap<Event, EventResource>()
             .IncludeAllDerived();
         CreateMap<FootballEvent, FootballEventResource>();
+
+        CreateMap<SaveFootballEventResource, FootballEvent>();
     }
 }
