@@ -47,7 +47,6 @@ export const InsertMailBody = ({
 
     // This has to be constant, are api keys.
     const sendEmail = () => {
-        console.log(`Send mail to ${mail}`);
         if (sendMail) {
             emailjs
                 .send(
@@ -58,12 +57,8 @@ export const InsertMailBody = ({
                     'xSUyz4Yg5V6qWfUlw'
                 )
                 .then(
-                    function (response) {
-                        console.log('SUCCESS!', response.status, response.text);
-                    },
-                    function (error) {
-                        console.log('FAILED...', error);
-                    }
+                    function (response) {},
+                    function (error) {}
                 );
         }
         mailSent(true);

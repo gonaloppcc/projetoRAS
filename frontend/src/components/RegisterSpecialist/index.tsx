@@ -4,7 +4,7 @@ import {ScrollModalities} from './scrollModalities';
 import {REGEX_MAIL, REGEX_USERNAME} from 'utils/regex';
 import {PrimaryButton} from '@components/Button';
 import {Specialist} from '@domain/User';
-import {postSpecialist} from '../../services/backend/user';
+import {addSpecialist} from '../../services/backend/user';
 import {Sport} from '@domain/Event';
 
 export interface FormErrors {
@@ -49,7 +49,7 @@ export const RegisterSpecialist = ({modalities}: RegisterSpecialistProps) => {
             Password: formValues.password,
             Specialties: [], // TODO: Falta este, mas tenho de ter o get
         };
-        await postSpecialist(specialist);
+        await addSpecialist(specialist);
     };
 
     const changeModalities = (team: string, selected: boolean) => {

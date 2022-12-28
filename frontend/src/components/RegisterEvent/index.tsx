@@ -95,16 +95,12 @@ export const RegisterEvent = ({sports}: RegisterEventProps) => {
     const handleSubmit: React.MouseEventHandler<
         HTMLButtonElement
     > = async () => {
-        console.log('AQUI!!!');
         validate();
 
         if (hasErrors()) {
-            console.log('Has errors');
-            console.log(errors);
             return;
         }
 
-        console.log('Vai submeter');
         // TODO: Make the request to the backend here
         const dateAndHour: string = `${date}T${hour}:17.0065405+00:00`;
         const partipantHome: ParticipantPost = {
@@ -146,9 +142,6 @@ export const RegisterEvent = ({sports}: RegisterEventProps) => {
             Participants: twoParticipant,
         };
 
-        console.log('Vai fazer post de:');
-        console.log(newEvent);
-        console.log(JSON.stringify(newEvent));
         await postEvent(newEvent);
         //await router.push('/success');
     };

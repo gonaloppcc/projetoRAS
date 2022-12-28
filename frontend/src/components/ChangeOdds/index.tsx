@@ -23,7 +23,6 @@ export const ChangeOdds = ({homeOdd, tieOdd, awayOdd}: ChangeOddsProps) => {
 
     const handleChange: React.ChangeEventHandler<HTMLInputElement> = (e) => {
         const {name, value} = e.target;
-        console.log(e.target);
         setValues({...values, [name]: value});
     };
 

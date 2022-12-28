@@ -1,81 +1,40 @@
 import React from 'react';
-import {SportIcon} from '@components/SportIcon';
-import {Bet} from '@domain/Bet';
-import {formatDate, formatNumber} from '../../utils/formatters';
+import {Bet, MultipleBet, SimpleBet} from '@domain/Bet';
+import {OnGoingSimpleBetRecord} from '@components/OnGoingSimpleBetRecord';
+import {OnGoingMultipleBetRecord} from '@components/OnGoingMultipleBetRecord';
 
-export interface OnGoingBetRecordProps extends Bet {
+export interface OnGoingBetRecordProps {
+    bet: Bet;
     cancelBetHandler: () => void;
 }
 
+const isSimpleBet = (bet: Bet): bet is SimpleBet => {
+    return 'Event' in bet;
+};
+
+const isMultipleBet = (bet: Bet): bet is MultipleBet => {
+    return 'Odds' in bet;
+};
+
 export const OnGoingBetRecord = ({
-    Id,
-    Odd: {Id: OddId, PartId, Price},
-    EventId,
-    Date,
-    Closed,
-    BetterId,
-    Amount,
+    bet,
     cancelBetHandler,
 }: OnGoingBetRecordProps) => {
-    // FIXME: Hardcoded text in this component
-    const betName = `Resultado Final: ${PartId}`; // FIXME: Only valid to Participant Bets
-
-    const eventType = 'Football'; // FIXME: Event type is hardcoded
-
-    const betPossibleWinnings = Amount * Price;
-
-    const dateFormatted = formatDate(Date);
-
-    const eventName = 'Dummy Event Name'; // FIXME: Event name is hardcoded
-
+    console.log('OnGoingBetRecord');
     return (
-        <div className="flex flex-row justify-between items-center px-4 gap-8 bg-WHITE rounded">
-            <div className="flex flex-row justify-center items-center gap-4">
-                <SportIcon eventType={eventType} />
-                <div className="flex flex-col items-start p-0 gap-1">
-                    <span className="text-EERIE_BLACK text-base font-semibold">
-                        {betName}
-                    </span>
-                    <span className="text-LIGHT_GRAY text-xs">{eventName}</span>
-                </div>
-            </div>
-            <div className="flex flex-col items-start p-0 gap-2">
-                <span className="text-LIGHT_GRAY text-sm">{'Data'}</span>
-                <span className="text-EERIE_BLACK text-base">
-                    {dateFormatted}
-                </span>
-            </div>
-
-            <div className="flex flex-col items-start p-0 gap-2">
-                <span className="text-LIGHT_GRAY text-sm">{'Cota'}</span>
-                <span className="text-SPECIAL text-base">{Price}</span>
-            </div>
-
-            <div className="flex flex-col items-start p-0 gap-2">
-                <span className="text-LIGHT_GRAY text-sm">
-                    {'Valor apostado'}
-                </span>
-                <span className="text-EERIE_BLACK text-base font-semibold">
-                    {formatNumber(Amount)} €
-                </span>
-            </div>
-            <div className="flex flex-col items-start py-4 gap-2">
-                <span className="text-LIGHT_GRAY text-xs">
-                    {'Potenciais Ganhos'}
-                </span>
-                <span className="text-base font-semibold">
-                    {formatNumber(betPossibleWinnings)} €
-                </span>
-            </div>
-
-            <div className="flex flex-col items-start py-4 gap-2">
-                <button
-                    onClick={cancelBetHandler}
-                    className="bg-SPECIAL hover:bg-SPECIAL_DARK p-3 rounded font-semibold"
-                >
-                    Cancelar
-                </button>
-            </div>
-        </div>
+        <>
+            {isSimpleBet(bet) && (
+                <OnGoingSimpleBetRecord
+                    {...(bet as SimpleBet)}
+                    cancelBetHandler={cancelBetHandler}
+                />
+            )}
+            {isMultipleBet(bet) && (
+                <OnGoingMultipleBetRecord
+                    {...(bet as MultipleBet)}
+                    cancelBetHandler={cancelBetHandler}
+                />
+            )}
+        </>
     );
 };
