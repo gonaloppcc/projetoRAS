@@ -1,6 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 
-namespace RasbetServer.Resources.Events.Event.Participants.Participant.Team;
+namespace RasbetServer.Resources.Events.Participants.Participant.Team;
 
 public class SaveTeamResource : SaveParticipantResource
 {

@@ -1,9 +1,9 @@
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using RasbetServer.Models.Events.Participants.Participant;
-using RasbetServer.Resources.Events.Event.Participants.Participant;
-using RasbetServer.Resources.Events.Event.Participants.Participant.Player;
-using RasbetServer.Resources.Events.Event.Participants.Participant.Team;
+using RasbetServer.Resources.Events.Participants.Participant;
+using RasbetServer.Resources.Events.Participants.Participant.Player;
+using RasbetServer.Resources.Events.Participants.Participant.Team;
 using RasbetServer.Services.Participants;
 
 namespace RasbetServer.Controllers;

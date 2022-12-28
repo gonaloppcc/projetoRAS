@@ -1,4 +1,4 @@
-namespace RasbetServer.Resources.Events.Event.Participants.Participant.Player;
+namespace RasbetServer.Resources.Events.Participants.Participant.Player;
 
 public class PlayerResource : ParticipantResource
 {
