@@ -16,7 +16,7 @@ public class UserService : IUserService
     
     public async Task<User> LoginAsync(string email, string password)
     {
-        var user = await _userRepository.GetUserByEmailAsync(email);
+        var user = await _userRepository.GetByEmailAsync(email);
         if (user.Password != password)
         {
             throw new IncorrectCredentialsException("Incorrect password");
@@ -29,8 +29,7 @@ public class UserService : IUserService
     {
         try
         {
-            await _userRepository.AddUserAsync(user);
-            return await _userRepository.GetUserByEmailAsync(user.Email);
+            return await _userRepository.AddAsync(user);
         }
         catch (DbUpdateException e)
         {
@@ -40,20 +39,20 @@ public class UserService : IUserService
 
     public async Task DeleteUserAsync(string id)
     {
-        var user = await _userRepository.GetUserAsync(id);
-        await _userRepository.DeleteUserAsync(user);
+        var user = await _userRepository.GetAsync(id);
+        await _userRepository.DeleteAsync(user);
     }
 
     public async Task ChangePasswordAsync(string id, string newPassword)
     {
-        var user = await _userRepository.GetUserAsync(id);
+        var user = await _userRepository.GetAsync(id);
         user.Password = newPassword;
-        await _userRepository.UpdateUserAsync(user);
+        await _userRepository.UpdateAsync(user);
     }
 
     public async Task<float> UpdateBalanceAsync(string id, float amount)
     {
-        var user = await _userRepository.GetUserAsync(id);
+        var user = await _userRepository.GetAsync(id);
 
         if (user is not Better better)
             throw new InvalidUserTypeException("User is not a better");
@@ -62,13 +61,13 @@ public class UserService : IUserService
         if (better.Balance < 0)
             throw new InvalidOperationException("Not enough balance");
         
-        await _userRepository.UpdateUserAsync(better);
+        await _userRepository.UpdateAsync(better);
         return better.Balance;
     }
 
     public async Task<IEnumerable<Transaction>> GetTransactionHist(string id)
     {
-        var user = await _userRepository.GetUserAsync(id);
+        var user = await _userRepository.GetAsync(id);
         if (user is not Better better)
             throw new InvalidUserTypeException("User is not a better");
 

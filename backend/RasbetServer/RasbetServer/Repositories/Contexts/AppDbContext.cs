@@ -36,17 +36,9 @@ public class AppDbContext : DbContext {
     public DbSet<Bet> Bets { get; set; }
     public DbSet<MultiBet> MultiBets { get; set; }
     public DbSet<SimpleBet> SimpleBets { get; set; }
-    public DbSet<OddBetIds> OddBetIds { get; set; }
 
     public AppDbContext(DbContextOptions<AppDbContext> options)
         : base(options) {
-    }
-
-    protected override void OnModelCreating(ModelBuilder modelBuilder) {
-        base.OnModelCreating(modelBuilder);
-
-        modelBuilder.Entity<OddBetIds>()
-            .HasKey(obi => new { obi.MultiBetId, obi.OddId });
     }
 
     private void SeedSports()

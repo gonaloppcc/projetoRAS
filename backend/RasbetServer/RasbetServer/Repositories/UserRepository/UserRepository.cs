@@ -9,7 +9,7 @@ public class UserRepository : BaseRepository, IUserRepository {
     public UserRepository(AppDbContext context) : base(context) {
     }
 
-    public async Task<User> GetUserAsync(string id)
+    public async Task<User> GetAsync(string id)
     {
         try
         {
@@ -27,7 +27,7 @@ public class UserRepository : BaseRepository, IUserRepository {
         
     }
 
-    public async Task<User> GetUserByEmailAsync(string email)
+    public async Task<User> GetByEmailAsync(string email)
     {
         try
         {
@@ -45,7 +45,7 @@ public class UserRepository : BaseRepository, IUserRepository {
         
     }
 
-    public async Task AddUserAsync(User user) {
+    public async Task<User> AddAsync(User user) {
         if (user is Specialist specialist)
         {
             specialist.Specialties.ToList().ForEach(sport => _context.Attach(sport));
@@ -54,19 +54,28 @@ public class UserRepository : BaseRepository, IUserRepository {
         var newUser = _context.Users.Add(user);
         await _context.SaveChangesAsync();
 
-        // Refresh _context cache
-        newUser.State = EntityState.Detached;
+        await newUser.ReloadAsync();
+        return newUser.Entity;
     }
 
-    public async Task DeleteUserAsync(User user)
+    public async Task DeleteAsync(User user)
     {
         _context.Users.Remove(user);
         await _context.SaveChangesAsync();
     }
 
-    public async Task UpdateUserAsync(User user)
+    public async Task UpdateAsync(User user)
     {
         _context.Update(user);
         await _context.SaveChangesAsync();
+    }
+
+    public async Task<Transaction> AddTransactionAsync(Transaction transaction)
+    {
+        var entityEntry = _context.Transactions.Add(transaction);
+        await _context.SaveChangesAsync();
+
+        await entityEntry.ReloadAsync();
+        return entityEntry.Entity;
     }
 }

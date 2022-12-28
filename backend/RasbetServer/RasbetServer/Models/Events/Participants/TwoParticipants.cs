@@ -1,7 +1,5 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Runtime.InteropServices;
-using Newtonsoft.Json.Linq;
 using RasbetServer.Models.Bets.Odds;
 
 namespace RasbetServer.Models.Events.Participants;

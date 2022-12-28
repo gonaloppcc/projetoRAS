@@ -1,8 +1,8 @@
 using RasbetServer.Models.Events;
 
-namespace RasbetServer.Repositories.CompetitionRepository;
+namespace RasbetServer.Services.Competitions;
 
-public interface ICompetitionRepository
+public interface ICompetitionService
 {
     Task<Competition> AddAsync(Competition competition);
     Task<Competition> GetAsync(string id);

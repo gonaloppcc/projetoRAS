@@ -9,20 +9,22 @@ public class CompetitionRepository : BaseRepository, ICompetitionRepository
     public CompetitionRepository(AppDbContext context) : base(context)
     { }
     
-    public Competition AddCompetition(Competition c)
+    public async Task<Competition> AddAsync(Competition c)
     {
-        var comp = _context.Competitions.Add(c);
-        _context.SaveChanges();
+        var comp = await _context.Competitions.AddAsync(c);
+        await _context.SaveChangesAsync();
         
-        // Refresh _context cache
-        comp.State = EntityState.Detached;
-        return _context.Competitions.Find(comp.Entity.Name) 
-               ?? throw new InvalidOperationException();
+        await comp.ReloadAsync();
+        return comp.Entity;
     }
 
-    public Competition GetCompetition(string name)
-        => (from c in _context.Competitions where c.Name == name select c).Single();
+    public async Task<Competition> GetAsync(string name)
+    {
+        return await (from c in _context.Competitions where c.Name == name select c).SingleAsync();
+    }
 
-    public IEnumerable<Competition> GetAllCompetitions(string sportId)
-        => (from c in _context.Competitions where c.SportId == sportId select c).ToList();
+    public async Task<IEnumerable<Competition>> ListAsync(string sportId)
+    {
+        return await (from c in _context.Competitions where c.SportId == sportId select c).ToListAsync();
+    }
 }

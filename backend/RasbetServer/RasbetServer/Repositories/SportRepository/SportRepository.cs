@@ -15,10 +15,8 @@ public class SportRepository : BaseRepository, ISportRepository
         var entityEntry = _context.Sports.Add(sport);
         await _context.SaveChangesAsync();
 
-        // Refresh _context cache
-        entityEntry.State = EntityState.Detached;
-        return await _context.Sports.FirstAsync(e=> e.Name == entityEntry.Entity.Name) 
-               ?? throw new InvalidOperationException();
+        await entityEntry.ReloadAsync();
+        return entityEntry.Entity;
     }
 
     public async Task<Sport> GetAsync(string name)

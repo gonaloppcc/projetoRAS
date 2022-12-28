@@ -1,6 +1,5 @@
 using AutoMapper;
 using RasbetServer.Models.Bets.Odds;
-using RasbetServer.Resources.Odds;
 using RasbetServer.Resources.Promotions;
 
 namespace RasbetServer.Mapping;

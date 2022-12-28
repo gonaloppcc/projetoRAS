@@ -2,15 +2,12 @@ using System.Text.Json;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
 using RasbetServer.Models.Users;
-using RasbetServer.Repositories.UserRepository;
 using RasbetServer.Resources.Users;
 using RasbetServer.Resources.Users.Better;
 using RasbetServer.Resources.Users.Better.Transaction;
 using RasbetServer.Resources.Users.Specialist;
 using RasbetServer.Services.Users;
-using Exception = System.Exception;
 
 namespace RasbetServer.Controllers;
 

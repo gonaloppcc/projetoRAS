@@ -10,12 +10,13 @@ public class ParticipantRepository : BaseRepository, IParticipantRepository
     {
     }
 
-    public async Task AddAsync(Participant participant)
+    public async Task<Participant> AddAsync(Participant participant)
     {
         var entityEntry = await _context.Participants.AddAsync(participant);
         await _context.SaveChangesAsync();
-
-        entityEntry.State = EntityState.Detached;
+        
+        await entityEntry.ReloadAsync();
+        return entityEntry.Entity;
     }
 
     public async Task<Participant> GetAsync(string name)

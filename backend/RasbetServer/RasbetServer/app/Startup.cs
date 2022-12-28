@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Newtonsoft.Json;
 using RasbetServer.Repositories.BetRepository;
 using RasbetServer.Repositories.CompetitionRepository;
 using RasbetServer.Repositories.Contexts;
@@ -11,6 +12,8 @@ using RasbetServer.Repositories.EventRepository;
 using RasbetServer.Repositories.ParticipantRepository;
 using RasbetServer.Repositories.SportRepository;
 using RasbetServer.Repositories.UserRepository;
+using RasbetServer.Services.Bets;
+using RasbetServer.Services.Competitions;
 using RasbetServer.Services.Events;
 using RasbetServer.Services.Participants;
 using RasbetServer.Services.Sports;
@@ -49,7 +52,7 @@ public class Startup
         });
         services.AddControllers()
             .AddNewtonsoftJson(options =>
-                options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
+                options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore);
         services.AddDbContext<AppDbContext>(options => options.UseLazyLoadingProxies().UseMySQL(ConnectionString));
 
         services.AddScoped<IUserRepository, UserRepository>();
@@ -62,7 +65,10 @@ public class Startup
         services.AddScoped<ISportService, SportService>();
         
         services.AddScoped<ICompetitionRepository, CompetitionRepository>();
+        services.AddScoped<ICompetitionService, CompetitionsService>();
+        
         services.AddScoped<IBetRepository, BetRepository>();
+        services.AddScoped<IBetService, BetService>();
 
         services.AddScoped<IParticipantRepository, ParticipantRepository>();
         services.AddScoped<IParticipantService, ParticipantService>();

@@ -1,5 +1,4 @@
 using System.ComponentModel.DataAnnotations;
-using RasbetServer.Resources.Events.Event.BaseParticipants;
 
 namespace RasbetServer.Resources.Events.Event;
 

@@ -4,8 +4,8 @@ namespace RasbetServer.Repositories.BetRepository;
 
 public interface IBetRepository
 {
-    Bet MakeBet(Bet bet);
-    Bet GetBet(string id);
-    IEnumerable<Bet> GetBets(string userId);
-    void DeleteBet(string id);
+    Task<Bet> AddAsync(Bet bet);
+    Task<Bet> GetAsync(string id);
+    Task<IEnumerable<Bet>> ListAsync(string userId);
+    Task DeleteAsync(string id);
 }

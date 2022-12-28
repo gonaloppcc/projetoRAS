@@ -2,6 +2,10 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using RasbetServer.Models.Bets.Odds;
+using RasbetServer.Resources.Bets;
+using RasbetServer.Resources.Bets.MultiBet;
+using RasbetServer.Resources.Bets.SimpleBet;
 
 namespace RasbetServer.Models.Bets;
 
@@ -23,6 +27,8 @@ public abstract class Bet
     
     [Required]
     public float Amount { get; set; }
+    
+    public float CancelReturn => 0.8f * Amount;
 
     public Bet() { }
     
@@ -40,12 +46,14 @@ public abstract class Bet
 
     public abstract float CalcCashOut();
 
-    public static Bet FromJson(JObject json)
+    public abstract IEnumerable<Odd> GetOdds();
+
+    public static SaveBetResource FromJson(JObject json)
     {
         return json["Type"].Value<string>() switch
         {
-            nameof(MultiBet) => MultiBet.FromJson(json),
-            nameof(SimpleBet) => SimpleBet.FromJson(json),
+            nameof(MultiBet) => json["Bet"].ToObject<SaveMultiBetResource>(),
+            nameof(SimpleBet) => json["Bet"].ToObject<SaveSimpleBetResource>(),
             _ => throw new JsonException()
         };
     }

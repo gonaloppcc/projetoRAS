@@ -60,7 +60,7 @@ public abstract class Event
     {
         return json["Sport"].Value<string>() switch
         {
-            FootballEvent.Sport => FootballEvent.FromJson(json),
+            FootballEvent.Sport => FromJson(json),
             _ => throw new JsonException()
         };
     }

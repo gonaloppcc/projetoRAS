@@ -1,4 +1,3 @@
-using RasbetServer.Resources.Events.Competitions;
 using RasbetServer.Resources.Events.Event.BaseParticipants;
 
 namespace RasbetServer.Resources.Events.Event;

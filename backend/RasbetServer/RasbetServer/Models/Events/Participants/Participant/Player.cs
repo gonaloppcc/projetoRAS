@@ -1,5 +1,4 @@
 using System.ComponentModel.DataAnnotations.Schema;
-using Newtonsoft.Json.Linq;
 
 namespace RasbetServer.Models.Events.Participants.Participant;
 

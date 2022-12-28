@@ -6,5 +6,5 @@ public interface IEventRepository
 {
     Task<Event> GetAsync(string id);
     Task<IEnumerable<Event>> ListPageAsync(string competitionId, int pageNum, int pageSize);
-    Task AddAsync(Event e);
+    Task<Event> AddAsync(Event e);
 }

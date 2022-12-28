@@ -25,10 +25,7 @@
         <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="6.0.7" />
         <PackageReference Include="MySql.EntityFrameworkCore" Version="6.0.7" />
         <PackageReference Include="Swashbuckle.AspNetCore" Version="6.4.0" />
-    </ItemGroup>
-
-    <ItemGroup>
-      <Folder Include="Resources\Bets" />
+        <PackageReference Include="System.Text.Json" Version="6.0.7" />
     </ItemGroup>
 
 </Project>

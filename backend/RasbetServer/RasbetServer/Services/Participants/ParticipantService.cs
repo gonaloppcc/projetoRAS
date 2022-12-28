@@ -25,7 +25,6 @@ public class ParticipantService : IParticipantService
 
     public async Task<Participant> AddAsync(Participant participant)
     {
-        await _participantRepository.AddAsync(participant);
-        return await _participantRepository.GetAsync(participant.Name);
+        return await _participantRepository.AddAsync(participant);
     }
 }

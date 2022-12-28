@@ -1,5 +1,4 @@
 using System.ComponentModel.DataAnnotations;
-using RasbetServer.Resources.Events.Competitions;
 
 namespace RasbetServer.Resources.Events.Sport;
 

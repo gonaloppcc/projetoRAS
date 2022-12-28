@@ -24,7 +24,6 @@ public class EventService : IEventService
 
     public async Task<Event> AddAsync(Event e)
     {
-        await _eventRepository.AddAsync(e);
-        return await _eventRepository.GetAsync(e.Id ?? throw new InvalidOperationException());
+        return await _eventRepository.AddAsync(e);
     }
 }

@@ -4,7 +4,7 @@ namespace RasbetServer.Repositories.ParticipantRepository;
 
 public interface IParticipantRepository
 {
-    Task AddAsync(Participant participant);
+    Task<Participant> AddAsync(Participant participant);
     Task<Participant> GetAsync(string name);
     Task<IEnumerable<Participant>> ListBySportAsync(string sport);
 }

@@ -1,12 +1,6 @@
-using System.Text.Json;
 using AutoMapper;
-using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
 using RasbetServer.Models.Events;
-using RasbetServer.Models.Events.Participants;
-using RasbetServer.Repositories.EventRepository;
 using RasbetServer.Resources.Events.Event;
 using RasbetServer.Resources.Events.Event.FootballEvent;
 using RasbetServer.Services.Events;

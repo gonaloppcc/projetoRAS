@@ -3,9 +3,10 @@
 namespace RasbetServer.Repositories.UserRepository;
 
 public interface IUserRepository {
-    Task<User> GetUserAsync(string id);
-    Task<User> GetUserByEmailAsync(string email);
-    Task AddUserAsync(User user);
-    Task DeleteUserAsync(User user);
-    Task UpdateUserAsync(User user);
+    Task<User> GetAsync(string id);
+    Task<User> GetByEmailAsync(string email);
+    Task<User> AddAsync(User user);
+    Task DeleteAsync(User user);
+    Task UpdateAsync(User user);
+    Task<Transaction> AddTransactionAsync(Transaction transaction);
 }
