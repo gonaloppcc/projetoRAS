@@ -1,0 +1,31 @@
+_id: req_f0147468a1cf4a58942f0612de66733e
+type: Request
+parentId: fld_036a40beb99f43d2a57425ebd024897d
+modified: 1672257495556
+created: 1670087334633
+url: localhost:5000/bets
+name: AddSimpleBet
+description: ""
+method: POST
+body:
+  mimeType: application/json
+  text: |-
+    {
+    	"Type": "SimpleBet",
+    	"OddId": "15d54109-72d4-4bbb-9900-fc2d60372013",
+    	"BetterId": "0",
+    	"Amount": 5
+    }
+parameters: []
+headers:
+  - name: Content-Type
+    value: application/json
+authentication: {}
+metaSortKey: -1670087334633
+isPrivate: false
+settingStoreCookies: true
+settingSendCookies: true
+settingDisableRenderRequestBody: false
+settingEncodeUrl: true
+settingRebuildPath: true
+settingFollowRedirects: global

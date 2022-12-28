@@ -1,0 +1,34 @@
+_id: req_5cf86fef7c4a4b28b2e4b5283ada18b2
+type: Request
+parentId: fld_036a40beb99f43d2a57425ebd024897d
+modified: 1672257540561
+created: 1670088945409
+url: localhost:5000/bets
+name: AddMultiBet
+description: ""
+method: POST
+body:
+  mimeType: application/json
+  text: |-
+    {
+    	"Type": "MultiBet",
+    	"BetterId": "0",
+    	"Amount": 8,
+    	"Odds": [
+    		"968806c6-6d86-4817-a3fe-54b6d3379cc8",
+    		"ece5e821-3a97-4656-b105-1a37b102dac5"
+    	]
+    }
+parameters: []
+headers:
+  - name: Content-Type
+    value: application/json
+authentication: {}
+metaSortKey: -1670087334658
+isPrivate: false
+settingStoreCookies: true
+settingSendCookies: true
+settingDisableRenderRequestBody: false
+settingEncodeUrl: true
+settingRebuildPath: true
+settingFollowRedirects: global

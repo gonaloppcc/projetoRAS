@@ -1,0 +1,21 @@
+_id: req_26a8309e75844d2b91c1316eaf1ebc94
+type: Request
+parentId: fld_c446421bd66c43a793eba227da4941b0
+modified: 1672195348503
+created: 1672184459514
+url: http://localhost:5000/participants/Atletico Madrid
+name: GetParticipant
+description: ""
+method: GET
+body: {}
+parameters: []
+headers: []
+authentication: {}
+metaSortKey: -1672184459514
+isPrivate: false
+settingStoreCookies: true
+settingSendCookies: true
+settingDisableRenderRequestBody: false
+settingEncodeUrl: true
+settingRebuildPath: true
+settingFollowRedirects: global

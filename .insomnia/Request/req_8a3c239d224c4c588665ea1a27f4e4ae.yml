@@ -1,0 +1,34 @@
+_id: req_8a3c239d224c4c588665ea1a27f4e4ae
+type: Request
+parentId: fld_c831b6f386ae4766a65da45623b8b986
+modified: 1672193969635
+created: 1669753994628
+url: http://localhost:5000/users/specialists
+name: RegisterSpecialist
+description: ""
+method: POST
+body:
+  mimeType: application/json
+  text: |-
+    {
+    	"Email": "specialist1@rasbet.com",
+    	"Username": "Specialist1",
+    	"Password": "Password123",
+    	"Specialties": [
+    			"Football",
+    			"Basketball"
+    	]
+    }
+parameters: []
+headers:
+  - name: Content-Type
+    value: application/json
+authentication: {}
+metaSortKey: -1669418845978.75
+isPrivate: false
+settingStoreCookies: true
+settingSendCookies: true
+settingDisableRenderRequestBody: false
+settingEncodeUrl: true
+settingRebuildPath: true
+settingFollowRedirects: global

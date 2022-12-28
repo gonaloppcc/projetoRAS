@@ -1,0 +1,33 @@
+_id: req_8912cd80e9a1443493a682bfc9c5f96f
+type: Request
+parentId: fld_c831b6f386ae4766a65da45623b8b986
+modified: 1672177953138
+created: 1669418845910
+url: http://localhost:5000/users
+name: ChangePassword
+description: ""
+method: PATCH
+body:
+  mimeType: application/json
+  text: |-
+    {
+    	"password": "newPass12345"
+    }
+parameters:
+  - id: pair_99f72fbc754441cd98eb009603c447b9
+    name: id
+    value: f514b1bb-7108-4f48-b968-7af3a5b5348d
+    description: ""
+headers:
+  - name: Content-Type
+    value: application/json
+    id: pair_c2655073d2b940dcbdcd3f358ca568df
+authentication: {}
+metaSortKey: -1669418845972.5
+isPrivate: false
+settingStoreCookies: true
+settingSendCookies: true
+settingDisableRenderRequestBody: false
+settingEncodeUrl: true
+settingRebuildPath: true
+settingFollowRedirects: global

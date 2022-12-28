@@ -1,0 +1,25 @@
+_id: req_fb3700ad8825461ca596094902880cd4
+type: Request
+parentId: fld_036a40beb99f43d2a57425ebd024897d
+modified: 1671816967805
+created: 1671814140361
+url: localhost:5000/bets
+name: New Request
+description: ""
+method: GET
+body: {}
+parameters:
+  - id: pair_d218dc1160d44f28835369b7ddabd6a6
+    name: userId
+    value: " 0"
+    description: ""
+headers: []
+authentication: {}
+metaSortKey: -1670087334733
+isPrivate: false
+settingStoreCookies: true
+settingSendCookies: true
+settingDisableRenderRequestBody: false
+settingEncodeUrl: true
+settingRebuildPath: true
+settingFollowRedirects: global

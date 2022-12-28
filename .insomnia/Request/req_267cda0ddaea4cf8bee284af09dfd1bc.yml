@@ -1,0 +1,25 @@
+_id: req_267cda0ddaea4cf8bee284af09dfd1bc
+type: Request
+parentId: fld_036a40beb99f43d2a57425ebd024897d
+modified: 1670095877070
+created: 1670087878409
+url: localhost:5000/bets
+name: GetAllBets
+description: ""
+method: GET
+body: {}
+parameters:
+  - id: pair_3afa04f583f6428795f4bb79312277f5
+    name: userId
+    value: 0944ec88-b89c-4a98-9f41-fc9d226a7984
+    description: ""
+headers: []
+authentication: {}
+metaSortKey: -1670087334683
+isPrivate: false
+settingStoreCookies: true
+settingSendCookies: true
+settingDisableRenderRequestBody: false
+settingEncodeUrl: true
+settingRebuildPath: true
+settingFollowRedirects: global

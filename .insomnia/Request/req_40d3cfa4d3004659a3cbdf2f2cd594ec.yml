@@ -1,0 +1,33 @@
+_id: req_40d3cfa4d3004659a3cbdf2f2cd594ec
+type: Request
+parentId: fld_c831b6f386ae4766a65da45623b8b986
+modified: 1670117584954
+created: 1669415680715
+url: http://localhost:5000/users/betters
+name: RegisterBetter
+description: ""
+method: POST
+body:
+  mimeType: application/json
+  text: |-
+    {
+    	"Email": "marco@marco.marco",
+    	"Username": "marquinho",
+    	"Password": "pass123",
+    	"Nif": "12345678",
+    	"Cc": "87654321",
+    	"Cellphone": "912912912"
+    }
+parameters: []
+headers:
+  - name: Content-Type
+    value: application/json
+authentication: {}
+metaSortKey: -1669418845985
+isPrivate: false
+settingStoreCookies: true
+settingSendCookies: true
+settingDisableRenderRequestBody: false
+settingEncodeUrl: true
+settingRebuildPath: true
+settingFollowRedirects: global

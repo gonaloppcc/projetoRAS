@@ -1,0 +1,33 @@
+_id: req_266d7cf180aa49cb8ba89babdd600248
+type: Request
+parentId: fld_d8286c686f27455a88d70d0b096ef407
+modified: 1672180180364
+created: 1669476656465
+url: http://localhost:5000/events
+name: GetPage
+description: ""
+method: GET
+body: {}
+parameters:
+  - id: pair_65e773404e2a4fbda2ef78bbc4f13e1f
+    name: pageNum
+    value: "0"
+    description: ""
+  - id: pair_73df123f4ac3485bb8ee8ac08a899106
+    name: compId
+    value: Portuguese First League
+    description: ""
+  - id: pair_946a9fc946354db2b334e2f85e8bcee1
+    name: pageSize
+    value: "2"
+    description: ""
+headers: []
+authentication: {}
+metaSortKey: -1669476656465
+isPrivate: false
+settingStoreCookies: true
+settingSendCookies: true
+settingDisableRenderRequestBody: false
+settingEncodeUrl: true
+settingRebuildPath: true
+settingFollowRedirects: global

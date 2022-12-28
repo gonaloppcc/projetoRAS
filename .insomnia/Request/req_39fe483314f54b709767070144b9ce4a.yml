@@ -1,0 +1,30 @@
+_id: req_39fe483314f54b709767070144b9ce4a
+type: Request
+parentId: fld_c831b6f386ae4766a65da45623b8b986
+modified: 1672193963452
+created: 1669329422693
+url: http://localhost:5000/users
+name: Login
+description: ""
+method: POST
+body:
+  mimeType: application/json
+  text: |-
+    {
+    	"Email": "specialist1@rasbet.com",
+    	"Password": "Password123"
+    }
+parameters: []
+headers:
+  - name: Content-Type
+    value: application/json
+    id: pair_13803646983545288e21dc4f6ec3a494
+authentication: {}
+metaSortKey: -1669418846010
+isPrivate: false
+settingStoreCookies: true
+settingSendCookies: true
+settingDisableRenderRequestBody: false
+settingEncodeUrl: true
+settingRebuildPath: true
+settingFollowRedirects: global

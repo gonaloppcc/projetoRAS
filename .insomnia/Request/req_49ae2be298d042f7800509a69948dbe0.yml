@@ -1,0 +1,33 @@
+_id: req_49ae2be298d042f7800509a69948dbe0
+type: Request
+parentId: fld_c446421bd66c43a793eba227da4941b0
+modified: 1672186735111
+created: 1672186133365
+url: http://localhost:5000/participants/teams
+name: AddTeam
+description: ""
+method: POST
+body:
+  mimeType: application/json
+  text: |-
+    {
+    	"Name": "Atletico Madrid",
+    	"SportId": "Football",
+    	"Players": [
+    			"Juan Dos",
+    			"Miguel Silva"
+    	]
+    }
+parameters: []
+headers:
+  - name: Content-Type
+    value: application/json
+authentication: {}
+metaSortKey: -1672184459589
+isPrivate: false
+settingStoreCookies: true
+settingSendCookies: true
+settingDisableRenderRequestBody: false
+settingEncodeUrl: true
+settingRebuildPath: true
+settingFollowRedirects: global

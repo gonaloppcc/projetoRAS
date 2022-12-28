@@ -1,0 +1,33 @@
+_id: req_f2224b28cac14a069a7e3b369f85a9ad
+type: Request
+parentId: fld_81b7e52db10149a78c910feb5a020355
+modified: 1672257448297
+created: 1670026378694
+url: http://localhost:5000/sports
+name: AddSport
+description: ""
+method: POST
+body:
+  mimeType: application/json
+  text: |-
+    {
+    	"Name": "Formula1",
+    	"Competitions": [
+    		"Monaco Grand Prix",
+    		"Brazil",
+    		"Portugal"
+    	]
+    }
+parameters: []
+headers:
+  - name: Content-Type
+    value: application/json
+authentication: {}
+metaSortKey: -1670027156725
+isPrivate: false
+settingStoreCookies: true
+settingSendCookies: true
+settingDisableRenderRequestBody: false
+settingEncodeUrl: true
+settingRebuildPath: true
+settingFollowRedirects: global

@@ -1,0 +1,30 @@
+_id: req_5591adba0696425885889183c3534ec2
+type: Request
+parentId: fld_c446421bd66c43a793eba227da4941b0
+modified: 1672192959461
+created: 1672185191395
+url: http://localhost:5000/participants/players
+name: AddPlayer
+description: ""
+method: POST
+body:
+  mimeType: application/json
+  text: |-
+    {
+    	"Name": "Vitor Almeida",
+    	"TeamId": "Arsenal",
+    	"SportId": "Football"
+    }
+parameters: []
+headers:
+  - name: Content-Type
+    value: application/json
+authentication: {}
+metaSortKey: -1672184459614
+isPrivate: false
+settingStoreCookies: true
+settingSendCookies: true
+settingDisableRenderRequestBody: false
+settingEncodeUrl: true
+settingRebuildPath: true
+settingFollowRedirects: global
