@@ -10,7 +10,12 @@ public class EventProfile : Profile
     public EventProfile()
     {
         CreateMap<Event, EventResource>()
-            .IncludeAllDerived();
+            .ForMember(
+                    dest => dest.Competition,
+                    opt => opt.MapFrom(
+                            src => src.Competition.Name
+                        )
+                ).IncludeAllDerived();
         CreateMap<FootballEvent, FootballEventResource>();
 
         CreateMap<SaveFootballEventResource, FootballEvent>();

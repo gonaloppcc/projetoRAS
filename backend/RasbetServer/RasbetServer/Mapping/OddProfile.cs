@@ -12,8 +12,14 @@ public class OddProfile : Profile
     {
         CreateMap<Odd, OddResource>()
             .IncludeAllDerived();
-        CreateMap<ParticipantOdd, ParticipantOddResource>();
         CreateMap<TieOdd, TieOddResource>();
+        CreateMap<ParticipantOdd, ParticipantOddResource>()
+            .ForMember(
+                    dest => dest.ParticipantName,
+                    opt => opt.MapFrom(
+                            src => src.Part.Name
+                        )
+                );
 
         CreateMap<SaveOddResource, OddResource>()
             .IncludeAllDerived();

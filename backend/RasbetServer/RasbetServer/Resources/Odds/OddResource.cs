@@ -6,5 +6,5 @@ public class OddResource
 {
     public string Id { get; set; }
     public float Price { get; set; }
-    public PromotionResource? Promotion { get; set; }
+    public PromotionResource? Promo { get; set; }
 }

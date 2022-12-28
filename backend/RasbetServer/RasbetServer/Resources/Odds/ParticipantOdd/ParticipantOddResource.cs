@@ -4,5 +4,5 @@ namespace RasbetServer.Resources.Odds.ParticipantOdd;
 
 public class ParticipantOddResource : OddResource
 {
-    public ParticipantResource Part { get; set; }
+    public string ParticipantName { get; set; }
 }

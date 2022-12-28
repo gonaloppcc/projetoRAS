@@ -8,7 +8,7 @@ public abstract class Odd
 {
     [Key] [DatabaseGenerated(DatabaseGeneratedOption.Identity)] public string? Id { get; set; } = null;
     [Required] public float Price { get; set; }
-    public Promotion? Promo { get; set; }
+    public virtual Promotion? Promo { get; set; }
 
     public Odd() { }
     
