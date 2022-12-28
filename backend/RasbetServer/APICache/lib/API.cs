@@ -30,7 +30,7 @@ public class Api {
     }
 
     // TODO: Needs cleanup
-    public bool WriteToDatabase(string data) {
+    public async Task<bool> WriteToDatabase(string data) {
         JArray json = JArray.Parse(data);
         bool dbChanged = false;
         
@@ -88,7 +88,7 @@ public class Api {
             var context = new EventRepository(new AppDbContext(options));
             try
             {
-                context.AddEvent(match);
+                await context.AddAsync(match);
                 dbChanged = true;
             }
             catch (DbUpdateException e)

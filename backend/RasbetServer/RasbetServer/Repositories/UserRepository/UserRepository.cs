@@ -16,8 +16,6 @@ public class UserRepository : BaseRepository, IUserRepository {
             return await (
                 from u 
                     in _context.Users
-                        .Include(user => ((Specialist)user).Specialties)
-                        .Include(user => ((Better)user).TransactionHist)
                 where u.Id == id 
                 select u
             ).SingleAsync();
@@ -36,8 +34,6 @@ public class UserRepository : BaseRepository, IUserRepository {
             return await (
                 from u 
                     in _context.Users
-                        .Include(user => ((Specialist)user).Specialties)
-                        .Include(user => ((Better)user).TransactionHist)
                 where u.Email == email 
                 select u
             ).SingleAsync();

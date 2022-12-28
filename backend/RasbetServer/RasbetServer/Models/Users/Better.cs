@@ -20,7 +20,7 @@ public class Better : User {
     public float Balance { get; set; }
     
     [Required]
-    public IList<Transaction> TransactionHist { get; set; }
+    public virtual IList<Transaction> TransactionHist { get; set; }
 
     public Better(): base() {
     }

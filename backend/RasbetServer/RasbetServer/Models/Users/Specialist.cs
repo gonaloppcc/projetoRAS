@@ -7,7 +7,7 @@ namespace RasbetServer.Models.Users;
 
 public class Specialist : User {
     [Required]
-    public IList<Sport> Specialties { get; set; }
+    public virtual IList<Sport> Specialties { get; set; }
     
     public Specialist() : base() { }
 

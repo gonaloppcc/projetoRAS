@@ -15,7 +15,7 @@ Console.WriteLine("Please make sure the vpn is connected!");
 while (true) {
         var json = await api.FetchGames(client);
 
-        bool dbChanged = api.WriteToDatabase(json);
+        bool dbChanged = await api.WriteToDatabase(json);
         var time = DateTime.Now;
         
         Console.WriteLine(dbChanged ? $"[{time.Hour}:{time.Minute}] New games were just fetched!" : $"[{time.Hour}:{time.Minute}] No new games were fetched");

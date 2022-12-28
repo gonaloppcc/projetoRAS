@@ -11,6 +11,7 @@ using RasbetServer.Repositories.EventRepository;
 using RasbetServer.Repositories.ParticipantRepository;
 using RasbetServer.Repositories.SportRepository;
 using RasbetServer.Repositories.UserRepository;
+using RasbetServer.Services.Events;
 using RasbetServer.Services.Participants;
 using RasbetServer.Services.Sports;
 using RasbetServer.Services.Users;
@@ -49,12 +50,13 @@ public class Startup
         services.AddControllers()
             .AddNewtonsoftJson(options =>
                 options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
-        services.AddDbContext<AppDbContext>(options => options.UseMySQL(ConnectionString));//.UseLazyLoadingProxies().UseMySQL(ConnectionString));
+        services.AddDbContext<AppDbContext>(options => options.UseLazyLoadingProxies().UseMySQL(ConnectionString));
 
         services.AddScoped<IUserRepository, UserRepository>();
         services.AddScoped<IUserService, UserService>();
         
         services.AddScoped<IEventRepository, EventRepository>();
+        services.AddScoped<IEventService, EventService>();
         
         services.AddScoped<ISportRepository, SportRepository>();
         services.AddScoped<ISportService, SportService>();

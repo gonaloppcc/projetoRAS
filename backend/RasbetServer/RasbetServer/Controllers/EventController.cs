@@ -1,10 +1,14 @@
 using System.Text.Json;
+using AutoMapper;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using RasbetServer.Models.Events;
+using RasbetServer.Models.Events.Participants;
 using RasbetServer.Repositories.EventRepository;
+using RasbetServer.Resources.Events.Event;
+using RasbetServer.Services.Events;
 
 namespace RasbetServer.Controllers;
 
@@ -13,35 +17,32 @@ namespace RasbetServer.Controllers;
 [Route("events")]
 public class EventController : ControllerBase
 {
-    private readonly IEventRepository _eventRepository;
+    private readonly IEventService _eventService;
+    private readonly IMapper _mapper;
 
-    public EventController(IEventRepository eventRepository)
+    public EventController(IEventService eventService, IMapper mapper)
     {
-        _eventRepository = eventRepository;
+        _eventService = eventService;
+        _mapper = mapper;
     }
 
     // TODO: Implement this properly
     [HttpGet(Name = "GetPage")]
-    public ActionResult<List<Event>> GetPage([FromQuery] string compId, [FromQuery] int pageNum,
+    public async Task<ActionResult<List<EventResource>>> GetPage([FromQuery] string compId, [FromQuery] int pageNum,
         [FromQuery] int pageSize)
     {
-        try
-        {
-            return Ok(JsonConvert.SerializeObject(_eventRepository.GetPage(compId, pageNum, pageSize)));
-        }
-        catch (Exception e)
-        {
-            return NotFound("Page not found");
-        }
+        var page = await _eventService.ListPageAsync(compId, pageNum, pageSize); 
+        return Ok(_mapper.Map<IEnumerable<Event>, IEnumerable<EventResource>>(page));
     }
 
     // TODO: Implement this properly
     [HttpGet("{id}", Name = "GetEvent")]
-    public ActionResult<Event> GetEvent(string id)
+    public async Task<ActionResult<Event>> GetEvent(string id)
     {
         try
         {
-            return Ok(JsonConvert.SerializeObject(_eventRepository.GetEvent(id)));
+            var e = await _eventService.GetAsync(id);
+            return Ok(_mapper.Map<Event, EventResource>(e));
         }
         catch (Exception exception)
         {
@@ -51,12 +52,13 @@ public class EventController : ControllerBase
 
     // TODO: Implement this properly
     [HttpPost(Name = "AddEvent")]
-    public IActionResult AddEvent([FromBody] JsonElement json)
+    public async Task<IActionResult> AddEvent([FromBody] JsonElement json)
     {
         try
         {
             var e = Event.FromJson(JObject.Parse(json.ToString()));
-            return Ok(JsonConvert.SerializeObject(_eventRepository.AddEvent(e)));
+            var newEvent = await _eventService.AddAsync(e);
+            return Ok(_mapper.Map<Event,EventResource>(newEvent));
         }
         catch (Exception exception)
         {

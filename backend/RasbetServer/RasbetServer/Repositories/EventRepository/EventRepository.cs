@@ -13,24 +13,40 @@ public class EventRepository : BaseRepository, IEventRepository
     {
     }
 
-    public Event GetEvent(string id)
-        => (from e in _context.Events where e.Id == id select e).Single();
-
-    public IEnumerable<Event> GetPage(string competitionId, int pageNum, int pageSize) 
-        => (from e in _context.Events where e.CompetitionId == competitionId select e)
-            .Skip(pageNum * pageSize).Take(pageSize).ToList();
-
-    public Event AddEvent(Event e)
+    public async Task<Event> GetAsync(string id)
     {
-        FindAndReplaceParticipants(e);
-        
-        var @event = _context.Events.Add(e);
-        _context.SaveChanges();
+        return await (
+            from e 
+                in _context.Events
+            where e.Id == id 
+            select e
+        ).SingleAsync();
+    }
+
+    public async Task<IEnumerable<Event>> ListPageAsync(string competitionId, int pageNum, int pageSize)
+    {
+        return await (
+                from e
+                    in _context.Events
+                where e.CompetitionId == competitionId 
+                select e
+            )
+            .Skip(pageNum * pageSize)
+            .Take(pageSize)
+            .ToListAsync();
+    }
+
+    public async Task AddAsync(Event e)
+    {
+        //FindAndReplaceParticipants(e);
+        _context.AttachRange(e.Participants.GetParticipants());
+        _context.Attach(e.Competition);
+
+        var @event = await _context.Events.AddAsync(e);
+        await _context.SaveChangesAsync();
 
         // Refresh _context cache
         @event.State = EntityState.Detached;
-        return _context.Events.Find(@event.Entity.Id) 
-               ?? throw new InvalidOperationException();
     }
 
     private void FindAndReplaceParticipants(Event e)

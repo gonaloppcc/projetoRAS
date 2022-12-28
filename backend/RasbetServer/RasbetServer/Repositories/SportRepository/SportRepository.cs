@@ -17,17 +17,18 @@ public class SportRepository : BaseRepository, ISportRepository
 
         // Refresh _context cache
         entityEntry.State = EntityState.Detached;
-        return await _context.Sports.Include(s => s.Competitions).FirstAsync(e=> e.Name == entityEntry.Entity.Name) 
+        return await _context.Sports.FirstAsync(e=> e.Name == entityEntry.Entity.Name) 
                ?? throw new InvalidOperationException();
     }
 
     public async Task<Sport> GetAsync(string name)
         => await (
-            from s in _context.Sports.Include(s => s.Competitions) 
+            from s 
+                in _context.Sports 
             where s.Name == name 
             select s
             ).SingleAsync();
 
     public async Task<IEnumerable<Sport>> ListAsync()
-        => await _context.Sports.Include(s => s.Competitions).ToListAsync();
+        => await _context.Sports.ToListAsync();
 }

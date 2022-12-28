@@ -20,16 +20,14 @@ public class ParticipantRepository : BaseRepository, IParticipantRepository
 
     public async Task<Participant> GetAsync(string name)
     {
-        return await _context.Participants
-            .Include(part => ((Team)part).Players)
-            .FirstAsync(e => e.Name == name);
+        return await _context.Participants.FirstAsync(e => e.Name == name);
     }
 
     public async Task<IEnumerable<Participant>> ListBySportAsync(string sport)
     {
         return await (
             from p 
-                in _context.Participants.Include(part => ((Team)part).Players)
+                in _context.Participants
             where p.SportId == sport
             select p
             ).ToListAsync();

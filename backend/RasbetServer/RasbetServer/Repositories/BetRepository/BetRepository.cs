@@ -15,7 +15,7 @@ public class BetRepository : BaseRepository, IBetRepository
     {
         var user = (
             from b 
-                in _context.Betters.Include(b => b.TransactionHist)
+                in _context.Betters
             where b.Id == bet.BetterId 
             select b
             ).Single();
