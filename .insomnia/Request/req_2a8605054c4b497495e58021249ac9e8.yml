@@ -1,17 +1,17 @@
-_id: req_26a8309e75844d2b91c1316eaf1ebc94
+_id: req_2a8605054c4b497495e58021249ac9e8
 type: Request
-parentId: fld_c446421bd66c43a793eba227da4941b0
-modified: 1672289267515
-created: 1672184459514
-url: http://localhost:5000/participants/Atletico Madrid
-name: GetParticipant
+parentId: fld_0fbf4a21f6da4447b0a88b31a7333646
+modified: 1672336118679
+created: 1672290946681
+url: localhost:5000/competitions/Brazil
+name: DeleteCompetition
 description: ""
-method: GET
+method: DELETE
 body: {}
 parameters: []
 headers: []
 authentication: {}
-metaSortKey: -1672184459514
+metaSortKey: -1670028003887
 isPrivate: false
 settingStoreCookies: true
 settingSendCookies: true

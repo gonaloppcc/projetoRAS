@@ -1,9 +1,9 @@
 _id: req_8912cd80e9a1443493a682bfc9c5f96f
 type: Request
 parentId: fld_c831b6f386ae4766a65da45623b8b986
-modified: 1672177953138
+modified: 1672279518656
 created: 1669418845910
-url: http://localhost:5000/users
+url: http://localhost:5000/users/4be3ecd3-1f4c-4e7e-b2ba-5d7c2b3ba1f8/password
 name: ChangePassword
 description: ""
 method: PATCH
@@ -11,13 +11,9 @@ body:
   mimeType: application/json
   text: |-
     {
-    	"password": "newPass12345"
+    	"password": "newPass145"
     }
-parameters:
-  - id: pair_99f72fbc754441cd98eb009603c447b9
-    name: id
-    value: f514b1bb-7108-4f48-b968-7af3a5b5348d
-    description: ""
+parameters: []
 headers:
   - name: Content-Type
     value: application/json

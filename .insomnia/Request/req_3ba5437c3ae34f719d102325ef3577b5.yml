@@ -1,9 +1,9 @@
 _id: req_3ba5437c3ae34f719d102325ef3577b5
 type: Request
 parentId: fld_c831b6f386ae4766a65da45623b8b986
-modified: 1672180949833
+modified: 1672269324077
 created: 1672179896014
-url: http://localhost:5000/users/0/transactionHist
+url: http://localhost:5000/users/1/transactionHist
 name: GetTransactionHist
 description: ""
 method: GET

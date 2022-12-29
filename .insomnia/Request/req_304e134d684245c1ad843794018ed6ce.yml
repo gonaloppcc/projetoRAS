@@ -1,7 +1,7 @@
 _id: req_304e134d684245c1ad843794018ed6ce
 type: Request
 parentId: fld_0fbf4a21f6da4447b0a88b31a7333646
-modified: 1670116390556
+modified: 1672268245627
 created: 1670028003987
 url: localhost:5000/competitions
 name: AddCompetition
@@ -11,8 +11,8 @@ body:
   mimeType: application/json
   text: |-
     {
-    	"Name": "PortugueseFirstLeague",
-    	"SportId": "bce01c57-e484-49ea-abab-298fb087da40"
+    	"Name": "Liga dos Últimos",
+    	"SportId": "Football"
     }
 parameters: []
 headers:

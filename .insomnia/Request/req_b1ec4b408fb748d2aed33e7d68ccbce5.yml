@@ -1,14 +1,18 @@
 _id: req_b1ec4b408fb748d2aed33e7d68ccbce5
 type: Request
 parentId: fld_0fbf4a21f6da4447b0a88b31a7333646
-modified: 1670095194024
+modified: 1672289857107
 created: 1670028305694
-url: localhost:5000/competitions/8cede492-146f-44e1-b296-64542269df0f
+url: localhost:5000/competitions/NCAA
 name: GetCompetition
 description: ""
 method: GET
 body: {}
-parameters: []
+parameters:
+  - id: pair_a2a68d2f90a8472b98e56610c4ae9460
+    name: ""
+    value: ""
+    description: ""
 headers: []
 authentication: {}
 metaSortKey: -1670028003937

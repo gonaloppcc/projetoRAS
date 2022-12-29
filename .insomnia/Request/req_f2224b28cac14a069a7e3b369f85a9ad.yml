@@ -1,7 +1,7 @@
 _id: req_f2224b28cac14a069a7e3b369f85a9ad
 type: Request
 parentId: fld_81b7e52db10149a78c910feb5a020355
-modified: 1672257448297
+modified: 1672288278805
 created: 1670026378694
 url: http://localhost:5000/sports
 name: AddSport
@@ -11,7 +11,7 @@ body:
   mimeType: application/json
   text: |-
     {
-    	"Name": "Formula1",
+    	"Name": "Formula2",
     	"Competitions": [
     		"Monaco Grand Prix",
     		"Brazil",
