@@ -46,4 +46,7 @@ public class SimpleBet : Bet {
 
     public override float CalcCashOut()
         => Amount * Odd.Price;
+
+    public override IEnumerable<Odd> GetOdds()
+        => new List<Odd>{ Odd ?? new Odd(OddId) };
 }

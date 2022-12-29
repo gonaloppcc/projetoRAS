@@ -4,11 +4,13 @@ using RasbetServer.Models.Events;
 
 namespace RasbetServer.Models.Bets.Odds;
 
-public abstract class Odd
+public class Odd
 {
     [Key] [DatabaseGenerated(DatabaseGeneratedOption.Identity)] public string? Id { get; set; } = null;
     [Required] public float Price { get; set; }
-    public Promotion? Promo { get; set; }
+    public virtual Promotion? Promo { get; set; }
+    
+    public virtual IEnumerable<MultiBet> MultiBets { get; set; }
 
     public Odd() { }
     
@@ -24,7 +26,19 @@ public abstract class Odd
         Promo = promo;
     }
 
+    public Odd(string id)
+    {
+        Id = id;
+    }
+
     // FIXME: Make event attribute of this class
-    public abstract bool HasWon(Event @event);
-    public abstract string GetName();
+    public virtual bool HasWon(Event @event)
+    {
+        return false;
+    }
+
+    public virtual string GetName()
+    {
+        return "Odd";
+    }
 }

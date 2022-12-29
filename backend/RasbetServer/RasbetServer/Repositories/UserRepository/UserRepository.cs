@@ -8,42 +8,77 @@ public class UserRepository : BaseRepository, IUserRepository {
     public UserRepository(AppDbContext context) : base(context) {
     }
 
-    public User GetUser(string id)
-        => (from u in _context.Users where u.Id == id select u).Single();
-
-    public User LoginUser(string email, string password)
-        => (from u in _context.Users where u.Email == email & u.Password == password select u).Single();
-
-    public User AddUser(User user) {
-        var newUser = _context.Users.Add(user);
-        _context.SaveChanges();
-
-        // Refresh _context cache
-        newUser.State = EntityState.Detached;
-        return _context.Users.Find(newUser.Entity.Id) 
-               ?? throw new InvalidOperationException();
+    public async Task<User?> GetAsync(string id)
+    {
+        return await (
+            from u 
+                in _context.Users
+            where u.Id == id 
+            select u
+        ).SingleOrDefaultAsync();
     }
 
-    public void DeleteUser(string id)
+    public async Task<User?> GetByEmailAsync(string email)
     {
-        var user = (from u in _context.Users where u.Id == id select u).Single();
-        _context.Users.Remove(user);
-        _context.SaveChanges();
+        return await (
+            from u 
+                in _context.Users
+            where u.Email == email 
+            select u
+        ).SingleOrDefaultAsync();
     }
 
-    public void ChangePassword(string id, string password)
-    {
-        var user = (from u in _context.Users where u.Id == id select u).Single();
-        user.Password = password;
-        _context.SaveChanges();
+    public async Task<User?> AddAsync(User user) {
+        try
+        {
+            if (user is Specialist specialist)
+                specialist.Specialties.ToList().ForEach(sport => _context.Attach(sport));
+
+            var newUser = _context.Users.Add(user);
+            await _context.SaveChangesAsync();
+
+            await newUser.ReloadAsync();
+            return newUser.Entity;
+        }
+        catch (DbUpdateException)
+        {
+            return null;
+        }
     }
 
-    public Better UpdateBalance(string id, float amount)
+    public async Task<bool> DeleteAsync(User user)
     {
-        var user = (from u in _context.Betters where u.Id == id select u).Single();
-        user.Balance += amount;
-        _context.SaveChanges();
+        try
+        {
+            _context.Users.Remove(user);
+            await _context.SaveChangesAsync();
+            return true;
+        }
+        catch (DbUpdateException)
+        {
+            return false;
+        }
+    }
 
-        return user;
+    public async Task UpdateAsync(User user)
+    {
+        _context.Update(user);
+        await _context.SaveChangesAsync();
+    }
+
+    public async Task<Transaction?> AddTransactionAsync(Transaction transaction)
+    {
+        try
+        {
+            var entityEntry = _context.Transactions.Add(transaction);
+            await _context.SaveChangesAsync();
+
+            await entityEntry.ReloadAsync();
+            return entityEntry.Entity;
+        }
+        catch (DbUpdateException)
+        {
+            return null;
+        }
     }
 }

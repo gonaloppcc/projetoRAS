@@ -1,9 +1,10 @@
-using System.Text.Json;
+using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
-using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using RasbetServer.Extensions;
 using RasbetServer.Models.Bets;
-using RasbetServer.Repositories.BetRepository;
+using RasbetServer.Resources.Bets;
+using RasbetServer.Services.Bets;
 
 namespace RasbetServer.Controllers;
 
@@ -11,64 +12,51 @@ namespace RasbetServer.Controllers;
 [Route("bets")]
 public class BetController : ControllerBase
 {
-    private readonly IBetRepository _betRepository;
+    private readonly IBetService _betService;
+    private readonly IMapper _mapper;
 
-    public BetController(IBetRepository betRepository)
+    public BetController(IBetService betService, IMapper mapper)
     {
-        _betRepository = betRepository;
+        _betService = betService;
+        _mapper = mapper;
     }
 
     [HttpGet("{id}", Name = "GetBet")]
-    public ActionResult<Bet> GetBet(string id)
+    public async Task<IActionResult> GetBet(string id)
     {
-        try
-        {
-            return Ok(JsonConvert.SerializeObject(_betRepository.GetBet(id)));
-        }
-        catch (Exception e)
-        {
-            return Problem(e.Message);
-        } 
+        var response = await _betService.GetAsync(id);
+        if (!response.Success)
+            return this.ProcessResponse(response);
+        return Ok(_mapper.Map<Bet, BetResource>(response.Object!));
     }
 
     [HttpGet(Name = "GetAllBets")]
-    public ActionResult<IEnumerable<Bet>> GetAllBets([FromQuery] string userId)
+    public async Task<IActionResult> GetAllBets([FromQuery] string userId)
     {
-        try
-        {
-            return Ok(JsonConvert.SerializeObject(_betRepository.GetBets(userId)));
-        }
-        catch (Exception e)
-        {
-            return Problem(e.Message);
-        }
+        var response = await _betService.ListAsync(userId);
+        if (!response.Success)
+            return this.ProcessResponse(response);
+        return Ok(_mapper.Map<IEnumerable<Bet>, IEnumerable<BetResource>>(response.Object!));
     }
 
     [HttpPost(Name = "AddBet")]
-    public ActionResult<Bet> AddBet(JsonElement json)
+    public async Task<IActionResult> AddBet([FromBody] JObject json)
     {
-        try
-        {
-            var bet = Bet.FromJson(JObject.Parse(json.ToString()));
-            return Ok(JsonConvert.SerializeObject(_betRepository.MakeBet(bet)));
-        }
-        catch (Exception e)
-        {
-            return Problem(e.Message);
-        }
+        var betResource = Bet.FromJson(json);
+        var bet = _mapper.Map<SaveBetResource, Bet>(betResource);
+        var response = await _betService.AddAsync(bet);
+        if (!response.Success)
+            return this.ProcessResponse(response);
+        return Ok(_mapper.Map<Bet, BetResource>(response.Object!));
     }
 
     [HttpDelete("{id}", Name = "DeleteBet")]
-    public IActionResult DeleteBet(string id)
+    public async Task<IActionResult> CancelBet(string id)
     {
-        try
-        {
-            _betRepository.DeleteBet(id);
-            return Ok("Bet deleted successfully");
-        }
-        catch (Exception e)
-        {
-            return Problem(e.Message);
-        }
+        var response = await _betService.CancelBetAsync(id);
+        if (!response.Success)
+            return this.ProcessResponse(response);
+        
+        return Ok(response.Object);
     }
 }

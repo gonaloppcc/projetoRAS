@@ -1,7 +1,5 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Runtime.InteropServices;
-using Newtonsoft.Json.Linq;
 using RasbetServer.Models.Bets.Odds;
 
 namespace RasbetServer.Models.Events.Participants;
@@ -22,10 +20,11 @@ public class TwoParticipants : BaseParticipants
     public virtual TieOdd? Tie { get; set; }
 
     public TwoParticipants() : base() { }
-    
-    public TwoParticipants(ParticipantOdd home, int homeScore, ParticipantOdd away, int awayScore, TieOdd? tie) {
-        Home = new Result(home, homeScore);
-        Away = new Result(away, awayScore);
+
+    public TwoParticipants(Result home, Result away, TieOdd? tie)
+    {
+        Home = home;
+        Away = away;
         Tie = tie;
     }
 
@@ -37,14 +36,5 @@ public class TwoParticipants : BaseParticipants
             return null;
 
         return Home.Score > Away.Score ? Home : Away;
-    }
-
-    public static TwoParticipants FromJson(JObject json)
-    {
-        ParticipantOdd home = ParticipantOdd.FromJson(json[nameof(Home)].ToObject<JObject>());
-        ParticipantOdd away = ParticipantOdd.FromJson(json[nameof(Away)].ToObject<JObject>());
-        TieOdd? tieOdd = TieOdd.FromJson(json[nameof(Tie)].ToObject<JObject>());
-
-        return new TwoParticipants(home, 0, away, 0, tieOdd);
     }
 }

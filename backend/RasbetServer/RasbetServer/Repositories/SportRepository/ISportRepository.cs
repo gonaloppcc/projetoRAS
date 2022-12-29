@@ -4,7 +4,8 @@ namespace RasbetServer.Repositories.SportRepository;
 
 public interface ISportRepository
 {
-    Sport AddSport(Sport s);
-    Sport GetSport(string id);
-    IEnumerable<Sport> GetAllSports();
+    Task<Sport?> AddAsync(Sport sport);
+    Task<Sport?> GetAsync(string id);
+    Task<IEnumerable<Sport>> ListAsync();
+    Task<bool> DeleteAsync(Sport sport);
 }

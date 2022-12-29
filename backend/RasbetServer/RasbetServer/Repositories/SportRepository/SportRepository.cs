@@ -10,20 +10,44 @@ public class SportRepository : BaseRepository, ISportRepository
     {
     }
 
-    public Sport AddSport(Sport s)
+    public async Task<Sport?> AddAsync(Sport sport)
     {
-        var sport = _context.Sports.Add(s);
-        _context.SaveChanges();
+        try
+        {
+            var entityEntry = _context.Sports.Add(sport);
+            await _context.SaveChangesAsync();
 
-        // Refresh _context cache
-        sport.State = EntityState.Detached;
-        return _context.Sports.Find(sport.Entity.Name) 
-               ?? throw new InvalidOperationException();
+            await entityEntry.ReloadAsync();
+            return entityEntry.Entity;
+        }
+        catch (DbUpdateException)
+        {
+            return null;
+        }
     }
 
-    public Sport GetSport(string name)
-        => (from s in _context.Sports where s.Name == name select s).Single();
+    public async Task<Sport?> GetAsync(string name)
+        => await (
+            from s 
+                in _context.Sports 
+            where s.Name == name 
+            select s
+        ).SingleOrDefaultAsync();
 
-    public IEnumerable<Sport> GetAllSports()
-        => _context.Sports.ToList();
+    public async Task<IEnumerable<Sport>> ListAsync()
+        => await _context.Sports.ToListAsync();
+
+    public async Task<bool> DeleteAsync(Sport sport)
+    {
+        try
+        {
+            _context.Sports.Remove(sport);
+            await _context.SaveChangesAsync();
+            return true;
+        }
+        catch (DbUpdateException)
+        {
+            return false;
+        }
+    }
 }
