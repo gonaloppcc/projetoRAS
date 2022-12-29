@@ -25,7 +25,7 @@ public class Startup
 {
     public IConfiguration Configuration { get; }
     public string ConnectionString { get; }
-    private readonly string MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
+    private const string MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
 
     public Startup(IConfiguration configuration)
     {
