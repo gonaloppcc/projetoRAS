@@ -4,6 +4,7 @@ import {REGEX_MAIL} from '../../utils/regex';
 import {PrimaryButton} from '@components/Button';
 import {useProfileState} from '@state/useProfileState';
 import {useRouter} from 'next/router';
+import Link from 'next/link';
 
 // Receives a function that opens the Modal of "ForgetPassword"
 export interface LoginBodyProps {
@@ -118,13 +119,13 @@ export const LoginBody = ({setOpen}: LoginBodyProps) => {
                                 </PrimaryButton>
                             </div>
                             <div className="flex-none order-2  text-center	">
-                                <a
+                                <Link
                                     href="/register"
                                     className="flex-none order-2 h text-lg"
                                 >
                                     {/*  FIXME Em todos */}
                                     Não tem conta? Registe-se agora!
-                                </a>
+                                </Link>
                                 <div
                                     onClick={() => setOpen(true)}
                                     className="cursor-pointer"

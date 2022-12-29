@@ -1,256 +1,280 @@
-import {Sport} from 'pages/registerEvent';
+import {AllSport} from 'pages/registerEvent';
 import React, {useEffect, useState} from 'react';
 import {SearchBox} from './searchBox';
 import {Table} from './table';
 import {PrimaryButton} from '@components/Button';
-import {ErrorSharp} from '@mui/icons-material';
-import {SucessPage} from './sucessPage';
+import {useRouter} from 'next/router';
+import {
+    EventPost,
+    TwoParticipantsPost,
+    TieOdd,
+    ValuePromo,
+    ParticipantOddPost,
+    ParticipantPost,
+    Player,
+} from '@domain/Event';
+import {postEvent} from 'services/backend/event';
 
 export interface RegisterEventProps {
-    data: React.ReactNode;
+    sports: AllSport[];
 }
 
-export const RegisterEvent = ({data}: [Sport]) => {
-    const [sucessPage, setSucessPage] = useState<boolean>(false);
+interface FormErrors {
+    sport: string;
+    league: string;
+    teams: string;
+    hour: string;
+    date: string;
+}
 
-    const [sport, setSport] = useState<string>('');
+const initialFormErrors: FormErrors = {
+    sport: '',
+    league: '',
+    teams: '',
+    hour: '',
+    date: '',
+};
+
+export const RegisterEvent = ({sports}: RegisterEventProps) => {
+    const [sportName, setSportName] = useState<string>(sports[0].name);
     const [sportSelected, setSportSelected] = useState<boolean>(false);
 
-    const [possibleLeagues, setPossibleLeagues] = useState<[string]>(
-        data[0].leagues
-    );
     const [league, setLeague] = useState<string>('');
     const [leagueSelected, setLeagueSelected] = useState<boolean>(false);
 
-    const [possibleTeams, setPossibleTeams] = useState<[string]>([]);
-    const [selectedTeams, setSelectedTeams] = useState<[string]>([]);
+    const [selectedTeams, setSelectedTeams] = useState<string[]>([]);
 
-    const getLeagues = () => {
-        let thing = sportSelected
-            ? data.filter((sportInfo: Sport) => sportInfo.name == sport)[0]
-            : data[0];
-        setPossibleLeagues(thing.leagues);
-        return thing.leagues;
+    // Handle submit part
+    const [errors, setErrors] = useState<FormErrors>(initialFormErrors);
+
+    const [date, setDate] = useState<string>('');
+    const [hour, setHour] = useState<string>('');
+
+    const router = useRouter();
+
+    let possibleLeagues = sportSelected
+        ? sports.filter((sportInfo: AllSport) => sportInfo.name == sportName)[0]
+              .leagues
+        : [];
+
+    let possibleTeams = sportSelected
+        ? sports.filter((sportInfo: AllSport) => sportInfo.name == sportName)[0]
+              .participants
+        : [];
+
+    const changeTeams = (team: string, selected: boolean) => {
+        if (selected) {
+            setSelectedTeams([...selectedTeams, team]);
+        } else {
+            setSelectedTeams(selectedTeams.filter((t) => t !== team));
+        }
     };
 
-    const getTeams = () => {
-        let thing = sportSelected
-            ? data.filter((sportInfo: Sport) => sportInfo.name == sport)[0]
-            : data[0];
-        setPossibleTeams(thing.participants);
-        return thing.participants;
-    };
-
-    const changeTeams = (team: string, value: boolean) => {
-        value
-            ? setSelectedTeams((current) => [...current, team])
-            : setSelectedTeams((current) =>
-                  current.filter((element: string) => {
-                      return element !== team;
-                  })
-              );
-    };
-
-    // Necessary to update the leagues and teams associated to the sport
+    // Necessary to update the leagues and teams associated to the sportName
     useEffect(() => {
         if (sportSelected) {
-            getLeagues();
             setSelectedTeams([]);
-            getTeams();
             setSportSelected(true);
         }
-    }, [sport]);
+    }, [sportSelected]);
 
     const today = new Date().toISOString().split('T')[0];
-    const [date, setDate] = useState<string>('');
-    const changeDate = (e) => {
+
+    const changeDate: React.ChangeEventHandler<HTMLInputElement> = (e) => {
         setDate(e.target.value);
     };
-    const [hour, setHour] = useState<string>('');
-    const changeHour = (e) => {
+
+    const changeHour: React.ChangeEventHandler<HTMLInputElement> = (e) => {
         setHour(e.target.value);
     };
 
-    // Handle submit part
-    const [formErrors, setFormErrors] = useState({});
-    const [isSubmitting, setIsSubmitting] = useState(false);
-
-    // Necessary when we go back to this page
-    useEffect(() => {
-        setSport('');
-        setSportSelected(false);
-        setLeague('');
-        setSelectedTeams([]);
-        setHour('');
-        setHour('');
-    }, [sucessPage]);
-
-    //form submission handler
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        setFormErrors(validate());
-        setIsSubmitting(true);
+    const hasErrors = () => {
+        return Object.values(errors).some((err) => err !== '');
     };
 
-    useEffect(() => {
-        if (Object.keys(formErrors).length === 0 && isSubmitting) {
-            submit();
+    const handleSubmit: React.MouseEventHandler<
+        HTMLButtonElement
+    > = async () => {
+        validate();
+
+        if (hasErrors()) {
+            return;
         }
-    }, [formErrors]);
 
-    // FIXME
+        // TODO: Make the request to the backend here
+        const dateAndHour: string = `${date}T${hour}:17.0065405+00:00`;
+        const partipantHome: ParticipantPost = {
+            Type: 'Team',
+            Name: selectedTeams[0],
+            Players: [],
+        };
+        const participantHomeOdd: ParticipantOddPost = {
+            Price: 0,
+            Participant: partipantHome,
+            Promotion: null,
+        };
+        const partipantAway: ParticipantPost = {
+            Type: 'Team',
+            Name: selectedTeams[1],
+            Players: [],
+        };
+        const participantAwayOdd: ParticipantOddPost = {
+            Price: 0,
+            Participant: partipantAway,
+            Promotion: null,
+        };
+        const valuePromo: ValuePromo = {
+            Value: 0,
+        };
+        const tieOdd: TieOdd = {
+            Price: 0,
+            Promo: valuePromo,
+        };
+        const twoParticipant: TwoParticipantsPost = {
+            Home: participantHomeOdd,
+            Away: participantAwayOdd,
+            Tie: tieOdd,
+        };
+        const newEvent: EventPost = {
+            Sport: sportName,
+            Date: dateAndHour,
+            CompetitionId: league,
+            Participants: twoParticipant,
+        };
 
-    const submit = () => {
-        console.log('Submit');
-        console.log(date);
-        console.log(hour);
-        console.log(sport);
-        console.log(league);
-        console.log(selectedTeams);
-        setSucessPage(true);
+        await postEvent(newEvent);
+        //await router.push('/success');
     };
 
     const validate = () => {
-        let errors = {};
+        let errors: FormErrors = {...initialFormErrors};
+
         // FIXME em todos
         if (!sportSelected) {
             errors.sport = 'Obrigatório';
+        } else {
+            if (selectedTeams.length === 0) {
+                errors.teams = 'Número de equipas insuficiente.';
+            }
         }
+
         if (!leagueSelected) {
             errors.league = 'Obrigatório';
         }
-        const sportInfo = data.filter(
-            (sportInList) => sportInList.name === sport
+        const sportInfo = sports.filter(
+            (sportInList) => sportInList.name === sportName
         )[0];
 
         if (leagueSelected && !sportInfo.leagues.includes(league)) {
             errors.league = 'Liga não disponível na modalidade';
         }
 
-        if (sportSelected) {
-            const numSelectedTeams = selectedTeams.length;
-            if (numSelectedTeams > sportInfo.maxParticipants) {
-                errors.teams = 'Número de equipas ultrapassa máximo.';
-            }
-            if (numSelectedTeams < sportInfo.minParticipants) {
-                errors.teams = 'Número de equipas insuficiente.';
-            }
-        }
         if (!date) {
             errors.date = 'Obrigatório';
         }
+
         if (!hour) {
             errors.hour = 'Obrigatório';
         }
 
-        return errors;
+        setErrors(errors);
     };
 
-    const submitButtonContent = <div>Submeter</div>;
-
     return (
-        <>
-            {sucessPage && <SucessPage changePage={setSucessPage} />}
-            {!sucessPage && (
-                <div className="h-screen w-screen justify-center flex items-center bg-CULTURED">
-                    <div className="bg-white  flex flex-col items-center px-10 py-10 h-auto  relative gap-2">
-                        <div className="w-fit h-10  text-4xl ">
-                            {/* FIXME */}
-                            Adicionar evento
-                        </div>
-                        <div className="flex flex-row gap-5 space-evenly">
-                            {/* FIXME  Títulos das searchBoxes*/}
-                            <SearchBox
-                                content={data.map((sport: Sport) => sport.name)}
-                                title={'Modalidades'}
-                                currentSearch={sport}
-                                changeCurrentSearch={setSport}
-                                selected={sportSelected}
-                                changeSelected={setSportSelected}
-                                maybeError={formErrors.sport}
+        <div className="h-screen w-screen justify-center flex items-center bg-CULTURED">
+            <div className="bg-white  flex flex-col items-center px-10 py-10 h-auto  relative gap-2">
+                <div className="w-fit h-10  text-4xl ">
+                    {/* FIXME */}
+                    Adicionar evento
+                </div>
+                <div className="flex flex-row gap-5 space-evenly">
+                    {/* FIXME  Títulos das searchBoxes*/}
+                    <SearchBox
+                        allResults={sports.map((sport: AllSport) => sport.name)}
+                        title={'Modalidades'}
+                        currentSearch={sportName}
+                        changeCurrentSearch={setSportName}
+                        selected={sportSelected}
+                        changeSelected={setSportSelected}
+                        error={errors.sport}
+                    />
+                    <SearchBox
+                        allResults={possibleLeagues}
+                        title={'Ligas'}
+                        currentSearch={league}
+                        changeCurrentSearch={setLeague}
+                        selected={leagueSelected}
+                        changeSelected={setLeagueSelected}
+                        error={errors.league}
+                    />
+                </div>
+                <div className="w-full">
+                    <div className="flex flex-row gap-1 star ">
+                        <div className="w-2/3">
+                            <Table
+                                title="Teams"
+                                setValue={changeTeams}
+                                results={possibleTeams}
+                                error={errors.teams}
                             />
-                            <SearchBox
-                                content={possibleLeagues}
-                                title={'Ligas'}
-                                currentSearch={league}
-                                changeCurrentSearch={setLeague}
-                                selected={leagueSelected}
-                                changeSelected={setLeagueSelected}
-                                maybeError={formErrors.league}
-                            />
                         </div>
-                        <div className="w-full">
-                            <div className="flex flex-row gap-1 star ">
-                                <div className="w-2/3">
-                                    <Table
-                                        title="Teams"
-                                        changeFunction={changeTeams}
-                                        //content={data.map((sport) => sport.name)}
-                                        content={possibleTeams}
-                                        //maybeError={formErrors.sport}
-                                        maybeError={formErrors.teams}
-                                    />
+                        <div className="w-1/3 flex flex-col px-3">
+                            <div className="  datepicker w-full relative form-floating mb-3 ">
+                                <input
+                                    type="date"
+                                    className="bg-CULTURED border-2 form-control block w-full  py-1.5 text-base font-normal text-gray-700  bg-clip-padding rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
+                                    placeholder="Select a date"
+                                    onChange={changeDate}
+                                    id={'Calendar'}
+                                    min={today}
+                                />
+                                <div className="flex flex-row justify-between">
+                                    <label
+                                        htmlFor="floatingInput"
+                                        className="text-gray-700"
+                                    >
+                                        {/* FIXME */}
+                                        Game Day
+                                    </label>
+                                    {errors.date && (
+                                        <div className="text-red-500 font-semibold">
+                                            {errors.date}
+                                        </div>
+                                    )}
                                 </div>
-                                <div className="w-1/3 flex flex-col px-3">
-                                    <div className="  datepicker w-full relative form-floating mb-3 ">
-                                        <input
-                                            type="date"
-                                            className="bg-CULTURED border-2 form-control block w-full  py-1.5 text-base font-normal text-gray-700  bg-clip-padding rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
-                                            placeholder="Select a date"
-                                            onChange={changeDate}
-                                            id={'Calendar'}
-                                            min={today}
-                                        />
-                                        <div className="flex flex-row justify-between">
-                                            <label
-                                                htmlFor="floatingInput"
-                                                className="text-gray-700"
-                                            >
-                                                {/* FIXME */}
-                                                Game Day
-                                            </label>
-                                            {formErrors.date && (
-                                                <div className="text-red-500 font-semibold">
-                                                    {formErrors.date}
-                                                </div>
-                                            )}
-                                        </div>
-                                    </div>
-                                    <div className="w-full">
-                                        <div className="timepicker relative form-floating mb-3 ">
-                                            <input
-                                                type="time"
-                                                className="bg-CULTURED border-2 form-control block w-full  py-1.5 text-base font-normal text-gray-700 bg-clip-padding rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
-                                                placeholder="Select a date"
-                                                onChange={changeHour}
-                                            />
-                                            <div className="flex flex-row justify-between">
-                                                <label
-                                                    htmlFor="floatingInput"
-                                                    className="text-gray-700"
-                                                >
-                                                    Match Hour
-                                                </label>
-                                                {formErrors.hour && (
-                                                    <div className="text-red-500 font-semibold">
-                                                        {formErrors.hour}
-                                                    </div>
-                                                )}
+                            </div>
+                            <div className="w-full">
+                                <div className="timepicker relative form-floating mb-3 ">
+                                    <input
+                                        type="time"
+                                        className="bg-CULTURED border-2 form-control block w-full  py-1.5 text-base font-normal text-gray-700 bg-clip-padding rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
+                                        placeholder="Select a date"
+                                        onChange={changeHour}
+                                    />
+                                    <div className="flex flex-row justify-between">
+                                        <label
+                                            htmlFor="floatingInput"
+                                            className="text-gray-700"
+                                        >
+                                            Match Hour
+                                        </label>
+                                        {errors.hour && (
+                                            <div className="text-red-500 font-semibold">
+                                                {errors.hour}
                                             </div>
-                                        </div>
+                                        )}
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        <div>
-                            <PrimaryButton
-                                children={submitButtonContent}
-                                onClick={handleSubmit}
-                            />
-                        </div>
                     </div>
                 </div>
-            )}
-        </>
+                <div>
+                    <PrimaryButton onClick={handleSubmit}>
+                        Submeter
+                    </PrimaryButton>
+                </div>
+            </div>
+        </div>
     );
 };

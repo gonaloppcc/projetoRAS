@@ -50,10 +50,10 @@ public abstract class Bet
 
     public static SaveBetResource FromJson(JObject json)
     {
-        return json["Type"].Value<string>() switch
+        return json["Type"]!.Value<string>() switch
         {
-            nameof(MultiBet) => json["Bet"].ToObject<SaveMultiBetResource>(),
-            nameof(SimpleBet) => json["Bet"].ToObject<SaveSimpleBetResource>(),
+            nameof(MultiBet) => json["Bet"]!.ToObject<SaveMultiBetResource>()!,
+            nameof(SimpleBet) => json["Bet"]!.ToObject<SaveSimpleBetResource>()!,
             _ => throw new JsonException()
         };
     }

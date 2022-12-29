@@ -13,9 +13,7 @@ public class UserProfile : Profile
     public UserProfile()
     {
         CreateMap<User, UserResource>()
-            .Include<Better, BetterResource>()
-            .Include<Administrator, AdministratorResource>()
-            .Include<Specialist, SpecialistResource>();
+            .IncludeAllDerived();
         CreateMap<Better, BetterResource>();
         CreateMap<Administrator, AdministratorResource>();
         CreateMap<Specialist, SpecialistResource>()
@@ -27,9 +25,7 @@ public class UserProfile : Profile
             );
 
         CreateMap<SaveUserResource, User>()
-            .Include<SaveBetterResource, Better>()
-            .Include<SaveAdministratorResource, Administrator>()
-            .Include<SaveSpecialistResource, Specialist>();
+            .IncludeAllDerived();
         CreateMap<SaveBetterResource, Better>();
         CreateMap<SaveAdministratorResource, Administrator>();
         CreateMap<SaveSpecialistResource, Specialist>()

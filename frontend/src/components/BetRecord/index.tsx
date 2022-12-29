@@ -1,8 +1,7 @@
 import React from 'react';
-import {SportsSoccer} from '@mui/icons-material';
 import {formatDate} from '../../utils/formatters';
 import {SportIcon} from '@components/SportIcon';
-import {Bet} from '@domain/Bet';
+import {SimpleBet} from '@domain/Bet';
 
 export interface BetRecordProps {
     eventName: string;
@@ -18,23 +17,26 @@ export interface BetRecordProps {
 export const BetRecord = ({
     Id,
     Odd: {Id: OddId, PartId, Price},
-    EventId,
+    Event: {Participants},
     Date,
     Closed,
     BetterId,
     Amount,
-}: Bet) => {
+}: SimpleBet) => {
     // FIXME: Hardcoded text in this component
     const betName = `Resultado Final: ${PartId}`;
 
     const eventType = 'Football';
 
-    const eventName = 'FC Porto vs. Benfica';
+    const awayName = Participants.Away.Participant.Part?.Name || '';
+    const homeName = Participants.Home.Participant.Part?.Name || '';
+
+    const eventName = `${homeName} - ${awayName}`;
 
     const betWinnings = Amount * Price; // FIXME: This is not correct, the better could lose the bet
 
     const cancelBetHandler = () => {
-        console.log('Aposta cancelada');
+        // FIXME: These bets are already closed, so we should not be able to cancel them
     };
 
     const dateFormatted = formatDate(Date);

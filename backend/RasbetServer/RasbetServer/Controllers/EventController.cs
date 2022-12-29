@@ -1,9 +1,9 @@
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json.Linq;
 using RasbetServer.Extensions;
 using RasbetServer.Models.Events;
 using RasbetServer.Resources.Events.Event;
-using RasbetServer.Resources.Events.Event.FootballEvent;
 using RasbetServer.Services.Events;
 
 namespace RasbetServer.Controllers;
@@ -47,9 +47,10 @@ public class EventController : ControllerBase
 
     // TODO: Implement this properly
     [HttpPost(Name = "AddEvent")]
-    public async Task<IActionResult> AddEvent([FromBody] SaveFootballEventResource eventResource)
+    public async Task<IActionResult> AddEvent([FromBody] JObject json)
     {
-        var e = _mapper.Map<SaveFootballEventResource, FootballEvent>(eventResource);
+        var eventResource = Event.FromJson(json);
+        var e = _mapper.Map<SaveEventResource, Event>(eventResource);
         var response = await _eventService.AddAsync(e);
         if (!response.Success)
             return this.ProcessResponse(response);

@@ -1,6 +1,4 @@
-﻿using Microsoft.Data.SqlClient;
-using Microsoft.EntityFrameworkCore;
-using RasbetServer.Extensions;
+﻿using Microsoft.EntityFrameworkCore;
 using RasbetServer.Models.Users;
 using RasbetServer.Repositories.Contexts;
 

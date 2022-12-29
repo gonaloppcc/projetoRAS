@@ -3,6 +3,8 @@ using System.ComponentModel.DataAnnotations.Schema;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using RasbetServer.Models.Events.Participants;
+using RasbetServer.Resources.Events.Event;
+using RasbetServer.Resources.Events.Event.FootballEvent;
 
 namespace RasbetServer.Models.Events;
 
@@ -56,11 +58,11 @@ public abstract class Event
         Completed = completed;
     }
 
-    public static Event FromJson(JObject json)
+    public static SaveEventResource FromJson(JObject json)
     {
-        return json["Sport"].Value<string>() switch
+        return json["Sport"]!.Value<string>() switch
         {
-            FootballEvent.Sport => FromJson(json),
+            FootballEvent.Sport => json["Event"]!.ToObject<SaveFootballEventResource>()!,
             _ => throw new JsonException()
         };
     }

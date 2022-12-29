@@ -1,11 +1,13 @@
+import React from 'react';
 import {PrimaryButton} from '@components/Button';
+import {useRouter} from 'next/router';
 
-export interface SucessPageProps {
-    changePage: (value: boolean) => void;
-}
+const Success = () => {
+    const router = useRouter();
 
-export const SucessPage = ({changePage}: SucessPageProps) => {
-    const addNewEvent = <div>Adicionar novo evento?</div>;
+    const changePageHandler = async () => {
+        await router.push('/registerEvent');
+    };
 
     return (
         <div className="h-screen w-screen justify-center flex items-center bg-CULTURED">
@@ -13,11 +15,12 @@ export const SucessPage = ({changePage}: SucessPageProps) => {
                 <div className="w-fit text-4xl">
                     Evento submetido com sucesso
                 </div>
-                <PrimaryButton
-                    children={addNewEvent}
-                    onClick={() => changePage(false)}
-                />
+                <PrimaryButton onClick={changePageHandler}>
+                    Adicionar novo evento?
+                </PrimaryButton>
             </div>
         </div>
     );
 };
+
+export default Success;

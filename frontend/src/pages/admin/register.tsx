@@ -1,15 +1,19 @@
 import type {NextPage} from 'next';
-import Head from 'next/head';
-import Image from 'next/image';
 import {RegisterSpecialist} from '../../components/RegisterSpecialist';
-
-const MOCK_MODALITIES = ['Futebol', 'Basket', 'Marathon'];
+import {CircularProgress} from '@mui/material';
+import {useSports} from '@hooks/useSports';
+//const MOCK_MODALITIES = ['Futebol', 'Basket', 'Marathon'];
 const Home: NextPage = () => {
+    const {isSuccess, isLoading, isError, sports, error} = useSports();
     return (
         <>
-            <div className="bg-blue-400">
-                <RegisterSpecialist modalities={MOCK_MODALITIES} />
-            </div>
+            {isLoading && <CircularProgress />}
+            {isSuccess && (
+                <div className="bg-blue-400">
+                    <RegisterSpecialist modalities={sports} />
+                </div>
+            )}
+            {isError && <span>{error}</span>}
         </>
     );
 };

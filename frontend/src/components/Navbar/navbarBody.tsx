@@ -1,10 +1,10 @@
 import {Navlink} from '@components/Navlink';
 import Link from 'next/link';
 import Image from 'next/image';
-import AddCircleOutlinedIcon from '@mui/icons-material/AddCircleOutlined';
 import {useProfileState} from '@state/useProfileState';
 import {PrimaryButton, SecondaryButton} from '@components/Button';
 import {useRouter} from 'next/router';
+import {Balance} from '@components/Balance';
 
 const navlinks = [
     {
@@ -18,34 +18,12 @@ const navlinks = [
         isActive: true,
     },
 ];
-const Balance = ({
-    balance,
-    setOpen,
-}: {
-    balance: number;
-    setOpen: (state: boolean) => void;
-}) => {
-    return (
-        <button
-            className="bg-grey-light hover:bg-grey text-grey-darkest font-bold py-2 px-4 rounded inline-flex items-center"
-            onClick={() => setOpen(true)}
-        >
-            <svg
-                className="w-6 h-6 mr-2 "
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 20 20"
-            >
-                <AddCircleOutlinedIcon
-                    style={{color: 'white'}}
-                    sx={{fontSize: 70}}
-                />
-            </svg>
-            <span>{balance} €</span>
-        </button>
-    );
-};
 
-export const NavBarBody = (props) => {
+interface NavBarBodyProps {
+    setOpen: (state: boolean) => void;
+}
+
+export const NavBarBody = ({setOpen}: NavBarBodyProps) => {
     const {Id, Username, Balance: balance} = useProfileState();
 
     const router = useRouter();
@@ -63,7 +41,7 @@ export const NavBarBody = (props) => {
     return (
         <div className="hidden md:flex flex-row justify-between items-center px-8 h-12 gap-3 bg-IMPERIAL_RED">
             <div className="h-full flex flex-row items-center gap-8">
-                <Image src={'/logo.png'} width={50} height={50} />
+                <Image src={'/logo.png'} alt="Logo" width={50} height={50} />
                 <div className="h-full flex flex-row ">
                     {navlinks.map((navlink) => (
                         <Navlink key={navlink.name} {...navlink} />
@@ -72,7 +50,7 @@ export const NavBarBody = (props) => {
             </div>
             {isLoggedIn && (
                 <div className="flex flex-row justify-end items-center p-0 gap-12">
-                    <Balance setOpen={props.setOpen} balance={balance} />
+                    <Balance setOpen={setOpen} balance={balance} />
 
                     <Link href="/better/bets" className="text-WHITE">
                         {'Apostas' /* FIXME Hardcoded for now */}

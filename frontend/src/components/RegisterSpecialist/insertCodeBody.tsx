@@ -12,15 +12,7 @@ export const InsertCodeBody = ({code}: ForgetPasswordProps) => {
     const codeInserted = ({value}: HandleChangeProps) => {
         setInsertedCode(value);
     };
-    const compareCodes = () => {
-        console.log('Code inserted');
-        console.log(code);
-        console.log(insertedCode);
-        console.log('Is equal?');
-        console.log(parseInt(insertedCode) === code);
-    };
-
-    const TextCheckCodeBTN = () => <div>Check code</div>;
+    const compareCodes = () => {};
 
     return (
         <div className="flex flex-col gap-3 p-5">
@@ -39,10 +31,7 @@ export const InsertCodeBody = ({code}: ForgetPasswordProps) => {
                 />
             </div>
             <div className="flex items-center justify-center gap-10">
-                <PrimaryButton
-                    children={<TextCheckCodeBTN />}
-                    onClick={compareCodes}
-                />
+                <PrimaryButton onClick={compareCodes}>Check code</PrimaryButton>
             </div>
         </div>
     );

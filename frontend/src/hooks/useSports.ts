@@ -21,7 +21,7 @@ export const useSports = (): useSportsProps => {
         isSuccess,
         isLoading,
         isError,
-        sports: sports as unknown as Sport[],
+        sports: (sports || []) as unknown as Sport[],
         error: error as string,
         refetch,
     };

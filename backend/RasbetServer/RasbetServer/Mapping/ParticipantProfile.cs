@@ -11,8 +11,7 @@ public class ParticipantProfile : Profile
     public ParticipantProfile()
     {
         CreateMap<Participant, ParticipantResource>()
-            .Include<Player, PlayerResource>()
-            .Include<Team, TeamResource>();
+            .IncludeAllDerived();
         CreateMap<Player, PlayerResource>();
         CreateMap<Team, TeamResource>()
             .ForMember(
@@ -21,10 +20,9 @@ public class ParticipantProfile : Profile
                     src => src.Players.ToList().ConvertAll(player => player.Name)
                 )
             );
-        
+
         CreateMap<SaveParticipantResource, Participant>()
-            .Include<SavePlayerResource, Player>()
-            .Include<SaveTeamResource, Team>();
+            .IncludeAllDerived();
         CreateMap<SavePlayerResource, Player>();
         CreateMap<SaveTeamResource, Team>()
             .ConstructUsing(src => new Team())

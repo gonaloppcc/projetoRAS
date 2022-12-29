@@ -1,10 +1,17 @@
-import {ClassNames} from '@emotion/react';
-import {ErrorSharp} from '@mui/icons-material';
-import React, {useEffect, useState} from 'react';
-import {InputForm} from '../createBetter/inputForm';
+import React from 'react';
 
-export const SuspendedGameCard = (props) => {
-    const column = (header, body) => {
+export interface SuspendedGameInfo {
+    eventName: string;
+    date: string;
+    open: boolean;
+}
+
+export interface SuspendedGameCardProps {
+    game: SuspendedGameInfo;
+}
+
+export const SuspendedGameCard = ({game}: SuspendedGameCardProps) => {
+    const column = (header: string, body: string) => {
         return (
             <div className=" m-3 p-3 rounded-lg w-full">
                 <div className="flex flex-col gap-1  pl-3">
@@ -17,7 +24,7 @@ export const SuspendedGameCard = (props) => {
         );
     };
 
-    const button = (text, onClick) => {
+    const button = (text: string, onClick: () => void) => {
         return (
             <button
                 onClick={onClick}
@@ -28,24 +35,18 @@ export const SuspendedGameCard = (props) => {
         );
     };
 
-    const openBet = () => {
-        console.log('Abrir bet');
-        console.log(props.game.eventName);
-    };
+    const openBet = () => {};
 
-    const closeBet = () => {
-        console.log('Fechar bet');
-        console.log(props.game.eventName);
-    };
+    const closeBet = () => {};
 
     return (
         <>
             <div className=" bg-white px-5 rounded flex flex-row w-full">
                 <div className="pr-5 m-auto text-xl content-between grow rounded-lg w-full">
-                    {props.game.eventName}
+                    {game.eventName}
                 </div>
                 {/*FIXME*/}
-                {column('Data', props.game.date)}
+                {column('Data', game.date)}
                 {column('Estado', 'Aberto')}
                 <div className=" bg-white rounded flex flex-row items-center gap-2">
                     {button('Abrir', openBet)}

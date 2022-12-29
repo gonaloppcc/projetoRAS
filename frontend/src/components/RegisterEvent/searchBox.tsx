@@ -1,52 +1,44 @@
-import {PrimaryButton} from '@components/Button';
-import React, {useEffect, useState} from 'react';
+import React from 'react';
+import {Possibilities} from '@components/Possibilities';
 
 // Depois meter isto genérico, recebe uma lista de coisas, e vai filtrando
 
 export interface SearchBoxProps {
     title: string;
-    content: [string];
+    allResults: string[];
     currentSearch: string;
     changeCurrentSearch: (value: string) => void;
     selected: boolean;
     changeSelected: (value: boolean) => void;
-    maybeError: string;
+    error?: string;
 }
 
+const MAX_SEARCH_RESULTS = 3;
+
 export const SearchBox = ({
-    content,
+    allResults,
     title,
     currentSearch,
     changeCurrentSearch,
     selected,
     changeSelected,
-    maybeError,
+    error,
 }: SearchBoxProps) => {
-    const [validEntries, setValidEntries] = useState<[string]>(content);
+    const possibilities = allResults.filter((name) =>
+        name.includes(currentSearch)
+    );
 
-    const maxSearchBox: number = 3;
-
-    const changeSearchBar = (e) => {
+    const changeSearchBar: React.ChangeEventHandler<HTMLInputElement> = (e) => {
         const {name, value} = e.target;
         changeCurrentSearch(value);
-        const possibilities = content.filter((name) => name.includes(value));
-        // If there was an option selected, it won't be any more.
+        // If there was an option selected, it won't be anymore.
         // Because the user uses the search bar again.
         if (selected) changeSelected(false);
-        setValidEntries(possibilities);
     };
 
-    const lineChoosen = (e) => {
-        const selected = e.target.innerHTML;
-        changeCurrentSearch(selected);
+    const lineChoosen = (value: string) => {
+        changeCurrentSearch(value);
         changeSelected(true);
-    };
-
-    const clicou = () => {
-        if (currentSearch.length == 0) {
-            setValidEntries(content);
-        }
-        changeSelected(false);
     };
 
     return (
@@ -75,25 +67,20 @@ export const SearchBox = ({
                             type="text"
                             value={currentSearch}
                             onChange={changeSearchBar}
-                            onClick={() => clicou()}
                             // FIXME
                             placeholder={`Procura ${title.toLowerCase()}`}
                         ></input>
                     </div>
                     <div className="py-3 text-sm overflow-auto max-h-28">
-                        {!selected &&
-                            validEntries.map((line) => (
-                                <div
-                                    key={line}
-                                    className="flex justify-start cursor-pointer text-gray-700 hover:text-blue-400 hover:bg-blue-100 rounded-md px-2 py-2 my-2"
-                                    onClick={lineChoosen}
-                                >
-                                    {line}
-                                </div>
-                            ))}
+                        {!selected && (
+                            <Possibilities
+                                possibilities={possibilities}
+                                setChosenPossibility={lineChoosen}
+                            />
+                        )}
                     </div>
                 </div>
-                <div className="text-red-500 font-semibold">{maybeError}</div>
+                <div className="text-red-500 font-semibold">{error}</div>
             </div>
         </div>
     );
