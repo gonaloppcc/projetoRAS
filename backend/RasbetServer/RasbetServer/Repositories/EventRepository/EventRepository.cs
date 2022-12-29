@@ -20,7 +20,7 @@ public class EventRepository : BaseRepository, IEventRepository
         ).SingleOrDefaultAsync();
     }
 
-    public async Task<IEnumerable<Event>> ListPageAsync(string competitionId, int pageNum, int pageSize)
+    public async Task<IEnumerable<Event>> ListByCompetitionAsync(string competitionId)
     {
         return await (
                 from e
@@ -28,8 +28,6 @@ public class EventRepository : BaseRepository, IEventRepository
                 where e.CompetitionId == competitionId 
                 select e
             )
-            .Skip(pageNum * pageSize)
-            .Take(pageSize)
             .ToListAsync();
     }
 

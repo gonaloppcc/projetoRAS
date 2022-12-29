@@ -5,6 +5,6 @@ namespace RasbetServer.Repositories.EventRepository;
 public interface IEventRepository
 {
     Task<Event?> GetAsync(string id);
-    Task<IEnumerable<Event>> ListPageAsync(string competitionId, int pageNum, int pageSize);
+    Task<IEnumerable<Event>> ListByCompetitionAsync(string competitionId);
     Task<Event?> AddAsync(Event e);
 }

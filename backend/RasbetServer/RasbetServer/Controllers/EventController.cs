@@ -22,19 +22,26 @@ public class EventController : ControllerBase
         _mapper = mapper;
     }
 
-    // TODO: Implement this properly
-    [HttpGet(Name = "GetPage")]
-    public async Task<IActionResult> GetPage([FromQuery] string compId, [FromQuery] int pageNum,
-        [FromQuery] int pageSize)
+    [HttpGet("competition", Name = "GetPageByCompetition")]
+    public async Task<IActionResult> GetPageByCompetition([FromQuery] string compId, [FromQuery] int pageNum, [FromQuery] int pageSize)
     {
-        var response = await _eventService.ListPageAsync(compId, pageNum, pageSize);
+        var response = await _eventService.ListPageByCompetitionAsync(compId, pageNum, pageSize);
         if (!response.Success)
             return this.ProcessResponse(response);
         
         return Ok(_mapper.Map<IEnumerable<Event>, IEnumerable<EventResource>>(response.Object!));
     }
 
-    // TODO: Implement this properly
+    [HttpGet("sport", Name = "GetPageBySport")]
+    public async Task<IActionResult> GetPageBySport([FromQuery] string sportId, [FromQuery] int pageNum, [FromQuery] int pageSize)
+    {
+        var response = await _eventService.ListPageBySportAsync(sportId, pageNum, pageSize);
+        if (!response.Success)
+            return this.ProcessResponse(response);
+
+        return Ok(_mapper.Map<IEnumerable<Event>, IEnumerable<EventResource>>(response.Object!));
+    }
+
     [HttpGet("{id}", Name = "GetEvent")]
     public async Task<IActionResult> GetEvent(string id)
     {
@@ -45,7 +52,6 @@ public class EventController : ControllerBase
         return Ok(_mapper.Map<Event, EventResource>(response.Object!));
     }
 
-    // TODO: Implement this properly
     [HttpPost(Name = "AddEvent")]
     public async Task<IActionResult> AddEvent([FromBody] JObject json)
     {
