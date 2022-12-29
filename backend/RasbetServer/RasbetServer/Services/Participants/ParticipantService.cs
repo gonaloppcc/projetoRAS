@@ -1,21 +1,25 @@
 using RasbetServer.Models.Events.Participants.Participant;
+using RasbetServer.Repositories.BetRepository;
+using RasbetServer.Repositories.CompetitionRepository;
+using RasbetServer.Repositories.EventRepository;
 using RasbetServer.Repositories.ParticipantRepository;
 using RasbetServer.Repositories.SportRepository;
+using RasbetServer.Repositories.UserRepository;
 using RasbetServer.Services.Communication;
 
 namespace RasbetServer.Services.Participants;
 
-public class ParticipantService : IParticipantService
+public class ParticipantService : BaseService, IParticipantService
 {
-    private readonly IParticipantRepository _participantRepository;
-    private readonly ISportRepository _sportRepository;
-
-    public ParticipantService(IParticipantRepository participantRepository, ISportRepository sportRepository)
-    {
-        _participantRepository = participantRepository;
-        _sportRepository = sportRepository;
-    }
-
+    public ParticipantService(
+        IBetRepository betRepository,
+        ICompetitionRepository competitionRepository, 
+        ISportRepository sportRepository,
+        IParticipantRepository participantRepository, 
+        IEventRepository eventRepository,
+        IUserRepository userRepository
+    ) : base (betRepository, competitionRepository, sportRepository, participantRepository, eventRepository, userRepository)
+    { }
 
     public async Task<ObjectResponse<Participant>> GetAsync(string name)
     {

@@ -1,16 +1,25 @@
 using RasbetServer.Models.Users;
+using RasbetServer.Repositories.BetRepository;
+using RasbetServer.Repositories.CompetitionRepository;
+using RasbetServer.Repositories.EventRepository;
+using RasbetServer.Repositories.ParticipantRepository;
+using RasbetServer.Repositories.SportRepository;
 using RasbetServer.Repositories.UserRepository;
 using RasbetServer.Services.Communication;
 
 namespace RasbetServer.Services.Users;
 
-public class UserService : IUserService
+public class UserService : BaseService, IUserService
 {
-    private readonly IUserRepository _userRepository;
-
-    public UserService(IUserRepository userRepository)
+    public UserService(
+        IBetRepository betRepository,
+        ICompetitionRepository competitionRepository,
+        ISportRepository sportRepository,
+        IParticipantRepository participantRepository,
+        IEventRepository eventRepository,
+        IUserRepository userRepository
+        ) : base(betRepository, competitionRepository, sportRepository, participantRepository, eventRepository, userRepository)
     {
-        _userRepository = userRepository;
     }
     
     public async Task<ObjectResponse<User>> LoginAsync(string email, string password)
