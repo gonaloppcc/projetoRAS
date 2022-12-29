@@ -10,18 +10,30 @@ public class ParticipantRepository : BaseRepository, IParticipantRepository
     {
     }
 
-    public async Task<Participant> AddAsync(Participant participant)
+    public async Task<Participant?> AddAsync(Participant participant)
     {
-        var entityEntry = await _context.Participants.AddAsync(participant);
-        await _context.SaveChangesAsync();
+        try
+        {
+            var entityEntry = await _context.Participants.AddAsync(participant);
+            await _context.SaveChangesAsync();
         
-        await entityEntry.ReloadAsync();
-        return entityEntry.Entity;
+            await entityEntry.ReloadAsync();
+            return entityEntry.Entity;
+        }
+        catch (DbUpdateException)
+        {
+            return null;
+        }
     }
 
-    public async Task<Participant> GetAsync(string name)
+    public async Task<Participant?> GetAsync(string name)
     {
-        return await _context.Participants.FirstAsync(e => e.Name == name);
+        return await (
+            from p
+                in _context.Participants
+            where p.Name == name
+            select p
+        ).SingleOrDefaultAsync();
     }
 
     public async Task<IEnumerable<Participant>> ListBySportAsync(string sport)
@@ -31,6 +43,6 @@ public class ParticipantRepository : BaseRepository, IParticipantRepository
                 in _context.Participants
             where p.SportId == sport
             select p
-            ).ToListAsync();
+        ).ToListAsync();
     }
 }

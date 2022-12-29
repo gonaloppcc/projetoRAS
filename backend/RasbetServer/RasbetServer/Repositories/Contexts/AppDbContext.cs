@@ -8,7 +8,8 @@ using RasbetServer.Models.Users;
 
 namespace RasbetServer.Repositories.Contexts;
 
-public class AppDbContext : DbContext {
+public class AppDbContext : DbContext
+{
     public DbSet<User> Users { get; set; }
     public DbSet<Better> Betters { get; set; }
     public DbSet<Specialist> Specialists { get; set; }
@@ -38,8 +39,8 @@ public class AppDbContext : DbContext {
     public DbSet<SimpleBet> SimpleBets { get; set; }
 
     public AppDbContext(DbContextOptions<AppDbContext> options)
-        : base(options) {
-    }
+        : base(options) 
+    { }
 
     private void SeedSports()
     {

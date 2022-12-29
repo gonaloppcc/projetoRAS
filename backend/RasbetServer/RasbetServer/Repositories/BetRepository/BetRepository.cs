@@ -10,21 +10,28 @@ public class BetRepository : BaseRepository, IBetRepository
     {
     }
 
-    public async Task<Bet> AddAsync(Bet bet)
+    public async Task<Bet?> AddAsync(Bet bet)
     {
-        var odds = bet.GetOdds();
-        _context.Odds.AttachRange(odds);
-        
-        var entityEntry = await _context.Bets.AddAsync(bet);
-        await _context.SaveChangesAsync();
+        try
+        {
+            var odds = bet.GetOdds();
+            _context.Odds.AttachRange(odds);
 
-        await entityEntry.ReloadAsync();
-        return entityEntry.Entity;
+            var entityEntry = await _context.Bets.AddAsync(bet);
+            await _context.SaveChangesAsync();
+
+            await entityEntry.ReloadAsync();
+            return entityEntry.Entity;
+        }
+        catch (DbUpdateException)
+        {
+            return null;
+        }
     }
 
-    public async Task<Bet> GetAsync(string id)
+    public async Task<Bet?> GetAsync(string id)
     {
-        return await (from b in _context.Bets where b.Id == id select b).SingleAsync();
+        return await (from b in _context.Bets where b.Id == id select b).SingleOrDefaultAsync();
     }
 
     public async Task<IEnumerable<Bet>> ListAsync(string userId)
@@ -32,11 +39,17 @@ public class BetRepository : BaseRepository, IBetRepository
         return await (from b in _context.Bets where b.BetterId == userId select b).ToListAsync();
     }
 
-    public async Task DeleteAsync(string id)
+    public async Task<bool> DeleteAsync(Bet bet)
     {
-        //var bet = (from b in _context.Bets where b.Id == id select b).SingleAsync();
-        var bet = await GetAsync(id);
-        _context.Bets.Remove(bet);
-        await _context.SaveChangesAsync();
+        try
+        {
+            _context.Bets.Remove(bet);
+            await _context.SaveChangesAsync();
+            return true;
+        }
+        catch (DbUpdateException)
+        {
+            return false;
+        }
     }
 }

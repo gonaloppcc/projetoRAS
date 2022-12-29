@@ -1,7 +1,6 @@
-using Microsoft.EntityFrameworkCore;
-using RasbetServer.Exceptions.Users;
 using RasbetServer.Models.Users;
 using RasbetServer.Repositories.UserRepository;
+using RasbetServer.Services.Communication;
 
 namespace RasbetServer.Services.Users;
 
@@ -14,63 +13,72 @@ public class UserService : IUserService
         _userRepository = userRepository;
     }
     
-    public async Task<User> LoginAsync(string email, string password)
+    public async Task<ObjectResponse<User>> LoginAsync(string email, string password)
     {
         var user = await _userRepository.GetByEmailAsync(email);
+        if (user is null)
+            return new ObjectResponse<User>("User not found", StatusCode.NotFound);
+
         if (user.Password != password)
-        {
-            throw new IncorrectCredentialsException("Incorrect password");
-        }
+            return new ObjectResponse<User>("Incorrect credentials", StatusCode.Unauthorized);
 
-        return user;
+        return new ObjectResponse<User>(user);
     }
 
-    public async Task<User> RegisterAsync(User user)
+    public async Task<ObjectResponse<User>> RegisterAsync(User user)
     {
-        try
-        {
-            return await _userRepository.AddAsync(user);
-        }
-        catch (DbUpdateException e)
-        {
-            throw new UserAlreadyExistsException("A user with this email already exists", e);
-        }
+        var registered = await _userRepository.AddAsync(user);
+        if (registered is null)
+            return new ObjectResponse<User>("User already exists", StatusCode.Conflict);
+        return new ObjectResponse<User>(registered);
     }
 
-    public async Task DeleteUserAsync(string id)
+    public async Task<VoidResponse> DeleteUserAsync(string id)
     {
         var user = await _userRepository.GetAsync(id);
-        await _userRepository.DeleteAsync(user);
+        if (user is null)
+            return new VoidResponse("User not found", StatusCode.NotFound);
+        
+        bool deleted = await _userRepository.DeleteAsync(user);
+        if (!deleted)
+            return new VoidResponse("Unknown error deleting user", StatusCode.BadRequest);
+        
+        return new VoidResponse();
     }
 
-    public async Task ChangePasswordAsync(string id, string newPassword)
+    public async Task<VoidResponse> ChangePasswordAsync(string id, string newPassword)
     {
         var user = await _userRepository.GetAsync(id);
+        if (user is null)
+            return new VoidResponse("User not found", StatusCode.NotFound);
+        
         user.Password = newPassword;
         await _userRepository.UpdateAsync(user);
+
+        return new VoidResponse();
     }
 
-    public async Task<float> UpdateBalanceAsync(string id, float amount)
+    public async Task<ObjectResponse<float>> UpdateBalanceAsync(string id, float amount)
     {
         var user = await _userRepository.GetAsync(id);
 
         if (user is not Better better)
-            throw new InvalidUserTypeException("User is not a better");
+            return new ObjectResponse<float>("User is not a better", StatusCode.Unauthorized);
         
         better.Balance += amount;
         if (better.Balance < 0)
-            throw new InvalidOperationException("Not enough balance");
+            return new ObjectResponse<float>("Insufficient balance", StatusCode.Forbidden);
         
         await _userRepository.UpdateAsync(better);
-        return better.Balance;
+        return new ObjectResponse<float>(better.Balance);
     }
 
-    public async Task<IEnumerable<Transaction>> GetTransactionHist(string id)
+    public async Task<ObjectResponse<IEnumerable<Transaction>>> GetTransactionHist(string id)
     {
         var user = await _userRepository.GetAsync(id);
         if (user is not Better better)
-            throw new InvalidUserTypeException("User is not a better");
+            return new ObjectResponse<IEnumerable<Transaction>>("User is not a better", StatusCode.Unauthorized);
 
-        return better.TransactionHist;
+        return new ObjectResponse<IEnumerable<Transaction>>(better.TransactionHist);
     }
 }

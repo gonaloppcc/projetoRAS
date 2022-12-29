@@ -1,6 +1,7 @@
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
+using RasbetServer.Extensions;
 using RasbetServer.Models.Events;
 using RasbetServer.Resources.Events.Sport;
 using RasbetServer.Services.Sports;
@@ -23,45 +24,41 @@ public class SportController : ControllerBase
     [HttpPost(Name = "AddSport")]
     public async Task<IActionResult> AddSport([FromBody] SaveSportResource sportResource)
     {
-        try
-        {
-            var sport = _mapper.Map<SaveSportResource, Sport>(sportResource);
-            var added = await _sportService.AddAsync(sport);
-            var response = _mapper.Map<Sport, SportResource>(added);
-            return Ok(JsonConvert.SerializeObject(response));
-        }
-        catch (Exception e)
-        {
-            return BadRequest();
-        }
+        var sport = _mapper.Map<SaveSportResource, Sport>(sportResource);
+        var response = await _sportService.AddAsync(sport);
+        if (!response.Success)
+            return this.ProcessResponse(response);
+        
+        return Ok(_mapper.Map<Sport, SportResource>(response.Object!));
     }
 
     [HttpGet("{id}", Name = "GetSport")]
-    public async Task<ActionResult<SportResource>> GetSport(string id)
+    public async Task<IActionResult> GetSport(string id)
     {
-        try
-        {
-            var sportResource = _mapper.Map<Sport, SportResource>(await _sportService.GetAsync(id));
-            return Ok(sportResource);
-        }
-        catch (Exception e)
-        {
-            return NotFound();
-        }
+        var response = await _sportService.GetAsync(id);
+        if (!response.Success)
+            return this.ProcessResponse(response);
+        
+        return Ok(_mapper.Map<Sport, SportResource>(response.Object!));
     }
 
     [HttpGet(Name = "GetAllSports")]
-    public async Task<ActionResult<IEnumerable<SportResource>>> GetAllSports()
+    public async Task<IActionResult> GetAllSports()
     {
-        try
-        {
-            var sports = await _sportService.ListAsync();
-            var sportsResources = _mapper.Map<IEnumerable<Sport>, IEnumerable<SportResource>>(sports);
-            return Ok(sportsResources);
-        }
-        catch (Exception e)
-        {
-            return NotFound();
-        }
+        var response = await _sportService.ListAsync();
+        if (!response.Success)
+            return this.ProcessResponse(response);
+        
+        return Ok(_mapper.Map<IEnumerable<Sport>, IEnumerable<SportResource>>(response.Object!));
+    }
+
+    [HttpDelete("{id}", Name = "Delete Sport")]
+    public async Task<IActionResult> DeleteSport(string id)
+    {
+        var response = await _sportService.DeleteAsync(id);
+        if (!response.Success)
+            return this.ProcessResponse(response);
+
+        return Ok("Sport successfully deleted");
     }
 }

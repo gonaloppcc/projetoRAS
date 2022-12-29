@@ -1,5 +1,6 @@
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
+using RasbetServer.Extensions;
 using RasbetServer.Models.Events.Participants.Participant;
 using RasbetServer.Resources.Events.Participants.Participant;
 using RasbetServer.Resources.Events.Participants.Participant.Player;
@@ -24,30 +25,42 @@ public class ParticipantController : ControllerBase
     [HttpGet("{id}", Name = "GetParticipant")]
     public async Task<IActionResult> GetParticipantAsync(string id)
     {
-        var participant = await _ParticipantService.GetAsync(id);
-        return Ok(_mapper.Map<Participant, ParticipantResource>(participant));
+        var response = await _ParticipantService.GetAsync(id);
+        if (!response.Success)
+            return this.ProcessResponse(response);
+        
+        return Ok(_mapper.Map<Participant, ParticipantResource>(response.Object!));
     }
 
     [HttpGet(Name = "GetBySport")]
     public async Task<IActionResult> GetBySportAsync([FromQuery] string sport)
     {
-        var partList = await _ParticipantService.ListBySportAsync(sport);
-        return Ok(_mapper.Map<IEnumerable<Participant>, IEnumerable<ParticipantResource>>(partList));
+        var response = await _ParticipantService.ListBySportAsync(sport);
+        if (!response.Success)
+            return this.ProcessResponse(response);
+        
+        return Ok(_mapper.Map<IEnumerable<Participant>, IEnumerable<ParticipantResource>>(response.Object!));
     }
 
     [HttpPost("teams", Name = "AddTeam")]
     public async Task<IActionResult> AddTeamAsync(SaveTeamResource teamResource)
     {
         var part = _mapper.Map<SaveTeamResource, Team>(teamResource);
-        var added = await _ParticipantService.AddAsync(part);
-        return Ok(_mapper.Map<Participant, ParticipantResource>(added));
+        var response = await _ParticipantService.AddAsync(part);
+        if (!response.Success)
+            return this.ProcessResponse(response);
+        
+        return Ok(_mapper.Map<Participant, ParticipantResource>(response.Object!));
     }
     
     [HttpPost("players", Name = "AddPlayer")]
     public async Task<IActionResult> AddPlayerAsync(SavePlayerResource playerResource)
     {
         var part = _mapper.Map<SavePlayerResource, Player>(playerResource);
-        var added = await _ParticipantService.AddAsync(part);
-        return Ok(_mapper.Map<Participant, ParticipantResource>(added));
+        var response = await _ParticipantService.AddAsync(part);
+        if (!response.Success)
+            return this.ProcessResponse(response);
+        
+        return Ok(_mapper.Map<Participant, ParticipantResource>(response.Object!));
     }
 }

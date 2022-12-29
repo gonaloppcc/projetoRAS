@@ -1,6 +1,7 @@
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json.Linq;
+using RasbetServer.Extensions;
 using RasbetServer.Models.Bets;
 using RasbetServer.Resources.Bets;
 using RasbetServer.Services.Bets;
@@ -21,31 +22,41 @@ public class BetController : ControllerBase
     }
 
     [HttpGet("{id}", Name = "GetBet")]
-    public async Task<ActionResult<Bet>> GetBet(string id)
+    public async Task<IActionResult> GetBet(string id)
     {
-        var bet = await _betService.GetAsync(id);
-        return Ok(_mapper.Map<Bet, BetResource>(bet));
+        var response = await _betService.GetAsync(id);
+        if (!response.Success)
+            return this.ProcessResponse(response);
+        return Ok(_mapper.Map<Bet, BetResource>(response.Object!));
     }
 
     [HttpGet(Name = "GetAllBets")]
-    public async Task<ActionResult<IEnumerable<Bet>>> GetAllBets([FromQuery] string userId)
+    public async Task<IActionResult> GetAllBets([FromQuery] string userId)
     {
-        var betList = await _betService.ListAsync(userId); 
-        return Ok(_mapper.Map<IEnumerable<Bet>, IEnumerable<BetResource>>(betList));
+        var response = await _betService.ListAsync(userId);
+        if (!response.Success)
+            return this.ProcessResponse(response);
+        return Ok(_mapper.Map<IEnumerable<Bet>, IEnumerable<BetResource>>(response.Object!));
     }
 
     [HttpPost(Name = "AddBet")]
-    public async Task<ActionResult<Bet>> AddBet([FromBody] JObject json)
+    public async Task<IActionResult> AddBet([FromBody] JObject json)
     {
         var betResource = Bet.FromJson(json);
         var bet = _mapper.Map<SaveBetResource, Bet>(betResource);
-        var newBet = await _betService.AddAsync(bet);
-        return Ok(_mapper.Map<Bet, BetResource>(newBet));
+        var response = await _betService.AddAsync(bet);
+        if (!response.Success)
+            return this.ProcessResponse(response);
+        return Ok(_mapper.Map<Bet, BetResource>(response.Object!));
     }
 
     [HttpDelete("{id}", Name = "DeleteBet")]
     public async Task<IActionResult> CancelBet(string id)
     {
-        return Ok(await _betService.CancelBetAsync(id));
+        var response = await _betService.CancelBetAsync(id);
+        if (!response.Success)
+            return this.ProcessResponse(response);
+        
+        return Ok(response.Object);
     }
 }

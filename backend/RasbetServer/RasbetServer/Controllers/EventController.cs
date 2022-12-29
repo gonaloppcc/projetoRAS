@@ -1,5 +1,6 @@
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
+using RasbetServer.Extensions;
 using RasbetServer.Models.Events;
 using RasbetServer.Resources.Events.Event;
 using RasbetServer.Resources.Events.Event.FootballEvent;
@@ -23,41 +24,36 @@ public class EventController : ControllerBase
 
     // TODO: Implement this properly
     [HttpGet(Name = "GetPage")]
-    public async Task<ActionResult<List<EventResource>>> GetPage([FromQuery] string compId, [FromQuery] int pageNum,
+    public async Task<IActionResult> GetPage([FromQuery] string compId, [FromQuery] int pageNum,
         [FromQuery] int pageSize)
     {
-        var page = await _eventService.ListPageAsync(compId, pageNum, pageSize); 
-        return Ok(_mapper.Map<IEnumerable<Event>, IEnumerable<EventResource>>(page));
+        var response = await _eventService.ListPageAsync(compId, pageNum, pageSize);
+        if (!response.Success)
+            return this.ProcessResponse(response);
+        
+        return Ok(_mapper.Map<IEnumerable<Event>, IEnumerable<EventResource>>(response.Object!));
     }
 
     // TODO: Implement this properly
     [HttpGet("{id}", Name = "GetEvent")]
-    public async Task<ActionResult<Event>> GetEvent(string id)
+    public async Task<IActionResult> GetEvent(string id)
     {
-        try
-        {
-            var e = await _eventService.GetAsync(id);
-            return Ok(_mapper.Map<Event, EventResource>(e));
-        }
-        catch (Exception exception)
-        {
-            return NotFound("The requested event was not found");
-        }
+        var response = await _eventService.GetAsync(id);
+        if (!response.Success)
+            return this.ProcessResponse(response);
+        
+        return Ok(_mapper.Map<Event, EventResource>(response.Object!));
     }
 
     // TODO: Implement this properly
     [HttpPost(Name = "AddEvent")]
     public async Task<IActionResult> AddEvent([FromBody] SaveFootballEventResource eventResource)
     {
-        try
-        {
-            var e = _mapper.Map<SaveFootballEventResource, FootballEvent>(eventResource);
-            var newEvent = await _eventService.AddAsync(e);
-            return Ok(_mapper.Map<Event,EventResource>(newEvent));
-        }
-        catch (Exception exception)
-        {
-            return BadRequest("Error Adding Event");
-        }
+        var e = _mapper.Map<SaveFootballEventResource, FootballEvent>(eventResource);
+        var response = await _eventService.AddAsync(e);
+        if (!response.Success)
+            return this.ProcessResponse(response);
+        
+        return Ok(_mapper.Map<Event,EventResource>(response.Object!));
     }
 }

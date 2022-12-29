@@ -1,8 +1,8 @@
-using RasbetServer.Exceptions.Users;
 using RasbetServer.Models.Bets;
 using RasbetServer.Models.Users;
 using RasbetServer.Repositories.BetRepository;
 using RasbetServer.Repositories.UserRepository;
+using RasbetServer.Services.Communication;
 
 namespace RasbetServer.Services.Bets;
 
@@ -17,51 +17,70 @@ public class BetService : IBetService
         _userRepository = userRepository;
     }
     
-    public async Task<Bet> GetAsync(string id)
+    public async Task<ObjectResponse<Bet>> GetAsync(string id)
     {
-        return await _betRepository.GetAsync(id);
+        var bet = await _betRepository.GetAsync(id);
+        if (bet is null)
+            return new ObjectResponse<Bet>("Bet not found", StatusCode.NotFound);
+        
+        return new ObjectResponse<Bet>(bet);
     }
 
-    public async Task<IEnumerable<Bet>> ListAsync(string userId)
+    public async Task<ObjectResponse<IEnumerable<Bet>>> ListAsync(string userId)
     {
-        return await _betRepository.ListAsync(userId);
+        var user = await _userRepository.GetAsync(userId);
+        if (user is null)
+            return new ObjectResponse<IEnumerable<Bet>>("User not found", StatusCode.NotFound);
+        if (user is not Better)
+            return new ObjectResponse<IEnumerable<Bet>>("User is not a better", StatusCode.Unauthorized);
+        
+        return new ObjectResponse<IEnumerable<Bet>>(await _betRepository.ListAsync(userId));
     }
 
-    public async Task<Bet> AddAsync(Bet bet)
+    public async Task<ObjectResponse<Bet>> AddAsync(Bet bet)
     {
         var user = await _userRepository.GetAsync(bet.BetterId);
         if (user is not Better better)
-            throw new InvalidUserTypeException("User must be a better to make bets");
+            return new ObjectResponse<Bet>("User is not a better", StatusCode.Unauthorized);
         if (better.Balance < bet.Amount)
-            throw new InvalidOperationException("Not enough balance to make this bet");
+            return new ObjectResponse<Bet>("Insufficient balance", StatusCode.Unauthorized);
         
         bet.Date = DateTime.Now;
         bet.Closed = false;
         var added = await _betRepository.AddAsync(bet);
+        if (added is null)
+            return new ObjectResponse<Bet>("Unknown error registering bet", StatusCode.BadRequest);
+        
         better.Balance -= bet.Amount;
         better.TransactionHist.Add(new Transaction(-bet.Amount));
-        //await _userRepository.AddTransactionAsync(new Transaction(-bet.Amount));
         await _userRepository.UpdateAsync(better);
 
-        return added;
+        return new ObjectResponse<Bet>(added);
     }
 
-    public async Task<float> CancelBetAsync(string id)
+    public async Task<ObjectResponse<float>> CancelBetAsync(string id)
     {
         var bet = await _betRepository.GetAsync(id);
+        if (bet is null)
+            return new ObjectResponse<float>("Bet not found", StatusCode.NotFound);
         if (bet.Closed)
-            throw new InvalidOperationException("Bet is closed");
+            return new ObjectResponse<float>("Cannot cancel a closed bet", StatusCode.Forbidden);
         
         var user = await _userRepository.GetAsync(bet.BetterId);
+        if (user is null)
+            return new ObjectResponse<float>("User not found", StatusCode.NotFound);
         if (user is not Better better)
-            throw new InvalidUserTypeException("User must be a better");
+            return new ObjectResponse<float>("User is not a better", StatusCode.Unauthorized);
 
         float cancelReturn = bet.CancelReturn;
         better.Balance += cancelReturn;
-        await _betRepository.DeleteAsync(id);
+        var deleted = await _betRepository.DeleteAsync(bet);
+        if (!deleted)
+            return new ObjectResponse<float>("Unknown error canceling bet", StatusCode.BadRequest);
+        
         better.TransactionHist.Add(new Transaction(cancelReturn));
         await _userRepository.UpdateAsync(better);
 
-        return better.Balance;
+        return new ObjectResponse<float>(better.Balance);
     }
 }

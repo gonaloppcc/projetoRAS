@@ -10,14 +10,14 @@ public class EventRepository : BaseRepository, IEventRepository
     {
     }
 
-    public async Task<Event> GetAsync(string id)
+    public async Task<Event?> GetAsync(string id)
     {
         return await (
             from e 
                 in _context.Events
             where e.Id == id 
             select e
-        ).SingleAsync();
+        ).SingleOrDefaultAsync();
     }
 
     public async Task<IEnumerable<Event>> ListPageAsync(string competitionId, int pageNum, int pageSize)
@@ -33,12 +33,19 @@ public class EventRepository : BaseRepository, IEventRepository
             .ToListAsync();
     }
 
-    public async Task<Event> AddAsync(Event e)
+    public async Task<Event?> AddAsync(Event e)
     {
-        var entityEntry = await _context.Events.AddAsync(e);
-        await _context.SaveChangesAsync();
+        try
+        {
+            var entityEntry = await _context.Events.AddAsync(e);
+            await _context.SaveChangesAsync();
 
-        await entityEntry.ReloadAsync();
-        return entityEntry.Entity;
+            await entityEntry.ReloadAsync();
+            return entityEntry.Entity;
+        }
+        catch (DbUpdateException)
+        {
+            return null;
+        }
     }
 }

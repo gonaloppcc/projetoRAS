@@ -2,6 +2,8 @@ using System.Text.Json;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
+using RasbetServer.Extensions;
 using RasbetServer.Models.Users;
 using RasbetServer.Resources.Users;
 using RasbetServer.Resources.Users.Better;
@@ -33,29 +35,20 @@ public class UserController : ControllerBase
     [HttpPost(Name = "Login")]
     public async Task<IActionResult> Login([FromBody] Credentials creds)
     {
-        try {
-            var user = await _userService.LoginAsync(creds.Email, creds.Password);
-            var resource = _mapper.Map<User, UserResource>(user);
-            return Ok(JsonConvert.SerializeObject(resource));
-        }
-        catch (Exception e) {
-            return NotFound("User not found");
-        }
+        var response = await _userService.LoginAsync(creds.Email, creds.Password);
+        if (!response.Success)
+            return this.ProcessResponse(response);
+        
+        var resource = _mapper.Map<User, UserResource>(response.Object!);
+        return Ok(resource);
     }
 
     [HttpPatch("balance", Name = "UpdateBalance")]
     public async Task<IActionResult> UpdateBalance([FromQuery] string id, [FromQuery] float balance)
     {
-        try
-        {
-            var newBalance = await _userService.UpdateBalanceAsync(id, balance);
-            //var resource = _mapper.Map<User, UserResource>(better);
-            return Ok(JsonConvert.SerializeObject(newBalance));
-        }
-        catch (Exception e)
-        {
-            return NotFound("User not found");
-        }
+        var response = await _userService.UpdateBalanceAsync(id, balance);
+        return response.Success ? 
+             Ok(response.Object) : this.ProcessResponse(response);
     }
 
     /// <summary>
@@ -69,17 +62,13 @@ public class UserController : ControllerBase
     [HttpPost("betters", Name = "RegisterBetter")]
     public async Task<IActionResult> RegisterBetter([FromBody] SaveBetterResource betterResource)
     {
-        try
-        {
-            var better = _mapper.Map<SaveBetterResource, Better>(betterResource);
-            var newBetter = await _userService.RegisterAsync(better);
-            var resource = _mapper.Map<User, UserResource>(newBetter);
-            return Ok(JsonConvert.SerializeObject(resource));
-        }
-        catch (Exception e)
-        {
-            return BadRequest();
-        }
+        var better = _mapper.Map<SaveBetterResource, Better>(betterResource);
+        var response = await _userService.RegisterAsync(better);
+        if (!response.Success)
+            return this.ProcessResponse(response);
+
+        var resource = _mapper.Map<User, UserResource>(response.Object!);
+        return Ok(resource);
     }
 
     /// <summary>
@@ -93,17 +82,13 @@ public class UserController : ControllerBase
     [HttpPost("specialists", Name = "RegisterSpecialist")]
     public async Task<IActionResult> RegisterSpecialist([FromBody] SaveSpecialistResource specialistResource)
     {
-        try
-        {
-            var specialist = _mapper.Map<SaveSpecialistResource, Specialist>(specialistResource);
-            var newSpecialist = await _userService.RegisterAsync(specialist);
-            var resource = _mapper.Map<User, UserResource>(newSpecialist);
-            return Ok(JsonConvert.SerializeObject(resource));
-        }
-        catch (Exception e)
-        {
-            return Problem(e.Message);
-        }
+        var specialist = _mapper.Map<SaveSpecialistResource, Specialist>(specialistResource);
+        var response = await _userService.RegisterAsync(specialist);
+        if (!response.Success)
+            return this.ProcessResponse(response);
+        
+        var resource = _mapper.Map<User, UserResource>(response.Object!);
+        return Ok(resource);
     }
 
     /// <summary>
@@ -113,21 +98,16 @@ public class UserController : ControllerBase
     /// <param name="json">Json object with the new password</param>
     /// <returns>The user with the updated password or BadRequest if the user does not exist</returns>
     [HttpPatch("{id}/password", Name = "ChangePassword")]
-    public async Task<ActionResult<User>> ChangePassword(string id, [FromBody] JsonElement json)
+    public async Task<IActionResult> ChangePassword(string id, [FromBody] JObject json)
     {
-        var password = json.GetProperty("password").GetString();
-        if (password is null)
+        var token = json["password"];
+        if (token is null)
             return BadRequest("No password provided");
-
-        try
-        {
-            await _userService.ChangePasswordAsync(id, password);
-            return Ok("Password changed successfully");
-        }
-        catch (Exception e)
-        {
-            return NotFound("User not found");
-        }
+        var password = token.Value<string>()!;
+        
+        var response = await _userService.ChangePasswordAsync(id, password);
+        return response.Success ? 
+            Ok("Password changed successfully") : this.ProcessResponse(response);
     }
 
     /// <summary>
@@ -138,23 +118,18 @@ public class UserController : ControllerBase
     [HttpDelete("{id}", Name = "DeleteUser")]
     public async Task<IActionResult> Delete(string id)
     {
-        try
-        {
-            await _userService.DeleteUserAsync(id);
-            return Ok("User successfully deleted");
-        }
-        catch (Exception e)
-        {
-            return NotFound("User not found");
-        }
+        var response = await _userService.DeleteUserAsync(id);
+        return response.Success ?
+            Ok("User successfully deleted") : this.ProcessResponse(response);
     }
 
     [HttpGet("{id}/transactionHist", Name = "GetTransactionHist")]
     public async Task<IActionResult> GetTransactionHist(string id)
     {
-        var transactionHist = await _userService.GetTransactionHist(id);
-        var transactionResource =
-            _mapper.Map<IEnumerable<Transaction>, IEnumerable<TransactionResource>>(transactionHist);
-        return Ok(transactionResource);
+        var response = await _userService.GetTransactionHist(id);
+        if (!response.Success)
+            return this.ProcessResponse(response);
+        
+        return Ok(_mapper.Map<IEnumerable<Transaction>, IEnumerable<TransactionResource>>(response.Object!));
     }
 }

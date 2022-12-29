@@ -1,10 +1,12 @@
 using RasbetServer.Models.Events;
+using RasbetServer.Services.Communication;
 
 namespace RasbetServer.Services.Sports;
 
 public interface ISportService
 {
-    Task<Sport> GetAsync(string name);
-    Task<IEnumerable<Sport>> ListAsync();
-    Task<Sport> AddAsync(Sport sport);
+    Task<ObjectResponse<Sport>> GetAsync(string name);
+    Task<ObjectResponse<IEnumerable<Sport>>> ListAsync();
+    Task<ObjectResponse<Sport>> AddAsync(Sport sport);
+    Task<VoidResponse> DeleteAsync(string id);
 }

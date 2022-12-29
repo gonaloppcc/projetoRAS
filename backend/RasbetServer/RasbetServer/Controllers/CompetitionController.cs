@@ -1,6 +1,7 @@
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
+using RasbetServer.Extensions;
 using RasbetServer.Models.Events;
 using RasbetServer.Resources.Events.Competitions;
 using RasbetServer.Services.Competitions;
@@ -21,34 +22,43 @@ public class CompetitionController : ControllerBase
     }
     
     [HttpPost(Name = "AddCompetition")]
-    public async Task<ActionResult<Competition>> AddCompetition([FromBody] SaveCompetitionResource competitionResource)
+    public async Task<IActionResult> AddCompetition([FromBody] SaveCompetitionResource competitionResource)
     {
-        try
-        {
-            var comp = _mapper.Map<SaveCompetitionResource, Competition>(competitionResource);
-            var newComp = await _competitionService.AddAsync(comp);
-            var mapped = _mapper.Map<Competition, CompetitionResource>(newComp);
-            return Ok(JsonConvert.SerializeObject(mapped));
-        }
-        catch (Exception e)
-        {
-            return BadRequest();
-        }
+        var comp = _mapper.Map<SaveCompetitionResource, Competition>(competitionResource);
+        var response = await _competitionService.AddAsync(comp);
+        if (!response.Success)
+            return this.ProcessResponse(response);
+        
+        return Ok(_mapper.Map<Competition, CompetitionResource>(response.Object!));
     }
 
     [HttpGet("{id}", Name = "GetCompetition")]
-    public async Task<ActionResult<Competition>> GetCompetition(string id)
+    public async Task<IActionResult> GetCompetition(string id)
     {
-        var comp = await _competitionService.GetAsync(id);
-        var compResource = _mapper.Map<Competition, CompetitionResource>(comp);
-        return Ok(JsonConvert.SerializeObject(compResource));   
+        var response = await _competitionService.GetAsync(id);
+        if (!response.Success)
+            return this.ProcessResponse(response);
+        
+        return Ok(_mapper.Map<Competition, CompetitionResource>(response.Object!));   
     }
 
     [HttpGet(Name = "GetAllCompetitions")]
-    public async Task<ActionResult<List<Competition>>> GetAllCompetitions([FromQuery] string sportId)
+    public async Task<IActionResult> GetAllCompetitions([FromQuery] string sportId)
     {
-        var comps = await _competitionService.ListAsync(sportId);
-        var compsResource = _mapper.Map<IEnumerable<Competition>, IEnumerable<CompetitionResource>>(comps);
-        return Ok(JsonConvert.SerializeObject(compsResource));
+        var response = await _competitionService.ListAsync(sportId);
+        if (!response.Success)
+            return this.ProcessResponse(response);
+        
+        return Ok(_mapper.Map<IEnumerable<Competition>, IEnumerable<CompetitionResource>>(response.Object!));
+    }
+
+    [HttpDelete("{id}", Name = "DeleteCompetition")]
+    public async Task<IActionResult> DeleteCompetition(string id)
+    {
+        var response = await _competitionService.DeleteAsync(id);
+        if (!response.Success)
+            return this.ProcessResponse(response);
+
+        return Ok("Competition successfully deleted");
     }
 }
