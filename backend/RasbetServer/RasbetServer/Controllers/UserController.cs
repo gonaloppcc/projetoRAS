@@ -145,9 +145,9 @@ public class UserController : ControllerBase
     }
 
     [HttpDelete("{betterId}/notifications/{id}")]
-    public async Task<IActionResult> CancelNotificationAsync(string id)
+    public async Task<IActionResult> CloseNotificationAsync(string id)
     {
-        var response = await _userService.CancelNotificationAsync(id);
+        var response = await _userService.CloseNotificationAsync(id);
         if (!response.Success)
             return this.ProcessResponse(response);
 

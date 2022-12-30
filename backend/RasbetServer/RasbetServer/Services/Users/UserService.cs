@@ -103,7 +103,7 @@ public class UserService : IUserService
         return new ObjectResponse<IEnumerable<Notification>>(notifications);
     }
 
-    public async Task<VoidResponse> CancelNotificationAsync(string notificationId)
+    public async Task<VoidResponse> CloseNotificationAsync(string notificationId)
     {
         var notification = await _notificationRepository.GetAsync(notificationId);
         if (notification is null)
