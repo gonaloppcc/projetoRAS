@@ -1,4 +1,6 @@
 using RasbetServer.Models.Users;
+using RasbetServer.Models.Users.Better;
+using RasbetServer.Models.Users.Notifications;
 using RasbetServer.Repositories.BetRepository;
 using RasbetServer.Repositories.CompetitionRepository;
 using RasbetServer.Repositories.EventRepository;
@@ -89,5 +91,18 @@ public class UserService : BaseService, IUserService
             return new ObjectResponse<IEnumerable<Transaction>>("User is not a better", StatusCode.Unauthorized);
 
         return new ObjectResponse<IEnumerable<Transaction>>(better.TransactionHist);
+    }
+
+    public async Task<ObjectResponse<IEnumerable<Notification>>> GetNotificationsAsync(string userId)
+    {
+        var user = await _userRepository.GetAsync(userId);
+        if (user is null)
+            return new ObjectResponse<IEnumerable<Notification>>("User not found", StatusCode.NotFound);
+
+        var notifications = user.Notifications;
+        if (notifications is null)
+            return new ObjectResponse<IEnumerable<Notification>>("Unknown error getting notifications", StatusCode.BadRequest);
+        
+        return new ObjectResponse<IEnumerable<Notification>>(notifications);
     }
 }

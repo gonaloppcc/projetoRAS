@@ -3,9 +3,12 @@ using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json.Linq;
 using RasbetServer.Extensions;
 using RasbetServer.Models.Users;
+using RasbetServer.Models.Users.Better;
+using RasbetServer.Models.Users.Notifications;
 using RasbetServer.Resources.Users;
 using RasbetServer.Resources.Users.Better;
 using RasbetServer.Resources.Users.Better.Transaction;
+using RasbetServer.Resources.Users.Notifications;
 using RasbetServer.Resources.Users.Specialist;
 using RasbetServer.Services.Users;
 
@@ -129,5 +132,15 @@ public class UserController : ControllerBase
             return this.ProcessResponse(response);
         
         return Ok(_mapper.Map<IEnumerable<Transaction>, IEnumerable<TransactionResource>>(response.Object!));
+    }
+
+    [HttpGet("{id}/notifications", Name = "GetNotifications")]
+    public async Task<IActionResult> GetNotifications(string id)
+    {
+        var response = await _userService.GetNotificationsAsync(id);
+        if (!response.Success)
+            return this.ProcessResponse(response);
+
+        return Ok(_mapper.Map<IEnumerable<Notification>, IEnumerable<NotificationResource>>(response.Object!));
     }
 }

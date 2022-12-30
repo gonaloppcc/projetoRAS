@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using RasbetServer.Models.Users;
+using RasbetServer.Models.Users.Better;
 using RasbetServer.Repositories.Contexts;
 
 namespace RasbetServer.Repositories.UserRepository;

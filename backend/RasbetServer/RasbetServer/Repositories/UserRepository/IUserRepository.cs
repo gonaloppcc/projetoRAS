@@ -1,4 +1,5 @@
 ﻿using RasbetServer.Models.Users;
+using RasbetServer.Models.Users.Better;
 
 namespace RasbetServer.Repositories.UserRepository;
 
