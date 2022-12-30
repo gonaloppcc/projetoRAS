@@ -9,6 +9,7 @@ using RasbetServer.Repositories.BetRepository;
 using RasbetServer.Repositories.CompetitionRepository;
 using RasbetServer.Repositories.Contexts;
 using RasbetServer.Repositories.EventRepository;
+using RasbetServer.Repositories.NotificationRepository;
 using RasbetServer.Repositories.ParticipantRepository;
 using RasbetServer.Repositories.SportRepository;
 using RasbetServer.Repositories.UserRepository;
@@ -72,6 +73,8 @@ public class Startup
 
         services.AddScoped<IParticipantRepository, ParticipantRepository>();
         services.AddScoped<IParticipantService, ParticipantService>();
+
+        services.AddScoped<INotificationRepository, NotificationRepository>();
 
         services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
     }

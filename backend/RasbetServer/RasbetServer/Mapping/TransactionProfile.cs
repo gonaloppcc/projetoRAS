@@ -1,5 +1,4 @@
 using AutoMapper;
-using RasbetServer.Models.Users;
 using RasbetServer.Models.Users.Better;
 using RasbetServer.Resources.Users.Better.Transaction;
 

@@ -14,4 +14,5 @@ public interface IUserService
     Task<ObjectResponse<float>> UpdateBalanceAsync(string id, float amount);
     Task<ObjectResponse<IEnumerable<Transaction>>> GetTransactionHist(string id);
     Task<ObjectResponse<IEnumerable<Notification>>> GetNotificationsAsync(string userId);
+    Task<VoidResponse> CancelNotificationAsync(string notificationId);
 }

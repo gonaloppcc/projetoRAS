@@ -143,4 +143,14 @@ public class UserController : ControllerBase
 
         return Ok(_mapper.Map<IEnumerable<Notification>, IEnumerable<NotificationResource>>(response.Object!));
     }
+
+    [HttpDelete("{betterId}/notifications/{id}")]
+    public async Task<IActionResult> CancelNotificationAsync(string id)
+    {
+        var response = await _userService.CancelNotificationAsync(id);
+        if (!response.Success)
+            return this.ProcessResponse(response);
+
+        return Ok("Notification deleted successfully");
+    }
 }

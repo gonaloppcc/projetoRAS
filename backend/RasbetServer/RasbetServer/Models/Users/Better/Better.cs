@@ -1,5 +1,4 @@
 using System.ComponentModel.DataAnnotations;
-using Newtonsoft.Json.Linq;
 
 namespace RasbetServer.Models.Users.Better;
 

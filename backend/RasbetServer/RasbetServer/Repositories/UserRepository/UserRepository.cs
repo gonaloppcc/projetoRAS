@@ -1,6 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using RasbetServer.Models.Users;
-using RasbetServer.Models.Users.Better;
 using RasbetServer.Repositories.Contexts;
 
 namespace RasbetServer.Repositories.UserRepository;
@@ -65,21 +64,5 @@ public class UserRepository : BaseRepository, IUserRepository {
     {
         _context.Update(user);
         await _context.SaveChangesAsync();
-    }
-
-    public async Task<Transaction?> AddTransactionAsync(Transaction transaction)
-    {
-        try
-        {
-            var entityEntry = _context.Transactions.Add(transaction);
-            await _context.SaveChangesAsync();
-
-            await entityEntry.ReloadAsync();
-            return entityEntry.Entity;
-        }
-        catch (DbUpdateException)
-        {
-            return null;
-        }
     }
 }
