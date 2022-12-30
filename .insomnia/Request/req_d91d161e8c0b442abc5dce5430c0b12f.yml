@@ -1,7 +1,7 @@
 _id: req_d91d161e8c0b442abc5dce5430c0b12f
 type: Request
 parentId: fld_d8286c686f27455a88d70d0b096ef407
-modified: 1672336962117
+modified: 1672355262299
 created: 1672249243026
 url: http://localhost:5000/events
 name: AddEvent
@@ -13,7 +13,7 @@ body:
     {
     	"Sport": "Football",
     	"Event": {
-    		"CompetitionId": "Portuguese First League",
+    		"CompetitionId": "Premier League",
     		"Date": "2022-11-26T16:01:17.0065405+00:00",
     		"Completed": true,
     		"Participants": {

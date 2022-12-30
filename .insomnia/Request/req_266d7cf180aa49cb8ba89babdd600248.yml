@@ -1,10 +1,10 @@
 _id: req_266d7cf180aa49cb8ba89babdd600248
 type: Request
 parentId: fld_d8286c686f27455a88d70d0b096ef407
-modified: 1672333874909
+modified: 1672355271778
 created: 1669476656465
-url: http://localhost:5000/events
-name: GetPage
+url: http://localhost:5000/events/competition
+name: GetPageByCompetition
 description: ""
 method: GET
 body: {}
@@ -15,11 +15,11 @@ parameters:
     description: ""
   - id: pair_73df123f4ac3485bb8ee8ac08a899106
     name: compId
-    value: Portuguese First League
+    value: Premier League
     description: ""
   - id: pair_946a9fc946354db2b334e2f85e8bcee1
     name: pageSize
-    value: "2"
+    value: "5"
     description: ""
 headers: []
 authentication: {}

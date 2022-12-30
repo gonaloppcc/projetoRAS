@@ -1,7 +1,7 @@
 _id: req_cfcc6eaa2c2d48deb78c0985e2cd242e
 type: Request
 parentId: fld_0fbf4a21f6da4447b0a88b31a7333646
-modified: 1672290934213
+modified: 1672355235536
 created: 1670028365341
 url: localhost:5000/competitions/
 name: GetAllCompetitions
@@ -11,7 +11,7 @@ body: {}
 parameters:
   - id: pair_55f1803ccd5e425daeb07fa8121d9fd9
     name: sportId
-    value: Formula1
+    value: Football
     description: ""
 headers: []
 authentication: {}

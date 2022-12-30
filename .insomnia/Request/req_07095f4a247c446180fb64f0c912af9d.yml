@@ -1,0 +1,33 @@
+_id: req_07095f4a247c446180fb64f0c912af9d
+type: Request
+parentId: fld_d8286c686f27455a88d70d0b096ef407
+modified: 1672355378797
+created: 1672355291902
+url: http://localhost:5000/events/sport
+name: GetPageBySport
+description: ""
+method: GET
+body: {}
+parameters:
+  - id: pair_afdb3e1092b840e9a3d702fa92151d6b
+    name: sportId
+    value: Football
+    description: ""
+  - id: pair_4504a70105bc449095ac29359ba109e5
+    name: pageNum
+    value: "1"
+    description: ""
+  - id: pair_14bf0be494444374804d038f744034ec
+    name: pageSize
+    value: "2"
+    description: ""
+headers: []
+authentication: {}
+metaSortKey: -1669462203851.25
+isPrivate: false
+settingStoreCookies: true
+settingSendCookies: true
+settingDisableRenderRequestBody: false
+settingEncodeUrl: true
+settingRebuildPath: true
+settingFollowRedirects: global
