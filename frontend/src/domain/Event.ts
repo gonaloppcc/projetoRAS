@@ -80,3 +80,10 @@ export interface Part {
 export interface Player {
     Name: string;
 }
+
+// Utilizado no admin/chooseModality
+export interface InfoSport {
+    name: string;
+    competition: string[];
+    teams: string[];
+}

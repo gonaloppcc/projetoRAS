@@ -7,7 +7,7 @@ interface PageProps {
 }
 
 const EventPage: NextPage<PageProps> = ({eventId}) => {
-    return <div>EventId: {eventId}</div>;
+    return <div>Sport: {eventId}</div>;
 };
 
 EventPage.getInitialProps = async ({query}) => {
