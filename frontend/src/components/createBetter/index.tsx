@@ -2,6 +2,7 @@ import React, {useEffect, useState} from 'react';
 import {HandleChangeProps, InputForm} from '@components/createBetter/inputForm';
 import {REGEX_MAIL, REGEX_NUMBERS, REGEX_USERNAME} from '../../utils/regex';
 import Link from 'next/link';
+import {PrimaryButton} from '@components/Button';
 
 interface ValuesProps {
     password: string;
@@ -157,10 +158,9 @@ export const CreateBetter = () => {
                                 error={errors.numberCC}
                             />
                             <div className="flex flex-col items-start self-stretch flex-none order-1 px-20 py-3">
-                                <div className=" text-white text-center h-12 p-2 w-24 gap-5 bg-red-600 rounded justify-center ">
-                                    {/*  FIXME Em todos */}
-                                    <button type="submit">Registar</button>
-                                </div>
+                                <PrimaryButton type="submit">
+                                    Registar
+                                </PrimaryButton>
                             </div>
                             <div className="flex-none order-2  ">
                                 <div className="text-center	">

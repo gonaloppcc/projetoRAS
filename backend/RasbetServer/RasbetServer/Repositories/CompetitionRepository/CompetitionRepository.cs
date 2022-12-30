@@ -9,20 +9,43 @@ public class CompetitionRepository : BaseRepository, ICompetitionRepository
     public CompetitionRepository(AppDbContext context) : base(context)
     { }
     
-    public Competition AddCompetition(Competition c)
+    public async Task<Competition?> AddAsync(Competition c)
     {
-        var comp = _context.Competitions.Add(c);
-        _context.SaveChanges();
+        try
+        {
+            var comp = await _context.Competitions.AddAsync(c);
+            await _context.SaveChangesAsync();
         
-        // Refresh _context cache
-        comp.State = EntityState.Detached;
-        return _context.Competitions.Find(comp.Entity.Name) 
-               ?? throw new InvalidOperationException();
+            await comp.ReloadAsync();
+            return comp.Entity;
+        }
+        catch (DbUpdateException)
+        {
+            return null;
+        }
     }
 
-    public Competition GetCompetition(string name)
-        => (from c in _context.Competitions where c.Name == name select c).Single();
+    public async Task<Competition?> GetAsync(string name)
+    {
+        return await (from c in _context.Competitions where c.Name == name select c).SingleOrDefaultAsync();
+    }
 
-    public IEnumerable<Competition> GetAllCompetitions(string sportId)
-        => (from c in _context.Competitions where c.SportId == sportId select c).ToList();
+    public async Task<IEnumerable<Competition>> ListAsync(string sportId)
+    {
+        return await (from c in _context.Competitions where c.SportId == sportId select c).ToListAsync();
+    }
+
+    public async Task<bool> DeleteAsync(Competition competition)
+    {
+        try
+        {
+            _context.Competitions.Remove(competition);
+            await _context.SaveChangesAsync();
+            return true;
+        }
+        catch (DbUpdateException)
+        {
+            return false;
+        }
+    }
 }

@@ -4,7 +4,7 @@ import {PageLayout} from '@components/PageLayout';
 import {useEvents} from '@hooks/useEvents';
 import {CircularProgress} from '@mui/material';
 
-const PRIMARY_COMPETITION_ID = 'Premier League'; // Football
+const PRIMARY_COMPETITION_ID = 'Portuguese First League'; // Football
 
 const Home: NextPage = () => {
     const {isSuccess, isLoading, isError, events, error} = useEvents(
@@ -13,7 +13,7 @@ const Home: NextPage = () => {
 
     return (
         <PageLayout>
-            <div className="flex flex-col justify-start items-center gap-3 w-full">
+            <div className="min-w-min flex flex-col justify-start items-start gap-3 w-full">
                 {isLoading && <CircularProgress />}
                 {isSuccess &&
                     events.map((event) => (

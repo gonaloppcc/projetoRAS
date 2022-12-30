@@ -4,7 +4,8 @@ namespace RasbetServer.Repositories.CompetitionRepository;
 
 public interface ICompetitionRepository
 {
-    Competition AddCompetition(Competition competition);
-    Competition GetCompetition(string id);
-    IEnumerable<Competition> GetAllCompetitions(string sportId);
+    Task<Competition?> AddAsync(Competition competition);
+    Task<Competition?> GetAsync(string id);
+    Task<IEnumerable<Competition>> ListAsync(string sportId);
+    Task<bool> DeleteAsync(Competition competition);
 }

@@ -1,10 +1,10 @@
-using System.Text.Json;
-using Microsoft.AspNetCore.Cors;
+using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
-using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using RasbetServer.Extensions;
 using RasbetServer.Models.Events;
-using RasbetServer.Repositories.EventRepository;
+using RasbetServer.Resources.Events.Event;
+using RasbetServer.Services.Events;
 
 namespace RasbetServer.Controllers;
 
@@ -13,54 +13,54 @@ namespace RasbetServer.Controllers;
 [Route("events")]
 public class EventController : ControllerBase
 {
-    private readonly IEventRepository _eventRepository;
+    private readonly IEventService _eventService;
+    private readonly IMapper _mapper;
 
-    public EventController(IEventRepository eventRepository)
+    public EventController(IEventService eventService, IMapper mapper)
     {
-        _eventRepository = eventRepository;
+        _eventService = eventService;
+        _mapper = mapper;
     }
 
-    // TODO: Implement this properly
-    [HttpGet(Name = "GetPage")]
-    public ActionResult<List<Event>> GetPage([FromQuery] string compId, [FromQuery] int pageNum,
-        [FromQuery] int pageSize)
+    [HttpGet("competition", Name = "GetPageByCompetition")]
+    public async Task<IActionResult> GetPageByCompetition([FromQuery] string compId, [FromQuery] int pageNum, [FromQuery] int pageSize)
     {
-        try
-        {
-            return Ok(JsonConvert.SerializeObject(_eventRepository.GetPage(compId, pageNum, pageSize)));
-        }
-        catch (Exception e)
-        {
-            return NotFound("Page not found");
-        }
+        var response = await _eventService.ListPageByCompetitionAsync(compId, pageNum, pageSize);
+        if (!response.Success)
+            return this.ProcessResponse(response);
+        
+        return Ok(_mapper.Map<IEnumerable<Event>, IEnumerable<EventResource>>(response.Object!));
     }
 
-    // TODO: Implement this properly
+    [HttpGet("sport", Name = "GetPageBySport")]
+    public async Task<IActionResult> GetPageBySport([FromQuery] string sportId, [FromQuery] int pageNum, [FromQuery] int pageSize)
+    {
+        var response = await _eventService.ListPageBySportAsync(sportId, pageNum, pageSize);
+        if (!response.Success)
+            return this.ProcessResponse(response);
+
+        return Ok(_mapper.Map<IEnumerable<Event>, IEnumerable<EventResource>>(response.Object!));
+    }
+
     [HttpGet("{id}", Name = "GetEvent")]
-    public ActionResult<Event> GetEvent(string id)
+    public async Task<IActionResult> GetEvent(string id)
     {
-        try
-        {
-            return Ok(JsonConvert.SerializeObject(_eventRepository.GetEvent(id)));
-        }
-        catch (Exception exception)
-        {
-            return NotFound("The requested event was not found");
-        }
+        var response = await _eventService.GetAsync(id);
+        if (!response.Success)
+            return this.ProcessResponse(response);
+        
+        return Ok(_mapper.Map<Event, EventResource>(response.Object!));
     }
 
-    // TODO: Implement this properly
     [HttpPost(Name = "AddEvent")]
-    public IActionResult AddEvent([FromBody] JsonElement json)
+    public async Task<IActionResult> AddEvent([FromBody] JObject json)
     {
-        try
-        {
-            var e = Event.FromJson(JObject.Parse(json.ToString()));
-            return Ok(JsonConvert.SerializeObject(_eventRepository.AddEvent(e)));
-        }
-        catch (Exception exception)
-        {
-            return BadRequest("Error Adding Event");
-        }
+        var eventResource = Event.FromJson(json);
+        var e = _mapper.Map<SaveEventResource, Event>(eventResource);
+        var response = await _eventService.AddAsync(e);
+        if (!response.Success)
+            return this.ProcessResponse(response);
+        
+        return Ok(_mapper.Map<Event,EventResource>(response.Object!));
     }
 }

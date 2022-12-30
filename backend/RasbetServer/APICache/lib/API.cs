@@ -30,7 +30,7 @@ public class Api {
     }
 
     // TODO: Needs cleanup
-    public bool WriteToDatabase(string data) {
+    public async Task<bool> WriteToDatabase(string data) {
         JArray json = JArray.Parse(data);
         bool dbChanged = false;
         
@@ -74,12 +74,12 @@ public class Api {
             if (home is null || away is null)
                 throw new JsonException();
 
-            var partHome = new Team(home, new List<Player>());
-            var partAway = new Team(away, new List<Player>());
+            var partHome = new Team(home, "Football", new List<Player>());
+            var partAway = new Team(away, "Football", new List<Player>());
             var partOddHome = new ParticipantOdd(priceHome, partHome, null);
             var partOddAway = new ParticipantOdd(priceAway, partAway, null);
             var tieOdd = new TieOdd(priceDraw, null);
-            var participants = new TwoParticipants(partOddHome, 0, partOddAway, 0, tieOdd);
+            var participants = new TwoParticipants(new Result(partOddHome, 0), new Result(partOddAway, 0), tieOdd);
             var match = new FootballEvent(id, participants, commenceTime, "Portuguese First League", completed);
             
             var options = new DbContextOptionsBuilder<AppDbContext>()
@@ -88,7 +88,7 @@ public class Api {
             var context = new EventRepository(new AppDbContext(options));
             try
             {
-                context.AddEvent(match);
+                await context.AddAsync(match);
                 dbChanged = true;
             }
             catch (DbUpdateException e)

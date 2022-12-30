@@ -9,6 +9,8 @@ export interface User {
     Password: string;
 
     TransactionHist: Transaction[];
+
+    role: string;
 }
 
 export interface Transaction {

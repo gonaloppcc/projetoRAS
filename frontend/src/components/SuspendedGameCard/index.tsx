@@ -1,13 +1,13 @@
 import React from 'react';
 
-export interface GameInfo {
+export interface SuspendedGameInfo {
     eventName: string;
     date: string;
     open: boolean;
 }
 
 export interface SuspendedGameCardProps {
-    game: GameInfo;
+    game: SuspendedGameInfo;
 }
 
 export const SuspendedGameCard = ({game}: SuspendedGameCardProps) => {
@@ -35,15 +35,9 @@ export const SuspendedGameCard = ({game}: SuspendedGameCardProps) => {
         );
     };
 
-    const openBet = () => {
-        console.log('Abrir bet');
-        console.log(game.eventName);
-    };
+    const openBet = () => {};
 
-    const closeBet = () => {
-        console.log('Fechar bet');
-        console.log(game.eventName);
-    };
+    const closeBet = () => {};
 
     return (
         <>

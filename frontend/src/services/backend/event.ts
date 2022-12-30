@@ -18,7 +18,6 @@ export const getEvents = async ({
 };
 
 export const getEvent = async (eventId: string): Promise<Event> => {
-    console.log(`${BASE_URL}/events/${eventId}`);
     const response = await axios.get(`${BASE_URL}/events/${eventId}`);
     return response.data as Event;
 };

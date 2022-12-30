@@ -1,6 +1,5 @@
 using Microsoft.EntityFrameworkCore;
 using RasbetServer.Models.Bets;
-using RasbetServer.Models.Users;
 using RasbetServer.Repositories.Contexts;
 
 namespace RasbetServer.Repositories.BetRepository;
@@ -11,33 +10,46 @@ public class BetRepository : BaseRepository, IBetRepository
     {
     }
 
-    public Bet MakeBet(Bet bet)
+    public async Task<Bet?> AddAsync(Bet bet)
     {
-        var user = (from b in _context.Betters where b.Id == bet.BetterId select b).Single();
-        if (user.Balance < bet.Amount)
-            throw new InvalidOperationException();
-        
-        var newBet = _context.Bets.Add(bet);
-        user.Balance -= bet.Amount;
-        user.TransactionHist.Add(new Transaction(-bet.Amount));
-        _context.SaveChanges();
+        try
+        {
+            var odds = bet.GetOdds();
+            _context.Odds.AttachRange(odds);
 
-        // Refresh _context cache
-        newBet.State = EntityState.Detached;
-        return _context.Bets.Find(newBet.Entity.Id) 
-               ?? throw new InvalidOperationException();
+            var entityEntry = await _context.Bets.AddAsync(bet);
+            await _context.SaveChangesAsync();
+
+            await entityEntry.ReloadAsync();
+            return entityEntry.Entity;
+        }
+        catch (DbUpdateException)
+        {
+            return null;
+        }
     }
 
-    public Bet GetBet(string id)
-        => (from b in _context.Bets where b.Id == id select b).Single();
-
-    public IEnumerable<Bet> GetBets(string userId)
-        => (from b in _context.Bets where b.BetterId == userId select b).ToList();
-
-    public void DeleteBet(string id)
+    public async Task<Bet?> GetAsync(string id)
     {
-        var bet = (from b in _context.Bets where b.Id == id select b).Single();
-        _context.Bets.Remove(bet);
-        _context.SaveChanges();
+        return await (from b in _context.Bets where b.Id == id select b).SingleOrDefaultAsync();
+    }
+
+    public async Task<IEnumerable<Bet>> ListAsync(string userId)
+    {
+        return await (from b in _context.Bets where b.BetterId == userId select b).ToListAsync();
+    }
+
+    public async Task<bool> DeleteAsync(Bet bet)
+    {
+        try
+        {
+            _context.Bets.Remove(bet);
+            await _context.SaveChangesAsync();
+            return true;
+        }
+        catch (DbUpdateException)
+        {
+            return false;
+        }
     }
 }

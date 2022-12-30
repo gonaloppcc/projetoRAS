@@ -1,6 +1,10 @@
 import create from 'zustand';
 import {v4 as uuidv4} from 'uuid';
-import {addSimpleBet, AddSimpleBetProps} from '../services/backend/bet';
+import {
+    addMultipleBet,
+    addSimpleBet,
+    AddSimpleBetProps,
+} from '../services/backend/bet';
 import {Odd} from '@domain/Bet';
 
 export enum Currency {
@@ -39,7 +43,7 @@ interface ReportState {
 
     setBettingAmount: (bettingAmount: number) => void;
 
-    submitReport: () => void;
+    submitReport: (betterId: string) => void;
 }
 
 const initialBets: BetState[] = [];
@@ -67,11 +71,8 @@ export const useBettingSlip = create<ReportState>((set, get) => ({
             if (index === -1) {
                 return {bets: state.bets};
             }
-            console.log({amount});
             const newBets = [...state.bets];
             newBets[index].bettingAmount = amount;
-
-            console.log({newBets});
 
             return {bets: newBets};
         });
@@ -91,23 +92,36 @@ export const useBettingSlip = create<ReportState>((set, get) => ({
 
     setBettingAmount: (bettingAmount: number) => set({bettingAmount}),
 
-    submitReport: async () => {
+    submitReport: async (betterId) => {
         const {bets, betType, bettingAmount} = get();
         switch (betType) {
             case BetType.Simple:
-                console.log({odd: bets[0].odd});
                 const simpleBet: AddSimpleBetProps = {
                     Date: '2022-11-26T16:01:17.0065405+00:00',
                     OddId: bets[0].odd.Id,
-                    BetterId: '0',
+                    BetterId: betterId,
                     Amount: bets[0].bettingAmount as number,
+                    EventId: bets[0].eventId,
                 };
-                console.log({simpleBet});
 
                 await addSimpleBet(simpleBet);
 
                 break;
             case BetType.Multiple:
+                // TODO: Implement MultiBet logic
+
+                const multipleBet = {
+                    Date: '2022-11-26T16:01:17.0065405+00:00',
+                    BetterId: betterId,
+                    Amount: bettingAmount as number,
+                    Odds: bets.map((bet) => ({
+                        OddId: bet.odd.Id,
+                        EventId: bet.eventId,
+                    })),
+                };
+
+                await addMultipleBet(multipleBet);
+
                 break;
             default:
                 break;

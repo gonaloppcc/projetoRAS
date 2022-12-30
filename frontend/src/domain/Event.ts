@@ -1,5 +1,3 @@
-import {Value} from 'classnames';
-
 export interface Event {
     Id: string;
     Date: string;
@@ -8,6 +6,7 @@ export interface Event {
 
     Completed: boolean;
 }
+
 export interface EventPost {
     Sport: string;
     CompetitionId: string;
@@ -46,7 +45,7 @@ export interface TwoParticipant {
     Id: string;
     Home: ParticipantOdd;
     Away: ParticipantOdd;
-    Tie?: TieOdd;
+    Tie: TieOdd;
 }
 
 export interface ParticipantOdd {
@@ -56,6 +55,7 @@ export interface ParticipantOdd {
 }
 
 export interface TieOdd {
+    Id: string;
     Price: number;
     Promo: ValuePromo;
 }

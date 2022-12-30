@@ -8,7 +8,8 @@ using RasbetServer.Models.Users;
 
 namespace RasbetServer.Repositories.Contexts;
 
-public class AppDbContext : DbContext {
+public class AppDbContext : DbContext
+{
     public DbSet<User> Users { get; set; }
     public DbSet<Better> Betters { get; set; }
     public DbSet<Specialist> Specialists { get; set; }
@@ -19,7 +20,6 @@ public class AppDbContext : DbContext {
     public DbSet<FootballEvent> FootballEvents { get; set; }
     public DbSet<Competition> Competitions { get; set; }
     public DbSet<Sport> Sports { get; set; }
-    public DbSet<SportSpecialistIds> SportSpecialistIds { get; set; }
 
     public DbSet<BaseParticipants> BaseParticipants { get; set; }
     public DbSet<TwoParticipants> TwoParticipants { get; set; }
@@ -37,20 +37,10 @@ public class AppDbContext : DbContext {
     public DbSet<Bet> Bets { get; set; }
     public DbSet<MultiBet> MultiBets { get; set; }
     public DbSet<SimpleBet> SimpleBets { get; set; }
-    public DbSet<OddBetIds> OddBetIds { get; set; }
 
     public AppDbContext(DbContextOptions<AppDbContext> options)
-        : base(options) {
-    }
-
-    protected override void OnModelCreating(ModelBuilder modelBuilder) {
-        base.OnModelCreating(modelBuilder);
-
-        modelBuilder.Entity<OddBetIds>()
-            .HasKey(obi => new { obi.MultiBetId, obi.OddId });
-        modelBuilder.Entity<SportSpecialistIds>()
-            .HasKey(ssi => new { ssi.SpecialistId, ssi.SportId });
-    }
+        : base(options) 
+    { }
 
     private void SeedSports()
     {
@@ -83,27 +73,27 @@ public class AppDbContext : DbContext {
 
     private void SeedParticipants()
     {
-        Participants.Add(new Team("Manchester United", new List<Player>()));
-        Participants.Add(new Team("Manchester City", new List<Player>()));
-        Participants.Add(new Team("Liverpool", new List<Player>()));
-        Participants.Add(new Team("Chelsea", new List<Player>()));
-        Participants.Add(new Team("Arsenal", new List<Player>()));
-        Participants.Add(new Team("Tottenham", new List<Player>()));
-        Participants.Add(new Team("Everton", new List<Player>()));
-        Participants.Add(new Team("Leicester", new List<Player>()));
-        Participants.Add(new Team("West Ham", new List<Player>()));
-        Participants.Add(new Team("Wolves", new List<Player>()));
-        Participants.Add(new Team("Crystal Palace", new List<Player>()));
-        Participants.Add(new Team("Southampton", new List<Player>()));
-        Participants.Add(new Team("Burnley", new List<Player>()));
-        Participants.Add(new Team("Brighton", new List<Player>()));
-        Participants.Add(new Team("Newcastle", new List<Player>()));
-        Participants.Add(new Team("Bournemouth", new List<Player>()));
-        Participants.Add(new Team("Aston Villa", new List<Player>()));
-        Participants.Add(new Team("Sheffield United", new List<Player>()));
-        Participants.Add(new Team("Norwich", new List<Player>()));
-        Participants.Add(new Team("Watford", new List<Player>()));
-        Participants.Add(new Team("Brentford", new List<Player>()));
+        Participants.Add(new Team("Manchester United", "Football", new List<Player>()));
+        Participants.Add(new Team("Manchester City", "Football", new List<Player>()));
+        Participants.Add(new Team("Liverpool", "Football", new List<Player>()));
+        Participants.Add(new Team("Chelsea", "Football", new List<Player>()));
+        Participants.Add(new Team("Arsenal", "Football", new List<Player>()));
+        Participants.Add(new Team("Tottenham", "Football", new List<Player>()));
+        Participants.Add(new Team("Everton", "Football", new List<Player>()));
+        Participants.Add(new Team("Leicester", "Football", new List<Player>()));
+        Participants.Add(new Team("West Ham", "Football", new List<Player>()));
+        Participants.Add(new Team("Wolves", "Football", new List<Player>()));
+        Participants.Add(new Team("Crystal Palace", "Football", new List<Player>()));
+        Participants.Add(new Team("Southampton", "Football", new List<Player>()));
+        Participants.Add(new Team("Burnley", "Football", new List<Player>()));
+        Participants.Add(new Team("Brighton", "Football", new List<Player>()));
+        Participants.Add(new Team("Newcastle", "Football", new List<Player>()));
+        Participants.Add(new Team("Bournemouth", "Football", new List<Player>()));
+        Participants.Add(new Team("Aston Villa", "Football", new List<Player>()));
+        Participants.Add(new Team("Sheffield United", "Football", new List<Player>()));
+        Participants.Add(new Team("Norwich", "Football", new List<Player>()));
+        Participants.Add(new Team("Watford", "Football", new List<Player>()));
+        Participants.Add(new Team("Brentford", "Football", new List<Player>()));
     }
 
     private void SeedOdds()
@@ -145,11 +135,11 @@ public class AppDbContext : DbContext {
 
     private void SeedSpecialists()
     {
-        Specialists.Add(new Specialist("5", "email1@email.com", "username1", "password1", new List<SportSpecialistIds>()));
-        Specialists.Add(new Specialist("6", "email2@email.com", "username2", "password2", new List<SportSpecialistIds>()));
-        Specialists.Add(new Specialist("7", "email3@email.com", "username3", "password3", new List<SportSpecialistIds>()));
-        Specialists.Add(new Specialist("8", "email4@email.com", "username4", "password4", new List<SportSpecialistIds>()));
-        Specialists.Add(new Specialist("9", "email5@email.com", "username5", "password5", new List<SportSpecialistIds>()));
+        Specialists.Add(new Specialist("5", "email1@email.com", "username1", "password1", new List<Sport>()));
+        Specialists.Add(new Specialist("6", "email2@email.com", "username2", "password2", new List<Sport>()));
+        Specialists.Add(new Specialist("7", "email3@email.com", "username3", "password3", new List<Sport>()));
+        Specialists.Add(new Specialist("8", "email4@email.com", "username4", "password4", new List<Sport>()));
+        Specialists.Add(new Specialist("9", "email5@email.com", "username5", "password5", new List<Sport>()));
     }
     
     public void Seed()
