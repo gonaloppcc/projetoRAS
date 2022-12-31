@@ -98,11 +98,9 @@ export const useBettingSlip = create<ReportState>((set, get) => ({
         switch (betType) {
             case BetType.Simple:
                 const simpleBet: AddSimpleBetProps = {
-                    date: '2022-11-26T16:01:17.0065405+00:00',
                     oddId: bets[0].odd.id,
                     betterId: betterId,
                     amount: bets[0].bettingAmount as number,
-                    eventId: bets[0].eventId,
                 };
 
                 await addSimpleBet(simpleBet);
@@ -112,7 +110,6 @@ export const useBettingSlip = create<ReportState>((set, get) => ({
                 // TODO: Implement MultiBet logic
 
                 const multipleBet: AddMultipleBetProps = {
-                    date: '2022-11-26T16:01:17.0065405+00:00',
                     betterId: betterId,
                     amount: bettingAmount as number,
                     odds: bets.map((bet) => ({

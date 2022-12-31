@@ -3,15 +3,12 @@ import axios from 'axios';
 import {SimpleBet} from '@domain/Bet';
 
 export interface AddSimpleBetProps {
-    date: string;
     oddId: string;
     betterId: string;
     amount: number;
-    eventId: string;
 }
 
 export interface AddMultipleBetProps {
-    date: string;
     betterId: string;
     amount: number;
     odds: {
@@ -24,8 +21,8 @@ export const addSimpleBet = async (
     betProps: AddSimpleBetProps
 ): Promise<SimpleBet> => {
     const response = await axios.post(`${BASE_URL}/bets`, {
-        Type: 'SimpleBet',
-        ...betProps,
+        type: 'simpleBet',
+        bet: betProps,
     });
     return response.data as SimpleBet;
 };
@@ -47,8 +44,8 @@ export const addMultipleBet = async (
     betProps: AddMultipleBetProps
 ): Promise<SimpleBet> => {
     const response = await axios.post(`${BASE_URL}/bets`, {
-        Type: 'MultiBet',
-        ...betProps,
+        type: 'multiBet',
+        bet: betProps,
     });
     return response.data as SimpleBet;
 };
