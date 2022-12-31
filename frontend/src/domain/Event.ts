@@ -6,6 +6,14 @@ export interface Event {
     Completed: boolean;
 }
 
+export interface EventMini {
+    id: string;
+    date: string;
+    competition: CompetitionMini;
+    participants: TwoParticipantMini;
+    completed: boolean;
+}
+
 export interface EventToPost {
     CompetitionId: string;
     Date: string;
@@ -36,11 +44,18 @@ export interface ParticipantPost {
     Players: Player[];
 }
 
+export interface CompetitionMini {
+    name: string;
+    pport: SportMini;
+}
 export interface Competition {
     Name: string;
     Sport: Sport;
 }
 
+export interface SportMini {
+    name: string;
+}
 export interface Sport {
     Name: string;
 }
@@ -51,23 +66,53 @@ export interface TwoParticipant {
     Away: ParticipantOdd;
     Tie: TieOdd;
 }
+export interface TwoParticipantMini {
+    id: string;
+    home: ParticipantInfoMini;
+    away: ParticipantInfoMini;
+    tie: TieOddMini;
+}
 
+export interface ParticipantInfoMini {
+    participant: ParticipantOddMini;
+}
+
+export interface ParticipantOddMini {
+    id: string;
+    participantName: ParticipantMini;
+    price: number;
+    score?: number;
+}
 export interface ParticipantOdd {
     Id: string;
     Participant: Participant;
     Score?: number;
 }
 
+export interface TieOddMini {
+    Id?: string;
+    Price: number;
+    Promo: ValuePromoMini;
+}
 export interface TieOdd {
     Id?: string;
     Price: number;
     Promo: ValuePromo;
 }
 
+export interface ValuePromoMini {
+    Value: number;
+}
 export interface ValuePromo {
     Value: number;
 }
-
+export interface ParticipantMini {
+    id: string;
+    price: number;
+    Player: Player[];
+    Promo?: boolean; // FIXME I don't know if this is the correct type
+    Part?: Part;
+}
 export interface Participant {
     Id: string;
     Price: number;

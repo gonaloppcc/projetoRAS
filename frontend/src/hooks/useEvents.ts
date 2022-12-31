@@ -1,10 +1,14 @@
 import {useQuery} from '@tanstack/react-query';
 import {getEvents, getEventsBySport} from '../services/backend/event';
-import {Event} from '@domain/Event';
+import {Event, EventMini} from '@domain/Event';
 import {FetcherProps} from '@hooks/Fetcher';
 
 export interface useEventsProps extends FetcherProps {
     events: Event[];
+}
+
+export interface useEventsBySportProps extends FetcherProps {
+    events: EventMini[];
 }
 
 export const useEvents = (compId: string): useEventsProps => {
@@ -27,7 +31,7 @@ export const useEvents = (compId: string): useEventsProps => {
     };
 };
 
-export const useEventsBySport = (sportId: string): useEventsProps => {
+export const useEventsBySport = (sportId: string): useEventsBySportProps => {
     const {
         isSuccess,
         isLoading,
@@ -41,7 +45,7 @@ export const useEventsBySport = (sportId: string): useEventsProps => {
         isSuccess,
         isLoading,
         isError,
-        events: events as unknown as Event[],
+        events: events as unknown as EventMini[],
         error: error as string,
         refetch,
     };
