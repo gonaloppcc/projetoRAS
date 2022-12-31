@@ -1,5 +1,5 @@
 using RasbetServer.Models.Bets;
-using RasbetServer.Models.Users;
+using RasbetServer.Models.Users.Better;
 using RasbetServer.Repositories.BetRepository;
 using RasbetServer.Repositories.UserRepository;
 using RasbetServer.Services.Communication;

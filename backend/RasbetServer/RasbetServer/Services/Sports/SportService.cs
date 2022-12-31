@@ -6,7 +6,7 @@ namespace RasbetServer.Services.Sports;
 
 public class SportService : ISportService
 {
-    public readonly ISportRepository _sportRepository;
+    private readonly ISportRepository _sportRepository;
 
     public SportService(ISportRepository sportRepository)
     {

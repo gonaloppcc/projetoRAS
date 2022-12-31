@@ -16,7 +16,6 @@ public class ParticipantService : IParticipantService
         _sportRepository = sportRepository;
     }
 
-
     public async Task<ObjectResponse<Participant>> GetAsync(string name)
     {
         var participant = await _participantRepository.GetAsync(name);

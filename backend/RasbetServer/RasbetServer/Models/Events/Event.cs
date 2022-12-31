@@ -8,7 +8,7 @@ using RasbetServer.Resources.Events.Event.FootballEvent;
 
 namespace RasbetServer.Models.Events;
 
-public abstract class Event
+public abstract class Event : ICopyFrom<Event>
 {
     [Key]
     [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
@@ -65,5 +65,12 @@ public abstract class Event
             FootballEvent.Sport => json["Event"]!.ToObject<SaveFootballEventResource>()!,
             _ => throw new JsonException()
         };
+    }
+
+    public void CopyFrom(Event other)
+    {
+        Date = other.Date;
+        Completed = other.Completed;
+        Participants.CopyFrom(other.Participants);
     }
 }

@@ -3,9 +3,9 @@
 namespace RasbetServer.Repositories;
 
 public class BaseRepository {
-    protected readonly AppDbContext _context;
+    protected readonly AppDbContext Context;
 
     public BaseRepository(AppDbContext context) {
-        _context = context;
+        Context = context;
     }
 }

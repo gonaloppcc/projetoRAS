@@ -37,4 +37,15 @@ public class TwoParticipants : BaseParticipants
 
         return Home.Score > Away.Score ? Home : Away;
     }
+
+    public override void CopyFrom(BaseParticipants other)
+    {
+        if (other is not TwoParticipants twoParticipants)
+            throw new InvalidOperationException("Cannot copy BaseParticipants into TwoParticipants");
+        
+        Home.CopyFrom(twoParticipants.Home);
+        Away.CopyFrom(twoParticipants.Away);
+        if (Tie is not null && twoParticipants.Tie is not null)
+            Tie.CopyFrom(twoParticipants.Tie);
+    }
 }
