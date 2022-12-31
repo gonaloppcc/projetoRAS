@@ -90,12 +90,12 @@ export const OnGoingMultipleBetRecord = ({
                             <div className="flex flex-col items-start p-0 gap-1">
                                 <span className="text-EERIE_BLACK text-base font-semibold">
                                     {
-                                        odd.Event.Participants.Away.Participant
+                                        odd.Event.participants.away.participant
                                             .Part?.Name
                                     }
                                     {' - '}
                                     {
-                                        odd.Event.Participants.Home.Participant
+                                        odd.Event.participants.home.participant
                                             .Part?.Name
                                     }
                                 </span>

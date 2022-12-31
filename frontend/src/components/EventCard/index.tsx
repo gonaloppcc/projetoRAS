@@ -7,48 +7,48 @@ import {Odd} from '@domain/Bet';
 import {useRouter} from 'next/router';
 
 export const EventCard = ({
-    Id,
-    Date: date,
-    Competition,
-    Participants,
-    Completed,
+    id,
+    date,
+    competition,
+    participants,
+    completed,
 }: Event) => {
     const {addBet} = useBettingSlip();
     const router = useRouter();
 
-    const awayName = Participants.Away.Participant.Part?.Name || '';
-    const homeName = Participants.Home.Participant.Part?.Name || '';
+    const awayName = participants.away.participant.participantName || '';
+    const homeName = participants.home.participant.participantName || '';
 
     const eventName = `${homeName} - ${awayName}`;
 
-    const eventType = Competition.Sport.Name;
+    const eventType = competition;
 
     const odds = [
         {
-            Id: Participants.Home.Participant.Id,
+            Id: participants.home.participant.id,
             PartId: homeName,
-            Price: Participants.Home.Participant.Price,
+            Price: participants.home.participant.price,
         },
         {
-            Id: Participants.Tie.Id,
+            Id: participants.tie.id,
             PartId: 'Empate',
-            Price: Participants.Tie.Price,
+            Price: participants.tie.price,
         },
         {
-            Id: Participants.Away.Participant.Id,
+            Id: participants.away.participant.id,
             PartId: awayName,
-            Price: Participants.Away.Participant.Price,
+            Price: participants.away.participant.price,
         },
     ];
 
     const onClickHandler = async () => {
-        await router.push(`/event/${Id}`);
+        await router.push(`/event/${id}`);
     };
 
     const addBetHandler = (odd: Odd) => {
         return () =>
             addBet({
-                eventId: Id,
+                eventId: id,
                 eventName,
                 eventType,
                 odd,

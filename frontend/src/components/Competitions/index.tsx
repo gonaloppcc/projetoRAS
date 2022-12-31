@@ -6,6 +6,7 @@ export interface CompetitionsProps {
 }
 
 export const Competitions = ({competitions}: CompetitionsProps) => {
+    console.log('competitions:', competitions);
     return (
         <div className="flex flex-col items-start w-full p-0 rounded">
             <div className="p-2.5 bg-WHITE w-full rounded">
@@ -13,7 +14,7 @@ export const Competitions = ({competitions}: CompetitionsProps) => {
             </div>
             <div className="w-full flex flex-col items-center p-0 gap-0.5">
                 {competitions.map((props) => (
-                    <CompetitionCard key={props.Name} {...props} />
+                    <CompetitionCard key={props.name} {...props} />
                 ))}
             </div>
         </div>

@@ -17,7 +17,7 @@ const Home: NextPage = () => {
                 {isLoading && <CircularProgress />}
                 {isSuccess &&
                     events.map((event) => (
-                        <EventCard key={event.Id} {...event} />
+                        <EventCard key={event.id} {...event} />
                     ))}
                 {isSuccess && events.length === 0 && (
                     <span>Não há jogos por agora</span>

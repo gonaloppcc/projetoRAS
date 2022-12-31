@@ -22,13 +22,13 @@ const Home: NextPage = () => {
                             <div
                                 className="flex flex-row gap-1 bg-white text-gl py-2 rounded cursor-pointer"
                                 onClick={() => sportSelected(mod)}
-                                key={`${mod.Name}-3`}
+                                key={`${mod.name}-3`}
                             >
                                 <div className="pr-0">
                                     {/* TODO: Alterar*/}
-                                    <SportIcon eventType={mod.Name} />
+                                    <SportIcon eventType={mod.name} />
                                 </div>
-                                <div className="pl-0">{mod.Name}</div>
+                                <div className="pl-0">{mod.name}</div>
                             </div>
                         ))}
                     </div>

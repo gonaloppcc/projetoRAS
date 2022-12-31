@@ -17,7 +17,7 @@ export interface BetRecordProps {
 export const BetRecord = ({
     Id,
     Odd: {Id: OddId, PartId, Price},
-    Event: {Participants},
+    Event: {participants},
     Date,
     Closed,
     BetterId,
@@ -28,8 +28,8 @@ export const BetRecord = ({
 
     const eventType = 'Football';
 
-    const awayName = Participants.Away.Participant.Part?.Name || '';
-    const homeName = Participants.Home.Participant.Part?.Name || '';
+    const awayName = participants.away.participant.Part?.Name || '';
+    const homeName = participants.home.participant.Part?.Name || '';
 
     const eventName = `${homeName} - ${awayName}`;
 

@@ -10,9 +10,9 @@ export interface OnGoingSimpleBetRecordProps extends SimpleBet {
 export const OnGoingSimpleBetRecord = ({
     Odd: {PartId, Price},
     Event: {
-        Id: eventId,
-        Participants,
-        Competition: {Sport},
+        id: eventId,
+        participants,
+        competition: {sport},
     },
     Date,
     Amount,
@@ -21,14 +21,14 @@ export const OnGoingSimpleBetRecord = ({
     // FIXME: Hardcoded text in this component
     const betName = `Resultado Final: ${PartId ?? 'Empate'}`; // FIXME: Only valid to Participant Bets
 
-    const eventType = Sport.Name;
+    const eventType = sport.name;
 
     const betPossibleWinnings = Amount * Price;
 
     const dateFormatted = formatDate(Date);
 
-    const awayName = Participants.Away.Participant.Part?.Name || '';
-    const homeName = Participants.Home.Participant.Part?.Name || '';
+    const awayName = participants.away.participant.Part?.Name || '';
+    const homeName = participants.home.participant.Part?.Name || '';
 
     const eventName = `${homeName} - ${awayName}`;
 
