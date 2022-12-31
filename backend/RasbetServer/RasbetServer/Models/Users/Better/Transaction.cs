@@ -1,7 +1,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace RasbetServer.Models.Users;
+namespace RasbetServer.Models.Users.Better;
 
 public class Transaction
 {

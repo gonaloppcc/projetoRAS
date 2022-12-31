@@ -4,7 +4,7 @@ using Newtonsoft.Json.Linq;
 
 namespace RasbetServer.Models.Bets.Odds;
 
-public class Promotion
+public class Promotion : ICopyFrom<Promotion>
 {
     [Key] [DatabaseGenerated(DatabaseGeneratedOption.Identity)] public string? Id { get; set; } = null;
 
@@ -24,4 +24,9 @@ public class Promotion
     public static Promotion? FromJson(JObject? json)
         => json is null ? 
             null : new Promotion(json[nameof(Value)].Value<float>());
+
+    public void CopyFrom(Promotion other)
+    {
+        Value = other.Value;
+    }
 }

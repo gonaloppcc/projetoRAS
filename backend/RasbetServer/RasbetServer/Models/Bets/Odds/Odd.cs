@@ -4,7 +4,7 @@ using RasbetServer.Models.Events;
 
 namespace RasbetServer.Models.Bets.Odds;
 
-public class Odd
+public class Odd : ICopyFrom<Odd>
 {
     [Key] [DatabaseGenerated(DatabaseGeneratedOption.Identity)] public string? Id { get; set; } = null;
     [Required] public float Price { get; set; }
@@ -40,5 +40,12 @@ public class Odd
     public virtual string GetName()
     {
         return "Odd";
+    }
+
+    public virtual void CopyFrom(Odd other)
+    {
+        Price = other.Price;
+        if (other.Promo is not null && Promo is not null)
+            Promo.CopyFrom(other.Promo);
     }
 }

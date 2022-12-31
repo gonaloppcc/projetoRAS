@@ -18,7 +18,19 @@ public class SportProfile : Profile
                                     .ToList()
                                     .ConvertAll(comp => comp.Name)
                                 )
-                    );
+                    )
+            .ForMember(
+                    dest => dest.Teams,
+                    opt => opt.MapFrom(
+                            src => src.Teams.ToList().ConvertAll(t => t.Name)
+                        )
+                )
+            .ForMember(
+                    dest => dest.Players,
+                    opt => opt.MapFrom(
+                            src => src.Players.ToList().ConvertAll(p => p.Name)
+                        )
+                );
         
         CreateMap<SaveSportResource, Sport>()
             .ForMember(
