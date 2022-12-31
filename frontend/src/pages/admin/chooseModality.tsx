@@ -24,7 +24,6 @@ const Home: NextPage = () => {
                             Selecione uma modalidade
                         </div>
                         {sports.map((mod: InfoSport) => {
-                            console.log(mod.name);
                             return (
                                 <div
                                     className="flex flex-row gap-1 bg-white text-gl py-2 rounded cursor-pointer"
