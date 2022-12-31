@@ -15,7 +15,6 @@ public class Result : ICopyFrom<Result>
     public string? ParticipantId { get; set; } = null;
     public virtual ParticipantOdd Participant { get; set; }
     
-    [Required]
     public int? Score { get; set; }
 
     public Result() { }

@@ -99,29 +99,6 @@ public class AppDbContext : DbContext
         Participants.Add(new Team("Brentford", "Football", new List<Player>()));
     }
 
-    private void SeedOdds()
-    {
-        Odds.Add(new ParticipantOdd("0", 1.90f, "Manchester United", null));
-        Odds.Add(new ParticipantOdd("1", 2.20f, "Manchester City", null));
-        Odds.Add(new ParticipantOdd("2", 3.60f, "Liverpool", null));
-        Odds.Add(new ParticipantOdd("3", 4.20f, "Chelsea", null));
-        Odds.Add(new ParticipantOdd("4", 4.58f, "Arsenal", null));
-        Odds.Add(new ParticipantOdd("5", 5.20f, "Tottenham", null));
-        Odds.Add(new ParticipantOdd("6", 5.60f, "Everton", null));
-        Odds.Add(new ParticipantOdd("7", 6.20f, "Leicester", null));
-        Odds.Add(new ParticipantOdd("8", 6.60f, "West Ham", null));
-
-        Odds.Add(new TieOdd("100", 3.20f, null));
-        Odds.Add(new TieOdd("101", 3.20f, null));
-        Odds.Add(new TieOdd("102", 3.20f, null));
-        Odds.Add(new TieOdd("103", 3.20f, null));
-        Odds.Add(new TieOdd("104", 3.20f, null));
-        Odds.Add(new TieOdd("105", 3.20f, null));
-        Odds.Add(new TieOdd("106", 3.20f, null));
-        Odds.Add(new TieOdd("107", 3.20f, null));
-        Odds.Add(new TieOdd("108", 3.20f, null));
-    }
-
     private void SeedBetters()
     {
         Betters.Add(new Better("0", "marco@gmail.com", "marco", "marco123", "123456789", "123456789", "123456789", 20));
@@ -149,7 +126,6 @@ public class AppDbContext : DbContext
         SeedSports();
         SeedCompetitions();
         SeedParticipants();
-        SeedOdds();
         
         SaveChanges();
     }
