@@ -15,31 +15,31 @@ export interface BetRecordProps {
 }
 
 export const BetRecord = ({
-    Id,
-    Odd: {Id: OddId, PartId, Price},
-    Event: {participants},
-    Date,
-    Closed,
-    BetterId,
-    Amount,
+    id,
+    odd: {id: OddId, partId, price},
+    event: {participants},
+    date,
+    closed,
+    betterId,
+    amount,
 }: SimpleBet) => {
     // FIXME: Hardcoded text in this component
-    const betName = `Resultado Final: ${PartId}`;
+    const betName = `Resultado Final: ${partId}`;
 
     const eventType = 'Football';
 
-    const awayName = participants.away.participant.Part?.Name || '';
-    const homeName = participants.home.participant.Part?.Name || '';
+    const awayName = participants.away.participant.participantName || '';
+    const homeName = participants.home.participant.participantName || '';
 
     const eventName = `${homeName} - ${awayName}`;
 
-    const betWinnings = Amount * Price; // FIXME: This is not correct, the better could lose the bet
+    const betWinnings = amount * price; // FIXME: This is not correct, the better could lose the bet
 
     const cancelBetHandler = () => {
         // FIXME: These bets are already closed, so we should not be able to cancel them
     };
 
-    const dateFormatted = formatDate(Date);
+    const dateFormatted = formatDate(date);
     return (
         <div className="flex flex-row justify-between items-center px-4 gap-8 bg-WHITE rounded">
             <div className="flex flex-row justify-center items-center gap-4">
@@ -61,7 +61,7 @@ export const BetRecord = ({
             <div className="flex flex-col items-start p-0 gap-2">
                 <span className="text-LIGHT_GRAY text-sm">{'Cota'}</span>
                 <span className="text-SPECIAL text-base font-semibold">
-                    {Price}
+                    {price}
                 </span>
             </div>
 
@@ -70,7 +70,7 @@ export const BetRecord = ({
                     {'Valor apostado'}
                 </span>
                 <span className="text-EERIE_BLACK text-base font-semibold">
-                    {Amount} €{' '}
+                    {amount} €{' '}
                     {/* FIXME: Money currency is hardcoded and can vary */}
                 </span>
             </div>

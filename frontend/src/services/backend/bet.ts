@@ -3,20 +3,20 @@ import axios from 'axios';
 import {SimpleBet} from '@domain/Bet';
 
 export interface AddSimpleBetProps {
-    Date: string;
-    OddId: string;
-    BetterId: string;
-    Amount: number;
-    EventId: string;
+    date: string;
+    oddId: string;
+    betterId: string;
+    amount: number;
+    eventId: string;
 }
 
-interface AddMultipleBetProps {
-    Date: string;
-    BetterId: string;
-    Amount: number;
-    Odds: {
-        OddId: string;
-        EventId: string;
+export interface AddMultipleBetProps {
+    date: string;
+    betterId: string;
+    amount: number;
+    odds: {
+        oddId: string;
+        eventId: string;
     }[];
 }
 

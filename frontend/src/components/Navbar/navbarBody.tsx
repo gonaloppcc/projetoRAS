@@ -1,7 +1,7 @@
 import {Navlink} from '@components/Navlink';
 import Link from 'next/link';
 import Image from 'next/image';
-import {useProfileState} from '@state/useProfileState';
+import {useProfile} from '@state/useProfile';
 import {PrimaryButton, SecondaryButton} from '@components/Button';
 import {useRouter} from 'next/router';
 import {Balance} from '@components/Balance';
@@ -24,7 +24,7 @@ interface NavBarBodyProps {
 }
 
 export const NavBarBody = ({setOpen}: NavBarBodyProps) => {
-    const {id, username, balance: balance} = useProfileState();
+    const {id, username, balance: balance} = useProfile();
 
     const router = useRouter();
 

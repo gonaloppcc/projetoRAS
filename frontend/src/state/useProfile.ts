@@ -13,7 +13,7 @@ export interface ProfileState extends User {
     isLogged: boolean;
 }
 
-export const useProfileState = create<ProfileState>((set, get) => ({
+export const useProfile = create<ProfileState>((set, get) => ({
     id: '',
     balance: 0,
     email: '',

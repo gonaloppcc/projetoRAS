@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import {NavBarBody} from './navbarBody';
 import {PaymentModal} from '@components/PaymentModal';
-import {useProfile} from '@hooks/useProfile';
+import {useProfile} from '@state/useProfile';
 
 export const Navbar = () => {
     const [isOpen, setIsOpen] = useState<boolean>(false);

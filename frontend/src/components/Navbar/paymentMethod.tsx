@@ -2,7 +2,7 @@ import {HandleChangeProps, InputForm} from '@components/createBetter/inputForm';
 import React, {useCallback, useEffect, useState} from 'react';
 import Image from 'next/image';
 import {PrimaryButton} from '@components/Button';
-import {useProfile} from '@hooks/useProfile';
+import {useProfile} from '@state/useProfile';
 
 export interface PaymentMethodProps {
     isDepositing: boolean;

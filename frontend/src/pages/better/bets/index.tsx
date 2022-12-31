@@ -6,10 +6,10 @@ import {useBets} from '@hooks/useBets';
 import {Bet} from '@domain/Bet';
 import {CircularProgress} from '@mui/material';
 import {deleteBet} from '../../../services/backend/bet';
-import {useProfileState} from '@state/useProfileState';
+import {useProfile} from '@state/useProfile';
 
 const Bets = () => {
-    const {id} = useProfileState();
+    const {id} = useProfile();
 
     const {isSuccess, isLoading, isError, bets, refetch} = useBets(id);
 
@@ -17,9 +17,9 @@ const Bets = () => {
     let finishedBets: Bet[] = [];
 
     if (!isLoading) {
-        onGoingBets = bets.filter((bet) => !bet.Closed);
+        onGoingBets = bets.filter((bet) => !bet.closed);
 
-        finishedBets = bets.filter((bet) => bet.Closed);
+        finishedBets = bets.filter((bet) => bet.closed);
     }
 
     const cancelBetHandler = (betId: string) => {
