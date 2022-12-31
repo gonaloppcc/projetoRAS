@@ -14,15 +14,10 @@ export interface ProfileState extends User {
 }
 
 export const useProfileState = create<ProfileState>((set, get) => ({
-    Id: '',
-    Nif: '',
-    Cc: '',
-    Cellphone: '',
-    Balance: 0,
-    Email: '',
-    Username: '',
-    Password: '',
-    TransactionHist: [],
+    id: '',
+    balance: 0,
+    email: '',
+    username: '',
     role: '',
     isLogged: false,
     login: async (email, password) => {
@@ -36,17 +31,17 @@ export const useProfileState = create<ProfileState>((set, get) => ({
 
     setBalance: (balance) => {
         set((state) => {
-            return {...state, Balance: balance};
+            return {...state, balance: balance};
         });
     },
     deposit: async (amount) => {
-        const user = await addBalance(get().Id, amount);
+        const user = await addBalance(get().id, amount);
         set((state) => {
             return {...state, ...user};
         });
     },
     withdraw: async (amount) => {
-        const user = await addBalance(get().Id, -amount);
+        const user = await addBalance(get().id, -amount);
         set((state) => {
             return {...state, ...user};
         });

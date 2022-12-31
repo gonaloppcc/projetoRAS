@@ -83,7 +83,7 @@ export const OnGoingMultipleBetRecord = ({
             <div className="w-full flex flex-col gap-5 pr-40 bg-WHITE">
                 {Odds.map((odd) => (
                     <div
-                        key={odd.Odd.Id}
+                        key={odd.Odd.id}
                         className="w-full flex flex-row justify-between items-center px-4 gap-8 bg-WHITE rounded"
                     >
                         <div className="flex flex-row justify-center items-center gap-4">

@@ -50,7 +50,7 @@ export interface Participants {
 export interface ParticipantOdd {
     id: string;
     participant: Participant;
-    Score?: number;
+    score?: number;
 }
 
 export interface TieOdd {

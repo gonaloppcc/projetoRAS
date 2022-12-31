@@ -9,9 +9,9 @@ import {deleteBet} from '../../../services/backend/bet';
 import {useProfileState} from '@state/useProfileState';
 
 const Bets = () => {
-    const {Id} = useProfileState();
+    const {id} = useProfileState();
 
-    const {isSuccess, isLoading, isError, bets, refetch} = useBets(Id);
+    const {isSuccess, isLoading, isError, bets, refetch} = useBets(id);
 
     let onGoingBets: Bet[] = [];
     let finishedBets: Bet[] = [];
@@ -41,10 +41,10 @@ const Bets = () => {
                                 {isSuccess &&
                                     onGoingBets.map((bet) => (
                                         <OnGoingBetRecord
-                                            key={bet.Id}
+                                            key={bet.id}
                                             bet={bet}
                                             cancelBetHandler={cancelBetHandler(
-                                                bet.Id
+                                                bet.id
                                             )}
                                         />
                                     ))}

@@ -1,21 +1,14 @@
 export interface User {
-    Id: string;
-    Nif: string;
-    Cc: string;
-    Cellphone: string;
-    Balance: number;
-    Email: string;
-    Username: string;
-    Password: string;
-
-    TransactionHist: Transaction[];
-
+    id: string;
+    balance: number;
+    email: string;
+    username: string;
     role: string;
 }
 
 export interface Transaction {
-    Id: string;
-    Value: number;
+    id: string;
+    value: number;
 }
 export interface Specialist {
     Email: string;

@@ -29,7 +29,7 @@ export const BettingSlip = () => {
         submitReport,
     } = useBettingSlip();
 
-    const {Id, Email, Password, login, isLogged} = useProfileState();
+    const {id, email, Password, login, isLogged} = useProfileState();
 
     const getRemoveBetHandler = (id: string) => () => {
         removeBet(id);
@@ -40,8 +40,8 @@ export const BettingSlip = () => {
             // TODO: Show login modal
             return;
         }
-        await submitReport(Id);
-        await login(Email, Password);
+        await submitReport(id);
+        await login(email, Password);
     };
 
     return (

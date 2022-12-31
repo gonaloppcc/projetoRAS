@@ -24,11 +24,11 @@ interface NavBarBodyProps {
 }
 
 export const NavBarBody = ({setOpen}: NavBarBodyProps) => {
-    const {Id, Username, Balance: balance} = useProfileState();
+    const {id, username, balance: balance} = useProfileState();
 
     const router = useRouter();
 
-    const isLoggedIn = Id !== '';
+    const isLoggedIn = id !== '';
 
     const loginHandler = async () => {
         await router.push('/login');
@@ -57,7 +57,7 @@ export const NavBarBody = ({setOpen}: NavBarBodyProps) => {
                     </Link>
                     <div className="flex flex-row items-center gap-2">
                         <div className="w-8 h-8 rounded-full bg-LIGHT_GRAY" />
-                        <span className="text-WHITE">{Username}</span>
+                        <span className="text-WHITE">{username}</span>
                     </div>
                 </div>
             )}
