@@ -47,26 +47,21 @@ const MOCK_EVENTS = [
 
 const Home: NextPage = () => {
     return (
-        <PageLayout>
-            <div className="gap-8 h-screen w-screen justify-center flex items-center">
-                <div className=" flex flex-col gap-5 items-top min-h-screen w-max">
-                    {MOCK_EVENTS.map((game) => {
-                        console.log(game);
-                        return game.open ? (
-                            <OpenGameCard
-                                key={game.eventName}
-                                game={game as OpenGameInfo}
-                            />
-                        ) : (
-                            <SuspendedGameCard
-                                key={game.eventName}
-                                game={game}
-                            />
-                        );
-                    })}
-                </div>
+        <div className="gap-8 h-screen w-screen justify-center flex items-center">
+            <div className=" flex flex-col gap-5 items-top min-h-screen w-max">
+                {MOCK_EVENTS.map((game) => {
+                    console.log(game);
+                    return game.open ? (
+                        <OpenGameCard
+                            key={game.eventName}
+                            game={game as OpenGameInfo}
+                        />
+                    ) : (
+                        <SuspendedGameCard key={game.eventName} game={game} />
+                    );
+                })}
             </div>
-        </PageLayout>
+        </div>
     );
 };
 

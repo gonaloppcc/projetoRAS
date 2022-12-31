@@ -1,8 +1,8 @@
-import {Sport} from '@domain/Event';
+import {InfoSport} from '@domain/Event';
 
 export interface ScrollModalitiesProps {
-    changeModality: (modality: string) => void;
-    modalities: Sport[];
+    changeModality: (modality: string, value: boolean) => void;
+    modalities: InfoSport[];
     error: string;
 }
 
@@ -11,8 +11,11 @@ export const ScrollModalities = ({
     modalities,
     error,
 }: ScrollModalitiesProps) => {
-    const checkBoxClicked = (args, mod) => {
-        changeModality(args, mod.target.checked);
+    // O value é uma coisa do html, tipo input com checkbox
+    const checkBoxClicked = (args: InfoSport, value) => {
+        console.log(args.name);
+        console.log(value.target.checked);
+        changeModality(args.name, value);
     };
 
     return (
@@ -25,16 +28,16 @@ export const ScrollModalities = ({
             <div className="border-solid pt-3 h-24 overflow-auto scrollbar-hide">
                 {modalities.map((mod) => (
                     <div
-                        key={`${mod}-3`}
+                        key={`${mod.name}-3`}
                         className="bg-white flex flex-row items-center justify-between flex-none order-none h-10 py-2 px-5 gap-2"
                     >
                         <div className="flex flex-row gap-1">
                             <div className="pr-0">☺︎</div>
-                            <div className="pl-0">{mod.Name}</div>
+                            <div className="pl-0">{mod.name}</div>
                         </div>
                         <input
-                            key={mod.Name}
-                            id={mod.Name}
+                            key={mod.name}
+                            id={mod.name}
                             type="checkbox"
                             onChange={checkBoxClicked.bind(this, mod)}
                         />

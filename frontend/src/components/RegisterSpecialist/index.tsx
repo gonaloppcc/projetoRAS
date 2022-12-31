@@ -3,9 +3,9 @@ import {HandleChangeProps, InputForm} from '../createBetter/inputForm';
 import {ScrollModalities} from './scrollModalities';
 import {REGEX_MAIL, REGEX_USERNAME} from 'utils/regex';
 import {PrimaryButton} from '@components/Button';
-import {Specialist} from '@domain/User';
+import {Specialist, SportSpecialist} from '@domain/User';
 import {addSpecialist} from '../../services/backend/user';
-import {Sport} from '@domain/Event';
+import {InfoSport} from '@domain/Event';
 
 export interface FormErrors {
     username: string;
@@ -22,7 +22,7 @@ const initialValueFormErrors: FormErrors = {
 };
 
 export interface RegisterSpecialistProps {
-    modalities: Sport[];
+    modalities: InfoSport[];
 }
 
 const intialValues = {
@@ -39,7 +39,9 @@ interface valuesProps {
 
 export const RegisterSpecialist = ({modalities}: RegisterSpecialistProps) => {
     const [formValues, setFormValues] = useState<valuesProps>(intialValues);
-    const [modalitiesSelected, setModalitiesSelected] = useState<string[]>([]);
+    const [modalitiesSelected, setModalitiesSelected] = useState<
+        SportSpecialist[]
+    >([]);
     const [formErrors, setFormErrors] = useState(initialValueFormErrors);
 
     const submit = async () => {
@@ -47,7 +49,7 @@ export const RegisterSpecialist = ({modalities}: RegisterSpecialistProps) => {
             Email: formValues.mail,
             Username: formValues.username,
             Password: formValues.password,
-            Specialties: [], // TODO: Falta este, mas tenho de ter o get
+            Specialties: modalitiesSelected, // TODO: Já alterei, mas o submit não dá
         };
         await addSpecialist(specialist);
     };
