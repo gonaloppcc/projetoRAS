@@ -9,5 +9,5 @@ public abstract class EventResource
     public DateTime Date { get; set; }
     public string Competition { get; set; }
     public bool Completed { get; set; }
-    public virtual string SportId { get; set; }
+    public virtual string SportId { get; }
 }
