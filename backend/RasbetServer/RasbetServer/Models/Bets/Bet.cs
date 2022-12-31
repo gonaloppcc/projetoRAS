@@ -48,12 +48,18 @@ public abstract class Bet
 
     public abstract IEnumerable<Odd> GetOdds();
 
-    public static SaveBetResource FromJson(JObject json)
+    private static string? GetTypeFromJObject(JObject json) 
+        => (json["Type"] ?? json["type"])?.Value<string>();
+
+    private static JToken? GetBetTokenFromJObject(JObject json) 
+        => json["Bet"] ?? json["bet"];
+    
+    public static SaveBetResource? FromJson(JObject json)
     {
-        return json["Type"]!.Value<string>() switch
+        return GetTypeFromJObject(json) switch
         {
-            nameof(MultiBet) => json["Bet"]!.ToObject<SaveMultiBetResource>()!,
-            nameof(SimpleBet) => json["Bet"]!.ToObject<SaveSimpleBetResource>()!,
+            nameof(MultiBet) => GetBetTokenFromJObject(json)?.ToObject<SaveMultiBetResource>(),
+            nameof(SimpleBet) => GetBetTokenFromJObject(json)?.ToObject<SaveSimpleBetResource>(),
             _ => throw new JsonException()
         };
     }
