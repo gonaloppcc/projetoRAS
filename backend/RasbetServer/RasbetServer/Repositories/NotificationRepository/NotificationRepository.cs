@@ -14,8 +14,8 @@ public class NotificationRepository : BaseRepository, INotificationRepository
     {
         try
         {
-            var entityEntry = await _context.Notifications.AddAsync(notification);
-            await _context.SaveChangesAsync();
+            var entityEntry = await Context.Notifications.AddAsync(notification);
+            await Context.SaveChangesAsync();
 
             await entityEntry.ReloadAsync();
             return entityEntry.Entity;
@@ -29,7 +29,7 @@ public class NotificationRepository : BaseRepository, INotificationRepository
     public async Task<Notification?> GetAsync(string id)
     {
         return await (
-            from n in _context.Notifications
+            from n in Context.Notifications
             where n.Id == id
             select n
         ).SingleOrDefaultAsync();
@@ -38,7 +38,7 @@ public class NotificationRepository : BaseRepository, INotificationRepository
     public async Task<IEnumerable<Notification>?> ListAsync(string userId)
     {
         return await (
-            from n in _context.Notifications
+            from n in Context.Notifications
             where n.UserId == userId
             select n
         ).ToListAsync();
@@ -48,8 +48,8 @@ public class NotificationRepository : BaseRepository, INotificationRepository
     {
         try
         {
-            _context.Notifications.Remove(notification);
-            await _context.SaveChangesAsync();
+            Context.Notifications.Remove(notification);
+            await Context.SaveChangesAsync();
             return true;
         }
         catch (DbUpdateException)

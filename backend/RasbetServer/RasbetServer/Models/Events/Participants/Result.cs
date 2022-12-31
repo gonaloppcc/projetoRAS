@@ -4,7 +4,7 @@ using RasbetServer.Models.Bets.Odds;
 
 namespace RasbetServer.Models.Events.Participants;
 
-public class Result
+public class Result : ICopyFrom<Result>
 {
     [Key]
     [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
@@ -24,5 +24,11 @@ public class Result
     {
         Participant = participant;
         Score = score;
+    }
+
+    public void CopyFrom(Result other)
+    {
+        Score = other.Score;
+        Participant.CopyFrom(other.Participant);
     }
 }

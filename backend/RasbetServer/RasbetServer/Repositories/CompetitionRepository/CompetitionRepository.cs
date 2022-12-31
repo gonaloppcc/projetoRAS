@@ -13,8 +13,8 @@ public class CompetitionRepository : BaseRepository, ICompetitionRepository
     {
         try
         {
-            var comp = await _context.Competitions.AddAsync(c);
-            await _context.SaveChangesAsync();
+            var comp = await Context.Competitions.AddAsync(c);
+            await Context.SaveChangesAsync();
         
             await comp.ReloadAsync();
             return comp.Entity;
@@ -27,20 +27,20 @@ public class CompetitionRepository : BaseRepository, ICompetitionRepository
 
     public async Task<Competition?> GetAsync(string name)
     {
-        return await (from c in _context.Competitions where c.Name == name select c).SingleOrDefaultAsync();
+        return await (from c in Context.Competitions where c.Name == name select c).SingleOrDefaultAsync();
     }
 
     public async Task<IEnumerable<Competition>> ListAsync(string sportId)
     {
-        return await (from c in _context.Competitions where c.SportId == sportId select c).ToListAsync();
+        return await (from c in Context.Competitions where c.SportId == sportId select c).ToListAsync();
     }
 
     public async Task<bool> DeleteAsync(Competition competition)
     {
         try
         {
-            _context.Competitions.Remove(competition);
-            await _context.SaveChangesAsync();
+            Context.Competitions.Remove(competition);
+            await Context.SaveChangesAsync();
             return true;
         }
         catch (DbUpdateException)

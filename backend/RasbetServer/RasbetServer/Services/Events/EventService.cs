@@ -1,4 +1,6 @@
+using Castle.Core;
 using RasbetServer.Models.Events;
+using RasbetServer.Models.Events.Participants;
 using RasbetServer.Repositories.CompetitionRepository;
 using RasbetServer.Repositories.EventRepository;
 using RasbetServer.Repositories.SportRepository;
@@ -69,6 +71,30 @@ public class EventService : IEventService
         }
 
         eventList = eventList.OrderBy(e => e.Date).Skip(pageNum * pageSize).Take(pageSize);
+        return new ObjectResponse<IEnumerable<Event>>(eventList);
+    }
+
+    public async Task<ObjectResponse<IEnumerable<Event>>> CacheEvents(IEnumerable<Event> events)
+    {
+        IList<Event> eventList = new List<Event>();
+        foreach (var e in events)
+        {
+            var prevEvent = await _eventRepository.GetByInfoAsync(e);
+            if (prevEvent is null)
+            {
+                var newEvent = await _eventRepository.AddAsync(e);
+                if (newEvent is null)
+                    return new ObjectResponse<IEnumerable<Event>>($"Error adding one of the events", StatusCode.BadRequest);
+                eventList.Add(newEvent);
+            }
+            else
+            {
+                prevEvent.CopyFrom(e);
+                await _eventRepository.UpdateAsync(prevEvent);
+                eventList.Add(prevEvent);
+            }
+        }
+
         return new ObjectResponse<IEnumerable<Event>>(eventList);
     }
 }

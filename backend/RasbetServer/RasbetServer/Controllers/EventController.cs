@@ -63,4 +63,18 @@ public class EventController : ControllerBase
         
         return Ok(_mapper.Map<Event,EventResource>(response.Object!));
     }
+
+    [HttpPost("apiCache", Name = "APICache")]
+    public async Task<IActionResult> CacheEvents([FromBody] IList<JObject> jsons)
+    {
+        var events = jsons.Select(Event.FromJson)
+            .Select(eventResource => _mapper.Map<SaveEventResource, Event>(eventResource))
+            .ToList();
+
+        var response = await _eventService.CacheEvents(events);
+        if (!response.Success)
+            return this.ProcessResponse(response);
+
+        return Ok(_mapper.Map<IEnumerable<Event>, IEnumerable<EventResource>>(response.Object!));
+    }
 }

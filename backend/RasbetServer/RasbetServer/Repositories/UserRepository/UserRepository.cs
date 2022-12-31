@@ -12,7 +12,7 @@ public class UserRepository : BaseRepository, IUserRepository {
     {
         return await (
             from u 
-                in _context.Users
+                in Context.Users
             where u.Id == id 
             select u
         ).SingleOrDefaultAsync();
@@ -22,7 +22,7 @@ public class UserRepository : BaseRepository, IUserRepository {
     {
         return await (
             from u 
-                in _context.Users
+                in Context.Users
             where u.Email == email 
             select u
         ).SingleOrDefaultAsync();
@@ -32,10 +32,10 @@ public class UserRepository : BaseRepository, IUserRepository {
         try
         {
             if (user is Specialist specialist)
-                specialist.Specialties.ToList().ForEach(sport => _context.Attach(sport));
+                specialist.Specialties.ToList().ForEach(sport => Context.Attach(sport));
 
-            var newUser = _context.Users.Add(user);
-            await _context.SaveChangesAsync();
+            var newUser = Context.Users.Add(user);
+            await Context.SaveChangesAsync();
 
             await newUser.ReloadAsync();
             return newUser.Entity;
@@ -50,8 +50,8 @@ public class UserRepository : BaseRepository, IUserRepository {
     {
         try
         {
-            _context.Users.Remove(user);
-            await _context.SaveChangesAsync();
+            Context.Users.Remove(user);
+            await Context.SaveChangesAsync();
             return true;
         }
         catch (DbUpdateException)
@@ -62,7 +62,7 @@ public class UserRepository : BaseRepository, IUserRepository {
 
     public async Task UpdateAsync(User user)
     {
-        _context.Update(user);
-        await _context.SaveChangesAsync();
+        Context.Update(user);
+        await Context.SaveChangesAsync();
     }
 }
