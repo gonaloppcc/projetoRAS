@@ -3,15 +3,19 @@ export interface Event {
     Date: string;
     Competition: Competition;
     Participants: TwoParticipant;
-
     Completed: boolean;
+}
+
+export interface EventToPost {
+    CompetitionId: string;
+    Date: string;
+    Completed: boolean;
+    Participants: TwoParticipantsPost;
 }
 
 export interface EventPost {
     Sport: string;
-    CompetitionId: string;
-    Participants: TwoParticipantsPost;
-    Date: string;
+    Event: EventToPost;
 }
 
 export interface TwoParticipantsPost {
@@ -55,7 +59,7 @@ export interface ParticipantOdd {
 }
 
 export interface TieOdd {
-    Id: string;
+    Id?: string;
     Price: number;
     Promo: ValuePromo;
 }
@@ -84,6 +88,6 @@ export interface Player {
 // Utilizado no admin/chooseModality
 export interface InfoSport {
     name: string;
-    competition: string[];
+    competitions: string[];
     teams: string[];
 }

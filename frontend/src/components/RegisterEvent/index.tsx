@@ -1,4 +1,3 @@
-import {AllSport} from 'pages/registerEvent';
 import React, {useEffect, useState} from 'react';
 import {SearchBox} from './searchBox';
 import {Table} from './table';
@@ -12,11 +11,13 @@ import {
     ParticipantOddPost,
     ParticipantPost,
     Player,
+    InfoSport,
+    EventToPost,
 } from '@domain/Event';
 import {postEvent} from 'services/backend/event';
 
 export interface RegisterEventProps {
-    sports: AllSport[];
+    sports: InfoSport[];
 }
 
 interface FormErrors {
@@ -53,13 +54,15 @@ export const RegisterEvent = ({sports}: RegisterEventProps) => {
     const router = useRouter();
 
     let possibleLeagues = sportSelected
-        ? sports.filter((sportInfo: AllSport) => sportInfo.name == sportName)[0]
-              .leagues
+        ? sports.filter(
+              (sportInfo: InfoSport) => sportInfo.name == sportName
+          )[0].competitions
         : [];
 
     let possibleTeams = sportSelected
-        ? sports.filter((sportInfo: AllSport) => sportInfo.name == sportName)[0]
-              .participants
+        ? sports.filter(
+              (sportInfo: InfoSport) => sportInfo.name == sportName
+          )[0].teams
         : [];
 
     const changeTeams = (team: string, selected: boolean) => {
@@ -89,7 +92,8 @@ export const RegisterEvent = ({sports}: RegisterEventProps) => {
     };
 
     const hasErrors = () => {
-        return Object.values(errors).some((err) => err !== '');
+        let errors_now = validate();
+        return Object.values(errors_now).some((err) => err !== '');
     };
 
     const handleSubmit: React.MouseEventHandler<
@@ -99,51 +103,57 @@ export const RegisterEvent = ({sports}: RegisterEventProps) => {
 
         if (hasErrors()) {
             return;
+        } else {
+            console.log('Só devia estar aqui sem erros');
+            // TODO: Make the request to the backend here
+            const dateAndHour: string = `${date}T${hour}:17.0065405+00:00`;
+            const partipantHome: ParticipantPost = {
+                Type: 'Team',
+                Name: selectedTeams[0],
+                Players: [],
+            };
+            const participantHomeOdd: ParticipantOddPost = {
+                Price: 0,
+                Participant: partipantHome,
+                Promotion: null,
+            };
+            const partipantAway: ParticipantPost = {
+                Type: 'Team',
+                Name: selectedTeams[1],
+                Players: [],
+            };
+            const participantAwayOdd: ParticipantOddPost = {
+                Price: 0,
+                Participant: partipantAway,
+                Promotion: null,
+            };
+            const valuePromo: ValuePromo = {
+                Value: 0,
+            };
+            const tieOdd: TieOdd = {
+                Price: 0,
+                Promo: valuePromo,
+            };
+            const twoParticipant: TwoParticipantsPost = {
+                Home: participantHomeOdd,
+                Away: participantAwayOdd,
+                Tie: tieOdd,
+            };
+            const event: EventToPost = {
+                CompetitionId: league,
+                Date: dateAndHour,
+                Completed: false,
+                Participants: twoParticipant,
+            };
+
+            const newEvent: EventPost = {
+                Sport: sportName,
+                Event: event,
+            };
+
+            await postEvent(newEvent);
+            await router.push('/success');
         }
-
-        // TODO: Make the request to the backend here
-        const dateAndHour: string = `${date}T${hour}:17.0065405+00:00`;
-        const partipantHome: ParticipantPost = {
-            Type: 'Team',
-            Name: selectedTeams[0],
-            Players: [],
-        };
-        const participantHomeOdd: ParticipantOddPost = {
-            Price: 0,
-            Participant: partipantHome,
-            Promotion: null,
-        };
-        const partipantAway: ParticipantPost = {
-            Type: 'Team',
-            Name: selectedTeams[1],
-            Players: [],
-        };
-        const participantAwayOdd: ParticipantOddPost = {
-            Price: 0,
-            Participant: partipantAway,
-            Promotion: null,
-        };
-        const valuePromo: ValuePromo = {
-            Value: 0,
-        };
-        const tieOdd: TieOdd = {
-            Price: 0,
-            Promo: valuePromo,
-        };
-        const twoParticipant: TwoParticipantsPost = {
-            Home: participantHomeOdd,
-            Away: participantAwayOdd,
-            Tie: tieOdd,
-        };
-        const newEvent: EventPost = {
-            Sport: sportName,
-            Date: dateAndHour,
-            CompetitionId: league,
-            Participants: twoParticipant,
-        };
-
-        await postEvent(newEvent);
-        //await router.push('/success');
     };
 
     const validate = () => {
@@ -165,7 +175,7 @@ export const RegisterEvent = ({sports}: RegisterEventProps) => {
             (sportInList) => sportInList.name === sportName
         )[0];
 
-        if (leagueSelected && !sportInfo.leagues.includes(league)) {
+        if (leagueSelected && !sportInfo.competitions.includes(league)) {
             errors.league = 'Liga não disponível na modalidade';
         }
 
@@ -178,6 +188,7 @@ export const RegisterEvent = ({sports}: RegisterEventProps) => {
         }
 
         setErrors(errors);
+        return errors;
     };
 
     return (
@@ -190,7 +201,9 @@ export const RegisterEvent = ({sports}: RegisterEventProps) => {
                 <div className="flex flex-row gap-5 space-evenly">
                     {/* FIXME  Títulos das searchBoxes*/}
                     <SearchBox
-                        allResults={sports.map((sport: AllSport) => sport.name)}
+                        allResults={sports.map(
+                            (sport: InfoSport) => sport.name
+                        )}
                         title={'Modalidades'}
                         currentSearch={sportName}
                         changeCurrentSearch={setSportName}
