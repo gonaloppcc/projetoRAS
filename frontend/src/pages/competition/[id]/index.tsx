@@ -24,7 +24,7 @@ const CompetitionPage: NextPage<PageProps> = ({competitionId}) => {
                 {isSuccess && events.length === 0 && (
                     <span>Não há jogos por agora</span>
                 )}
-                {isError && <span>{error}</span>}
+                {isError && <span>{error.message}</span>}
             </div>
         </PageLayout>
     );

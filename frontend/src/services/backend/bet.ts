@@ -11,10 +11,7 @@ export interface AddSimpleBetProps {
 export interface AddMultipleBetProps {
     betterId: string;
     amount: number;
-    odds: {
-        oddId: string;
-        eventId: string;
-    }[];
+    oddIds: string[];
 }
 
 export const addSimpleBet = async (

@@ -21,9 +21,7 @@ export const useEvents = (compId: string): useEventsProps => {
         ['events', compId],
         () => getEventsByCompetition({competitionId: compId}),
         {
-            onError: (err) => {
-                toast.error((err as AxiosError).message);
-            },
+            onError: (err) => toast.error((err as AxiosError).message),
         }
     );
 

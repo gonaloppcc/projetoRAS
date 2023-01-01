@@ -112,10 +112,7 @@ export const useBettingSlip = create<ReportState>((set, get) => ({
                 const multipleBet: AddMultipleBetProps = {
                     betterId: betterId,
                     amount: bettingAmount as number,
-                    odds: bets.map((bet) => ({
-                        oddId: bet.odd.id,
-                        eventId: bet.eventId,
-                    })),
+                    oddIds: bets.map((bet) => bet.odd.id),
                 };
 
                 await addMultipleBet(multipleBet);

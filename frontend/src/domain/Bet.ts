@@ -4,7 +4,7 @@ export type Bet = SimpleBet | MultipleBet;
 
 export interface SimpleBet {
     id: string;
-    odd: Odd;
+    oddId: string;
     event: Event;
     date: string;
     closed: boolean;
@@ -22,8 +22,8 @@ export interface MultipleBet {
 }
 
 export interface MultiBetOdd {
-    event: Event;
-    odd: Odd;
+    //event: Event;
+    oddId: string;
 }
 
 export interface Odd {

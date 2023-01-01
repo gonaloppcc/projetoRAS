@@ -16,7 +16,7 @@ export interface BetRecordProps {
 
 export const BetRecord = ({
     id,
-    odd: {id: OddId, partId, price},
+    oddId: {id: OddId, partId, price},
     event: {participants},
     date,
     closed,

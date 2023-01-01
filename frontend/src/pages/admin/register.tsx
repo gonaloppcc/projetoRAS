@@ -13,7 +13,7 @@ const Home: NextPage = () => {
                     <RegisterSpecialist modalities={sports} />
                 </div>
             )}
-            {isError && <span>{error}</span>}
+            {isError && <span>{error.message}</span>}
         </>
     );
 };

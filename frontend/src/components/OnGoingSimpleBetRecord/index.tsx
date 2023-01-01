@@ -8,7 +8,7 @@ export interface OnGoingSimpleBetRecordProps extends SimpleBet {
 }
 
 export const OnGoingSimpleBetRecord = ({
-    odd: {partId, price},
+    oddId: {partId, price},
     event: {
         id: eventId,
         participants,
@@ -18,6 +18,7 @@ export const OnGoingSimpleBetRecord = ({
     amount,
     cancelBetHandler,
 }: OnGoingSimpleBetRecordProps) => {
+    console.log('OnGoingSimpleBetRecord');
     // FIXME: Hardcoded text in this component
     const betName = `Resultado Final: ${partId ?? 'Empate'}`; // FIXME: Only valid to Participant Bets
 

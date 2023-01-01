@@ -17,7 +17,7 @@ export const OnGoingMultipleBetRecord = ({
 
     //const eventType = Sport.Name;
 
-    const price = odds.reduce((acc, odd) => acc * odd.odd.price, 1);
+    const price = odds.reduce((acc, odd) => acc * odd.oddId.price, 1);
 
     const betPossibleWinnings = amount * price;
 
@@ -83,7 +83,7 @@ export const OnGoingMultipleBetRecord = ({
             <div className="w-full flex flex-col gap-5 pr-40 bg-WHITE">
                 {odds.map((odd) => (
                     <div
-                        key={odd.odd.id}
+                        key={odd.oddId}
                         className="w-full flex flex-row justify-between items-center px-4 gap-8 bg-WHITE rounded"
                     >
                         <div className="flex flex-row justify-center items-center gap-4">
@@ -104,7 +104,7 @@ export const OnGoingMultipleBetRecord = ({
                         <div className="flex flex-row justify-center items-center gap-4">
                             <div className="flex flex-col items-start p-0 gap-1">
                                 <span className="text-EERIE_BLACK text-base font-semibold">
-                                    {odd.odd.price}
+                                    {odd.oddId.price}
                                 </span>
                             </div>
                         </div>
