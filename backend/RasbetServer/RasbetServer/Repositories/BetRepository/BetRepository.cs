@@ -52,4 +52,11 @@ public class BetRepository : BaseRepository, IBetRepository
             return false;
         }
     }
+
+    public async Task<IEnumerable<Bet>?> GetBetsFromOdd(string id)
+    {
+        var odd = await Context.Odds.FindAsync(id);
+
+        return odd?.MultiBets.Concat<Bet>(odd.SimpleBets);
+    }
 }

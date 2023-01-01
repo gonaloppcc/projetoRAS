@@ -4,7 +4,7 @@ using Newtonsoft.Json.Linq;
 
 namespace RasbetServer.Models.Bets.Odds;
 
-public class Promotion : ICopyFrom<Promotion>
+public class Promotion : ICopyFrom<Promotion>, IComparable<Promotion>
 {
     [Key] [DatabaseGenerated(DatabaseGeneratedOption.Identity)] public string? Id { get; set; } = null;
 
@@ -28,5 +28,12 @@ public class Promotion : ICopyFrom<Promotion>
     public void CopyFrom(Promotion other)
     {
         Value = other.Value;
+    }
+
+    public bool Compare(Promotion? other)
+    {
+        if (other is null)
+            return false;
+        return Math.Abs(Value - other.Value) < 0.001;
     }
 }

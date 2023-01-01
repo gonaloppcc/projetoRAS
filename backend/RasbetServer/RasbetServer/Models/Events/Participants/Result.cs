@@ -4,7 +4,7 @@ using RasbetServer.Models.Bets.Odds;
 
 namespace RasbetServer.Models.Events.Participants;
 
-public class Result : ICopyFrom<Result>
+public class Result : ICopyFrom<Result>, IComparable<Result>
 {
     [Key]
     [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
@@ -29,5 +29,10 @@ public class Result : ICopyFrom<Result>
     {
         Score = other.Score;
         Participant.CopyFrom(other.Participant);
+    }
+
+    public bool Compare(Result other)
+    {
+        return Score == other.Score && Participant.Compare(other.Participant);
     }
 }

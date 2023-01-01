@@ -48,4 +48,17 @@ public class TwoParticipants : BaseParticipants
         if (Tie is not null && twoParticipants.Tie is not null)
             Tie.CopyFrom(twoParticipants.Tie);
     }
+
+    public override bool Compare(BaseParticipants other)
+    {
+        if (other is not TwoParticipants twoParticipants)
+            return false;
+
+        var equal = Home.Compare(twoParticipants.Home) && Away.Compare(twoParticipants.Away);
+
+        if (Tie is not null)
+            return equal && Tie.Compare(twoParticipants.Tie);
+
+        return equal && twoParticipants.Tie == null;
+    }
 }

@@ -3,6 +3,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using RasbetServer.Models.Bets.Odds;
+using RasbetServer.Models.Users.Better;
 using RasbetServer.Resources.Bets;
 using RasbetServer.Resources.Bets.MultiBet;
 using RasbetServer.Resources.Bets.SimpleBet;
@@ -24,6 +25,7 @@ public abstract class Bet
     [Required] 
     [ForeignKey("BetterId")]
     public string BetterId { get; set; }
+    public virtual Better Better { get; set; }
     
     [Required]
     public float Amount { get; set; }

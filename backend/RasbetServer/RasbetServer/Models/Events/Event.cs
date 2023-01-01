@@ -2,13 +2,14 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using RasbetServer.Models.Bets.Odds;
 using RasbetServer.Models.Events.Participants;
 using RasbetServer.Resources.Events.Event;
 using RasbetServer.Resources.Events.Event.FootballEvent;
 
 namespace RasbetServer.Models.Events;
 
-public abstract class Event : ICopyFrom<Event>
+public abstract class Event : ICopyFrom<Event>, IComparable<Event>
 {
     [Key]
     [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
@@ -18,7 +19,9 @@ public abstract class Event : ICopyFrom<Event>
     [ForeignKey("ParticipantsId")]
     public string? ParticipantsId { get; set; } = null;
     public virtual BaseParticipants Participants { get; set; }
-    
+
+    public virtual IEnumerable<Odd> Odds { get; }
+
     [Required] public DateTime Date { get; set; }
 
     [Required]
@@ -73,10 +76,19 @@ public abstract class Event : ICopyFrom<Event>
         };
     }
 
-    public void CopyFrom(Event other)
+    public virtual void CopyFrom(Event other)
     {
         Date = other.Date;
         Completed = other.Completed;
         Participants.CopyFrom(other.Participants);
+    }
+
+    public virtual bool Compare(Event other)
+    {
+        return Math.Truncate((Date - other.Date).TotalMinutes) == 0 &&
+               Completed == other.Completed &&
+               CompetitionId == other.CompetitionId &&
+               Participants.Compare(other.Participants);
+
     }
 }

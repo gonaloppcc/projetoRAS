@@ -44,4 +44,12 @@ public class TieOdd : Odd
 
         return new TieOdd(price, promotion);
     }
+
+    public override bool Compare(Odd? other)
+    {
+        if (other is null)
+            return false;
+        
+        return base.Compare(other);
+    }
 }

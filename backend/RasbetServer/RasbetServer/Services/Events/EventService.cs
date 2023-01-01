@@ -1,9 +1,12 @@
 using Castle.Core;
 using RasbetServer.Models.Events;
 using RasbetServer.Models.Events.Participants;
+using RasbetServer.Models.Users.Notifications;
+using RasbetServer.Repositories.BetRepository;
 using RasbetServer.Repositories.CompetitionRepository;
 using RasbetServer.Repositories.EventRepository;
 using RasbetServer.Repositories.SportRepository;
+using RasbetServer.Repositories.UserRepository;
 using RasbetServer.Services.Communication;
 
 namespace RasbetServer.Services.Events;
@@ -13,16 +16,22 @@ public class EventService : IEventService
     private readonly IEventRepository _eventRepository;
     private readonly ICompetitionRepository _competitionRepository;
     private readonly ISportRepository _sportRepository;
+    private readonly IBetRepository _betRepository;
+    private readonly IUserRepository _userRepository;
 
     public EventService(
         IEventRepository eventRepository, 
         ICompetitionRepository competitionRepository, 
-        ISportRepository sportRepository
-        )
+        ISportRepository sportRepository,
+        IBetRepository betRepository,
+        IUserRepository userRepository
+    )
     {
         _eventRepository = eventRepository;
         _competitionRepository = competitionRepository;
         _sportRepository = sportRepository;
+        _betRepository = betRepository;
+        _userRepository = userRepository;
     }
     
     public async Task<ObjectResponse<Event>> GetAsync(string id)
@@ -89,6 +98,8 @@ public class EventService : IEventService
             }
             else
             {
+                if (!prevEvent.Compare(e))
+                    CreateNotificationsForEventChanged(prevEvent);
                 prevEvent.CopyFrom(e);
                 await _eventRepository.UpdateAsync(prevEvent);
                 eventList.Add(prevEvent);
@@ -96,5 +107,24 @@ public class EventService : IEventService
         }
 
         return new ObjectResponse<IEnumerable<Event>>(eventList);
+    }
+
+    private async Task CreateNotificationsForEventChanged(Event e)
+    {
+        foreach (var odd in e.Odds)
+        {
+            if (odd.Id is null)
+                continue;
+            var bets = await _betRepository.GetBetsFromOdd(odd.Id);
+            if (bets is null)
+                continue;
+                        
+            bets.ToList()
+                .ForEach(b =>
+                {
+                    b.Better.Notifications.Add(new Notification(null, null, $"Event {e.Id} changed", NotificationSeverity.Medium));
+                    _userRepository.UpdateAsync(b.Better);
+                });
+        }
     }
 }

@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace RasbetServer.Models.Events.Participants;
 
-public abstract class BaseParticipants : ICopyFrom<BaseParticipants>
+public abstract class BaseParticipants : ICopyFrom<BaseParticipants>, IComparable<BaseParticipants>
 {
     [Key]
     [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
@@ -14,4 +14,5 @@ public abstract class BaseParticipants : ICopyFrom<BaseParticipants>
     public abstract List<Result> GetParticipants();
     public abstract Result? GetWinner();
     public abstract void CopyFrom(BaseParticipants other);
+    public abstract bool Compare(BaseParticipants other);
 }
