@@ -44,7 +44,7 @@ interface ReportState {
 
     setBettingAmount: (bettingAmount: number) => void;
 
-    submitReport: (betterId: string) => void;
+    submitReport: (betterId: string) => Promise<void>;
 }
 
 const initialBets: BetState[] = [];

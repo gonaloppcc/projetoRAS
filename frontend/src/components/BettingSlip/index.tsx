@@ -6,6 +6,8 @@ import {Tabs} from '@components/Tabs';
 import {SimpleBetCard} from '@components/SimpleBetCard';
 import {SimpleBetBettingSlipInfo} from '@components/SimpleBetBettingSlipInfo';
 import {useProfile} from '@state/useProfile';
+import {useMutation} from '@tanstack/react-query';
+import toast from 'react-hot-toast';
 
 const TABS = [
     {
@@ -31,6 +33,15 @@ export const BettingSlip = () => {
 
     const {id, email, login, isLogged} = useProfile();
 
+    const submitReportMutation = useMutation({
+        mutationFn: submitReport,
+        onSuccess: async () => {
+            await login(email, 'marco123'); // FIXME: Password is hardcoded for that specific user
+
+            toast.success('Aposta submetida com sucesso!');
+        },
+    });
+
     const getRemoveBetHandler = (id: string) => () => {
         removeBet(id);
     };
@@ -40,8 +51,7 @@ export const BettingSlip = () => {
             // TODO: Show login modal
             return;
         }
-        await submitReport(id);
-        await login(email, 'marco123'); // FIXME: Password is hardcoded for that specific user
+        submitReportMutation.mutate(id);
     };
 
     return (
