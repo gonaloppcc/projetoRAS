@@ -7,6 +7,17 @@ public class FootballEvent : Event
 {
     public const string Sport = "Football";
 
+    public override string PrettyName
+    {
+        get
+        {
+            if (Participants is not TwoParticipants twoParticipants)
+                return "Wrong type of Participants";
+
+            return $"{twoParticipants.Home.Participant.PartId} - {twoParticipants.Away.Participant.PartId}";
+        }
+    }
+
     public override IEnumerable<Odd> Odds
     {
         get

@@ -1,6 +1,4 @@
-using Castle.Core;
 using RasbetServer.Models.Events;
-using RasbetServer.Models.Events.Participants;
 using RasbetServer.Models.Users.Notifications;
 using RasbetServer.Repositories.BetRepository;
 using RasbetServer.Repositories.CompetitionRepository;
@@ -98,8 +96,10 @@ public class EventService : IEventService
             }
             else
             {
-                if (!prevEvent.Compare(e))
-                    await CreateNotificationsForEventChanged(prevEvent);
+                var success = await CreateNotificationsForEventChanged(prevEvent, e);
+                if (!success)
+                    continue;
+                
                 prevEvent.CopyFrom(e);
                 await _eventRepository.UpdateAsync(prevEvent);
                 eventList.Add(prevEvent);
@@ -109,22 +109,35 @@ public class EventService : IEventService
         return new ObjectResponse<IEnumerable<Event>>(eventList);
     }
 
-    private async Task CreateNotificationsForEventChanged(Event e)
+    private async Task<bool> CreateNotificationsForEventChanged(Event previous, Event newEvent)
     {
-        foreach (var odd in e.Odds)
-        {
-            if (odd.Id is null)
-                continue;
-            var bets = await _betRepository.GetBetsFromOdd(odd.Id);
-            if (bets is null)
-                continue;
-                        
-            bets.ToList()
-                .ForEach(b =>
+        var notifiedBetters = new List<string>();
+        
+        var changes = previous.Compare(newEvent)?.ToList();
+        if (changes is null)
+            return false;
+        var notifications = Notification.CreateNotificationFromEventChanges(previous, changes).ToList();
+
+        previous.Odds
+            .ToList()
+            .ForEach(async odd =>
+            {
+                if (odd.Id is null)
+                    return;
+
+                var bets = (await _betRepository.GetBetsFromOdd(odd.Id))?.ToList();
+
+                bets?.ForEach(bet =>
                 {
-                    b.Better.Notifications.Add(new Notification(null, null, $"Event {e.Id} changed", NotificationSeverity.Medium));
-                    _userRepository.UpdateAsync(b.Better);
+                    var better = bet.Better;
+                    if (notifiedBetters.Any(id => id == better.Id))
+                        return;
+                    
+                    notifications.ForEach(n => better.Notifications?.Add(n.Clone));
+                    _userRepository.UpdateAsync(better);
+                    notifiedBetters.Add(better.Id!);
                 });
-        }
+            });
+        return true;
     }
 }

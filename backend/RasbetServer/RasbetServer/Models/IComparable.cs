@@ -1,6 +1,6 @@
 namespace RasbetServer.Models;
 
-public interface IComparable<in T>
+public interface IComparable<in T, out TChangedEnum>
 {
-    bool Compare(T other);
+    TChangedEnum Compare(T other);
 }

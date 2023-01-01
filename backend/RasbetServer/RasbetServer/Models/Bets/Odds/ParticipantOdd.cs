@@ -7,7 +7,7 @@ using RasbetServer.Models.Events.Participants.Participant;
 
 namespace RasbetServer.Models.Bets.Odds;
 
-public class ParticipantOdd : Odd, IComparable<ParticipantOdd>
+public class ParticipantOdd : Odd
 {
     [Required] [ForeignKey("PartId")] public string PartId { get; set; }
     [Required] public virtual Participant Part { get; set; }
@@ -66,10 +66,5 @@ public class ParticipantOdd : Odd, IComparable<ParticipantOdd>
         Promotion? promotion = Promotion.FromJson(json["Promotion"].ToObject<JObject>());
 
         return new ParticipantOdd(price, participant, promotion);
-    }
-
-    public bool Compare(ParticipantOdd other)
-    {
-        return PartId == other.PartId;
     }
 }

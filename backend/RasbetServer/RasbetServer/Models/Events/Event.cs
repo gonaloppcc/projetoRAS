@@ -3,13 +3,14 @@ using System.ComponentModel.DataAnnotations.Schema;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using RasbetServer.Models.Bets.Odds;
+using RasbetServer.Models.CompareResults;
 using RasbetServer.Models.Events.Participants;
 using RasbetServer.Resources.Events.Event;
 using RasbetServer.Resources.Events.Event.FootballEvent;
 
 namespace RasbetServer.Models.Events;
 
-public abstract class Event : ICopyFrom<Event>, IComparable<Event>
+public abstract class Event : ICopyFrom<Event>, IComparable<Event, IEnumerable<EventCompareResults>?>
 {
     [Key]
     [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
@@ -30,6 +31,8 @@ public abstract class Event : ICopyFrom<Event>, IComparable<Event>
     public virtual Competition Competition { get; set; }
     
     [Required] public bool Completed { get; set; }
+    
+    public virtual string PrettyName { get; }
 
     public Event() { }
     
@@ -83,12 +86,23 @@ public abstract class Event : ICopyFrom<Event>, IComparable<Event>
         Participants.CopyFrom(other.Participants);
     }
 
-    public virtual bool Compare(Event other)
+    public virtual IEnumerable<EventCompareResults>? Compare(Event other)
     {
-        return Math.Truncate((Date - other.Date).TotalMinutes) == 0 &&
-               Completed == other.Completed &&
-               CompetitionId == other.CompetitionId &&
-               Participants.Compare(other.Participants);
+        var dateChanged = EventCompareResults.NothingChanged;
+        var eventCompleted = EventCompareResults.NothingChanged;
+        var participantsChanged = Participants.Compare(other.Participants)?.ToList();
+        if (participantsChanged is null)
+            return null;
+        
+        if (Math.Truncate((Date - other.Date).TotalMinutes) != 0)
+            dateChanged = EventCompareResults.DateChanged;
 
+        if (Completed != other.Completed)
+            eventCompleted = EventCompareResults.EventCompleted;
+        
+        participantsChanged.Add(dateChanged);
+        participantsChanged.Add(eventCompleted);
+
+        return participantsChanged.Where(change => change != EventCompareResults.NothingChanged).Distinct();
     }
 }

@@ -1,6 +1,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using RasbetServer.Models.Bets.Odds;
+using RasbetServer.Models.CompareResults;
 
 namespace RasbetServer.Models.Events.Participants;
 
@@ -49,16 +50,20 @@ public class TwoParticipants : BaseParticipants
             Tie.CopyFrom(twoParticipants.Tie);
     }
 
-    public override bool Compare(BaseParticipants other)
+    public override IEnumerable<EventCompareResults>? Compare(BaseParticipants other)
     {
         if (other is not TwoParticipants twoParticipants)
-            return false;
+            return null;
 
-        var equal = Home.Compare(twoParticipants.Home) && Away.Compare(twoParticipants.Away);
+        var homeResult = Home.Compare(twoParticipants.Home);
+        var awayResult = Away.Compare(twoParticipants.Away);
+        var tieResult = new List<EventCompareResults>();
+        
+        if (Tie is not null && twoParticipants.Tie is not null)
+        {
+            tieResult = Tie.Compare(twoParticipants.Tie).ToList();
+        }
 
-        if (Tie is not null)
-            return equal && Tie.Compare(twoParticipants.Tie);
-
-        return equal && twoParticipants.Tie == null;
+        return homeResult.Concat(awayResult).Concat(tieResult);
     }
 }

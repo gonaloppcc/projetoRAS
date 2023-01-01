@@ -18,6 +18,12 @@ public class AppDbContext : DbContext
     public DbSet<Administrator> Administrators { get; set; }
     public DbSet<Transaction> Transactions { get; set; }
     public DbSet<Notification> Notifications { get; set; }
+    public DbSet<EventCompletedNotification> EventCompletedNotifications { get; set; }
+    public DbSet<EventDateChangedNotification> EventDateChangedNotifications { get; set; }
+    public DbSet<EventOddPriceChangedNotification> EventOddPriceChangedNotifications { get; set; }
+    public DbSet<EventPromotionCreatedNotification> EventPromotionCreatedNotifications { get; set; }
+    public DbSet<EventPromotionEndedNotification> EventPromotionEndedNotifications { get; set; }
+    public DbSet<EventPromotionValueChangedNotification> EventPromotionValueChangedNotifications { get; set; }
 
     public DbSet<Event> Events { get; set; }
     public DbSet<FootballEvent> FootballEvents { get; set; }

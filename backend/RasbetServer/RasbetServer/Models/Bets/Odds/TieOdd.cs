@@ -1,4 +1,5 @@
 using Newtonsoft.Json.Linq;
+using RasbetServer.Models.CompareResults;
 using RasbetServer.Models.Events;
 
 namespace RasbetServer.Models.Bets.Odds;
@@ -43,13 +44,5 @@ public class TieOdd : Odd
         Promotion? promotion = Promotion.FromJson(json[nameof(Promo)].ToObject<JObject>());
 
         return new TieOdd(price, promotion);
-    }
-
-    public override bool Compare(Odd? other)
-    {
-        if (other is null)
-            return false;
-        
-        return base.Compare(other);
     }
 }
