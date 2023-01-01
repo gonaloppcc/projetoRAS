@@ -2,6 +2,8 @@ export interface Event {
     id: string;
     date: string;
     competition: string;
+
+    sportId: string;
     participants: Participants;
 
     completed: boolean;

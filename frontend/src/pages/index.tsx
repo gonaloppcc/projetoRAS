@@ -4,7 +4,7 @@ import {PageLayout} from '@components/PageLayout';
 import {useEvents} from '@hooks/useEvents';
 import {CircularProgress} from '@mui/material';
 
-const PRIMARY_COMPETITION_ID = 'Portuguese First League'; // Football
+const PRIMARY_COMPETITION_ID = 'Portuguese First League';
 
 const Home: NextPage = () => {
     const {isSuccess, isLoading, isError, events, error} = useEvents(
@@ -22,7 +22,7 @@ const Home: NextPage = () => {
                 {isSuccess && events.length === 0 && (
                     <span>Não há jogos por agora</span>
                 )}
-                {isError && <span>{error}</span>}
+                {isError && <span>{error.message}</span>}
             </div>
         </PageLayout>
     );

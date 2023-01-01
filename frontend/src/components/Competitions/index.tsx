@@ -6,7 +6,6 @@ export interface CompetitionsProps {
 }
 
 export const Competitions = ({competitions}: CompetitionsProps) => {
-    console.log('competitions:', competitions);
     return (
         <div className="flex flex-col items-start w-full p-0 rounded">
             <div className="p-2.5 bg-WHITE w-full rounded">

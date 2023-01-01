@@ -21,7 +21,7 @@ export const addSimpleBet = async (
     betProps: AddSimpleBetProps
 ): Promise<SimpleBet> => {
     const response = await axios.post(`${BASE_URL}/bets`, {
-        type: 'simpleBet',
+        type: 'SimpleBet',
         bet: betProps,
     });
     return response.data as SimpleBet;
@@ -44,7 +44,7 @@ export const addMultipleBet = async (
     betProps: AddMultipleBetProps
 ): Promise<SimpleBet> => {
     const response = await axios.post(`${BASE_URL}/bets`, {
-        type: 'multiBet',
+        type: 'MultiBet',
         bet: betProps,
     });
     return response.data as SimpleBet;
