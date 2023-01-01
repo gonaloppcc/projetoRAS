@@ -3,7 +3,6 @@ import {Competition} from '@domain/Event';
 import {useQuery} from '@tanstack/react-query';
 import {getCompetitions} from '../services/backend/competitions';
 import {AxiosError} from 'axios';
-import toast from 'react-hot-toast';
 
 export interface useCompetitionProps extends FetcherProps {
     competitions: Competition[];
@@ -17,9 +16,7 @@ export const useCompetitions = (sportId: string): useCompetitionProps => {
         data: competitions,
         error,
         refetch,
-    } = useQuery(['competitions'], () => getCompetitions(sportId), {
-        onError: (err) => toast.error((err as AxiosError).message),
-    });
+    } = useQuery(['competitions'], () => getCompetitions(sportId));
 
     return {
         isSuccess,

@@ -6,6 +6,7 @@ import {formatDate} from '../../utils/formatters';
 import {Odd} from '@domain/Bet';
 import {useRouter} from 'next/router';
 import classNames from 'classnames';
+import {useMutation} from '@tanstack/react-query';
 
 export const EventCard = ({
     id,
@@ -14,8 +15,8 @@ export const EventCard = ({
     participants,
     completed,
 }: Event) => {
-    const {addBet} = useBettingSlip();
     const router = useRouter();
+    const {addBet} = useBettingSlip();
 
     const homeName = participants.home.participant.participantName || '';
     const awayName = participants.away.participant.participantName || '';

@@ -3,6 +3,8 @@ import React, {useCallback, useEffect, useState} from 'react';
 import Image from 'next/image';
 import {PrimaryButton} from '@components/Button';
 import {useProfile} from '@state/useProfile';
+import {useMutation} from '@tanstack/react-query';
+import toast from 'react-hot-toast';
 
 export interface PaymentMethodProps {
     isDepositing: boolean;
@@ -17,10 +19,17 @@ export const PaymentMethod = ({isDepositing, setMenu}: PaymentMethodProps) => {
 
     const {deposit, withdraw} = useProfile();
 
+    const makeTransactionMutation = useMutation({
+        mutationFn: isDepositing ? deposit : withdraw,
+        onSuccess: async () => {
+            toast.success('Transação realizada com sucesso!');
+        },
+    });
+
     const submit = useCallback(() => {
-        isDepositing ? deposit(amount) : withdraw(amount);
+        makeTransactionMutation.mutate(amount);
         setMenu(3);
-    }, [amount, deposit, isDepositing, setMenu, withdraw]);
+    }, [amount, makeTransactionMutation, setMenu]);
 
     const handleChange = ({value}: HandleChangeProps) => {
         if (value === '') {

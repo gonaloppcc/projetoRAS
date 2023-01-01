@@ -13,12 +13,12 @@ export const login = async (email: string, password: string): Promise<User> => {
 export const addBalance = async (
     userId: string,
     amount: number
-): Promise<User> => {
+): Promise<number> => {
     const response = await axios.patch(
         `${BASE_URL}/users/balance?id=${userId}&balance=${amount}`
     );
 
-    return response.data as User;
+    return response.data as number;
 };
 export const addSpecialist = async (specialist: Specialist): Promise<User> => {
     const response = await axios.post(

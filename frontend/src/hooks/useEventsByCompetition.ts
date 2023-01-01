@@ -2,14 +2,15 @@ import {useQuery} from '@tanstack/react-query';
 import {getEventsByCompetition} from '../services/backend/event';
 import {Event} from '@domain/Event';
 import {FetcherProps} from '@hooks/Fetcher';
-import toast from 'react-hot-toast';
 import {AxiosError} from 'axios';
 
-export interface useEventsProps extends FetcherProps {
+export interface useEventsByCompetitionProps extends FetcherProps {
     events: Event[];
 }
 
-export const useEvents = (compId: string): useEventsProps => {
+export const useEventsByCompetition = (
+    compId: string
+): useEventsByCompetitionProps => {
     const {
         isSuccess,
         isLoading,
@@ -17,12 +18,8 @@ export const useEvents = (compId: string): useEventsProps => {
         data: events,
         error,
         refetch,
-    } = useQuery(
-        ['events', compId],
-        () => getEventsByCompetition({competitionId: compId}),
-        {
-            onError: (err) => toast.error((err as AxiosError).message),
-        }
+    } = useQuery(['events', compId], () =>
+        getEventsByCompetition({competitionId: compId})
     );
 
     return {

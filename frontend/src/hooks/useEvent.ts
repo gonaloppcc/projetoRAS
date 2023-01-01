@@ -3,7 +3,6 @@ import {getEvent} from '../services/backend/event';
 import {Event} from '@domain/Event';
 import {FetcherProps} from '@hooks/Fetcher';
 import {AxiosError} from 'axios';
-import toast from 'react-hot-toast';
 
 export interface useEventsProps extends FetcherProps {
     event: Event;
@@ -17,9 +16,7 @@ export const useEvent = (eventId: string): useEventsProps => {
         data: event,
         error,
         refetch,
-    } = useQuery(['event', eventId], () => getEvent(eventId), {
-        onError: (err) => toast.error((err as AxiosError).message),
-    });
+    } = useQuery(['event', eventId], () => getEvent(eventId));
 
     return {
         isSuccess,
