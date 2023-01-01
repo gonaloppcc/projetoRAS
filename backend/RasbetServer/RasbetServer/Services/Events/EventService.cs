@@ -99,7 +99,7 @@ public class EventService : IEventService
             else
             {
                 if (!prevEvent.Compare(e))
-                    CreateNotificationsForEventChanged(prevEvent);
+                    await CreateNotificationsForEventChanged(prevEvent);
                 prevEvent.CopyFrom(e);
                 await _eventRepository.UpdateAsync(prevEvent);
                 eventList.Add(prevEvent);
