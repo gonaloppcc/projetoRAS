@@ -1,7 +1,7 @@
 import React from 'react';
 import {NextPage} from 'next';
 import {PageLayout} from '@components/PageLayout';
-import {useEvents} from '@hooks/useEvents';
+import {useEventsByCompetition} from '@hooks/useEventsByCompetition';
 import {CircularProgress} from '@mui/material';
 import {EventCard} from '@components/EventCard';
 
@@ -11,7 +11,7 @@ interface PageProps {
 
 const CompetitionPage: NextPage<PageProps> = ({competitionId}) => {
     const {isSuccess, isLoading, isError, events, error} =
-        useEvents(competitionId);
+        useEventsByCompetition(competitionId);
 
     return (
         <PageLayout>
@@ -19,12 +19,12 @@ const CompetitionPage: NextPage<PageProps> = ({competitionId}) => {
                 {isLoading && <CircularProgress />}
                 {isSuccess &&
                     events.map((event) => (
-                        <EventCard key={event.Id} {...event} />
+                        <EventCard key={event.id} {...event} />
                     ))}
                 {isSuccess && events.length === 0 && (
                     <span>Não há jogos por agora</span>
                 )}
-                {isError && <span>{error}</span>}
+                {isError && <span>Ocorreu um erro ao carregar os jogos</span>}
             </div>
         </PageLayout>
     );

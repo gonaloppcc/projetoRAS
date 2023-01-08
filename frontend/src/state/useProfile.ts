@@ -4,25 +4,20 @@ import {addBalance, login} from '../services/backend/user';
 
 export interface ProfileState extends User {
     // Handlers
-    login: (email: string, password: string) => void;
+    login: (email: string, password: string) => Promise<void>;
     setProfile: (id: string) => void;
     setBalance: (balance: number) => void;
-    deposit: (amount: number) => void;
-    withdraw: (amount: number) => void;
+    deposit: (amount: number) => Promise<void>;
+    withdraw: (amount: number) => Promise<void>;
 
     isLogged: boolean;
 }
 
-export const useProfileState = create<ProfileState>((set, get) => ({
-    Id: '',
-    Nif: '',
-    Cc: '',
-    Cellphone: '',
-    Balance: 0,
-    Email: '',
-    Username: '',
-    Password: '',
-    TransactionHist: [],
+export const useProfile = create<ProfileState>((set, get) => ({
+    id: '',
+    balance: 0,
+    email: '',
+    username: '',
     role: '',
     isLogged: false,
     login: async (email, password) => {
@@ -36,19 +31,19 @@ export const useProfileState = create<ProfileState>((set, get) => ({
 
     setBalance: (balance) => {
         set((state) => {
-            return {...state, Balance: balance};
+            return {...state, balance: balance};
         });
     },
     deposit: async (amount) => {
-        const user = await addBalance(get().Id, amount);
+        const balance = await addBalance(get().id, amount);
         set((state) => {
-            return {...state, ...user};
+            return {...state, balance};
         });
     },
     withdraw: async (amount) => {
-        const user = await addBalance(get().Id, -amount);
+        const balance = await addBalance(get().id, -amount);
         set((state) => {
-            return {...state, ...user};
+            return {...state, balance};
         });
     },
 }));

@@ -30,11 +30,11 @@ export const ScrollModalities = ({
                     >
                         <div className="flex flex-row gap-1">
                             <div className="pr-0">☺︎</div>
-                            <div className="pl-0">{mod.Name}</div>
+                            <div className="pl-0">{mod.name}</div>
                         </div>
                         <input
-                            key={mod.Name}
-                            id={mod.Name}
+                            key={mod.name}
+                            id={mod.name}
                             type="checkbox"
                             onChange={checkBoxClicked.bind(this, mod)}
                         />

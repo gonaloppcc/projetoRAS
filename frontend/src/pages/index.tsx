@@ -1,15 +1,14 @@
 import type {NextPage} from 'next';
 import {EventCard} from '@components/EventCard';
 import {PageLayout} from '@components/PageLayout';
-import {useEvents} from '@hooks/useEvents';
+import {useEventsByCompetition} from '@hooks/useEventsByCompetition';
 import {CircularProgress} from '@mui/material';
 
-const PRIMARY_COMPETITION_ID = 'Portuguese First League'; // Football
+const PRIMARY_COMPETITION_ID = 'Portuguese First League';
 
 const Home: NextPage = () => {
-    const {isSuccess, isLoading, isError, events, error} = useEvents(
-        PRIMARY_COMPETITION_ID
-    );
+    const {isSuccess, isLoading, isError, events, error} =
+        useEventsByCompetition(PRIMARY_COMPETITION_ID);
 
     return (
         <PageLayout>
@@ -17,12 +16,12 @@ const Home: NextPage = () => {
                 {isLoading && <CircularProgress />}
                 {isSuccess &&
                     events.map((event) => (
-                        <EventCard key={event.Id} {...event} />
+                        <EventCard key={event.id} {...event} />
                     ))}
                 {isSuccess && events.length === 0 && (
                     <span>Não há jogos por agora</span>
                 )}
-                {isError && <span>{error}</span>}
+                {isError && <span>Ocorreu um erro ao carregar os jogos</span>}
             </div>
         </PageLayout>
     );

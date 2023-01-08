@@ -2,6 +2,7 @@ import {useQuery} from '@tanstack/react-query';
 import {getEvent} from '../services/backend/event';
 import {Event} from '@domain/Event';
 import {FetcherProps} from '@hooks/Fetcher';
+import {AxiosError} from 'axios';
 
 export interface useEventsProps extends FetcherProps {
     event: Event;
@@ -22,7 +23,7 @@ export const useEvent = (eventId: string): useEventsProps => {
         isLoading,
         isError,
         event: event as unknown as Event,
-        error: error as string,
+        error: error as AxiosError,
         refetch,
     };
 };

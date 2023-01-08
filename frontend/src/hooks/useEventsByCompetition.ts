@@ -1,13 +1,16 @@
 import {useQuery} from '@tanstack/react-query';
-import {getEvents} from '../services/backend/event';
+import {getEventsByCompetition} from '../services/backend/event';
 import {Event} from '@domain/Event';
 import {FetcherProps} from '@hooks/Fetcher';
+import {AxiosError} from 'axios';
 
-export interface useEventsProps extends FetcherProps {
+export interface useEventsByCompetitionProps extends FetcherProps {
     events: Event[];
 }
 
-export const useEvents = (compId: string): useEventsProps => {
+export const useEventsByCompetition = (
+    compId: string
+): useEventsByCompetitionProps => {
     const {
         isSuccess,
         isLoading,
@@ -15,14 +18,16 @@ export const useEvents = (compId: string): useEventsProps => {
         data: events,
         error,
         refetch,
-    } = useQuery(['events', compId], () => getEvents({compId}));
+    } = useQuery(['events', compId], () =>
+        getEventsByCompetition({competitionId: compId})
+    );
 
     return {
         isSuccess,
         isLoading,
         isError,
         events: events as unknown as Event[],
-        error: error as string,
+        error: (error ?? '') as AxiosError,
         refetch,
     };
 };

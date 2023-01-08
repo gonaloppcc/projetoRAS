@@ -1,7 +1,7 @@
 import {Navlink} from '@components/Navlink';
 import Link from 'next/link';
 import Image from 'next/image';
-import {useProfileState} from '@state/useProfileState';
+import {useProfile} from '@state/useProfile';
 import {PrimaryButton, SecondaryButton} from '@components/Button';
 import {useRouter} from 'next/router';
 import {Balance} from '@components/Balance';
@@ -24,11 +24,11 @@ interface NavBarBodyProps {
 }
 
 export const NavBarBody = ({setOpen}: NavBarBodyProps) => {
-    const {Id, Username, Balance: balance} = useProfileState();
+    const {id, username, balance: balance} = useProfile();
 
     const router = useRouter();
 
-    const isLoggedIn = Id !== '';
+    const isLoggedIn = id !== '';
 
     const loginHandler = async () => {
         await router.push('/login');
@@ -57,7 +57,7 @@ export const NavBarBody = ({setOpen}: NavBarBodyProps) => {
                     </Link>
                     <div className="flex flex-row items-center gap-2">
                         <div className="w-8 h-8 rounded-full bg-LIGHT_GRAY" />
-                        <span className="text-WHITE">{Username}</span>
+                        <span className="text-WHITE">{username}</span>
                     </div>
                 </div>
             )}
