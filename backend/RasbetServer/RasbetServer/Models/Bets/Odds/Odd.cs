@@ -10,7 +10,10 @@ public class Odd : ICopyFrom<Odd>
     [Required] public float Price { get; set; }
     public virtual Promotion? Promo { get; set; }
     
-    public virtual IEnumerable<MultiBet> MultiBets { get; set; }
+    public virtual IEnumerable<Bet> Bets { get; set; }
+    
+    [NotMapped]
+    public virtual Event Event { get; }
 
     public Odd() { }
     
