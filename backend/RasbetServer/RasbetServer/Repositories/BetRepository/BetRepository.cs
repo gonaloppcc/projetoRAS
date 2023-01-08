@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using RasbetServer.Models.Bets;
+using RasbetServer.Models.Bets.Odds;
 using RasbetServer.Repositories.Contexts;
 
 namespace RasbetServer.Repositories.BetRepository;
@@ -14,12 +15,18 @@ public class BetRepository : BaseRepository, IBetRepository
     {
         try
         {
-            var odds = bet.GetOdds();
-            Context.Odds.AttachRange(odds);
+            var dbOdds = new List<Odd>();
+            foreach (var genericOdd in bet.Odds)
+            {
+                var odd = await Context.Odds.FindAsync(genericOdd.Id);
+                Context.Odds.Attach(odd);
+                dbOdds.Add(odd);
+            }
 
+            bet.Odds = dbOdds;
             var entityEntry = await Context.Bets.AddAsync(bet);
             await Context.SaveChangesAsync();
-
+            
             await entityEntry.ReloadAsync();
             return entityEntry.Entity;
         }

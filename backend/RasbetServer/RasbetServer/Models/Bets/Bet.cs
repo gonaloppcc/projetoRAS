@@ -30,6 +30,8 @@ public abstract class Bet
     
     public float CancelReturn => 0.8f * Amount;
 
+    public virtual IList<Odd> Odds { get; set; } = new List<Odd>();
+
     public Bet() { }
     
     public Bet(
@@ -45,8 +47,6 @@ public abstract class Bet
     }
 
     public abstract float CalcCashOut();
-
-    public abstract IEnumerable<Odd> GetOdds();
 
     private static string? GetTypeFromJObject(JObject json) 
         => (json["Type"] ?? json["type"])?.Value<string>();

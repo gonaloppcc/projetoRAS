@@ -1,4 +1,3 @@
-using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using RasbetServer.Models.Bets.Odds;
 
@@ -6,17 +5,22 @@ namespace RasbetServer.Models.Events.Participants;
 
 public class TwoParticipants : BaseParticipants
 {
-    [Required]
-    [ForeignKey("HomeId")]
-    public string? HomeId { get; set; } = null;
-    public virtual Result Home { get; set; }
+    [NotMapped]
+    public Result Home
+    {
+        get => Results[0];
+        set => Results.Insert(0, value);
+    }
 
-    [Required]
-    [ForeignKey("AwayId")]
-    public string? AwayId { get; set; } = null;
-    public virtual Result Away { get; set; }
+    [NotMapped]
+    public Result Away
+    {
+        get => Results[1];
+        set => Results.Insert(1, value);
+    }
 
-    [ForeignKey("TieId")] public string? TieId { get; set; } = null;
+    [ForeignKey("TieId")] 
+    public string? TieId { get; set; } = null;
     public virtual TieOdd? Tie { get; set; }
 
     public TwoParticipants() : base() { }

@@ -8,12 +8,17 @@ public class Result : ICopyFrom<Result>
 {
     [Key]
     [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-    public string? Id { get; set; } = null;
+    public string? Id { get; set; }
     
     [Required]
     [ForeignKey("ParticipantOddId")]
-    public string? ParticipantId { get; set; } = null;
+    public string? ParticipantId { get; set; }
     public virtual ParticipantOdd Participant { get; set; }
+    
+    [Required]
+    [ForeignKey("ParticipantsId")]
+    public string? ParticipantsId { get; set; }
+    public virtual BaseParticipants Participants { get; set; }
     
     public int? Score { get; set; }
 

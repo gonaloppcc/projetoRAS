@@ -1,10 +1,18 @@
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using Newtonsoft.Json.Linq;
 using RasbetServer.Models.Events;
+using RasbetServer.Models.Events.Participants;
 
 namespace RasbetServer.Models.Bets.Odds;
 
 public class TieOdd : Odd
 {
+    [InverseProperty("Tie")]
+    public virtual TwoParticipants Participants { get; set; }
+
+    public override Event Event => Participants.Event;
+
     public TieOdd() : base() { }
     
     public TieOdd(string id, float price, Promotion? promo) : base(id, price, promo)
