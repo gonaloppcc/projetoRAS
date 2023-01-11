@@ -43,11 +43,25 @@ public class EventService : IEventService
 
     public async Task<ObjectResponse<Event>> AddAsync(Event e)
     {
-        var added = await _eventRepository.AddAsync(e);
-        if (added is null)
-            return new ObjectResponse<Event>("Event already exists", StatusCode.Conflict);
-        
-        return new ObjectResponse<Event>(added);
+        var prevEvent = await _eventRepository.GetByInfoAsync(e);
+        if (prevEvent is null)
+        {
+            var newEvent = await _eventRepository.AddAsync(e);
+            if (newEvent is null)
+                return new ObjectResponse<Event>("Error adding event", StatusCode.BadRequest);
+            return new ObjectResponse<Event>(newEvent);
+        }
+        else
+        {
+            var eventChanged = await CreateNotificationsForEventChanged(prevEvent, e);
+            if (eventChanged)
+            {
+                prevEvent.CopyFrom(e);
+                await _eventRepository.UpdateAsync(prevEvent);
+            }
+
+            return new ObjectResponse<Event>(prevEvent);
+        }
     }
 
     public async Task<ObjectResponse<IEnumerable<Event>>> ListPageByCompetitionAsync(string competitionId, int pageNum, int pageSize)
@@ -86,24 +100,11 @@ public class EventService : IEventService
         IList<Event> eventList = new List<Event>();
         foreach (var e in events)
         {
-            var prevEvent = await _eventRepository.GetByInfoAsync(e);
-            if (prevEvent is null)
-            {
-                var newEvent = await _eventRepository.AddAsync(e);
-                if (newEvent is null)
-                    return new ObjectResponse<IEnumerable<Event>>($"Error adding one of the events", StatusCode.BadRequest);
-                eventList.Add(newEvent);
-            }
-            else
-            {
-                var success = await CreateNotificationsForEventChanged(prevEvent, e);
-                if (!success)
-                    continue;
-                
-                prevEvent.CopyFrom(e);
-                await _eventRepository.UpdateAsync(prevEvent);
-                eventList.Add(prevEvent);
-            }
+            var objectResponse = await AddAsync(e);
+            if (!objectResponse.Success)
+                continue;
+            
+            eventList.Add(objectResponse.Object!);
         }
 
         return new ObjectResponse<IEnumerable<Event>>(eventList);
