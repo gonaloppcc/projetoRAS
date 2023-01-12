@@ -16,7 +16,7 @@ export const useBets = (userId: string): useBetsProps => {
         data: bets,
         error,
         refetch,
-    } = useQuery(['bets', userId], () => getBets({userId}));
+    } = useQuery(['bets', userId], () => getBets({email: userId}));
 
     return {
         isSuccess,

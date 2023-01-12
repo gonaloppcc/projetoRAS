@@ -31,7 +31,7 @@ export const BettingSlip = () => {
         submitReport,
     } = useBettingSlip();
 
-    const {id, email, login, isLogged} = useProfile();
+    const {id, email, login, isLoggedIn} = useProfile();
 
     const submitReportMutation = useMutation({
         mutationFn: submitReport,
@@ -47,7 +47,7 @@ export const BettingSlip = () => {
     };
 
     const submitReportHandler = async () => {
-        if (!isLogged) {
+        if (!isLoggedIn) {
             // TODO: Show login modal
             return;
         }

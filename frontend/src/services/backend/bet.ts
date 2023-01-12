@@ -25,11 +25,11 @@ export const addSimpleBet = async (
 };
 
 export const getBets = async ({
-    userId,
+    email,
 }: {
-    userId: string;
+    email: string;
 }): Promise<SimpleBet[]> => {
-    const response = await axios.get(`${BASE_URL}/bets?userId=${userId}`);
+    const response = await axios.get(`${BASE_URL}/bets?userId=${email}`);
     return response.data as SimpleBet[];
 };
 
