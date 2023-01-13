@@ -5,6 +5,8 @@ import {useProfile} from '@state/useProfile';
 import {PrimaryButton, SecondaryButton} from '@components/Button';
 import {useRouter} from 'next/router';
 import {Balance} from '@components/Balance';
+import {useEffect} from 'react';
+import {Avatar} from '@components/Avatar';
 
 const navlinks = [
     {
@@ -24,11 +26,15 @@ interface NavBarBodyProps {
 }
 
 export const NavBarBody = ({setOpen}: NavBarBodyProps) => {
-    const {id, username, balance: balance} = useProfile();
+    const {isLoggedIn, id, username, balance, getSession} = useProfile();
 
     const router = useRouter();
 
-    const isLoggedIn = id !== '';
+    useEffect(() => {
+        (async () => {
+            await getSession();
+        })();
+    }, [getSession]);
 
     const loginHandler = async () => {
         await router.push('/login');
@@ -56,8 +62,12 @@ export const NavBarBody = ({setOpen}: NavBarBodyProps) => {
                         {'Apostas' /* FIXME Hardcoded for now */}
                     </Link>
                     <div className="flex flex-row items-center gap-2">
-                        <div className="w-8 h-8 rounded-full bg-LIGHT_GRAY" />
-                        <span className="text-WHITE">{username}</span>
+                        <Avatar>{username.at(0)?.toUpperCase()}</Avatar>
+                        {/*<div className="w-8 h-8 rounded-full bg-LIGHT_GRAY" />*/}
+                        <span className="text-EERIE_BLACK font-semibold">
+                            {username.charAt(0).toUpperCase() +
+                                username.slice(1)}
+                        </span>
                     </div>
                 </div>
             )}
