@@ -1,6 +1,8 @@
 namespace RasbetServer.Models.Users;
 
 public class Administrator : User {
+    public Administrator() : base() { }
+    
     public Administrator(
         string id,
         string email,
