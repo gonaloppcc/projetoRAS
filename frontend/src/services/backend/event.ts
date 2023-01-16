@@ -1,4 +1,4 @@
-import {EventMini, EventPost} from '@domain/Event';
+import {EventPost} from '@domain/Event';
 import axios from 'axios';
 import {BASE_URL} from './constants';
 
@@ -11,8 +11,12 @@ export const getEvents = async ({
     pageNum?: number;
     pageSize?: number;
 }): Promise<Event[]> => {
+<<<<<<< Updated upstream
     const response = await axios.get(`${BASE_URL}/events`, {
         params: {compId, pageNum, pageSize},
+=======
+    const response = await axios.get(`${BASE_URL}/events/competition`, {
+        params: {compId: competitionId, pageNum, pageSize},
     });
     return response.data as Event[];
 };
@@ -25,11 +29,12 @@ export const getEventsBySport = async ({
     sportId: string;
     pageNum?: number;
     pageSize?: number;
-}): Promise<EventMini[]> => {
+}) => {
     const response = await axios.get(`${BASE_URL}/events/sport`, {
         params: {sportId, pageNum, pageSize},
+>>>>>>> Stashed changes
     });
-    return response.data as EventMini[];
+    return response.data as Event[];
 };
 
 export const getEvent = async (eventId: string): Promise<Event> => {
