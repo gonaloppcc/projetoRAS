@@ -1,10 +1,11 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using RasbetServer.Models.Bets.Odds;
+using RasbetServer.Models.CompareResults;
 
 namespace RasbetServer.Models.Events.Participants;
 
-public class Result : ICopyFrom<Result>
+public class Result : ICopyFrom<Result>, IComparable<Result, IEnumerable<EventCompareResults>>
 {
     [Key]
     [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
@@ -34,5 +35,10 @@ public class Result : ICopyFrom<Result>
     {
         Score = other.Score;
         Participant.CopyFrom(other.Participant);
+    }
+
+    public IEnumerable<EventCompareResults> Compare(Result other)
+    {
+        return Participant.Compare(other.Participant).Distinct();
     }
 }

@@ -8,4 +8,5 @@ public interface IBetRepository
     Task<Bet?> GetAsync(string id);
     Task<IEnumerable<Bet>> ListAsync(string userId);
     Task<bool> DeleteAsync(Bet bet);
+    Task<IEnumerable<Bet>?> GetBetsFromOdd(string id);
 }

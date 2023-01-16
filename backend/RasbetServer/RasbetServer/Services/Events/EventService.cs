@@ -1,9 +1,10 @@
-using Castle.Core;
 using RasbetServer.Models.Events;
-using RasbetServer.Models.Events.Participants;
+using RasbetServer.Models.Users.Notifications;
+using RasbetServer.Repositories.BetRepository;
 using RasbetServer.Repositories.CompetitionRepository;
 using RasbetServer.Repositories.EventRepository;
 using RasbetServer.Repositories.SportRepository;
+using RasbetServer.Repositories.UserRepository;
 using RasbetServer.Services.Communication;
 
 namespace RasbetServer.Services.Events;
@@ -13,16 +14,22 @@ public class EventService : IEventService
     private readonly IEventRepository _eventRepository;
     private readonly ICompetitionRepository _competitionRepository;
     private readonly ISportRepository _sportRepository;
+    private readonly IBetRepository _betRepository;
+    private readonly IUserRepository _userRepository;
 
     public EventService(
         IEventRepository eventRepository, 
         ICompetitionRepository competitionRepository, 
-        ISportRepository sportRepository
-        )
+        ISportRepository sportRepository,
+        IBetRepository betRepository,
+        IUserRepository userRepository
+    )
     {
         _eventRepository = eventRepository;
         _competitionRepository = competitionRepository;
         _sportRepository = sportRepository;
+        _betRepository = betRepository;
+        _userRepository = userRepository;
     }
     
     public async Task<ObjectResponse<Event>> GetAsync(string id)
@@ -36,11 +43,25 @@ public class EventService : IEventService
 
     public async Task<ObjectResponse<Event>> AddAsync(Event e)
     {
-        var added = await _eventRepository.AddAsync(e);
-        if (added is null)
-            return new ObjectResponse<Event>("Event already exists", StatusCode.Conflict);
-        
-        return new ObjectResponse<Event>(added);
+        var prevEvent = await _eventRepository.GetByInfoAsync(e);
+        if (prevEvent is null)
+        {
+            var newEvent = await _eventRepository.AddAsync(e);
+            if (newEvent is null)
+                return new ObjectResponse<Event>("Error adding event", StatusCode.BadRequest);
+            return new ObjectResponse<Event>(newEvent);
+        }
+        else
+        {
+            var eventChanged = await CreateNotificationsForEventChanged(prevEvent, e);
+            if (eventChanged)
+            {
+                prevEvent.CopyFrom(e);
+                await _eventRepository.UpdateAsync(prevEvent);
+            }
+
+            return new ObjectResponse<Event>(prevEvent);
+        }
     }
 
     public async Task<ObjectResponse<IEnumerable<Event>>> ListPageByCompetitionAsync(string competitionId, int pageNum, int pageSize)
@@ -79,22 +100,45 @@ public class EventService : IEventService
         IList<Event> eventList = new List<Event>();
         foreach (var e in events)
         {
-            var prevEvent = await _eventRepository.GetByInfoAsync(e);
-            if (prevEvent is null)
-            {
-                var newEvent = await _eventRepository.AddAsync(e);
-                if (newEvent is null)
-                    return new ObjectResponse<IEnumerable<Event>>($"Error adding one of the events", StatusCode.BadRequest);
-                eventList.Add(newEvent);
-            }
-            else
-            {
-                prevEvent.CopyFrom(e);
-                await _eventRepository.UpdateAsync(prevEvent);
-                eventList.Add(prevEvent);
-            }
+            var objectResponse = await AddAsync(e);
+            if (!objectResponse.Success)
+                continue;
+            
+            eventList.Add(objectResponse.Object!);
         }
 
         return new ObjectResponse<IEnumerable<Event>>(eventList);
+    }
+
+    private async Task<bool> CreateNotificationsForEventChanged(Event previous, Event newEvent)
+    {
+        var notifiedBetters = new List<string>();
+        
+        var changes = previous.Compare(newEvent)?.ToList();
+        if (changes is null)
+            return false;
+        var notifications = Notification.CreateNotificationFromEventChanges(previous, changes).ToList();
+
+        previous.Odds
+            .ToList()
+            .ForEach(async odd =>
+            {
+                if (odd.Id is null)
+                    return;
+
+                var bets = (await _betRepository.GetBetsFromOdd(odd.Id))?.ToList();
+
+                bets?.ForEach(bet =>
+                {
+                    var better = bet.Better;
+                    if (notifiedBetters.Any(id => id == better.Id))
+                        return;
+                    
+                    notifications.ForEach(n => better.Notifications?.Add(n.Clone));
+                    _userRepository.UpdateAsync(better);
+                    notifiedBetters.Add(better.Id!);
+                });
+            });
+        return true;
     }
 }

@@ -11,10 +11,17 @@ public class NotificationProfile : Profile
     {
         CreateMap<Notification, NotificationResource>()
             .ForMember(
-                    dest => dest.Severity,
-                    opt => opt.MapFrom(
-                            src => src.Severity.GetDisplayName()
-                        )
-                );
+                dest => dest.Severity,
+                opt => opt.MapFrom(
+                    src => src.Severity.GetDisplayName()
+                )
+            )
+            .IncludeAllDerived();
+        CreateMap<EventCompletedNotification, NotificationResource>();
+        CreateMap<EventDateChangedNotification, NotificationResource>();
+        CreateMap<EventOddPriceChangedNotification, NotificationResource>();
+        CreateMap<EventPromotionCreatedNotification, NotificationResource>();
+        CreateMap<EventPromotionEndedNotification, NotificationResource>();
+        CreateMap<EventPromotionValueChangedNotification, NotificationResource>();
     }
 }

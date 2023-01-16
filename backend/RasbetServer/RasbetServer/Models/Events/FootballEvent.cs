@@ -1,3 +1,4 @@
+using RasbetServer.Models.Bets.Odds;
 using RasbetServer.Models.Events.Participants;
 
 namespace RasbetServer.Models.Events;
@@ -5,6 +6,32 @@ namespace RasbetServer.Models.Events;
 public class FootballEvent : Event
 {
     public const string Sport = "Football";
+
+    public override string PrettyName
+    {
+        get
+        {
+            if (Participants is not TwoParticipants twoParticipants)
+                return "Wrong type of Participants";
+
+            return $"{twoParticipants.Home.Participant.PartId} - {twoParticipants.Away.Participant.PartId}";
+        }
+    }
+
+    public override IEnumerable<Odd> Odds
+    {
+        get
+        {
+            if (Participants is not TwoParticipants twoParticipants)
+                return new List<Odd>();
+            
+            var odds =  new List<Odd> { twoParticipants.Home.Participant, twoParticipants.Away.Participant };
+            if (twoParticipants.Tie is not null)
+                odds.Add(twoParticipants.Tie);
+
+            return odds;
+        }
+    }
 
     public FootballEvent() : base() { }
     
