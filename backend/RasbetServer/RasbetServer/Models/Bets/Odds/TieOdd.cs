@@ -1,6 +1,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Newtonsoft.Json.Linq;
+using RasbetServer.Models.CompareResults;
 using RasbetServer.Models.Events;
 using RasbetServer.Models.Events.Participants;
 
