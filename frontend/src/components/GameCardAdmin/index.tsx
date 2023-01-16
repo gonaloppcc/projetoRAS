@@ -57,6 +57,8 @@ export const GameCardAdmin = ({
     const awayTeam = game.participants.away.participant.participantName
         ? game.participants.away.participant.participantName
         : 'Away Team';
+    const oddHome = game.participants.home.participant.price;
+    const oddAway = game.participants.away.participant.price;
     const date = game.date.split('T')[0];
     const completed = game.completed;
 
@@ -83,6 +85,8 @@ export const GameCardAdmin = ({
                 {completed
                     ? column('Estado', 'Fechado')
                     : column('Estado', 'Aberto')}
+                {!resultOrOdd &&
+                    column('Odd casa-fora', `${oddHome}-${oddAway}`)}
                 <div className=" bg-white rounded flex flex-row items-center ">
                     {!completed && button(textButton, closeGame)}
                     {completed &&

@@ -22,25 +22,23 @@ const EventPage: NextPage<PageProps> = ({eventId}) => {
                         <div className="text-xl bg-white w-full font-semibold pl-4  py-4">
                             Jogos
                         </div>
-                        {events
-                            .filter((game) => !game.completed)
-                            .map((game) => {
-                                return (
-                                    <div key={game.id}>
-                                        <GameCardAdmin
-                                            game={game}
-                                            sport={eventId}
-                                            textButton={'Fechar jogo'}
-                                            textPropsUp={'Insira resultado'}
-                                            textSucess={
-                                                'Jogo fechado com sucesso'
-                                            }
-                                            resultOrOdd={true}
-                                            textSet={'Pontos'}
-                                        />
-                                    </div>
-                                );
-                            })}
+                        {events.map((game) => {
+                            return (
+                                <div key={game.id}>
+                                    <GameCardAdmin
+                                        game={game}
+                                        sport={eventId}
+                                        textButton={'Alterar odds'}
+                                        textPropsUp={'Insira novas odds'}
+                                        textSucess={
+                                            'Odds alteradas com sucesso'
+                                        }
+                                        resultOrOdd={false}
+                                        textSet={'Odd'}
+                                    />
+                                </div>
+                            );
+                        })}
                     </div>
                 </div>
             )}

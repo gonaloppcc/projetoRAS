@@ -42,11 +42,9 @@ export const SetResult = ({
     const [submitted, setSubmitted] = useState(false);
 
     const changeHome = ({name, value}: HandleChangeProps) => {
-        console.log(value);
         setValueHome(value);
     };
     const changeAway = ({name, value}: HandleChangeProps) => {
-        console.log(value);
         setValueAway(value);
     };
 
@@ -68,7 +66,9 @@ export const SetResult = ({
         } else {
             const dateAndHour: string = game.date;
             const partipantHome: ParticipantMesmo = {
-                Price: !resultOrOdd ? game.participants.home.participant.price : parseInt(valueHome),
+                Price: resultOrOdd
+                    ? game.participants.home.participant.price
+                    : parseInt(valueHome),
                 PartId: homeName,
                 Promo: null,
             };
@@ -77,7 +77,9 @@ export const SetResult = ({
                 Score: resultOrOdd ? parseInt(valueHome) : 0,
             };
             const partipantAway: ParticipantMesmo = {
-                Price: !resultOrOdd ? game.participants.away.participant.price : parseInt(valueAway),
+                Price: resultOrOdd
+                    ? game.participants.away.participant.price
+                    : parseInt(valueAway),
                 Promo: null,
                 PartId: awayName,
             };
@@ -101,7 +103,7 @@ export const SetResult = ({
             const event: EventToPost = {
                 CompetitionId: game.competition,
                 Date: dateAndHour,
-                Completed: true,
+                Completed: resultOrOdd,
                 Participants: twoParticipant,
             };
 
@@ -109,6 +111,7 @@ export const SetResult = ({
                 Sport: sport,
                 Event: event,
             };
+            console.log(newEvent);
             await postEvent(newEvent);
             setSubmitted(true);
         }
