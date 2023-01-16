@@ -95,6 +95,21 @@ public class EventService : IEventService
         return new ObjectResponse<IEnumerable<Event>>(eventList);
     }
 
+    public async Task<ObjectResponse<Event>> UpdateAsync(string id, Event e)
+    {
+        var prevEvent = await _eventRepository.GetAsync(id);
+        if (prevEvent is null)
+            return new ObjectResponse<Event>("Game not found", StatusCode.NotFound);
+
+        var eventChanged = await CreateNotificationsForEventChanged(prevEvent, e);
+        if (!eventChanged)
+            return new ObjectResponse<Event>("Event has no changes", StatusCode.Conflict);
+        
+        prevEvent.CopyFrom(e);
+        await _eventRepository.UpdateAsync(prevEvent);
+        return new ObjectResponse<Event>(prevEvent);
+    }
+
     public async Task<ObjectResponse<IEnumerable<Event>>> CacheEvents(IEnumerable<Event> events)
     {
         IList<Event> eventList = new List<Event>();
