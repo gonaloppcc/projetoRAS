@@ -52,7 +52,7 @@ public class BetService : IBetService
             return new ObjectResponse<Bet>("Unknown error registering bet", StatusCode.BadRequest);
         
         better.Balance -= bet.Amount;
-        better.TransactionHist.Add(new Transaction(-bet.Amount));
+        better.TransactionHist.Add(new Transaction(TransactionTypes.BetMade, DateTime.Now, -bet.Amount, better.Balance));
         await _userRepository.UpdateAsync(better);
 
         return new ObjectResponse<Bet>(added);
@@ -78,7 +78,7 @@ public class BetService : IBetService
         if (!deleted)
             return new ObjectResponse<float>("Unknown error canceling bet", StatusCode.BadRequest);
         
-        better.TransactionHist.Add(new Transaction(cancelReturn));
+        better.TransactionHist.Add(new Transaction(TransactionTypes.BetCancelled, DateTime.Now, cancelReturn, better.Balance));
         await _userRepository.UpdateAsync(better);
 
         return new ObjectResponse<float>(better.Balance);
