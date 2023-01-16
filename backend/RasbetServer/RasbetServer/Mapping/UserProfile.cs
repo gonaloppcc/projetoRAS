@@ -1,6 +1,7 @@
 using AutoMapper;
 using RasbetServer.Models.Events;
 using RasbetServer.Models.Users;
+using RasbetServer.Models.Users.Better;
 using RasbetServer.Resources.Users;
 using RasbetServer.Resources.Users.Administrator;
 using RasbetServer.Resources.Users.Better;

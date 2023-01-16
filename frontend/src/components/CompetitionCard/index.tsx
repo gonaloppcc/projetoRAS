@@ -2,24 +2,23 @@ import React from 'react';
 import StarBorderIcon from '@mui/icons-material/StarBorder';
 import StarIcon from '@mui/icons-material/Star';
 import {SportIcon} from '@components/SportIcon';
-import {Sport} from '@domain/Event';
 import {useRouter} from 'next/router';
 
 export interface CompetitionProps {
-    Name: string;
-    Sport: Sport; // TODO: Change to enum
+    name: string;
+    sportId: string; // TODO: Change to enum
     isFavorite?: boolean;
 }
 
 export const CompetitionCard = ({
-    Name,
-    Sport: {Name: sportName},
+    name,
+    sportId: sportName,
     isFavorite,
 }: CompetitionProps) => {
     const router = useRouter();
 
     const onClickHandler = async () => {
-        await router.push(`/competition/${Name}`);
+        await router.push(`/competition/${name}`);
     };
 
     return (
@@ -29,7 +28,7 @@ export const CompetitionCard = ({
         >
             <div className="flex flex-row justify-between items-center p-0 gap-2">
                 <SportIcon eventType={sportName} />
-                {Name}
+                {name}
             </div>
             {isFavorite ? <StarIcon /> : <StarBorderIcon />}
         </div>

@@ -14,8 +14,8 @@ public class ParticipantRepository : BaseRepository, IParticipantRepository
     {
         try
         {
-            var entityEntry = await _context.Participants.AddAsync(participant);
-            await _context.SaveChangesAsync();
+            var entityEntry = await Context.Participants.AddAsync(participant);
+            await Context.SaveChangesAsync();
         
             await entityEntry.ReloadAsync();
             return entityEntry.Entity;
@@ -30,7 +30,7 @@ public class ParticipantRepository : BaseRepository, IParticipantRepository
     {
         return await (
             from p
-                in _context.Participants
+                in Context.Participants
             where p.Name == name
             select p
         ).SingleOrDefaultAsync();
@@ -40,7 +40,7 @@ public class ParticipantRepository : BaseRepository, IParticipantRepository
     {
         return await (
             from p 
-                in _context.Participants
+                in Context.Participants
             where p.SportId == sport
             select p
         ).ToListAsync();

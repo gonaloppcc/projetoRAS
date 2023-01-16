@@ -1,25 +1,29 @@
+using Castle.Core;
 using RasbetServer.Models.Events;
-using RasbetServer.Repositories.BetRepository;
+using RasbetServer.Models.Events.Participants;
 using RasbetServer.Repositories.CompetitionRepository;
 using RasbetServer.Repositories.EventRepository;
-using RasbetServer.Repositories.ParticipantRepository;
 using RasbetServer.Repositories.SportRepository;
-using RasbetServer.Repositories.UserRepository;
 using RasbetServer.Services.Communication;
 
 namespace RasbetServer.Services.Events;
 
-public class EventService : BaseService, IEventService
+public class EventService : IEventService
 {
+    private readonly IEventRepository _eventRepository;
+    private readonly ICompetitionRepository _competitionRepository;
+    private readonly ISportRepository _sportRepository;
+
     public EventService(
-        IBetRepository betRepository,
+        IEventRepository eventRepository, 
         ICompetitionRepository competitionRepository, 
-        ISportRepository sportRepository,
-        IParticipantRepository participantRepository, 
-        IEventRepository eventRepository,
-        IUserRepository userRepository
-    ) : base (betRepository, competitionRepository, sportRepository, participantRepository, eventRepository, userRepository)
-    { }
+        ISportRepository sportRepository
+        )
+    {
+        _eventRepository = eventRepository;
+        _competitionRepository = competitionRepository;
+        _sportRepository = sportRepository;
+    }
     
     public async Task<ObjectResponse<Event>> GetAsync(string id)
     {
@@ -67,6 +71,30 @@ public class EventService : BaseService, IEventService
         }
 
         eventList = eventList.OrderBy(e => e.Date).Skip(pageNum * pageSize).Take(pageSize);
+        return new ObjectResponse<IEnumerable<Event>>(eventList);
+    }
+
+    public async Task<ObjectResponse<IEnumerable<Event>>> CacheEvents(IEnumerable<Event> events)
+    {
+        IList<Event> eventList = new List<Event>();
+        foreach (var e in events)
+        {
+            var prevEvent = await _eventRepository.GetByInfoAsync(e);
+            if (prevEvent is null)
+            {
+                var newEvent = await _eventRepository.AddAsync(e);
+                if (newEvent is null)
+                    return new ObjectResponse<IEnumerable<Event>>($"Error adding one of the events", StatusCode.BadRequest);
+                eventList.Add(newEvent);
+            }
+            else
+            {
+                prevEvent.CopyFrom(e);
+                await _eventRepository.UpdateAsync(prevEvent);
+                eventList.Add(prevEvent);
+            }
+        }
+
         return new ObjectResponse<IEnumerable<Event>>(eventList);
     }
 }

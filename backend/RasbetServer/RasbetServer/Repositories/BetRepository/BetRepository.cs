@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using RasbetServer.Models.Bets;
+using RasbetServer.Models.Bets.Odds;
 using RasbetServer.Repositories.Contexts;
 
 namespace RasbetServer.Repositories.BetRepository;
@@ -14,12 +15,18 @@ public class BetRepository : BaseRepository, IBetRepository
     {
         try
         {
-            var odds = bet.GetOdds();
-            _context.Odds.AttachRange(odds);
+            var dbOdds = new List<Odd>();
+            foreach (var genericOdd in bet.Odds)
+            {
+                var odd = await Context.Odds.FindAsync(genericOdd.Id);
+                Context.Odds.Attach(odd);
+                dbOdds.Add(odd);
+            }
 
-            var entityEntry = await _context.Bets.AddAsync(bet);
-            await _context.SaveChangesAsync();
-
+            bet.Odds = dbOdds;
+            var entityEntry = await Context.Bets.AddAsync(bet);
+            await Context.SaveChangesAsync();
+            
             await entityEntry.ReloadAsync();
             return entityEntry.Entity;
         }
@@ -31,20 +38,20 @@ public class BetRepository : BaseRepository, IBetRepository
 
     public async Task<Bet?> GetAsync(string id)
     {
-        return await (from b in _context.Bets where b.Id == id select b).SingleOrDefaultAsync();
+        return await (from b in Context.Bets where b.Id == id select b).SingleOrDefaultAsync();
     }
 
     public async Task<IEnumerable<Bet>> ListAsync(string userId)
     {
-        return await (from b in _context.Bets where b.BetterId == userId select b).ToListAsync();
+        return await (from b in Context.Bets where b.BetterId == userId select b).ToListAsync();
     }
 
     public async Task<bool> DeleteAsync(Bet bet)
     {
         try
         {
-            _context.Bets.Remove(bet);
-            await _context.SaveChangesAsync();
+            Context.Bets.Remove(bet);
+            await Context.SaveChangesAsync();
             return true;
         }
         catch (DbUpdateException)

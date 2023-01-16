@@ -17,7 +17,7 @@ public class OddProfile : Profile
             .ForMember(
                     dest => dest.ParticipantName,
                     opt => opt.MapFrom(
-                            src => src.Part.Name
+                            src => src.PartId
                         )
                 );
 

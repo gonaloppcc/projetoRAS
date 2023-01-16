@@ -154,6 +154,50 @@ export const RegisterEvent = ({sports}: RegisterEventProps) => {
             await postEvent(newEvent);
             await router.push('/success');
         }
+
+        // TODO: Make the request to the backend here
+        const dateAndHour: string = `${date}T${hour}:17.0065405+00:00`;
+        const partipantHome: ParticipantPost = {
+            Type: 'Team',
+            Name: selectedTeams[0],
+            Players: [],
+        };
+        const participantHomeOdd: ParticipantOddPost = {
+            Price: 0,
+            Participant: partipantHome,
+            Promotion: null,
+        };
+        const partipantAway: ParticipantPost = {
+            Type: 'Team',
+            Name: selectedTeams[1],
+            Players: [],
+        };
+        const participantAwayOdd: ParticipantOddPost = {
+            Price: 0,
+            Participant: partipantAway,
+            Promotion: null,
+        };
+        const valuePromo: ValuePromo = {
+            Value: 0,
+        };
+        const tieOdd: TieOdd = {
+            price: 0,
+            promo: valuePromo,
+        };
+        const twoParticipant: TwoParticipantsPost = {
+            Home: participantHomeOdd,
+            Away: participantAwayOdd,
+            Tie: tieOdd,
+        };
+        const newEvent: EventPost = {
+            Sport: sportName,
+            Date: dateAndHour,
+            CompetitionId: league,
+            Participants: twoParticipant,
+        };
+
+        await postEvent(newEvent);
+        //await router.push('/success');
     };
 
     const validate = () => {

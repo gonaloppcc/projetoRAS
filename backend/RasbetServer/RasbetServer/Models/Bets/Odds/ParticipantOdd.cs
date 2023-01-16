@@ -12,6 +12,11 @@ public class ParticipantOdd : Odd
     [Required] [ForeignKey("PartId")] public string PartId { get; set; }
     [Required] public virtual Participant Part { get; set; }
 
+    [InverseProperty("Participant")]
+    public virtual Result Result { get; set; }
+    
+    public override Event Event => Result.Participants.Event;
+
     public ParticipantOdd() : base() { }
     
     public ParticipantOdd(

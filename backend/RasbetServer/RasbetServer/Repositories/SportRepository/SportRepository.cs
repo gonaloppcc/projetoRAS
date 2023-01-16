@@ -14,8 +14,8 @@ public class SportRepository : BaseRepository, ISportRepository
     {
         try
         {
-            var entityEntry = _context.Sports.Add(sport);
-            await _context.SaveChangesAsync();
+            var entityEntry = Context.Sports.Add(sport);
+            await Context.SaveChangesAsync();
 
             await entityEntry.ReloadAsync();
             return entityEntry.Entity;
@@ -29,20 +29,20 @@ public class SportRepository : BaseRepository, ISportRepository
     public async Task<Sport?> GetAsync(string name)
         => await (
             from s 
-                in _context.Sports 
+                in Context.Sports 
             where s.Name == name 
             select s
         ).SingleOrDefaultAsync();
 
     public async Task<IEnumerable<Sport>> ListAsync()
-        => await _context.Sports.ToListAsync();
+        => await Context.Sports.ToListAsync();
 
     public async Task<bool> DeleteAsync(Sport sport)
     {
         try
         {
-            _context.Sports.Remove(sport);
-            await _context.SaveChangesAsync();
+            Context.Sports.Remove(sport);
+            await Context.SaveChangesAsync();
             return true;
         }
         catch (DbUpdateException)

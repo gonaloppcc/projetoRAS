@@ -56,11 +56,29 @@ public class EventController : ControllerBase
     public async Task<IActionResult> AddEvent([FromBody] JObject json)
     {
         var eventResource = Event.FromJson(json);
+        if (eventResource is null)
+            return BadRequest("Request is not in a valid format");
+        
         var e = _mapper.Map<SaveEventResource, Event>(eventResource);
         var response = await _eventService.AddAsync(e);
         if (!response.Success)
             return this.ProcessResponse(response);
         
         return Ok(_mapper.Map<Event,EventResource>(response.Object!));
+    }
+
+    [HttpPost("apiCache", Name = "APICache")]
+    public async Task<IActionResult> CacheEvents([FromBody] IList<JObject> jsons)
+    {
+        var events = jsons.Select(Event.FromJson)
+            .Where(ser => ser is not null)
+            .Select(eventResource => _mapper.Map<SaveEventResource, Event>(eventResource!))
+            .ToList();
+
+        var response = await _eventService.CacheEvents(events);
+        if (!response.Success)
+            return this.ProcessResponse(response);
+
+        return Ok(_mapper.Map<IEnumerable<Event>, IEnumerable<EventResource>>(response.Object!));
     }
 }

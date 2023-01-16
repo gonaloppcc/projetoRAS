@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import {HandleChangeProps, InputForm} from '@components/createBetter/inputForm';
 import {REGEX_MAIL} from '../../utils/regex';
 import {PrimaryButton} from '@components/Button';
-import {useProfileState} from '@state/useProfileState';
+import {useProfile} from '@state/useProfile';
 import {useRouter} from 'next/router';
 import Link from 'next/link';
 
@@ -33,7 +33,7 @@ export const LoginBody = ({setOpen}: LoginBodyProps) => {
     const [errors, setErrors] = useState<ErrorsProps>(initialErrors);
 
     const router = useRouter();
-    const {login} = useProfileState();
+    const {login} = useProfile();
 
     //form submission handler
     const handleSubmit: React.FormEventHandler<HTMLFormElement> = async (e) => {

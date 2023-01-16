@@ -7,23 +7,23 @@ export interface OnGoingMultipleBetRecordProps extends MultipleBet {
 }
 
 export const OnGoingMultipleBetRecord = ({
-    Date,
-    Amount,
+    date,
+    amount,
     cancelBetHandler,
-    Odds,
+    odds,
 }: OnGoingMultipleBetRecordProps) => {
     // FIXME: Hardcoded text in this component
     //const betName = `Resultado Final: ${PartId ?? 'Empate'}`; // FIXME: Only valid to Participant Bets
 
     //const eventType = Sport.Name;
 
-    const price = Odds.reduce((acc, odd) => acc * odd.Odd.Price, 1);
+    const price = odds.reduce((acc, odd) => acc * odd.oddId.price, 1);
 
-    const betPossibleWinnings = Amount * price;
+    const betPossibleWinnings = amount * price;
 
-    const dateFormatted = formatDate(Date);
+    const dateFormatted = formatDate(date);
 
-    const numberOfEvents = Odds.length;
+    const numberOfEvents = odds.length;
 
     //const awayName = Participants.Away.Participant.Part?.Name || '';
     //const homeName = Participants.Home.Participant.Part?.Name || '';
@@ -59,7 +59,7 @@ export const OnGoingMultipleBetRecord = ({
                         {'Valor apostado'}
                     </span>
                     <span className="text-EERIE_BLACK text-base font-semibold">
-                        {formatNumber(Amount)} €
+                        {formatNumber(amount)} €
                     </span>
                 </div>
                 <div className="flex flex-col items-start py-4 gap-2">
@@ -81,22 +81,22 @@ export const OnGoingMultipleBetRecord = ({
                 </div>
             </div>
             <div className="w-full flex flex-col gap-5 pr-40 bg-WHITE">
-                {Odds.map((odd) => (
+                {odds.map((odd) => (
                     <div
-                        key={odd.Odd.Id}
+                        key={odd.oddId}
                         className="w-full flex flex-row justify-between items-center px-4 gap-8 bg-WHITE rounded"
                     >
                         <div className="flex flex-row justify-center items-center gap-4">
                             <div className="flex flex-col items-start p-0 gap-1">
                                 <span className="text-EERIE_BLACK text-base font-semibold">
                                     {
-                                        odd.Event.Participants.Away.Participant
-                                            .Part?.Name
+                                        odd.event.participants.home.participant
+                                            .participantName
                                     }
                                     {' - '}
                                     {
-                                        odd.Event.Participants.Home.Participant
-                                            .Part?.Name
+                                        odd.event.participants.away.participant
+                                            .participantName
                                     }
                                 </span>
                             </div>
@@ -104,7 +104,7 @@ export const OnGoingMultipleBetRecord = ({
                         <div className="flex flex-row justify-center items-center gap-4">
                             <div className="flex flex-col items-start p-0 gap-1">
                                 <span className="text-EERIE_BLACK text-base font-semibold">
-                                    {odd.Odd.Price}
+                                    {odd.oddId.price}
                                 </span>
                             </div>
                         </div>

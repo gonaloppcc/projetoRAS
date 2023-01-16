@@ -43,6 +43,9 @@ public class BetController : ControllerBase
     public async Task<IActionResult> AddBet([FromBody] JObject json)
     {
         var betResource = Bet.FromJson(json);
+        if (betResource is null)
+            return BadRequest("Request is in an invalid format");
+        
         var bet = _mapper.Map<SaveBetResource, Bet>(betResource);
         var response = await _betService.AddAsync(bet);
         if (!response.Success)

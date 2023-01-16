@@ -17,7 +17,7 @@ export const SimpleBetCard = ({
     eventType,
     bettingAmount,
     setBettingAmount,
-    odd: {PartId, Price},
+    odd: {partId, price},
     removeBetHandler,
     currency,
 }: SimpleBetCardProps) => {
@@ -33,7 +33,7 @@ export const SimpleBetCard = ({
                 <div className="w-full flex flex-row gap-2 items-center">
                     <SportIcon eventType={eventType} />
                     <div className="flex flex-col justify-start items-start">
-                        <span className="font-semibold">{PartId}</span>
+                        <span className="font-semibold">{partId}</span>
                         <span className="font-sans font-normal font-extralight text-xs">
                             {eventName}
                         </span>
@@ -44,7 +44,7 @@ export const SimpleBetCard = ({
             <div className="w-full flex flex-row justify-between items-center gap-4">
                 <div className="flex flex-col">
                     <span>{'Odd' /* FIXME: Hardcoded text for now! */}</span>
-                    <span className="font-semibold">{formatNumber(Price)}</span>
+                    <span className="font-semibold">{formatNumber(price)}</span>
                 </div>
                 <Input
                     value={bettingAmountAsString}
@@ -54,7 +54,7 @@ export const SimpleBetCard = ({
                 <div className="flex flex-col">
                     <span>{'Ganhos' /* FIXME: Hardcoded text for now! */}</span>
                     <span className="font-semibold">
-                        {formatNumber(bettingAmount * Price)}
+                        {formatNumber(bettingAmount * price)}
                     </span>
                 </div>
             </div>

@@ -1,6 +1,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.EntityFrameworkCore;
+using RasbetServer.Models.Users.Notifications;
 
 namespace RasbetServer.Models.Users;
 
@@ -9,7 +10,7 @@ public abstract class User
 {
     [Key]
     [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-    public string? Id { get; set; } = null;
+    public string? Id { get; set; }
 
     // TODO: Index this
     [Required] public string Email { get; set; }
@@ -18,8 +19,7 @@ public abstract class User
     [Required] public string Username { get; set; }
     [Required] public string Password { get; set; }
 
-    public User() {
-    }
+    public virtual IList<Notification>? Notifications { get; set; }
 
     public User(
         string id,

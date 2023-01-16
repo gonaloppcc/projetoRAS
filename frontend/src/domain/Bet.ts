@@ -3,32 +3,32 @@ import {Event} from '@domain/Event';
 export type Bet = SimpleBet | MultipleBet;
 
 export interface SimpleBet {
-    Id: string;
-    Odd: Odd;
-    Event: Event;
-    Date: string;
-    Closed: boolean;
-    BetterId: string;
-    Amount: number;
+    id: string;
+    oddId: string;
+    event: Event;
+    date: string;
+    closed: boolean;
+    betterId: string;
+    amount: number;
 }
 
 export interface MultipleBet {
-    Id: string;
-    Closed: boolean;
-    Date: string;
-    BetterId: string;
-    Odds: MultiBetOdd[];
-    Amount: number;
+    id: string;
+    closed: boolean;
+    date: string;
+    betterId: string;
+    odds: MultiBetOdd[];
+    amount: number;
 }
 
 export interface MultiBetOdd {
-    Event: Event;
-    Odd: Odd;
+    //event: Event;
+    oddId: string;
 }
 
 export interface Odd {
-    Id: string;
-    PartId: string; // Name of the participant
-    Price: number;
+    id: string;
+    partId: string; // Name of the participant
+    price: number;
     //Promo?: boolean;
 }
