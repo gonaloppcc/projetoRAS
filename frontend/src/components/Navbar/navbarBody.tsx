@@ -61,6 +61,9 @@ export const NavBarBody = ({setOpen}: NavBarBodyProps) => {
                     <Link href="/better/bets" className="text-WHITE">
                         {'Apostas' /* FIXME Hardcoded for now */}
                     </Link>
+                    <Link href="/better/Operations" className="text-WHITE">
+                        {'Transações' /* FIXME Hardcoded for now */}
+                    </Link>
                     <div className="flex flex-row items-center gap-2">
                         <Avatar>{username.at(0)?.toUpperCase()}</Avatar>
                         {/*<div className="w-8 h-8 rounded-full bg-LIGHT_GRAY" />*/}
