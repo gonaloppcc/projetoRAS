@@ -2,7 +2,6 @@ import React from 'react';
 import {PageLayout} from '@components/PageLayout';
 import {MoneyOperation, OperationType} from '@components/MoneyOperation';
 import {useTransactions} from '@hooks/useTransactions';
-import {useProfile} from '@state/useProfile';
 
 const MOCK_DEPOSIT_OPERATION = {
     operationDate: '2021-10-10',
@@ -33,9 +32,8 @@ const MOCK_BET_LOST_OPERATION = {
 };
 
 const Operations = () => {
-    const {id} = useProfile();
     const {isSuccess, isLoading, isError, transactions, error} =
-        useTransactions(id);
+        useTransactions();
 
     return (
         <PageLayout>
