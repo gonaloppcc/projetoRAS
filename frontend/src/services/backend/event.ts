@@ -1,11 +1,11 @@
-import {EventPost} from '@domain/Event';
+import {EventMini, EventPost} from '@domain/Event';
 import axios from 'axios';
 import {BASE_URL} from './constants';
 
 export const getEventsByCompetition = async ({
     competitionId,
     pageNum = 0,
-    pageSize = 10,
+    pageSize = 20,
 }: {
     competitionId: string;
     pageNum?: number;
@@ -30,6 +30,21 @@ export const getEventsBySport = async ({
         params: {sportId, pageNum, pageSize},
     });
     return response.data as Event[];
+};
+
+export const getEventsBySport = async ({
+    sportId,
+    pageNum = 0,
+    pageSize = 20,
+}: {
+    sportId: string;
+    pageNum?: number;
+    pageSize?: number;
+}): Promise<EventMini[]> => {
+    const response = await axios.get(`${BASE_URL}/events/sport`, {
+        params: {sportId, pageNum, pageSize},
+    });
+    return response.data as EventMini[];
 };
 
 export const getEvent = async (eventId: string): Promise<Event> => {

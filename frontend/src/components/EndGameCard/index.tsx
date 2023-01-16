@@ -1,4 +1,5 @@
 import React from 'react';
+import {Event} from '@domain/Event';
 
 export interface SuspendedGameInfo {
     eventName: string;
@@ -10,15 +11,14 @@ export interface SuspendedGameCardProps {
     game: SuspendedGameInfo;
 }
 
-export const SuspendedGameCard = ({game}: SuspendedGameCardProps) => {
+export const EndGameCard = ({game}: Event) => {
+    console.log(game);
     const column = (header: string, body: string) => {
         return (
             <div className=" m-3 p-3 rounded-lg w-full">
                 <div className="flex flex-col gap-1  pl-3">
-                    <div className="text-sm text-zinc-500 font-light">
-                        {header}
-                    </div>
-                    <div className="  font-medium">{body}</div>
+                    <div className="text-sm text-zinc-500 font-light">AAA</div>
+                    <div className="  font-medium">Body</div>
                 </div>
             </div>
         );
@@ -46,8 +46,8 @@ export const SuspendedGameCard = ({game}: SuspendedGameCardProps) => {
                     {game.eventName}
                 </div>
                 {/*FIXME*/}
-                {column('Data', game.date)}
-                {column('Estado', 'Aberto')}
+                {column('Data', game.Date)}
+                {column('Estado', 'Fechado')}
                 <div className=" bg-white rounded flex flex-row items-center gap-2">
                     {button('Abrir', openBet)}
                     {button('Fechar', closeBet)}

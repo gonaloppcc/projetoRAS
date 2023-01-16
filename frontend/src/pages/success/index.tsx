@@ -6,7 +6,7 @@ const Success = () => {
     const router = useRouter();
 
     const changePageHandler = async () => {
-        await router.push('/registerEvent');
+        await router.push('/admin/chooseModality');
     };
 
     return (
@@ -16,7 +16,7 @@ const Success = () => {
                     Evento submetido com sucesso
                 </div>
                 <PrimaryButton onClick={changePageHandler}>
-                    Adicionar novo evento?
+                    Voltar à página principal?
                 </PrimaryButton>
             </div>
         </div>
