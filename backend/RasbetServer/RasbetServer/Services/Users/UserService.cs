@@ -71,6 +71,7 @@ public class UserService : IUserService
             return new ObjectResponse<float>("User is not a better", StatusCode.Unauthorized);
         
         better.Balance += amount;
+        better.TransactionHist.Add(new Transaction(amount));
         if (better.Balance < 0)
             return new ObjectResponse<float>("Insufficient balance", StatusCode.Forbidden);
         
