@@ -16,7 +16,7 @@ const Success = () => {
                     Evento submetido com sucesso
                 </div>
                 <PrimaryButton onClick={changePageHandler}>
-                    Voltar à página principal?
+                    Adicionar novo jogo?
                 </PrimaryButton>
             </div>
         </div>

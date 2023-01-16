@@ -11,12 +11,8 @@ export const getEvents = async ({
     pageNum?: number;
     pageSize?: number;
 }): Promise<Event[]> => {
-<<<<<<< Updated upstream
     const response = await axios.get(`${BASE_URL}/events`, {
         params: {compId, pageNum, pageSize},
-=======
-    const response = await axios.get(`${BASE_URL}/events/competition`, {
-        params: {compId: competitionId, pageNum, pageSize},
     });
     return response.data as Event[];
 };
@@ -29,10 +25,9 @@ export const getEventsBySport = async ({
     sportId: string;
     pageNum?: number;
     pageSize?: number;
-}) => {
+}): Promise<Event[]> => {
     const response = await axios.get(`${BASE_URL}/events/sport`, {
         params: {sportId, pageNum, pageSize},
->>>>>>> Stashed changes
     });
     return response.data as Event[];
 };

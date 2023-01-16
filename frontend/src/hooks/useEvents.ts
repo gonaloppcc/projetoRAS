@@ -45,7 +45,7 @@ export const useEventsBySport = (sportId: string): useEventsBySportProps => {
         isSuccess,
         isLoading,
         isError,
-        events: events as unknown as EventMini[],
+        events: events as unknown as EventReceived[],
         error: error as string,
         refetch,
     };

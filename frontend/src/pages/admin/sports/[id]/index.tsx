@@ -13,7 +13,6 @@ interface PageProps {
 const EventPage: NextPage<PageProps> = ({eventId}) => {
     const {isSuccess, isLoading, isError, events, error} =
         useEventsBySport(eventId);
-    console.log(events);
     return (
         <>
             {isLoading && <CircularProgress />}

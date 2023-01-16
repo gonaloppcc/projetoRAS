@@ -13,6 +13,7 @@ import {
     Player,
     InfoSport,
     EventToPost,
+    ParticipantMesmo,
 } from '@domain/Event';
 import {postEvent} from 'services/backend/event';
 
@@ -107,25 +108,23 @@ export const RegisterEvent = ({sports}: RegisterEventProps) => {
             console.log('Só devia estar aqui sem erros');
             // TODO: Make the request to the backend here
             const dateAndHour: string = `${date}T${hour}:17.0065405+00:00`;
-            const partipantHome: ParticipantPost = {
-                Type: 'Team',
-                Name: selectedTeams[0],
-                Players: [],
+            const partipantHome: ParticipantMesmo = {
+                Price: 0,
+                Promo: null,
+                PartId: selectedTeams[0],
             };
             const participantHomeOdd: ParticipantOddPost = {
-                Price: 0,
+                Score: 0,
                 Participant: partipantHome,
-                Promotion: null,
             };
-            const partipantAway: ParticipantPost = {
-                Type: 'Team',
-                Name: selectedTeams[1],
-                Players: [],
+            const partipantAway: ParticipantMesmo = {
+                Price: 0,
+                PartId: selectedTeams[1],
+                Promo: null,
             };
             const participantAwayOdd: ParticipantOddPost = {
-                Price: 0,
                 Participant: partipantAway,
-                Promotion: null,
+                Score: 0,
             };
             const valuePromo: ValuePromo = {
                 Value: 0,
@@ -155,53 +154,6 @@ export const RegisterEvent = ({sports}: RegisterEventProps) => {
             await postEvent(newEvent);
             await router.push('/success');
         }
-<<<<<<< Updated upstream
-=======
-
-        // TODO: Make the request to the backend here
-        const dateAndHour: string = `${date}T${hour}:17.0065405+00:00`;
-        const partipantHome: ParticipantPost = {
-            Type: 'Team',
-            Name: selectedTeams[0],
-            Players: [],
-        };
-        const participantHomeOdd: ParticipantOddPost = {
-            Price: 0,
-            Participant: partipantHome,
-            Promotion: null,
-        };
-        const partipantAway: ParticipantPost = {
-            Type: 'Team',
-            Name: selectedTeams[1],
-            Players: [],
-        };
-        const participantAwayOdd: ParticipantOddPost = {
-            Price: 0,
-            Participant: partipantAway,
-            Promotion: null,
-        };
-        const valuePromo: ValuePromo = {
-            Value: 0,
-        };
-        const tieOdd: TieOdd = {
-            price: 0,
-            promo: valuePromo,
-        };
-        const twoParticipant: TwoParticipantsPost = {
-            Home: participantHomeOdd,
-            Away: participantAwayOdd,
-            Tie: tieOdd,
-        };
-        const newEvent: EventPost = {
-            Sport: sportName,
-            Date: dateAndHour,
-            CompetitionId: league,
-            Participants: twoParticipant,
-        };
-
-        await postEvent(newEvent);
-        await router.push('/success');
->>>>>>> Stashed changes
     };
 
     const validate = () => {

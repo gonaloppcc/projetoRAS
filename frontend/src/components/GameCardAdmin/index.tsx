@@ -1,10 +1,10 @@
 import React, {useState} from 'react';
-import {EventMini} from '@domain/Event';
+import {EventReceived} from '@domain/Event';
 import {Modal} from '@components/Modal';
 import {SetResult} from './setResult';
 
 export interface GameCardAdminProps {
-    game: EventMini;
+    game: EventReceived;
     sport: string;
 }
 

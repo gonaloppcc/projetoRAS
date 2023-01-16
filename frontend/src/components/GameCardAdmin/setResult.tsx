@@ -1,9 +1,10 @@
 import {PrimaryButton} from '@components/Button';
 import {HandleChangeProps, InputForm} from '@components/createBetter/inputForm';
 import {
-    EventMini,
+    EventReceived,
     EventPost,
     EventToPost,
+    ParticipantMesmo,
     ParticipantOddPost,
     ParticipantPost,
     TieOdd,
@@ -22,6 +23,7 @@ export const SetResult = (game: GameCardAdminProps) => {
     const [resultHome, setResultHome] = useState<string>('0');
     const [resultAway, setResultAway] = useState<string>('0');
     const [error, setError] = useState<string>('');
+    const [submitted, setSubmitted] = useState(false);
 
     const changeHome = ({name, value}: HandleChangeProps) => {
         console.log(value);
@@ -55,39 +57,37 @@ export const SetResult = (game: GameCardAdminProps) => {
         if (!validate()) {
             return;
         } else {
-            console.log('Só devia estar aqui sem erros');
-            console.log(game);
-            // TODO: Make the request to the backend here
             const dateAndHour: string = game.game.date;
-            const partipantHome: ParticipantPost = {
-                Type: 'Team',
-                Name: homeName as string,
-                Players: [],
+            const partipantHome: ParticipantMesmo = {
+                Price: game.game.participants.home.participant.price,
+                PartId: homeName,
+                Promo: null,
             };
             const participantHomeOdd: ParticipantOddPost = {
-                Price: game.game.participants.home.participant.price,
                 Participant: partipantHome,
-                Promotion: 0,
-                score: parseInt(resultHome),
+                Score: parseInt(resultHome),
             };
-            const partipantAway: ParticipantPost = {
-                Type: 'Team',
-                Name: awayName as string,
-                Players: [],
+            const partipantAway: ParticipantMesmo = {
+                Price: game.game.participants.away.participant.price,
+                Promo: null,
+                PartId: awayName,
             };
             const participantAwayOdd: ParticipantOddPost = {
-                Price: 0,
                 Participant: partipantAway,
-                Promotion: null,
-                score: parseInt(resultAway),
+                Score: parseInt(resultAway),
             };
             const valuePromo: ValuePromo = {
                 Value: 0,
             };
+            const tie: TieOdd = {
+                Id: game.game.participants.tie.id,
+                Price: game.game.participants.tie.price,
+                Promo: game.game.participants.tie.promo,
+            };
             const twoParticipant: TwoParticipantsPost = {
                 Home: participantHomeOdd,
                 Away: participantAwayOdd,
-                Tie: game.game.participants.tie,
+                Tie: tie,
             };
             const event: EventToPost = {
                 CompetitionId: game.game.competition as unknown as string,
@@ -100,10 +100,8 @@ export const SetResult = (game: GameCardAdminProps) => {
                 Sport: game.sport,
                 Event: event,
             };
-            console.log('Vai submeter resultado');
-            console.log(newEvent);
             await postEvent(newEvent);
-            await router.push('/success');
+            setSubmitted(true);
         }
     };
 
@@ -116,36 +114,47 @@ export const SetResult = (game: GameCardAdminProps) => {
 
     return (
         <div className="flex flex-col gap-3 p-5">
-            <div className="text-lg font-semibold pb-2 border-b">
-                Insere o resultado do jogo
-            </div>
-            <div>Insira o resultado das duas equipas.</div>
-            <div className=" relative z-0">
-                <InputForm
-                    type="number"
-                    name={`Pontos ${homeName}`}
-                    id="odd_home"
-                    value={resultHome}
-                    handleChange={changeHome}
-                    error={''}
-                />
-                <InputForm
-                    type="number"
-                    name={`Pontos ${awayName}`}
-                    id="odd_home"
-                    value={resultAway}
-                    handleChange={changeAway}
-                    error={''}
-                />
-            </div>
-            {error.length > 0 && (
-                <div className="text-base mt-1 text-IMPERIAL_RED">{error}</div>
+            {submitted && (
+                <div className="text-lg font-semibold pb-2 border-b">
+                    Resultado acrescentado!
+                </div>
             )}
-            <div className="flex items-center justify-center gap-10">
-                <PrimaryButton onClick={handleSubmit}>
-                    <div>Submit</div>
-                </PrimaryButton>
-            </div>
+            {!submitted && (
+                <>
+                    <div className="text-lg font-semibold pb-2 border-b">
+                        Insere o resultado do jogo
+                    </div>
+                    <div>Insira o resultado das duas equipas.</div>
+                    <div className=" relative z-0">
+                        <InputForm
+                            type="number"
+                            name={`Pontos ${homeName}`}
+                            id="odd_home"
+                            value={resultHome}
+                            handleChange={changeHome}
+                            error={''}
+                        />
+                        <InputForm
+                            type="number"
+                            name={`Pontos ${awayName}`}
+                            id="odd_home"
+                            value={resultAway}
+                            handleChange={changeAway}
+                            error={''}
+                        />
+                    </div>
+                    {error.length > 0 && (
+                        <div className="text-base mt-1 text-IMPERIAL_RED">
+                            {error}
+                        </div>
+                    )}
+                    <div className="flex items-center justify-center gap-10">
+                        <PrimaryButton onClick={handleSubmit}>
+                            <div>Submit</div>
+                        </PrimaryButton>
+                    </div>
+                </>
+            )}
         </div>
     );
 };

@@ -6,11 +6,12 @@ export interface Event {
     Completed: boolean;
 }
 
-export interface EventMini {
+export interface EventReceived {
+    sportId: string;
     id: string;
     date: string;
-    competition: CompetitionMini;
-    participants: TwoParticipantMini;
+    competition: string;
+    participants: TwoParticipantReceived;
     completed: boolean;
 }
 
@@ -32,11 +33,15 @@ export interface TwoParticipantsPost {
     Tie: TieOdd;
 }
 
+export interface ParticipantMesmo {
+    Price: number | null;
+    Promo: number | null;
+    PartId: string;
+}
+
 export interface ParticipantOddPost {
-    Price: number;
-    Participant: ParticipantPost;
-    Promotion: number | null;
-    score?: number;
+    Participant: ParticipantMesmo;
+    Score: number;
 }
 
 export interface ParticipantPost {
@@ -45,18 +50,19 @@ export interface ParticipantPost {
     Players: Player[];
 }
 
-export interface CompetitionMini {
+export interface CompetitionReceived {
     name: string;
-    sport: SportMini;
+    sport: SportReceived;
 }
 export interface Competition {
     Name: string;
     Sport: Sport;
 }
 
-export interface SportMini {
+export interface SportReceived {
     name: string;
 }
+
 export interface Sport {
     Name: string;
 }
@@ -67,21 +73,20 @@ export interface TwoParticipant {
     Away: ParticipantOdd;
     Tie: TieOdd;
 }
-export interface TwoParticipantMini {
-    id: string;
-    home: ParticipantInfoMini;
-    away: ParticipantInfoMini;
-    tie: TieOddMini;
+export interface TwoParticipantReceived {
+    home: ParticipantInfoReceived;
+    away: ParticipantInfoReceived;
+    tie: TieOddReceived;
 }
 
-export interface ParticipantInfoMini {
-    participant: ParticipantOddMini;
+export interface ParticipantInfoReceived {
+    participant: ParticipantOddReceived;
     score?: number;
 }
 
-export interface ParticipantOddMini {
+export interface ParticipantOddReceived {
     id: string;
-    participantName: ParticipantMini;
+    participantName: string;
     price: number;
     score?: number;
 }
@@ -91,30 +96,21 @@ export interface ParticipantOdd {
     Score?: number;
 }
 
-export interface TieOddMini {
-    Id?: string;
-    Price: number;
-    Promo: ValuePromoMini;
+export interface TieOddReceived {
+    id: string;
+    price: number;
+    promo: ValuePromo;
 }
 export interface TieOdd {
     Id?: string;
-    Price: number;
+    Price: number | null;
     Promo: ValuePromo;
 }
 
-export interface ValuePromoMini {
-    Value: number;
-}
 export interface ValuePromo {
     Value: number;
 }
-export interface ParticipantMini {
-    id: string;
-    price: number;
-    Player: Player[];
-    Promo?: boolean; // FIXME I don't know if this is the correct type
-    Part?: Part;
-}
+
 export interface Participant {
     Id: string;
     Price: number;
