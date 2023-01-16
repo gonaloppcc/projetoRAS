@@ -10,6 +10,18 @@ export const login = async (email: string, password: string): Promise<User> => {
     return response.data as User;
 };
 
+export const register = async (
+    email: string,
+    password: string
+): Promise<User> => {
+    const response = await axios.post(`${BASE_URL}/users`, {
+        email,
+        password,
+        // TODO: ADD REST OF ARGUMENTS
+    });
+    return response.data as User;
+};
+
 export const addBalance = async (
     userId: string,
     amount: number

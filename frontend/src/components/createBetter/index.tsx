@@ -101,7 +101,7 @@ export const CreateBetter = () => {
                     Registo
                 </div>
                 <div className="flex flex-col items-start flex-none order-1">
-                    <div className="flex-none order-none  ">
+                    <div className="flex-none order-none">
                         <form
                             onSubmit={handleSubmit}
                             noValidate
