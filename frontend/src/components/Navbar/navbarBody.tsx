@@ -26,7 +26,7 @@ interface NavBarBodyProps {
 }
 
 export const NavBarBody = ({setOpen}: NavBarBodyProps) => {
-    const {isLoggedIn, id, username, balance, getSession} = useProfile();
+    const {isLoggedIn, username, balance, getSession} = useProfile();
 
     const router = useRouter();
 
@@ -61,7 +61,7 @@ export const NavBarBody = ({setOpen}: NavBarBodyProps) => {
                     <Link href="/better/bets" className="text-WHITE">
                         {'Apostas' /* FIXME Hardcoded for now */}
                     </Link>
-                    <Link href="/better/Operations" className="text-WHITE">
+                    <Link href="/better/operations" className="text-WHITE">
                         {'Transações' /* FIXME Hardcoded for now */}
                     </Link>
                     <div className="flex flex-row items-center gap-2">
