@@ -28,6 +28,11 @@ const EventPage: NextPage<PageProps> = ({eventId}) => {
                                     <GameCardAdmin
                                         game={game}
                                         sport={eventId}
+                                        textButton={'Fechar jogo'}
+                                        textPropsUp={'Insira resultado'}
+                                        textSucess={'Jogo fechado com sucesso'}
+                                        resultOrOdd={true}
+                                        textSet={'Pontos'}
                                     />
                                 </div>
                             );

@@ -16,33 +16,42 @@ import {useState} from 'react';
 import {postEvent} from 'services/backend/event';
 import {GameCardAdminProps} from '.';
 
-export const SetResult = (game: GameCardAdminProps) => {
-    const home = game.game.participants.home.participant;
-    const away = game.game.participants.away.participant;
+export interface InsertDataModal {
+    game: EventReceived;
+    sport: string;
+    textPropsUp: string;
+    textSucess: string;
+    resultOrOdd: boolean;
+    textSet: string;
+}
 
-    const [resultHome, setResultHome] = useState<string>('0');
-    const [resultAway, setResultAway] = useState<string>('0');
+export const SetResult = ({
+    game,
+    sport,
+    textPropsUp,
+    textSucess,
+    resultOrOdd,
+    textSet,
+}: InsertDataModal) => {
+    const home = game.participants.home.participant;
+    const away = game.participants.away.participant;
+
+    const [valueHome, setValueHome] = useState<string>('0');
+    const [valueAway, setValueAway] = useState<string>('0');
     const [error, setError] = useState<string>('');
     const [submitted, setSubmitted] = useState(false);
 
     const changeHome = ({name, value}: HandleChangeProps) => {
         console.log(value);
-        setResultHome(value);
+        setValueHome(value);
     };
     const changeAway = ({name, value}: HandleChangeProps) => {
         console.log(value);
-        setResultAway(value);
-    };
-
-    const submit = (e: React.MouseEvent<HTMLElement>) => {
-        console.log('Submit');
-        console.log(game.game);
-        console.log('Res home: ', resultHome);
-        console.log('Res away: ', resultAway);
+        setValueAway(value);
     };
 
     const validate = () => {
-        if (parseInt(resultHome) >= 0 && parseInt(resultAway) >= 0) {
+        if (parseInt(valueHome) >= 0 && parseInt(valueAway) >= 0) {
             setError('');
             return true;
         } else {
@@ -57,32 +66,32 @@ export const SetResult = (game: GameCardAdminProps) => {
         if (!validate()) {
             return;
         } else {
-            const dateAndHour: string = game.game.date;
+            const dateAndHour: string = game.date;
             const partipantHome: ParticipantMesmo = {
-                Price: game.game.participants.home.participant.price,
+                Price: !resultOrOdd ? game.participants.home.participant.price : parseInt(valueHome),
                 PartId: homeName,
                 Promo: null,
             };
             const participantHomeOdd: ParticipantOddPost = {
                 Participant: partipantHome,
-                Score: parseInt(resultHome),
+                Score: resultOrOdd ? parseInt(valueHome) : 0,
             };
             const partipantAway: ParticipantMesmo = {
-                Price: game.game.participants.away.participant.price,
+                Price: !resultOrOdd ? game.participants.away.participant.price : parseInt(valueAway),
                 Promo: null,
                 PartId: awayName,
             };
             const participantAwayOdd: ParticipantOddPost = {
                 Participant: partipantAway,
-                Score: parseInt(resultAway),
+                Score: resultOrOdd ? parseInt(valueAway) : 0,
             };
             const valuePromo: ValuePromo = {
                 Value: 0,
             };
             const tie: TieOdd = {
-                Id: game.game.participants.tie.id,
-                Price: game.game.participants.tie.price,
-                Promo: game.game.participants.tie.promo,
+                Id: game.participants.tie.id,
+                Price: game.participants.tie.price,
+                Promo: game.participants.tie.promo,
             };
             const twoParticipant: TwoParticipantsPost = {
                 Home: participantHomeOdd,
@@ -90,14 +99,14 @@ export const SetResult = (game: GameCardAdminProps) => {
                 Tie: tie,
             };
             const event: EventToPost = {
-                CompetitionId: game.game.competition as unknown as string,
+                CompetitionId: game.competition,
                 Date: dateAndHour,
                 Completed: true,
                 Participants: twoParticipant,
             };
 
             const newEvent: EventPost = {
-                Sport: game.sport,
+                Sport: sport,
                 Event: event,
             };
             await postEvent(newEvent);
@@ -105,40 +114,39 @@ export const SetResult = (game: GameCardAdminProps) => {
         }
     };
 
-    const homeName = game.game.participants.home.participant.participantName
-        ? game.game.participants.home.participant.participantName
+    const homeName = game.participants.home.participant.participantName
+        ? game.participants.home.participant.participantName
         : 'Home team';
-    const awayName = game.game.participants.away.participant.participantName
-        ? game.game.participants.away.participant.participantName
+    const awayName = game.participants.away.participant.participantName
+        ? game.participants.away.participant.participantName
         : 'Away team';
 
     return (
         <div className="flex flex-col gap-3 p-5">
             {submitted && (
                 <div className="text-lg font-semibold pb-2 border-b">
-                    Resultado acrescentado!
+                    {textSucess}
                 </div>
             )}
             {!submitted && (
                 <>
                     <div className="text-lg font-semibold pb-2 border-b">
-                        Insere o resultado do jogo
+                        {textPropsUp}
                     </div>
-                    <div>Insira o resultado das duas equipas.</div>
                     <div className=" relative z-0">
                         <InputForm
                             type="number"
-                            name={`Pontos ${homeName}`}
+                            name={`${textSet} ${homeName}`}
                             id="odd_home"
-                            value={resultHome}
+                            value={valueHome}
                             handleChange={changeHome}
                             error={''}
                         />
                         <InputForm
                             type="number"
-                            name={`Pontos ${awayName}`}
+                            name={`${textSet} ${awayName}`}
                             id="odd_home"
-                            value={resultAway}
+                            value={valueAway}
                             handleChange={changeAway}
                             error={''}
                         />
@@ -150,7 +158,7 @@ export const SetResult = (game: GameCardAdminProps) => {
                     )}
                     <div className="flex items-center justify-center gap-10">
                         <PrimaryButton onClick={handleSubmit}>
-                            <div>Submit</div>
+                            <div>Submeter</div>
                         </PrimaryButton>
                     </div>
                 </>

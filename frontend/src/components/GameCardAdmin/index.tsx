@@ -6,9 +6,22 @@ import {SetResult} from './setResult';
 export interface GameCardAdminProps {
     game: EventReceived;
     sport: string;
+    textButton: string;
+    textPropsUp: string;
+    textSucess: string;
+    resultOrOdd: boolean;
+    textSet: string;
 }
 
-export const GameCardAdmin = (game: GameCardAdminProps) => {
+export const GameCardAdmin = ({
+    game,
+    sport,
+    textButton,
+    textPropsUp,
+    textSucess,
+    resultOrOdd,
+    textSet,
+}: GameCardAdminProps) => {
     const [open, setOpen] = useState(false);
     const column = (header: string, body: string) => {
         return (
@@ -38,20 +51,27 @@ export const GameCardAdmin = (game: GameCardAdminProps) => {
         setOpen(true);
     };
 
-    const homeTeam = game.game.participants.home.participant.participantName
-        ? game.game.participants.home.participant.participantName
+    const homeTeam = game.participants.home.participant.participantName
+        ? game.participants.home.participant.participantName
         : 'Home Team';
-    const awayTeam = game.game.participants.away.participant.participantName
-        ? game.game.participants.away.participant.participantName
+    const awayTeam = game.participants.away.participant.participantName
+        ? game.participants.away.participant.participantName
         : 'Away Team';
-    const date = game.game.date.split('T')[0];
-    const completed = game.game.completed;
+    const date = game.date.split('T')[0];
+    const completed = game.completed;
 
     return (
         <>
             {open && (
                 <Modal isOpen={open} setIsOpen={setOpen}>
-                    <SetResult game={game.game} sport={game.sport} />
+                    <SetResult
+                        game={game}
+                        sport={sport}
+                        textPropsUp={textPropsUp}
+                        textSucess={textSucess}
+                        resultOrOdd={resultOrOdd}
+                        textSet={textSet}
+                    />
                 </Modal>
             )}
             <div className=" bg-white px-5 rounded flex flex-row w-full">
@@ -64,11 +84,11 @@ export const GameCardAdmin = (game: GameCardAdminProps) => {
                     ? column('Estado', 'Fechado')
                     : column('Estado', 'Aberto')}
                 <div className=" bg-white rounded flex flex-row items-center ">
-                    {!completed && button('Fechar jogo', closeGame)}
+                    {!completed && button(textButton, closeGame)}
                     {completed &&
                         column(
                             'Resultado:',
-                            `${game.game.participants.home.score}-${game.game.participants.away.score}`
+                            `${game.participants.home.score}-${game.participants.away.score}`
                         )}
                 </div>
             </div>
