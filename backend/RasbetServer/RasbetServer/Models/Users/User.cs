@@ -21,7 +21,9 @@ public abstract class User
 
     public virtual IList<Notification>? Notifications { get; set; }
 
-    public User(
+    protected User() { }
+    
+    protected User(
         string id,
         string email,
         string username,
@@ -33,8 +35,8 @@ public abstract class User
         Username = username;
         Password = password;
     }
-    
-    public User(
+
+    protected User(
         string email,
         string username,
         string password
