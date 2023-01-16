@@ -1,6 +1,6 @@
 import {useQuery} from '@tanstack/react-query';
 import {getEvents, getEventsBySport} from '../services/backend/event';
-import {Event, EventMini} from '@domain/Event';
+import {Event, EventReceived} from '@domain/Event';
 import {FetcherProps} from '@hooks/Fetcher';
 
 export interface useEventsProps extends FetcherProps {
@@ -8,7 +8,7 @@ export interface useEventsProps extends FetcherProps {
 }
 
 export interface useEventsBySportProps extends FetcherProps {
-    events: EventMini[];
+    events: EventReceived[];
 }
 
 export const useEvents = (compId: string): useEventsProps => {

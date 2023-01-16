@@ -9,7 +9,6 @@ export interface GameCardAdminProps {
 }
 
 export const GameCardAdmin = (game: GameCardAdminProps) => {
-    console.log(game);
     const [open, setOpen] = useState(false);
     const column = (header: string, body: string) => {
         return (
