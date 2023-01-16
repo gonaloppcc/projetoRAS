@@ -5,6 +5,9 @@ import {PrimaryButton} from '@components/Button';
 import {useProfile} from '@state/useProfile';
 import {useRouter} from 'next/router';
 import Link from 'next/link';
+import {useMutation} from '@tanstack/react-query';
+import toast from 'react-hot-toast';
+import {AxiosError} from 'axios';
 
 // Receives a function that opens the Modal of "ForgetPassword"
 export interface LoginBodyProps {
@@ -16,7 +19,9 @@ interface ValuesProps {
     password: string;
 }
 
-type ErrorsProps = ValuesProps;
+interface ErrorsProps extends ValuesProps {
+    submission: string;
+}
 
 const initialValues = {
     mail: '',
@@ -26,6 +31,7 @@ const initialValues = {
 const initialErrors = {
     mail: '',
     password: '',
+    submission: '',
 };
 
 export const LoginBody = ({setOpen}: LoginBodyProps) => {
@@ -34,6 +40,29 @@ export const LoginBody = ({setOpen}: LoginBodyProps) => {
 
     const router = useRouter();
     const {login} = useProfile();
+    const loginMutation = useMutation({
+        mutationFn: () => login(values.mail, values.password),
+        onSuccess: async () => {
+            toast.success('Login realizado com sucesso!');
+
+            await router.push('/');
+        },
+        onError: async (error: AxiosError) => {
+            let submissionError: string;
+
+            if (error?.response?.status === 401) {
+                submissionError = 'Mail ou palavra-passe inválidos';
+            } else {
+                submissionError =
+                    'Ocorreu um erro inesperado, tente novamente mais tarde';
+            }
+
+            setErrors({
+                ...initialErrors,
+                submission: submissionError,
+            });
+        },
+    });
 
     //form submission handler
     const handleSubmit: React.FormEventHandler<HTMLFormElement> = async (e) => {
@@ -42,14 +71,13 @@ export const LoginBody = ({setOpen}: LoginBodyProps) => {
 
         if (hasErrors()) return;
 
-        // Do something with the values
-        await login(values.mail, values.password);
-
-        await router.push('/');
+        loginMutation.mutate();
     };
 
     const hasErrors = () => {
-        return Object.values(errors).some((err) => err !== '');
+        const hasErrors = Object.values(errors).some((err) => err !== '');
+
+        console.log('hasErrors', hasErrors);
     };
 
     //input change handler
@@ -60,24 +88,25 @@ export const LoginBody = ({setOpen}: LoginBodyProps) => {
     //form validation handler
     // FIXME Em todos
     const validate = () => {
-        const errors = {
+        const validateErrors = {
             mail: '',
             password: '',
+            submission: '',
         };
 
         if (!values.mail) {
-            errors.mail = 'Obrigatório';
+            validateErrors.mail = 'Obrigatório';
         } else if (!REGEX_MAIL.test(values.mail)) {
-            errors.mail = 'Mail incorreto';
+            validateErrors.mail = 'Mail incorreto';
         }
 
         if (!values.password) {
-            errors.password = 'Obrigatório';
+            validateErrors.password = 'Obrigatório';
         } else if (values.password.length < 4) {
-            errors.password = 'Password tem de ter mais de 4 carateres';
+            validateErrors.password = 'Password tem de ter mais de 4 carateres';
         }
 
-        setErrors(errors);
+        setErrors(validateErrors);
     };
 
     return (
@@ -111,6 +140,11 @@ export const LoginBody = ({setOpen}: LoginBodyProps) => {
                                 value={values.password}
                                 error={errors.password}
                             />
+                            {errors.submission && (
+                                <div className="text-red-500">
+                                    {errors.submission}
+                                </div>
+                            )}
 
                             <div className="flex flex-col center px-20 py-3">
                                 {/*  FIXME Em todos */}

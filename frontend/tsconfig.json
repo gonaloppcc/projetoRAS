@@ -41,7 +41,6 @@
         "next-env.d.ts",
         "**/*.ts",
         "**/*.tsx",
-        "src/components/LoginCard"
     ],
     "exclude": [
         "node_modules"
