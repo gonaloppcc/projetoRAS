@@ -5,7 +5,9 @@ import {MultipleBetCard} from '@components/MultipleBetCard';
 import {Tabs} from '@components/Tabs';
 import {SimpleBetCard} from '@components/SimpleBetCard';
 import {SimpleBetBettingSlipInfo} from '@components/SimpleBetBettingSlipInfo';
-import {useProfileState} from '@state/useProfileState';
+import {useProfile} from '@state/useProfile';
+import {useMutation} from '@tanstack/react-query';
+import toast from 'react-hot-toast';
 
 const TABS = [
     {
@@ -29,19 +31,27 @@ export const BettingSlip = () => {
         submitReport,
     } = useBettingSlip();
 
-    const {Id, Email, Password, login, isLogged} = useProfileState();
+    const {id, email, login, isLoggedIn} = useProfile();
+
+    const submitReportMutation = useMutation({
+        mutationFn: submitReport,
+        onSuccess: async () => {
+            await login(email, 'marco123'); // FIXME: Password is hardcoded for that specific user
+
+            toast.success('Aposta submetida com sucesso!');
+        },
+    });
 
     const getRemoveBetHandler = (id: string) => () => {
         removeBet(id);
     };
 
     const submitReportHandler = async () => {
-        if (!isLogged) {
+        if (!isLoggedIn) {
             // TODO: Show login modal
             return;
         }
-        await submitReport(Id);
-        await login(Email, Password);
+        submitReportMutation.mutate(id);
     };
 
     return (
@@ -77,7 +87,7 @@ export const BettingSlip = () => {
                         possibleWinnings={bets.reduce((acc, bet) => {
                             return (
                                 acc +
-                                (bet.bettingAmount as number) * bet.odd.Price
+                                (bet.bettingAmount as number) * bet.odd.price
                             );
                         }, 0)}
                         placeBetOnClick={submitReportHandler}
@@ -97,7 +107,7 @@ export const BettingSlip = () => {
                         ))}
                     </div>
                     <MultipleBetBettingSlipInfo
-                        odd={bets.reduce((acc, bet) => acc * bet.odd.Price, 1)}
+                        odd={bets.reduce((acc, bet) => acc * bet.odd.price, 1)}
                         placeBetOnClick={submitReportHandler}
                         bettingAmount={
                             bettingAmount as number /* bettingAmount is always defined when the bet is Multiple */

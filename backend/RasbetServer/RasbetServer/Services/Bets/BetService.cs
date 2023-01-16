@@ -1,26 +1,21 @@
 using RasbetServer.Models.Bets;
-using RasbetServer.Models.Users;
+using RasbetServer.Models.Users.Better;
 using RasbetServer.Repositories.BetRepository;
-using RasbetServer.Repositories.CompetitionRepository;
-using RasbetServer.Repositories.EventRepository;
-using RasbetServer.Repositories.ParticipantRepository;
-using RasbetServer.Repositories.SportRepository;
 using RasbetServer.Repositories.UserRepository;
 using RasbetServer.Services.Communication;
 
 namespace RasbetServer.Services.Bets;
 
-public class BetService : BaseService, IBetService
+public class BetService : IBetService
 {
-    public BetService(
-        IBetRepository betRepository,
-        ICompetitionRepository competitionRepository, 
-        ISportRepository sportRepository,
-        IParticipantRepository participantRepository, 
-        IEventRepository eventRepository,
-        IUserRepository userRepository
-    ) : base (betRepository, competitionRepository, sportRepository, participantRepository, eventRepository, userRepository)
-    { }
+    private readonly IBetRepository _betRepository;
+    private readonly IUserRepository _userRepository;
+
+    public BetService(IBetRepository betRepository, IUserRepository userRepository)
+    {
+        _betRepository = betRepository;
+        _userRepository = userRepository;
+    }
     
     public async Task<ObjectResponse<Bet>> GetAsync(string id)
     {

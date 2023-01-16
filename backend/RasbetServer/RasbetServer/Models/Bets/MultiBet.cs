@@ -4,10 +4,6 @@ using RasbetServer.Models.Bets.Odds;
 namespace RasbetServer.Models.Bets;
 
 public class MultiBet : Bet {
-    [Required]
-    //public IList<string> OddIds { get; set; }
-    public virtual IList<Odd> Odds { get; set; }
-
     public MultiBet() : base() { }
     
     public MultiBet(
@@ -28,6 +24,4 @@ public class MultiBet : Bet {
 
         return Amount * multiplier;
     }
-
-    public override IEnumerable<Odd> GetOdds() => Odds;
 }

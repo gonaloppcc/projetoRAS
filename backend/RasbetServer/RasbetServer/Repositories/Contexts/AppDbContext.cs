@@ -5,6 +5,8 @@ using RasbetServer.Models.Events;
 using RasbetServer.Models.Events.Participants;
 using RasbetServer.Models.Events.Participants.Participant;
 using RasbetServer.Models.Users;
+using RasbetServer.Models.Users.Better;
+using RasbetServer.Models.Users.Notifications;
 
 namespace RasbetServer.Repositories.Contexts;
 
@@ -15,7 +17,8 @@ public class AppDbContext : DbContext
     public DbSet<Specialist> Specialists { get; set; }
     public DbSet<Administrator> Administrators { get; set; }
     public DbSet<Transaction> Transactions { get; set; }
-    
+    public DbSet<Notification> Notifications { get; set; }
+
     public DbSet<Event> Events { get; set; }
     public DbSet<FootballEvent> FootballEvents { get; set; }
     public DbSet<Competition> Competitions { get; set; }
@@ -96,50 +99,22 @@ public class AppDbContext : DbContext
         Participants.Add(new Team("Brentford", "Football", new List<Player>()));
     }
 
-    private void SeedOdds()
-    {
-        Odds.Add(new ParticipantOdd("0", 1.90f, "Manchester United", null));
-        Odds.Add(new ParticipantOdd("1", 2.20f, "Manchester City", null));
-        Odds.Add(new ParticipantOdd("2", 3.60f, "Liverpool", null));
-        Odds.Add(new ParticipantOdd("3", 4.20f, "Chelsea", null));
-        Odds.Add(new ParticipantOdd("4", 4.58f, "Arsenal", null));
-        Odds.Add(new ParticipantOdd("5", 5.20f, "Tottenham", null));
-        Odds.Add(new ParticipantOdd("6", 5.60f, "Everton", null));
-        Odds.Add(new ParticipantOdd("7", 6.20f, "Leicester", null));
-        Odds.Add(new ParticipantOdd("8", 6.60f, "West Ham", null));
-
-        Odds.Add(new TieOdd("100", 3.20f, null));
-        Odds.Add(new TieOdd("101", 3.20f, null));
-        Odds.Add(new TieOdd("102", 3.20f, null));
-        Odds.Add(new TieOdd("103", 3.20f, null));
-        Odds.Add(new TieOdd("104", 3.20f, null));
-        Odds.Add(new TieOdd("105", 3.20f, null));
-        Odds.Add(new TieOdd("106", 3.20f, null));
-        Odds.Add(new TieOdd("107", 3.20f, null));
-        Odds.Add(new TieOdd("108", 3.20f, null));
-    }
-
     private void SeedBetters()
     {
-        Betters.Add(new Better("0", "marco@gmail.com", "marco", "marco123", "123456789", "123456789", "123456789", 20,
-            new List<Transaction>()));
-        Betters.Add(new Better("1", "diogo@gmail.com", "diogo", "marco123", "123456789", "123456789", "123456789", 200,
-            new List<Transaction>()));
-        Betters.Add(new Better("2", "goncalo@gmail.com", "goncalo", "marco123", "123456789", "123456789", "123456789", 2000,
-            new List<Transaction>()));
-        Betters.Add(new Better("3", "barbara@gmail.com", "barbara", "marco123", "123456789", "123456789", "123456789",
-            500, new List<Transaction>()));
-        Betters.Add(new Better("4", "grandeMarco@gmail.com", "grandemarco", "marco123", "123456789", "123456789",
-            "123456789", 305, new List<Transaction>()));
+        Betters.Add(new Better("0", "marco@gmail.com", "marco", "marco123", "123456789", "123456789", "123456789", 20));
+        Betters.Add(new Better("1", "diogo@gmail.com", "diogo", "marco123", "123456789", "123456789", "123456789", 200));
+        Betters.Add(new Better("2", "goncalo@gmail.com", "goncalo", "marco123", "123456789", "123456789", "123456789", 2000));
+        Betters.Add(new Better("3", "barbara@gmail.com", "barbara", "marco123", "123456789", "123456789", "123456789", 500));
+        Betters.Add(new Better("4", "grandeMarco@gmail.com", "grandemarco", "marco123", "123456789", "123456789", 305));
     }
 
     private void SeedSpecialists()
     {
-        Specialists.Add(new Specialist("5", "email1@email.com", "username1", "password1", new List<Sport>()));
-        Specialists.Add(new Specialist("6", "email2@email.com", "username2", "password2", new List<Sport>()));
-        Specialists.Add(new Specialist("7", "email3@email.com", "username3", "password3", new List<Sport>()));
-        Specialists.Add(new Specialist("8", "email4@email.com", "username4", "password4", new List<Sport>()));
-        Specialists.Add(new Specialist("9", "email5@email.com", "username5", "password5", new List<Sport>()));
+        Specialists.Add(new Specialist("5", "email1@email.com", "username1", "password1"));
+        Specialists.Add(new Specialist("6", "email2@email.com", "username2", "password2"));
+        Specialists.Add(new Specialist("7", "email3@email.com", "username3", "password3"));
+        Specialists.Add(new Specialist("8", "email4@email.com", "username4", "password4"));
+        Specialists.Add(new Specialist("9", "email5@email.com", "username5", "password5"));
     }
     
     public void Seed()
@@ -151,7 +126,6 @@ public class AppDbContext : DbContext
         SeedSports();
         SeedCompetitions();
         SeedParticipants();
-        SeedOdds();
         
         SaveChanges();
     }

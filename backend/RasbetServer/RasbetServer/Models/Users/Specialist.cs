@@ -5,26 +5,20 @@ namespace RasbetServer.Models.Users;
 
 public class Specialist : User {
     [Required]
-    public virtual IList<Sport> Specialties { get; set; }
-    
-    public Specialist() : base() { }
+    public virtual IList<Sport>? Specialties { get; set; }
 
     public Specialist(
         string id,
         string email,
         string username,
-        string password,
-        IEnumerable<Sport> specialties
-    ) : base(id, email, username, password) {
-        Specialties = specialties.ToList();
-    }
+        string password
+    ) : base(id, email, username, password)
+    { }
     
     public Specialist(
         string email,
         string username,
-        string password,
-        IEnumerable<Sport> specialties
-    ) : base(email, username, password) {
-        Specialties = specialties.ToList();
-    }
+        string password
+    ) : base(email, username, password) 
+    { }
 }

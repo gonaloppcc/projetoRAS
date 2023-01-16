@@ -2,6 +2,7 @@ import create from 'zustand';
 import {v4 as uuidv4} from 'uuid';
 import {
     addMultipleBet,
+    AddMultipleBetProps,
     addSimpleBet,
     AddSimpleBetProps,
 } from '../services/backend/bet';
@@ -43,7 +44,7 @@ interface ReportState {
 
     setBettingAmount: (bettingAmount: number) => void;
 
-    submitReport: (betterId: string) => void;
+    submitReport: (betterId: string) => Promise<void>;
 }
 
 const initialBets: BetState[] = [];
@@ -97,11 +98,9 @@ export const useBettingSlip = create<ReportState>((set, get) => ({
         switch (betType) {
             case BetType.Simple:
                 const simpleBet: AddSimpleBetProps = {
-                    Date: '2022-11-26T16:01:17.0065405+00:00',
-                    OddId: bets[0].odd.Id,
-                    BetterId: betterId,
-                    Amount: bets[0].bettingAmount as number,
-                    EventId: bets[0].eventId,
+                    oddId: bets[0].odd.id,
+                    betterId: betterId,
+                    amount: bets[0].bettingAmount as number,
                 };
 
                 await addSimpleBet(simpleBet);
@@ -110,14 +109,10 @@ export const useBettingSlip = create<ReportState>((set, get) => ({
             case BetType.Multiple:
                 // TODO: Implement MultiBet logic
 
-                const multipleBet = {
-                    Date: '2022-11-26T16:01:17.0065405+00:00',
-                    BetterId: betterId,
-                    Amount: bettingAmount as number,
-                    Odds: bets.map((bet) => ({
-                        OddId: bet.odd.Id,
-                        EventId: bet.eventId,
-                    })),
+                const multipleBet: AddMultipleBetProps = {
+                    betterId: betterId,
+                    amount: bettingAmount as number,
+                    oddIds: bets.map((bet) => bet.odd.id),
                 };
 
                 await addMultipleBet(multipleBet);

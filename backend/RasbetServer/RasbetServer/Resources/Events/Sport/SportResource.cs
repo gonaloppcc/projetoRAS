@@ -1,5 +1,3 @@
-using RasbetServer.Models.Events.Participants.Participant;
-
 namespace RasbetServer.Resources.Events.Sport;
 
 public class SportResource

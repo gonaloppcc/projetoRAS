@@ -127,8 +127,8 @@ export const RegisterEvent = ({sports}: RegisterEventProps) => {
             Value: 0,
         };
         const tieOdd: TieOdd = {
-            Price: 0,
-            Promo: valuePromo,
+            price: 0,
+            promo: valuePromo,
         };
         const twoParticipant: TwoParticipantsPost = {
             Home: participantHomeOdd,

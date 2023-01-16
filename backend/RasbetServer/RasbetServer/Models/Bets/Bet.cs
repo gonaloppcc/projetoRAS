@@ -30,6 +30,8 @@ public abstract class Bet
     
     public float CancelReturn => 0.8f * Amount;
 
+    public virtual IList<Odd> Odds { get; set; } = new List<Odd>();
+
     public Bet() { }
     
     public Bet(
@@ -46,14 +48,18 @@ public abstract class Bet
 
     public abstract float CalcCashOut();
 
-    public abstract IEnumerable<Odd> GetOdds();
+    private static string? GetTypeFromJObject(JObject json) 
+        => (json["Type"] ?? json["type"])?.Value<string>();
 
-    public static SaveBetResource FromJson(JObject json)
+    private static JToken? GetBetTokenFromJObject(JObject json) 
+        => json["Bet"] ?? json["bet"];
+    
+    public static SaveBetResource? FromJson(JObject json)
     {
-        return json["Type"]!.Value<string>() switch
+        return GetTypeFromJObject(json) switch
         {
-            nameof(MultiBet) => json["Bet"]!.ToObject<SaveMultiBetResource>()!,
-            nameof(SimpleBet) => json["Bet"]!.ToObject<SaveSimpleBetResource>()!,
+            nameof(MultiBet) => GetBetTokenFromJObject(json)?.ToObject<SaveMultiBetResource>(),
+            nameof(SimpleBet) => GetBetTokenFromJObject(json)?.ToObject<SaveSimpleBetResource>(),
             _ => throw new JsonException()
         };
     }

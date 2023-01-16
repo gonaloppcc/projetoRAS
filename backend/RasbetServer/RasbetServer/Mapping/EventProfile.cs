@@ -13,7 +13,7 @@ public class EventProfile : Profile
             .ForMember(
                     dest => dest.Competition,
                     opt => opt.MapFrom(
-                            src => src.Competition.Name
+                            src => src.CompetitionId
                         )
                 ).IncludeAllDerived();
         CreateMap<FootballEvent, FootballEventResource>();

@@ -2,6 +2,7 @@ import {FetcherProps} from '@hooks/Fetcher';
 import {Sport} from '@domain/Event';
 import {useQuery} from '@tanstack/react-query';
 import {getSports} from '../services/backend/sports';
+import {AxiosError} from 'axios';
 
 export interface useSportsProps extends FetcherProps {
     sports: Sport[];
@@ -22,7 +23,7 @@ export const useSports = (): useSportsProps => {
         isLoading,
         isError,
         sports: (sports || []) as unknown as Sport[],
-        error: error as string,
+        error: error as AxiosError,
         refetch,
     };
 };

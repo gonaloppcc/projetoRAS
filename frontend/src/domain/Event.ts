@@ -1,10 +1,12 @@
 export interface Event {
-    Id: string;
-    Date: string;
-    Competition: Competition;
-    Participants: TwoParticipant;
+    id: string;
+    date: string;
+    competition: string;
 
-    Completed: boolean;
+    sportId: string;
+    participants: Participants;
+
+    completed: boolean;
 }
 
 export interface EventPost {
@@ -33,31 +35,30 @@ export interface ParticipantPost {
 }
 
 export interface Competition {
-    Name: string;
-    Sport: Sport;
+    name: string;
+    sportId: string;
 }
 
 export interface Sport {
-    Name: string;
+    name: string;
 }
 
-export interface TwoParticipant {
-    Id: string;
-    Home: ParticipantOdd;
-    Away: ParticipantOdd;
-    Tie: TieOdd;
+export interface Participants {
+    home: ParticipantOdd;
+    away: ParticipantOdd;
+    tie: TieOdd;
 }
 
 export interface ParticipantOdd {
-    Id: string;
-    Participant: Participant;
-    Score?: number;
+    id: string;
+    participant: Participant;
+    score?: number;
 }
 
 export interface TieOdd {
-    Id: string;
-    Price: number;
-    Promo: ValuePromo;
+    id: string;
+    price: number;
+    promo: ValuePromo;
 }
 
 export interface ValuePromo {
@@ -65,11 +66,11 @@ export interface ValuePromo {
 }
 
 export interface Participant {
-    Id: string;
-    Price: number;
-    Player: Player[];
-    Promo?: boolean; // FIXME I don't know if this is the correct type
-    Part?: Part;
+    id: string;
+
+    participantName: string;
+    price: number;
+    promo?: boolean; // FIXME I don't know if this is the correct type
 }
 
 export interface Part {

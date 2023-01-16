@@ -5,52 +5,56 @@ import {Event} from '@domain/Event';
 import {formatDate} from '../../utils/formatters';
 import {Odd} from '@domain/Bet';
 import {useRouter} from 'next/router';
+import classNames from 'classnames';
+import {useMutation} from '@tanstack/react-query';
 
 export const EventCard = ({
-    Id,
-    Date: date,
-    Competition,
-    Participants,
-    Completed,
+    id,
+    date,
+    competition,
+    participants,
+    completed,
 }: Event) => {
-    const {addBet} = useBettingSlip();
     const router = useRouter();
+    const {addBet} = useBettingSlip();
 
-    const awayName = Participants.Away.Participant.Part?.Name || '';
-    const homeName = Participants.Home.Participant.Part?.Name || '';
+    const homeName = participants.home.participant.participantName || '';
+    const awayName = participants.away.participant.participantName || '';
 
     const eventName = `${homeName} - ${awayName}`;
 
-    const eventType = Competition.Sport.Name;
+    const sportId = 'Football'; // FIXME: Event type is not available in the API
+
+    const score = `Partida terminada: ${participants.home.score} - ${participants.away.score}`;
 
     const odds = [
         {
-            Id: Participants.Home.Participant.Id,
-            PartId: homeName,
-            Price: Participants.Home.Participant.Price,
+            id: participants.home.participant.id,
+            partId: homeName,
+            price: participants.home.participant.price,
         },
         {
-            Id: Participants.Tie.Id,
-            PartId: 'Empate',
-            Price: Participants.Tie.Price,
+            id: participants.tie.id,
+            partId: 'Empate',
+            price: participants.tie.price,
         },
         {
-            Id: Participants.Away.Participant.Id,
-            PartId: awayName,
-            Price: Participants.Away.Participant.Price,
+            id: participants.away.participant.id,
+            partId: awayName,
+            price: participants.away.participant.price,
         },
     ];
 
     const onClickHandler = async () => {
-        await router.push(`/event/${Id}`);
+        await router.push(`/event/${id}`);
     };
 
     const addBetHandler = (odd: Odd) => {
         return () =>
             addBet({
-                eventId: Id,
+                eventId: id,
                 eventName,
-                eventType,
+                eventType: sportId,
                 odd,
             });
     };
@@ -61,9 +65,13 @@ export const EventCard = ({
     return (
         <div
             onClick={onClickHandler}
-            className="flex flex-row justify-between items-center px-4 min-w-min w-full h-24 drop-shadow-sm rounded bg-WHITE gap-5 cursor-pointer"
+            className={classNames({
+                'flex flex-row justify-between items-center px-4 min-w-min w-full h-24 drop-shadow-sm rounded bg-WHITE gap-5 cursor-pointer':
+                    true,
+                'opacity-50': completed,
+            })}
         >
-            <div className="flex flex-row items-center gap-1">
+            <div className="w-full flex flex-row items-center gap-1">
                 {/* TODO: Add Promotion image here <div>Promotion image if needed</div>*/}
                 <div className="flex flex-col justify-start items-start">
                     <span>{eventName}</span>
@@ -72,14 +80,20 @@ export const EventCard = ({
                     </span>
                 </div>
             </div>
-            <div className="h-full flex flex-row justify-end items-center gap-2">
-                {odds.map((odd) => (
-                    <OddCard
-                        key={odd.Id}
-                        {...odd}
-                        placeOddHandler={addBetHandler(odd)}
-                    />
-                ))}
+            <div className="w-full h-full flex flex-row justify-end items-center gap-2">
+                {!completed &&
+                    odds.map((odd) => (
+                        <OddCard
+                            key={odd.id}
+                            {...odd}
+                            placeOddHandler={addBetHandler(odd)}
+                        />
+                    ))}
+                {completed && (
+                    <div className="w-full flex flex-row justify-center">
+                        {score}
+                    </div>
+                )}
             </div>
         </div>
     );

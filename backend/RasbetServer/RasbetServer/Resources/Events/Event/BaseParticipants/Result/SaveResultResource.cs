@@ -8,5 +8,5 @@ public class SaveResultResource
     [Required]
     public SaveParticipantOddResource Participant { get; set; }
     [Required]
-    public int Score { get; set; }
+    public int? Score { get; set; }
 }

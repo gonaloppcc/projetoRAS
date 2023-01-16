@@ -1,28 +1,45 @@
 import type {NextPage} from 'next';
 import {EventCard} from '@components/EventCard';
 import {PageLayout} from '@components/PageLayout';
-import {useEvents} from '@hooks/useEvents';
+import {useEventsByCompetition} from '@hooks/useEventsByCompetition';
 import {CircularProgress} from '@mui/material';
+import {Pagination} from '@components/Pagination';
+import {usePagination} from '@hooks/usePagination';
 
-const PRIMARY_COMPETITION_ID = 'Portuguese First League'; // Football
+const PRIMARY_COMPETITION_ID = 'Portuguese First League';
+
+const NUM_PAGES = 10;
 
 const Home: NextPage = () => {
-    const {isSuccess, isLoading, isError, events, error} = useEvents(
-        PRIMARY_COMPETITION_ID
-    );
+    const {currentPage, setCurrentPage} = usePagination();
+
+    const {isSuccess, isLoading, isError, events} = useEventsByCompetition({
+        compId: PRIMARY_COMPETITION_ID,
+        pageNum: currentPage,
+    });
 
     return (
         <PageLayout>
-            <div className="min-w-min flex flex-col justify-start items-start gap-3 w-full">
-                {isLoading && <CircularProgress />}
-                {isSuccess &&
-                    events.map((event) => (
-                        <EventCard key={event.Id} {...event} />
-                    ))}
-                {isSuccess && events.length === 0 && (
-                    <span>Não há jogos por agora</span>
-                )}
-                {isError && <span>{error}</span>}
+            <div className="min-w-min flex flex-col justify-between items-start gap-3 w-full">
+                <div className="min-w-min flex flex-col justify-start items-center gap-3 w-full">
+                    {isLoading && <CircularProgress />}
+                    {isSuccess &&
+                        events.map((event) => (
+                            <EventCard key={event.id} {...event} />
+                        ))}
+                    {isSuccess && events.length === 0 && (
+                        <span>Não há jogos por agora</span>
+                    )}
+
+                    {isError && (
+                        <span>Ocorreu um erro ao carregar os jogos</span>
+                    )}
+                </div>
+                <Pagination
+                    currentPage={currentPage}
+                    onPageChange={setCurrentPage}
+                    totalPages={NUM_PAGES}
+                />
             </div>
         </PageLayout>
     );

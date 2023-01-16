@@ -8,34 +8,35 @@ export interface OnGoingSimpleBetRecordProps extends SimpleBet {
 }
 
 export const OnGoingSimpleBetRecord = ({
-    Odd: {PartId, Price},
-    Event: {
-        Id: eventId,
-        Participants,
-        Competition: {Sport},
+    oddId: {partId, price},
+    event: {
+        id: eventId,
+        participants,
+        competition: {sport},
     },
-    Date,
-    Amount,
+    date,
+    amount,
     cancelBetHandler,
 }: OnGoingSimpleBetRecordProps) => {
+    console.log('OnGoingSimpleBetRecord');
     // FIXME: Hardcoded text in this component
-    const betName = `Resultado Final: ${PartId ?? 'Empate'}`; // FIXME: Only valid to Participant Bets
+    const betName = `Resultado Final: ${partId ?? 'Empate'}`; // FIXME: Only valid to Participant Bets
 
-    const eventType = Sport.Name;
+    const sportId = 'Football'; // FIXME: Sport is not being returned by the API
 
-    const betPossibleWinnings = Amount * Price;
+    const betPossibleWinnings = amount * price;
 
-    const dateFormatted = formatDate(Date);
+    const dateFormatted = formatDate(date);
 
-    const awayName = Participants.Away.Participant.Part?.Name || '';
-    const homeName = Participants.Home.Participant.Part?.Name || '';
+    const homeName = participants.home.participant.participantName || '';
+    const awayName = participants.away.participant.participantName || '';
 
     const eventName = `${homeName} - ${awayName}`;
 
     return (
         <div className="flex flex-row justify-between items-center px-4 gap-8 bg-WHITE rounded">
             <div className="flex flex-row justify-center items-center gap-4">
-                <SportIcon eventType={eventType} />
+                <SportIcon eventType={sportId} />
                 <div className="flex flex-col items-start p-0 gap-1">
                     <span className="text-EERIE_BLACK text-base font-semibold">
                         {betName}
@@ -52,7 +53,7 @@ export const OnGoingSimpleBetRecord = ({
 
             <div className="flex flex-col items-start p-0 gap-2">
                 <span className="text-LIGHT_GRAY text-sm">{'Cota'}</span>
-                <span className="text-SPECIAL text-base">{Price}</span>
+                <span className="text-SPECIAL text-base">{price}</span>
             </div>
 
             <div className="flex flex-col items-start p-0 gap-2">
@@ -60,7 +61,7 @@ export const OnGoingSimpleBetRecord = ({
                     {'Valor apostado'}
                 </span>
                 <span className="text-EERIE_BLACK text-base font-semibold">
-                    {formatNumber(Amount)} €
+                    {formatNumber(amount)} €
                 </span>
             </div>
             <div className="flex flex-col items-start py-4 gap-2">

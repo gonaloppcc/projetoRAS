@@ -9,18 +9,18 @@ export interface OnGoingBetRecordProps {
 }
 
 const isSimpleBet = (bet: Bet): bet is SimpleBet => {
-    return 'Event' in bet;
+    return 'oddId' in bet;
 };
 
 const isMultipleBet = (bet: Bet): bet is MultipleBet => {
-    return 'Odds' in bet;
+    return 'oddIds' in bet;
 };
 
 export const OnGoingBetRecord = ({
     bet,
     cancelBetHandler,
 }: OnGoingBetRecordProps) => {
-    console.log('OnGoingBetRecord');
+    console.log('bet', bet);
     return (
         <>
             {isSimpleBet(bet) && (

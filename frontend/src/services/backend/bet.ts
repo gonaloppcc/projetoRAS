@@ -3,39 +3,33 @@ import axios from 'axios';
 import {SimpleBet} from '@domain/Bet';
 
 export interface AddSimpleBetProps {
-    Date: string;
-    OddId: string;
-    BetterId: string;
-    Amount: number;
-    EventId: string;
+    oddId: string;
+    betterId: string;
+    amount: number;
 }
 
-interface AddMultipleBetProps {
-    Date: string;
-    BetterId: string;
-    Amount: number;
-    Odds: {
-        OddId: string;
-        EventId: string;
-    }[];
+export interface AddMultipleBetProps {
+    betterId: string;
+    amount: number;
+    oddIds: string[];
 }
 
 export const addSimpleBet = async (
     betProps: AddSimpleBetProps
 ): Promise<SimpleBet> => {
     const response = await axios.post(`${BASE_URL}/bets`, {
-        Type: 'SimpleBet',
-        ...betProps,
+        type: 'SimpleBet',
+        bet: betProps,
     });
     return response.data as SimpleBet;
 };
 
 export const getBets = async ({
-    userId,
+    email,
 }: {
-    userId: string;
+    email: string;
 }): Promise<SimpleBet[]> => {
-    const response = await axios.get(`${BASE_URL}/bets?userId=${userId}`);
+    const response = await axios.get(`${BASE_URL}/bets?userId=${email}`);
     return response.data as SimpleBet[];
 };
 
@@ -47,8 +41,8 @@ export const addMultipleBet = async (
     betProps: AddMultipleBetProps
 ): Promise<SimpleBet> => {
     const response = await axios.post(`${BASE_URL}/bets`, {
-        Type: 'MultiBet',
-        ...betProps,
+        type: 'MultiBet',
+        bet: betProps,
     });
     return response.data as SimpleBet;
 };
