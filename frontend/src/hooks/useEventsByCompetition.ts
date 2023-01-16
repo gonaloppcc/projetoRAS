@@ -4,13 +4,21 @@ import {Event} from '@domain/Event';
 import {FetcherProps} from '@hooks/Fetcher';
 import {AxiosError} from 'axios';
 
-export interface useEventsByCompetitionProps extends FetcherProps {
+export interface UseEventsByCompetitionReturnType extends FetcherProps {
     events: Event[];
 }
 
-export const useEventsByCompetition = (
-    compId: string
-): useEventsByCompetitionProps => {
+interface UseEventsByCompetitionProps {
+    compId: string;
+    pageNum?: number;
+    pageSize?: number;
+}
+
+export const useEventsByCompetition = ({
+    compId,
+    pageNum = 0,
+    pageSize = 5,
+}: UseEventsByCompetitionProps): UseEventsByCompetitionReturnType => {
     const {
         isSuccess,
         isLoading,
@@ -18,8 +26,11 @@ export const useEventsByCompetition = (
         data: events,
         error,
         refetch,
-    } = useQuery(['events', compId], () =>
-        getEventsByCompetition({competitionId: compId})
+    } = useQuery(
+        ['events', compId, pageNum],
+        () =>
+            getEventsByCompetition({competitionId: compId, pageNum, pageSize}),
+        {keepPreviousData: true}
     );
 
     return {
