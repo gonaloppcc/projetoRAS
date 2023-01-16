@@ -1,0 +1,59 @@
+_id: req_ec6a667766f846a884eca43b9ca6bb34
+type: Request
+parentId: fld_d8286c686f27455a88d70d0b096ef407
+modified: 1672616715978
+created: 1672438865400
+url: http://localhost:5000/events/apiCache
+name: CacheEvents
+description: ""
+method: POST
+body:
+  mimeType: application/json
+  text: |-
+    [
+    	{
+    		"Sport": "Football",
+    		"Event": {
+    			"participants": {
+    				"home": {
+    					"participant": {
+    						"partId": "Chelsea",
+    						"price": 2,
+    						"promo": null
+    					},
+    					"score": 1
+    				},
+    				"away": {
+    					"participant": {
+    						"partId": "Burnley",
+    						"price": 4,
+    						"promo": {
+    							"value": 2
+    						}
+    					},
+    					"score": 0
+    				},
+    				"tie": {
+    					"price": 4,
+    					"promo": null
+    				}
+    			},
+    			"date": "2022-12-29T17:00:00",
+    			"competitionId": "Portuguese First League",
+    			"completed": true
+    		}
+    	}
+    ]
+parameters: []
+headers:
+  - name: Content-Type
+    value: application/json
+authentication: {}
+metaSortKey: -1672438865400
+isPrivate: false
+settingStoreCookies: true
+settingSendCookies: true
+settingDisableRenderRequestBody: false
+settingEncodeUrl: true
+settingRebuildPath: true
+settingFollowRedirects: global

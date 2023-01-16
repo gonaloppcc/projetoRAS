@@ -1,9 +1,9 @@
 _id: req_ae72d45dac944d6fa67976b7a4635cea
 type: Request
 parentId: fld_c831b6f386ae4766a65da45623b8b986
-modified: 1672370163248
+modified: 1672544138797
 created: 1672369805841
-url: http://localhost:5000/users/1/notifications/1
+url: http://localhost:5000/users/1/notifications/aa95d263-0b6f-4c71-a012-d9a7863e9bb4
 name: CancelNotification
 description: ""
 method: DELETE

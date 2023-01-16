@@ -1,7 +1,7 @@
 _id: req_f0147468a1cf4a58942f0612de66733e
 type: Request
 parentId: fld_036a40beb99f43d2a57425ebd024897d
-modified: 1672337223750
+modified: 1673903635019
 created: 1670087334633
 url: localhost:5000/bets
 name: AddSimpleBet
@@ -12,10 +12,10 @@ body:
   text: |-
     {
     	"Type": "SimpleBet",
-    	"Bet":{
-    		"OddId": "7fc342e2-7423-48d2-bde2-01e1aa3fc8f2",
-    		"BetterId": "1",
-    		"Amount": 50
+    	"bet":{
+    		"OddId": "532e86a3-de97-42cd-b806-874e99116263",
+    		"BetterId": "2",
+    		"Amount": 100
     	}
     }
 parameters: []

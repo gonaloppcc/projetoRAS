@@ -1,9 +1,9 @@
 _id: req_de56dbb0fc9e4c7dbfc2c36354597020
 type: Request
 parentId: fld_d8286c686f27455a88d70d0b096ef407
-modified: 1672337080715
+modified: 1673211404048
 created: 1669562005390
-url: http://localhost:5000/events/6c748448-9f37-4293-8570-d42d053aeae8
+url: http://localhost:5000/events/c9fcb2a3-2a53-4f40-97c2-f01d38ea6162
 name: GetEvent
 description: ""
 method: GET

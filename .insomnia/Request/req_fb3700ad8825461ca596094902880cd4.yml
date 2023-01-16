@@ -1,9 +1,9 @@
 _id: req_fb3700ad8825461ca596094902880cd4
 type: Request
 parentId: fld_036a40beb99f43d2a57425ebd024897d
-modified: 1672337287581
+modified: 1673215214931
 created: 1671814140361
-url: localhost:5000/bets/155192f5-f7a8-4f38-949a-6ba1a87a6ba1
+url: localhost:5000/bets/3ede18d0-5dfe-4685-bf7b-1d92dbe49763
 name: CancelBet
 description: ""
 method: DELETE

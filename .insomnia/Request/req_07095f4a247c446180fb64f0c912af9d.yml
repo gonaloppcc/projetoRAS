@@ -1,7 +1,7 @@
 _id: req_07095f4a247c446180fb64f0c912af9d
 type: Request
 parentId: fld_d8286c686f27455a88d70d0b096ef407
-modified: 1672355378797
+modified: 1672444705391
 created: 1672355291902
 url: http://localhost:5000/events/sport
 name: GetPageBySport
@@ -15,7 +15,7 @@ parameters:
     description: ""
   - id: pair_4504a70105bc449095ac29359ba109e5
     name: pageNum
-    value: "1"
+    value: "0"
     description: ""
   - id: pair_14bf0be494444374804d038f744034ec
     name: pageSize

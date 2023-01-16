@@ -1,12 +1,12 @@
-_id: req_d91d161e8c0b442abc5dce5430c0b12f
+_id: req_986a974dd2c6408e88d6c9358b4e8418
 type: Request
 parentId: fld_d8286c686f27455a88d70d0b096ef407
-modified: 1673902648702
-created: 1672249243026
-url: http://localhost:5000/events
-name: AddEvent
+modified: 1673908260733
+created: 1673903520067
+url: http://localhost:5000/events/eae6a12b-a5e5-4a2a-bef8-4795d13074ab
+name: UpdateEvent
 description: ""
-method: POST
+method: PUT
 body:
   mimeType: application/json
   text: |-
@@ -14,8 +14,8 @@ body:
     	"Sport": "Football",
     	"event": {
     		"competitionId": "Premier League",
-    		"date": "2022-11-26T16:01:17.0065405+00:00",
-    		"completed": true,
+    		"date": "2022-11-30T16:01:17.0065405+00:00",
+    		"completed": false,
     		"participants": {
     			"home": {
     				"participant": {
@@ -46,9 +46,8 @@ parameters: []
 headers:
   - name: Content-Type
     value: application/json
-    id: pair_3a37199843cb411b97cfd19ce1d01443
 authentication: {}
-metaSortKey: -1669447751237.5
+metaSortKey: -1673903520067
 isPrivate: false
 settingStoreCookies: true
 settingSendCookies: true

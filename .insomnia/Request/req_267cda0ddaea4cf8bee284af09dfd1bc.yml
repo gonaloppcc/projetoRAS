@@ -1,7 +1,7 @@
 _id: req_267cda0ddaea4cf8bee284af09dfd1bc
 type: Request
 parentId: fld_036a40beb99f43d2a57425ebd024897d
-modified: 1672335026485
+modified: 1673902678983
 created: 1670087878409
 url: localhost:5000/bets
 name: GetAllBets
@@ -11,7 +11,7 @@ body: {}
 parameters:
   - id: pair_3afa04f583f6428795f4bb79312277f5
     name: userId
-    value: "1"
+    value: "2"
     description: ""
 headers: []
 authentication: {}

@@ -1,7 +1,7 @@
 _id: req_5cf86fef7c4a4b28b2e4b5283ada18b2
 type: Request
 parentId: fld_036a40beb99f43d2a57425ebd024897d
-modified: 1672337249410
+modified: 1673902597287
 created: 1670088945409
 url: localhost:5000/bets
 name: AddMultiBet
@@ -12,12 +12,12 @@ body:
   text: |-
     {
     	"Type": "MultiBet",
-    	"Bet": {
+    	"bet": {
     		"BetterId": "1",
-    		"Amount": 100,
+    		"Amount": 1,
     		"OddIds": [
-    			"f143d13f-0d71-4380-ba6d-14c105dbf115",
-    			"22f737a8-31f6-4500-8113-99318fda672b"
+    			"8dfb3e29-6b99-4230-bd15-c03e590d883d",
+    			"4722009f-8835-43a3-9fd6-627a7f35c4f1"
     		]
     	}
     }
