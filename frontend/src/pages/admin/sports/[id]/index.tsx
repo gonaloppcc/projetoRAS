@@ -26,7 +26,10 @@ const EventPage: NextPage<PageProps> = ({eventId}) => {
                         {events.map((game) => {
                             return (
                                 <div key={game.id}>
-                                    <GameCardAdmin game={game} />
+                                    <GameCardAdmin
+                                        game={game}
+                                        sport={eventId}
+                                    />
                                 </div>
                             );
                         })}

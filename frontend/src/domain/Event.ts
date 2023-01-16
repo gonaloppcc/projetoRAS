@@ -36,6 +36,7 @@ export interface ParticipantOddPost {
     Price: number;
     Participant: ParticipantPost;
     Promotion: number | null;
+    score?: number;
 }
 
 export interface ParticipantPost {
@@ -46,7 +47,7 @@ export interface ParticipantPost {
 
 export interface CompetitionMini {
     name: string;
-    pport: SportMini;
+    sport: SportMini;
 }
 export interface Competition {
     Name: string;
@@ -75,6 +76,7 @@ export interface TwoParticipantMini {
 
 export interface ParticipantInfoMini {
     participant: ParticipantOddMini;
+    score?: number;
 }
 
 export interface ParticipantOddMini {

@@ -150,7 +150,8 @@ export const RegisterEvent = ({sports}: RegisterEventProps) => {
                 Sport: sportName,
                 Event: event,
             };
-
+            console.log('Sucesso?');
+            console.log(newEvent);
             await postEvent(newEvent);
             await router.push('/success');
         }

@@ -5,7 +5,7 @@ import {BASE_URL} from './constants';
 export const getEvents = async ({
     compId,
     pageNum = 0,
-    pageSize = 10,
+    pageSize = 20,
 }: {
     compId: string;
     pageNum?: number;
@@ -20,7 +20,7 @@ export const getEvents = async ({
 export const getEventsBySport = async ({
     sportId,
     pageNum = 0,
-    pageSize = 10,
+    pageSize = 20,
 }: {
     sportId: string;
     pageNum?: number;
