@@ -78,6 +78,8 @@ export const LoginBody = ({setOpen}: LoginBodyProps) => {
         const hasErrors = Object.values(errors).some((err) => err !== '');
 
         console.log('hasErrors', hasErrors);
+
+        return hasErrors;
     };
 
     //input change handler
