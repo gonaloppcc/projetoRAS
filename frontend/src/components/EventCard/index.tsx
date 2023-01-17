@@ -6,7 +6,7 @@ import {formatDate} from '../../utils/formatters';
 import {Odd} from '@domain/Bet';
 import {useRouter} from 'next/router';
 import classNames from 'classnames';
-import {useMutation} from '@tanstack/react-query';
+import {getOddsFromParticipants} from '../../utils/helpers';
 
 export const EventCard = ({
     id,
@@ -26,24 +26,7 @@ export const EventCard = ({
     const sportId = 'Football'; // FIXME: Event type is not available in the API
 
     const score = `Partida terminada: ${participants.home.score} - ${participants.away.score}`;
-
-    const odds = [
-        {
-            id: participants.home.participant.id,
-            partId: homeName,
-            price: participants.home.participant.price,
-        },
-        {
-            id: participants.tie.id,
-            partId: 'Empate',
-            price: participants.tie.price,
-        },
-        {
-            id: participants.away.participant.id,
-            partId: awayName,
-            price: participants.away.participant.price,
-        },
-    ];
+    const odds = getOddsFromParticipants(participants);
 
     const onClickHandler = async () => {
         await router.push(`/event/${id}`);

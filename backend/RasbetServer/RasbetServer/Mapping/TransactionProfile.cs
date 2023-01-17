@@ -8,6 +8,12 @@ public class TransactionProfile : Profile
 {
     public TransactionProfile()
     {
-        CreateMap<Transaction, TransactionResource>();
+        CreateMap<Transaction, TransactionResource>()
+            .ForMember(
+                dest => dest.Type,
+                opt => opt.MapFrom(
+                        src => src.Type.ToString()
+                    )
+                );
     }
 }

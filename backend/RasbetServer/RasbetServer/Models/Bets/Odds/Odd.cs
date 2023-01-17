@@ -1,13 +1,17 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using RasbetServer.Models.CompareResults;
 using RasbetServer.Models.Events;
 
 namespace RasbetServer.Models.Bets.Odds;
 
-public class Odd : ICopyFrom<Odd>
+public class Odd : ICopyFrom<Odd>, IComparable<Odd, IEnumerable<EventCompareResults>>
 {
     [Key] [DatabaseGenerated(DatabaseGeneratedOption.Identity)] public string? Id { get; set; } = null;
     [Required] public float Price { get; set; }
+    
+    [ForeignKey("PromoId")]
+    public string? PromoId { get; set; }
     public virtual Promotion? Promo { get; set; }
     
     public virtual IEnumerable<Bet> Bets { get; set; }
@@ -50,5 +54,24 @@ public class Odd : ICopyFrom<Odd>
         Price = other.Price;
         if (other.Promo is not null && Promo is not null)
             Promo.CopyFrom(other.Promo);
+        else 
+            Promo = other.Promo;
+    }
+
+    public virtual IEnumerable<EventCompareResults> Compare(Odd other)
+    {
+        var promoChanged = EventCompareResults.NothingChanged;
+        var priceChanged = EventCompareResults.NothingChanged;
+
+        if (Promo is not null)
+            promoChanged = Promo.Compare(other.Promo);
+
+        if (Promo is null && other.Promo is not null)
+            promoChanged = EventCompareResults.PromotionCreated;
+
+        if (Math.Abs(Price - other.Price) >= 0.01)
+            priceChanged = EventCompareResults.OddPriceChanged;
+        
+        return new List<EventCompareResults> { promoChanged, priceChanged };
     }
 }

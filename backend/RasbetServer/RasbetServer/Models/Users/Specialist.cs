@@ -7,6 +7,8 @@ public class Specialist : User {
     [Required]
     public virtual IList<Sport>? Specialties { get; set; }
 
+    public Specialist() : base() { }
+    
     public Specialist(
         string id,
         string email,
