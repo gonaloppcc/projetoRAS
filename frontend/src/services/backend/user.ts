@@ -1,4 +1,4 @@
-import {Specialist, Transaction, User} from '@domain/User';
+import {Notification, Specialist, Transaction, User} from '@domain/User';
 import {BASE_URL} from './constants';
 import axios from 'axios';
 
@@ -55,4 +55,13 @@ export const addSpecialist = async (specialist: Specialist): Promise<User> => {
         specialist
     );
     return response.data as User;
+};
+
+export const getNotifications = async (
+    userId: string
+): Promise<Notification[]> => {
+    const response = await axios.get(
+        `${BASE_URL}/users/${userId}/notifications`
+    );
+    return response.data as Notification[];
 };

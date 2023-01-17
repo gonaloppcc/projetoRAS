@@ -5,9 +5,10 @@ import {useProfile} from '@state/useProfile';
 import {PrimaryButton, SecondaryButton} from '@components/Button';
 import {useRouter} from 'next/router';
 import {Balance} from '@components/Balance';
-import {useEffect} from 'react';
+import {useEffect, useState} from 'react';
 import {Avatar} from '@components/Avatar';
 import {Dropdown} from '@components/Dropdown';
+import {Notifications} from '@components/Notifications';
 
 const navlinks = [
     {
@@ -23,11 +24,13 @@ const navlinks = [
 ];
 
 interface NavBarBodyProps {
-    setOpen: (state: boolean) => void;
+    setPaymentModalOpen: (state: boolean) => void;
 }
 
-export const NavBarBody = ({setOpen}: NavBarBodyProps) => {
+export const NavBarBody = ({setPaymentModalOpen}: NavBarBodyProps) => {
     const {isLoggedIn, username, balance, getSession, logout} = useProfile();
+    const [isNotificationSlideOpen, setIsNotificationSlideOpen] =
+        useState(false);
 
     const router = useRouter();
 
@@ -49,7 +52,7 @@ export const NavBarBody = ({setOpen}: NavBarBodyProps) => {
         {
             name: 'Notificações',
             onClick: () => {
-                // TODO: Implement this
+                setIsNotificationSlideOpen(true);
             },
         },
         {
@@ -70,7 +73,7 @@ export const NavBarBody = ({setOpen}: NavBarBodyProps) => {
             </div>
             {isLoggedIn && (
                 <div className="flex flex-row justify-end items-center p-0 gap-12">
-                    <Balance setOpen={setOpen} balance={balance} />
+                    <Balance setOpen={setPaymentModalOpen} balance={balance} />
 
                     <Link href="/better/bets" className="text-WHITE">
                         {'Apostas' /* FIXME Hardcoded for now */}
@@ -97,6 +100,10 @@ export const NavBarBody = ({setOpen}: NavBarBodyProps) => {
                     </SecondaryButton>
                 </div>
             )}
+            <Notifications
+                open={isNotificationSlideOpen}
+                setOpen={setIsNotificationSlideOpen}
+            />
         </div>
     );
 };

@@ -25,3 +25,10 @@ export interface Specialist {
 export interface SportSpecialist {
     SportId: string;
 }
+
+export interface Notification {
+    id: string;
+    date: string;
+    message: string;
+    severity: string;
+}
