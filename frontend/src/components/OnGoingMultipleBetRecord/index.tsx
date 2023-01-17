@@ -1,6 +1,8 @@
 import React from 'react';
 import {MultiBetOdd, MultipleBet} from '@domain/Bet';
 import {formatDate, formatNumber} from '../../utils/formatters';
+import {getEvent} from 'services/backend/event';
+import {useEvent} from '@hooks/useEvent';
 
 export interface OnGoingMultipleBetRecordProps extends MultipleBet {
     cancelBetHandler: () => void;
@@ -31,8 +33,15 @@ export const OnGoingMultipleBetRecord = ({
     //const eventName = `${homeName} - ${awayName}`;
 
     const getEventName = (odd: MultiBetOdd) => {
-        const awayName = 'Away';
-        const homeName = 'Home';
+        // eslint-disable-next-line react-hooks/rules-of-hooks
+        const {isSuccess, event} = useEvent(odd.eventId);
+        console.log(event);
+        const awayName = isSuccess
+            ? event.participants.away.participant.participantName
+            : 'Away';
+        const homeName = isSuccess
+            ? event.participants.away.participant.participantName
+            : 'Home';
         return `${homeName} - ${awayName}`;
     };
 
@@ -89,7 +98,7 @@ export const OnGoingMultipleBetRecord = ({
             <div className="w-full flex flex-col gap-5 pr-10 bg-WHITE pb-2">
                 {odds.map((odd) => (
                     <div
-                        key={odd.odd.id}
+                        key={odd.eventId}
                         className="w-full flex  justify-between px-4  bg-WHITE rounded"
                     >
                         <div className="flex flex-row justify-center items-center gap-4">
