@@ -1,4 +1,4 @@
-namespace RasbetServer.Resources.Odds.TieOdd;
+namespace RasbetServer.Resources.Odds.TieOdds;
 
 public class SaveTieOddResource : SaveOddResource
 { }

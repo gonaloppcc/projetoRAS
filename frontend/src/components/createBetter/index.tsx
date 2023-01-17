@@ -1,56 +1,106 @@
-import React, {useEffect, useState} from 'react';
+import React, {useState} from 'react';
 import {HandleChangeProps, InputForm} from '@components/createBetter/inputForm';
 import {REGEX_MAIL, REGEX_NUMBERS, REGEX_USERNAME} from '../../utils/regex';
 import Link from 'next/link';
 import {PrimaryButton} from '@components/Button';
+import {useMutation} from '@tanstack/react-query';
+import {registerBetter} from '../../services/backend/user';
+import {useRouter} from 'next/router';
+import {useProfile} from '@state/useProfile';
+import {AxiosError} from 'axios';
+import toast from 'react-hot-toast';
 
 interface ValuesProps {
     password: string;
-    mail: string;
-    phone: string;
-    numberCC: string;
+    email: string;
+    cellphone: string;
+    cc: string;
     nif: string;
     username: string;
 }
 
-type ErrorsProps = ValuesProps;
+interface ErrorsProps extends ValuesProps {
+    submission: string;
+}
 
 const initialValues: ValuesProps = {
     username: '',
-    mail: '',
+    email: '',
     password: '',
     nif: '',
-    phone: '',
-    numberCC: '',
+    cellphone: '',
+    cc: '',
+};
+
+const initialErrors: ErrorsProps = {
+    ...initialValues,
+    submission: '',
 };
 
 export const CreateBetter = () => {
     const [values, setValues] = useState<ValuesProps>(initialValues);
-    const [errors, setErrors] = useState<ErrorsProps>(initialValues);
-    const [isSubmitting, setIsSubmitting] = useState(false);
+    const [errors, setErrors] = useState<ErrorsProps>(initialErrors);
+    const router = useRouter();
+    const {login} = useProfile();
 
-    const submit = () => {
-        // TODO: Backend call
+    const registerMutation = useMutation({
+        mutationFn: async () => {
+            await registerBetter(
+                values.username,
+                values.email,
+                values.password,
+                values.nif,
+                values.cellphone,
+                values.cc
+            );
+        },
+        onSuccess: async () => {
+            toast.success('Registado com sucesso!');
+            await login(values.email, values.password);
+            await router.push('/');
+        },
+        onError: (error) => {
+            setErrors({
+                ...initialErrors,
+                submission: (error as AxiosError).message,
+            });
+        },
+    });
+
+    const hasErrors = () => {
+        return Object.values(errors).some((err) => err !== '');
     };
 
-    //input change handler
+    const submit: React.FormEventHandler<HTMLFormElement> = (event) => {
+        event.preventDefault();
+        validate();
+        if (!hasErrors()) {
+            console.log('submit');
+            registerMutation.mutate();
+        }
+    };
+
     const handleChange = ({name, value}: HandleChangeProps) => {
         setValues({...values, [name]: value});
     };
 
-    //form submission handler
     const handleSubmit: React.FormEventHandler<HTMLFormElement> = (e) => {
         e.preventDefault();
-        setErrors(validate());
-        setIsSubmitting(true);
+        validate();
     };
 
-    //form validation handler
-    // FIXME Em todos
     const validate = () => {
-        let errors: ErrorsProps = {...initialValues};
-        // Phone numbers, cc, nifs all with 9 numbers
+        let errors: ErrorsProps = {
+            username: '',
+            email: '',
+            password: '',
+            nif: '',
+            cellphone: '',
+            cc: '',
+            submission: '',
+        };
 
+        // FIXME: Add translations
         if (!values.username) {
             errors.username = 'Obrigatório';
         } else if (!REGEX_USERNAME.test(values.username)) {
@@ -63,10 +113,10 @@ export const CreateBetter = () => {
             errors.password = 'Password tem de ter mais de 4 carateres';
         }
 
-        if (!values.mail) {
-            errors.mail = 'Obrigatório';
-        } else if (!REGEX_MAIL.test(values.mail)) {
-            errors.mail = 'Mail incorreto';
+        if (!values.email) {
+            errors.email = 'Obrigatório';
+        } else if (!REGEX_MAIL.test(values.email)) {
+            errors.email = 'Mail incorreto';
         }
 
         if (!values.nif) {
@@ -75,24 +125,19 @@ export const CreateBetter = () => {
             errors.nif = 'NIF inválido (9 carateres)';
         }
 
-        if (!values.phone) {
-            errors.phone = 'Obrigatório';
-        } else if (!REGEX_NUMBERS.test(values.phone)) {
-            errors.phone = 'Número de telemóvel errado';
+        if (!values.cellphone) {
+            errors.cellphone = 'Obrigatório';
+        } else if (!REGEX_NUMBERS.test(values.cellphone)) {
+            errors.cellphone = 'Número de telemóvel errado';
         }
-        if (!values.numberCC) {
-            errors.numberCC = 'Obrigatório';
-        } else if (!REGEX_NUMBERS.test(values.numberCC)) {
-            errors.numberCC = 'Número de telemóvel errado';
+        if (!values.cc) {
+            errors.cc = 'Obrigatório';
+        } else if (!REGEX_NUMBERS.test(values.cc)) {
+            errors.cc = 'Número de telemóvel errado';
         }
-        return errors;
-    };
 
-    useEffect(() => {
-        if (Object.keys(errors).length === 0 && isSubmitting) {
-            submit();
-        }
-    }, [errors, isSubmitting]);
+        setErrors(errors);
+    };
 
     return (
         <div className="h-screen w-screen justify-center flex items-center bg-CULTURED">
@@ -101,12 +146,8 @@ export const CreateBetter = () => {
                     Registo
                 </div>
                 <div className="flex flex-col items-start flex-none order-1">
-                    <div className="flex-none order-none  ">
-                        <form
-                            onSubmit={handleSubmit}
-                            noValidate
-                            className="gap-5"
-                        >
+                    <div className="flex-none order-none">
+                        <form onSubmit={submit} noValidate className="gap-5">
                             {/*  FIXME Em todos */}
                             <InputForm
                                 type="text"
@@ -128,10 +169,10 @@ export const CreateBetter = () => {
                             <InputForm
                                 type="email"
                                 name="Email"
-                                id="mail"
-                                value={values.mail}
+                                id="email"
+                                value={values.email}
                                 handleChange={handleChange}
-                                error={errors.mail}
+                                error={errors.email}
                             />
                             <InputForm
                                 type="number"
@@ -144,21 +185,30 @@ export const CreateBetter = () => {
                             <InputForm
                                 type="tel"
                                 name="Número telemóvel"
-                                id="phone"
-                                value={values.phone}
+                                id="cellphone"
+                                value={values.cellphone}
                                 handleChange={handleChange}
-                                error={errors.phone}
+                                error={errors.cellphone}
                             />
                             <InputForm
                                 type="number"
                                 name="Número Cartão de Cidadão"
-                                id="numberCC"
-                                value={values.numberCC}
+                                id="cc"
+                                value={values.cc}
                                 handleChange={handleChange}
-                                error={errors.numberCC}
+                                error={errors.cc}
                             />
+                            {errors.submission && (
+                                <div className="text-red-500">
+                                    {errors.submission}
+                                </div>
+                            )}
+
                             <div className="flex flex-col items-start self-stretch flex-none order-1 px-20 py-3">
-                                <PrimaryButton type="submit">
+                                <PrimaryButton
+                                    disabled={registerMutation.isLoading}
+                                    type="submit"
+                                >
                                     Registar
                                 </PrimaryButton>
                             </div>

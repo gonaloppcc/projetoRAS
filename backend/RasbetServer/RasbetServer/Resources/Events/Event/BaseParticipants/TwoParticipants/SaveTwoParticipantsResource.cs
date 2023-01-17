@@ -1,6 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 using RasbetServer.Resources.Events.Event.BaseParticipants.Result;
-using RasbetServer.Resources.Odds.TieOdd;
+using RasbetServer.Resources.Odds.TieOdds;
 
 namespace RasbetServer.Resources.Events.Event.BaseParticipants.TwoParticipants;
 

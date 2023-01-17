@@ -1,41 +1,21 @@
 import type {NextPage} from 'next';
+import {CircularProgress} from '@mui/material';
 import {RegisterEvent} from '@components/RegisterEvent';
-
-/* FIXME Mock data hardcoded */
-const MOCK_SPORTS: AllSport[] = [
-    {
-        name: 'Football',
-        leagues: ['Premier League', 'La Liga', 'Serie A', 'Bundesliga'],
-        participants: ['Benfica', 'Porto', 'Real Madrid', 'Varzim', 'Rio Ave'],
-    },
-    {
-        name: 'Basketball',
-        leagues: ['NBA', 'Liga ACB', 'Liga Portuguesa'],
-        participants: [
-            'LA Lakers',
-            'Boston Celtics',
-            'Golden State Warriors',
-            'Milwaukee Bucks',
-        ],
-    },
-    {
-        name: 'Karate',
-        leagues: ['World Karate Federation', 'World Karate Federation2'],
-        participants: ['Benfica', 'Porto', 'Real Madrid', 'Varzim', 'Rio Ave'],
-    },
-];
-
-export interface AllSport {
-    name: string;
-    leagues: string[];
-    participants: string[];
-}
+import {useSports} from '@hooks/useSports';
 
 const Home: NextPage = () => {
+    const {isSuccess, isLoading, isError, sports, error} = useSports();
     return (
-        <div className="flex flex-col justify-start gap-3 w-full">
-            <RegisterEvent sports={MOCK_SPORTS} />
-        </div>
+        <>
+            {isLoading && <CircularProgress />}
+            {isSuccess && (
+                <div className="flex flex-col justify-start gap-3 w-full">
+                    <RegisterEvent sports={sports} />
+                </div>
+            )}
+
+            {isError && <span>{error}</span>}
+        </>
     );
 };
 

@@ -1,8 +1,8 @@
 using AutoMapper;
 using RasbetServer.Models.Bets.Odds;
 using RasbetServer.Resources.Odds;
-using RasbetServer.Resources.Odds.ParticipantOdd;
-using RasbetServer.Resources.Odds.TieOdd;
+using RasbetServer.Resources.Odds.ParticipantOdds;
+using RasbetServer.Resources.Odds.TieOdds;
 
 namespace RasbetServer.Mapping;
 
@@ -12,14 +12,10 @@ public class OddProfile : Profile
     {
         CreateMap<Odd, OddResource>()
             .IncludeAllDerived();
-        CreateMap<TieOdd, TieOddResource>();
+        CreateMap<TieOdd, TieOddResource>()
+            .ConstructUsing(o => new TieOddResource(o));
         CreateMap<ParticipantOdd, ParticipantOddResource>()
-            .ForMember(
-                    dest => dest.ParticipantName,
-                    opt => opt.MapFrom(
-                            src => src.PartId
-                        )
-                );
+            .ConstructUsing(o => new ParticipantOddResource(o));
 
         CreateMap<SaveOddResource, OddResource>()
             .IncludeAllDerived();

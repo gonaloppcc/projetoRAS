@@ -21,6 +21,8 @@ public class Better : User {
     [Required]
     public virtual IList<Transaction>? TransactionHist { get; set; }
 
+    public Better() : base() { }
+    
     public Better(
         string id,
         string email,
