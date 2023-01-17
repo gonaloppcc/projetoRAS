@@ -13,7 +13,7 @@ import {
 } from '@domain/Event';
 import router from 'next/router';
 import {useState} from 'react';
-import {postEvent} from 'services/backend/event';
+import {putEvent} from 'services/backend/event';
 import {GameCardAdminProps} from '.';
 
 export interface InsertDataModal {
@@ -38,6 +38,7 @@ export const SetResult = ({
 
     const [valueHome, setValueHome] = useState<string>('0');
     const [valueAway, setValueAway] = useState<string>('0');
+    const [valueTie, setValueTie] = useState<string>('0');
     const [error, setError] = useState<string>('');
     const [submitted, setSubmitted] = useState(false);
 
@@ -48,6 +49,9 @@ export const SetResult = ({
         setValueAway(value);
     };
 
+    const changeTie = ({name, value}: HandleChangeProps) => {
+        setValueTie(value);
+    };
     const validate = () => {
         if (parseInt(valueHome) >= 0 && parseInt(valueAway) >= 0) {
             setError('');
@@ -92,7 +96,9 @@ export const SetResult = ({
             };
             const tie: TieOdd = {
                 Id: game.participants.tie.id,
-                Price: game.participants.tie.price,
+                Price: resultOrOdd
+                    ? game.participants.tie.price
+                    : parseInt(valueTie),
                 Promo: game.participants.tie.promo,
             };
             const twoParticipant: TwoParticipantsPost = {
@@ -112,7 +118,7 @@ export const SetResult = ({
                 Event: event,
             };
             console.log(newEvent);
-            await postEvent(newEvent);
+            await putEvent(newEvent, game.id);
             setSubmitted(true);
         }
     };
@@ -145,6 +151,16 @@ export const SetResult = ({
                             handleChange={changeHome}
                             error={''}
                         />
+                        {!resultOrOdd && (
+                            <InputForm
+                                type="number"
+                                name={`Cota empate`}
+                                id="odd_tie"
+                                value={valueTie}
+                                handleChange={changeTie}
+                                error={''}
+                            />
+                        )}
                         <InputForm
                             type="number"
                             name={`${textSet} ${awayName}`}

@@ -26,7 +26,7 @@ export const GameCardAdmin = ({
     const column = (header: string, body: string) => {
         return (
             <div className=" m-3 p-3 rounded-lg w-full">
-                <div className="flex flex-col gap-1  pl-3">
+                <div className="flex  flex-col gap-1  pl-3">
                     <div className="text-sm text-zinc-500 font-light">
                         {header}
                     </div>
@@ -40,7 +40,7 @@ export const GameCardAdmin = ({
         return (
             <button
                 onClick={onClick}
-                className="bg-yellow-500 font-bold py-3 px-2 grow-0 rounded w-full "
+                className="bg-yellow-500 font-bold p-3 grow-0 rounded w-full "
             >
                 {text}
             </button>
@@ -59,6 +59,7 @@ export const GameCardAdmin = ({
         : 'Away Team';
     const oddHome = game.participants.home.participant.price;
     const oddAway = game.participants.away.participant.price;
+    const oddTie = game.participants.tie.price;
     const date = game.date.split('T')[0];
     const completed = game.completed;
 
@@ -86,7 +87,10 @@ export const GameCardAdmin = ({
                     ? column('Estado', 'Fechado')
                     : column('Estado', 'Aberto')}
                 {!resultOrOdd &&
-                    column('Odd casa-fora', `${oddHome}-${oddAway}`)}
+                    column(
+                        'Odd casa-empate-fora',
+                        `${oddHome}-${oddTie}-${oddAway}`
+                    )}
                 <div className=" bg-white rounded flex flex-row items-center ">
                     {!completed && button(textButton, closeGame)}
                     {completed &&

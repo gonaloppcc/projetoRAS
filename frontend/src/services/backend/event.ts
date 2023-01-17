@@ -39,6 +39,13 @@ export const getEvent = async (eventId: string): Promise<Event> => {
 
 export const postEvent = async (event: EventPost): Promise<Event> => {
     const response = await axios.post(`${BASE_URL}/events`, event);
-    // TODO: To Be tested
+    return response.data as Event;
+};
+
+export const putEvent = async (
+    event: EventPost,
+    idGame: string
+): Promise<Event> => {
+    const response = await axios.put(`${BASE_URL}/events/${idGame}`, event);
     return response.data as Event;
 };
