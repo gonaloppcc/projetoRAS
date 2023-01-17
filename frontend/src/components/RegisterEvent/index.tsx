@@ -2,21 +2,16 @@ import React, {useEffect, useState} from 'react';
 import {SearchBox} from './searchBox';
 import {Table} from './table';
 import {PrimaryButton} from '@components/Button';
-import {useRouter} from 'next/router';
 import {
+    postEvent,
     EventPost,
     TwoParticipantsPost,
-    TieOdd,
-    ValuePromo,
     ParticipantOddPost,
-    ParticipantPost,
-    Player,
-    InfoSport,
-    EventToPost,
     ParticipantMesmo,
-} from '@domain/Event';
-import {postEvent} from 'services/backend/event';
+    EventToPost,
+} from 'services/backend/event';
 import {Modal} from '@components/Modal';
+import {InfoSport, TieOdd, ValuePromo} from '@domain/Event';
 
 export interface RegisterEventProps {
     sports: InfoSport[];

@@ -1,20 +1,17 @@
 import {PrimaryButton} from '@components/Button';
 import {HandleChangeProps, InputForm} from '@components/createBetter/inputForm';
+import {ValuePromo, TieOdd} from '@domain/Event';
+
+import {useState} from 'react';
 import {
-    EventReceived,
     EventPost,
+    EventReceived,
     EventToPost,
     ParticipantMesmo,
     ParticipantOddPost,
-    ParticipantPost,
-    TieOdd,
+    putEvent,
     TwoParticipantsPost,
-    ValuePromo,
-} from '@domain/Event';
-import router from 'next/router';
-import {useState} from 'react';
-import {putEvent} from 'services/backend/event';
-import {GameCardAdminProps} from '.';
+} from 'services/backend/event';
 
 export interface InsertDataModal {
     game: EventReceived;
