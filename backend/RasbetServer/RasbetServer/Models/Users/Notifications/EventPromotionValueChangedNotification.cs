@@ -16,6 +16,6 @@ public class EventPromotionValueChangedNotification : Notification
     { }
     
     public EventPromotionValueChangedNotification(Event e)
-        : this(null, null, $"A promotion for event '{e.PrettyName}' has changed value", DateTime.Now, NotificationSeverity.Info)
+        : this(null, null, $"Uma promoção para o evento '{e.PrettyName}' mudou de valor", DateTime.Now, NotificationSeverity.Info)
     { }
 }
