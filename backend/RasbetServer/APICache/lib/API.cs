@@ -6,8 +6,8 @@ using RasbetServer.Resources.Events.Event.BaseParticipants.Result;
 using RasbetServer.Resources.Events.Event.BaseParticipants.TwoParticipants;
 using RasbetServer.Resources.Events.Event.FootballEvent;
 using RasbetServer.Resources.Events.Participants.Participant.Team;
-using RasbetServer.Resources.Odds.ParticipantOdd;
-using RasbetServer.Resources.Odds.TieOdd;
+using RasbetServer.Resources.Odds.ParticipantOdds;
+using RasbetServer.Resources.Odds.TieOdds;
 
 namespace APICache.lib;
 

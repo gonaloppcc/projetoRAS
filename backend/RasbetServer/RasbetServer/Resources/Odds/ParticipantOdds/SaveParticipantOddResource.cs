@@ -1,6 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 
-namespace RasbetServer.Resources.Odds.ParticipantOdd;
+namespace RasbetServer.Resources.Odds.ParticipantOdds;
 
 public class SaveParticipantOddResource : SaveOddResource
 {
