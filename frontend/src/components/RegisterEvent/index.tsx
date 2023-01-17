@@ -157,43 +157,47 @@ export const RegisterEvent = ({sports}: RegisterEventProps) => {
 
         // TODO: Make the request to the backend here
         const dateAndHour: string = `${date}T${hour}:17.0065405+00:00`;
-        const partipantHome: ParticipantPost = {
-            Type: 'Team',
-            Name: selectedTeams[0],
-            Players: [],
+
+        const participantAwayMesmo: ParticipantMesmo = {
+            Price: 0,
+            PartId: selectedTeams[1],
+            Promo: null,
+        };
+        const participantHomeMesmo: ParticipantMesmo = {
+            Price: 0,
+            PartId: selectedTeams[0],
+            Promo: null,
+        };
+
+        const participantAwayOdd: ParticipantOddPost = {
+            Score: 0,
+            Participant: participantAwayMesmo,
         };
         const participantHomeOdd: ParticipantOddPost = {
-            Price: 0,
-            Participant: partipantHome,
-            Promotion: null,
-        };
-        const partipantAway: ParticipantPost = {
-            Type: 'Team',
-            Name: selectedTeams[1],
-            Players: [],
-        };
-        const participantAwayOdd: ParticipantOddPost = {
-            Price: 0,
-            Participant: partipantAway,
-            Promotion: null,
+            Score: 0,
+            Participant: participantHomeMesmo,
         };
         const valuePromo: ValuePromo = {
             Value: 0,
         };
         const tieOdd: TieOdd = {
-            price: 0,
-            promo: valuePromo,
+            Price: 0,
+            Promo: valuePromo,
         };
         const twoParticipant: TwoParticipantsPost = {
             Home: participantHomeOdd,
             Away: participantAwayOdd,
             Tie: tieOdd,
         };
+        const eventToPost: EventToPost = {
+            CompetitionId: league,
+            Date: dateAndHour,
+            Completed: false,
+            Participants: twoParticipant,
+        };
         const newEvent: EventPost = {
             Sport: sportName,
-            Date: dateAndHour,
-            CompetitionId: league,
-            Participants: twoParticipant,
+            Event: eventToPost,
         };
 
         await postEvent(newEvent);
