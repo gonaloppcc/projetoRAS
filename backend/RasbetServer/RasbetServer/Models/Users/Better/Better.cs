@@ -1,4 +1,5 @@
 using System.ComponentModel.DataAnnotations;
+using RasbetServer.Models.Bets;
 
 namespace RasbetServer.Models.Users.Better;
 
@@ -20,6 +21,8 @@ public class Better : User {
     
     [Required]
     public virtual IList<Transaction>? TransactionHist { get; set; }
+    
+    public virtual IList<Bet> Bets { get; set; }
 
     public Better() : base() { }
     

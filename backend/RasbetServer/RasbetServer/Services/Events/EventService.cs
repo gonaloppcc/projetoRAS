@@ -1,4 +1,5 @@
 using RasbetServer.Models.Events;
+using RasbetServer.Models.Users.Better;
 using RasbetServer.Models.Users.Notifications;
 using RasbetServer.Repositories.BetRepository;
 using RasbetServer.Repositories.CompetitionRepository;
@@ -149,7 +150,19 @@ public class EventService : IEventService
                     if (notifiedBetters.Any(id => id == better.Id))
                         return;
                     
-                    notifications.ForEach(n => better.Notifications?.Add(n.Clone));
+                    notifications.ForEach(n =>
+                    {
+                        better.Notifications?.Add(n.Clone);
+                        if (n is not EventCompletedNotification)
+                            return;
+                        
+                        bet.Closed = true;
+                        if (!odd.HasWon(previous))
+                            return;
+                            
+                        better.Balance += bet.CalcCashOut();
+                        better.TransactionHist.Add(new Transaction(TransactionTypes.BetWin, DateTime.Now, bet.CalcCashOut(), better.Balance));
+                    });
                     _userRepository.UpdateAsync(better);
                     notifiedBetters.Add(better.Id!);
                 });
