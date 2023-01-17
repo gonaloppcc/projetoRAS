@@ -40,7 +40,7 @@ export const OnGoingMultipleBetRecord = ({
             ? event.participants.away.participant.participantName
             : 'Away';
         const homeName = isSuccess
-            ? event.participants.away.participant.participantName
+            ? event.participants.home.participant.participantName
             : 'Home';
         return `${homeName} - ${awayName}`;
     };
