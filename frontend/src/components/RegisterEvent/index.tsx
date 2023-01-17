@@ -125,6 +125,7 @@ export const RegisterEvent = ({sports}: RegisterEventProps) => {
             const tieOdd: TieOdd = {
                 price: 0,
                 promo: valuePromo,
+                id: '',
             };
             const twoParticipant: TwoParticipantsPost = {
                 Home: participantHomeOdd,
@@ -176,6 +177,7 @@ export const RegisterEvent = ({sports}: RegisterEventProps) => {
         const tieOdd: TieOdd = {
             price: 0,
             promo: valuePromo,
+            id: '',
         };
         const twoParticipant: TwoParticipantsPost = {
             Home: participantHomeOdd,

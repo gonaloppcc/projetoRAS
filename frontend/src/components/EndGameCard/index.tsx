@@ -45,7 +45,7 @@ export const EndGameCard = ({game}: SuspendedGameCardProps) => {
                     {game.eventName}
                 </div>
                 {/*FIXME*/}
-                {column('Data', game.Date)}
+                {column('Data', game.date)}
                 {column('Estado', 'Fechado')}
                 <div className=" bg-white rounded flex flex-row items-center gap-2">
                     {button('Abrir', openBet)}
