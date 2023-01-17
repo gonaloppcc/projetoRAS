@@ -55,7 +55,7 @@ export const BettingSlip = () => {
     };
 
     return (
-        <div className="w-full flex flex-col items-start p-0 gap-1 bg-WHITE rounded">
+        <div className="max-h-full h-full w-full flex flex-col items-start p-0 gap-1 bg-WHITE rounded">
             <div className="w-full flex flex-col items-start p-4 gap-2 bg-WHITE shadow rounded-t">
                 {'BOLETIM' /* FIXME Text hardcoded for now!! */}
                 <Tabs
