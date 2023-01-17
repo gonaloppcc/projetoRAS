@@ -4,16 +4,17 @@ import {PaymentModal} from '@components/PaymentModal';
 import {useProfile} from '@state/useProfile';
 
 export const Navbar = () => {
-    const [isOpen, setIsOpen] = useState<boolean>(false);
+    const [isPaymentModalOpen, setIsPaymentModalOpen] =
+        useState<boolean>(false);
 
     const {balance, setBalance} = useProfile();
 
     return (
         <div>
-            <NavBarBody setOpen={setIsOpen} />
+            <NavBarBody setPaymentModalOpen={setIsPaymentModalOpen} />
             <PaymentModal
-                isOpen={isOpen}
-                setIsOpen={setIsOpen}
+                isOpen={isPaymentModalOpen}
+                setIsOpen={setIsPaymentModalOpen}
                 balance={balance}
                 setBalance={setBalance}
             />
