@@ -1,6 +1,8 @@
 import React from 'react';
 import {MultiBetOdd, MultipleBet} from '@domain/Bet';
 import {formatDate, formatNumber} from '../../utils/formatters';
+import {getEvent} from 'services/backend/event';
+import {useEvent} from '@hooks/useEvent';
 
 export interface OnGoingMultipleBetRecordProps extends MultipleBet {
     cancelBetHandler: () => void;
@@ -31,8 +33,15 @@ export const OnGoingMultipleBetRecord = ({
     //const eventName = `${homeName} - ${awayName}`;
 
     const getEventName = (odd: MultiBetOdd) => {
-        const awayName = 'Away';
-        const homeName = 'Home';
+        // eslint-disable-next-line react-hooks/rules-of-hooks
+        const {isSuccess, event} = useEvent(odd.eventId);
+        console.log(event);
+        const awayName = isSuccess
+            ? event.participants.away.participant.participantName
+            : 'Away';
+        const homeName = isSuccess
+            ? event.participants.home.participant.participantName
+            : 'Home';
         return `${homeName} - ${awayName}`;
     };
 
@@ -86,11 +95,11 @@ export const OnGoingMultipleBetRecord = ({
                     </button>
                 </div>
             </div>
-            <div className="w-full flex flex-col gap-5 pr-40 bg-WHITE pb-2">
+            <div className="w-full flex flex-col gap-5 pr-10 bg-WHITE pb-2">
                 {odds.map((odd) => (
                     <div
-                        key={odd.odd.id}
-                        className="w-full flex flex-row justify-between items-center px-4 gap-8 bg-WHITE rounded"
+                        key={odd.eventId}
+                        className="w-full flex  justify-between px-4  bg-WHITE rounded"
                     >
                         <div className="flex flex-row justify-center items-center gap-4">
                             <div className="flex flex-col items-start p-0 gap-1">
@@ -99,8 +108,8 @@ export const OnGoingMultipleBetRecord = ({
                                 </span>
                             </div>
                         </div>
-                        <div className="flex flex-row justify-center items-center gap-4">
-                            <div className="flex flex-col items-start p-0 gap-1">
+                        <div className="flex flex-row ">
+                            <div className="flex flex-col p-0 gap-1 w-full ">
                                 <span className="text-EERIE_BLACK text-base font-semibold">
                                     {odd.odd.price}
                                 </span>
