@@ -2,6 +2,7 @@ import React from 'react';
 import {SportIcon} from '@components/SportIcon';
 import {SimpleBet} from '@domain/Bet';
 import {formatDate, formatNumber} from '../../utils/formatters';
+import {useEvent} from '@hooks/useEvent';
 
 export interface OnGoingSimpleBetRecordProps extends SimpleBet {
     cancelBetHandler: () => void;
@@ -24,8 +25,13 @@ export const OnGoingSimpleBetRecord = ({
 
     const dateFormatted = formatDate(date);
 
-    const homeName = ''; // participants.home.participant.participantName || '';
-    const awayName = ''; //participants.away.participant.participantName || '';
+    const {isSuccess, event} = useEvent(eventId);
+    const homeName = isSuccess
+        ? event.participants.home.participant.participantName
+        : 'Home team'; // participants.home.participant.participantName || '';
+    const awayName = isSuccess
+        ? event.participants.away.participant.participantName
+        : 'Aqay team'; //participants.away.participant.participantName || '';
 
     const eventName = `${homeName} - ${awayName}`;
 
@@ -37,7 +43,9 @@ export const OnGoingSimpleBetRecord = ({
                     <span className="text-EERIE_BLACK text-base font-semibold">
                         {betName}
                     </span>
-                    <span className="text-LIGHT_GRAY text-xs">{eventName}</span>
+                    <span className="text-MEDIUM_GRAY text-xs">
+                        {eventName}
+                    </span>
                 </div>
             </div>
             <div className="hidden xl:flex flex-col items-start p-0 gap-2 ">
