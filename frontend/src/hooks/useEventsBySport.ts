@@ -1,18 +1,15 @@
 import {useQuery} from '@tanstack/react-query';
-import {getEvents, getEventsBySport} from '../services/backend/event';
+import {getEventsBySport} from '../services/backend/event';
 import {Event, EventReceived} from '@domain/Event';
 import {FetcherProps} from '@hooks/Fetcher';
 import {AxiosError} from 'axios';
-
-export interface useEventsBySportProps extends FetcherProps {
-    events: Event[];
-}
+import {EventRepeat} from '@mui/icons-material';
 
 export interface useEventsBySportProps extends FetcherProps {
     events: EventReceived[];
 }
 
-export const useEvents = (compId: string): useEventsProps => {
+export const useEvents = (sportId: string): useEventsBySportProps => {
     const {
         isSuccess,
         isLoading,
@@ -26,7 +23,7 @@ export const useEvents = (compId: string): useEventsProps => {
         isSuccess,
         isLoading,
         isError,
-        events: events as unknown as Event[],
+        events: (events || []) as unknown as EventReceived[],
         error: (error ?? '') as AxiosError,
         refetch,
     };
@@ -47,7 +44,7 @@ export const useEventsBySport = (sportId: string): useEventsBySportProps => {
         isLoading,
         isError,
         events: events as unknown as EventReceived[],
-        error: error as string,
+        error: error as AxiosError,
         refetch,
     };
 };

@@ -43,7 +43,7 @@ const Home: NextPage = () => {
                 </div>
             )}
 
-            {isError && <span>{error}</span>}
+            {isError && <span>Something went wrong!</span>}
         </>
     );
 };

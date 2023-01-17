@@ -1,4 +1,4 @@
-import {EventPost} from '@domain/Event';
+import {EventPost, EventReceived} from '@domain/Event';
 import axios from 'axios';
 import {BASE_URL} from './constants';
 
@@ -20,31 +20,16 @@ export const getEventsByCompetition = async ({
 export const getEventsBySport = async ({
     sportId,
     pageNum = 0,
-    pageSize = 5,
-}: {
-    sportId: string;
-    pageNum?: number;
-    pageSize?: number;
-}) => {
-    const response = await axios.get(`${BASE_URL}/events/sport`, {
-        params: {sportId, pageNum, pageSize},
-    });
-    return response.data as Event[];
-};
-
-export const getEventsBySport = async ({
-    sportId,
-    pageNum = 0,
     pageSize = 20,
 }: {
     sportId: string;
     pageNum?: number;
     pageSize?: number;
-}): Promise<Event[]> => {
+}): Promise<EventReceived[]> => {
     const response = await axios.get(`${BASE_URL}/events/sport`, {
         params: {sportId, pageNum, pageSize},
     });
-    return response.data as Event[];
+    return response.data;
 };
 
 export const getEvent = async (eventId: string): Promise<Event> => {

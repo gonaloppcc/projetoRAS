@@ -2,7 +2,7 @@ import React from 'react';
 import {NextPage} from 'next';
 import {PageLayout} from '@components/PageLayout';
 import {CircularProgress} from '@mui/material';
-import {useEventsBySport} from '@hooks/useEvents';
+import {useEventsBySport} from '@hooks/useEventsBySport';
 import {GameCardAdmin} from '@components/GameCardAdmin';
 import {OpenGameCard, OpenGameInfo} from '@components/OpenGameCard';
 
