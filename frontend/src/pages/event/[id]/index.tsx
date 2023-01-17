@@ -6,7 +6,7 @@ import {formatDate} from '../../../utils/formatters';
 import {SportIcon} from '@components/SportIcon';
 import {OddCard} from '@components/OddCard';
 import {getOddsFromParticipants} from '../../../utils/helpers';
-import {Odd} from '@domain/Bet';
+import {ParticipantOdd} from '@domain/Bet';
 import {useBettingSlip} from '@state/useBettingSlip';
 
 interface PageProps {
@@ -17,7 +17,7 @@ const EventPage: NextPage<PageProps> = ({eventId}) => {
     const {isSuccess, isLoading, isError, event, error} = useEvent(eventId);
     const {addBet} = useBettingSlip();
 
-    let odds: Odd[] = [];
+    let odds: ParticipantOdd[] = [];
 
     if (isSuccess && event) {
         odds = getOddsFromParticipants(event.participants);
@@ -27,7 +27,7 @@ const EventPage: NextPage<PageProps> = ({eventId}) => {
     const awayName = event?.participants.away.participant.participantName || '';
     const eventName = `${homeName} - ${awayName}`;
 
-    const addBetHandler = (odd: Odd) => {
+    const addBetHandler = (odd: ParticipantOdd) => {
         return () =>
             addBet({
                 eventId: event?.id || '',
@@ -72,7 +72,9 @@ const EventPage: NextPage<PageProps> = ({eventId}) => {
                                                 className="w-full flex flex-row justify-between items-center px-4 py-2 bg-WHITE"
                                                 key={odd.id}
                                             >
-                                                <span>{odd.partId}</span>
+                                                <span>
+                                                    {odd.participantName}
+                                                </span>
                                                 <OddCard
                                                     {...odd}
                                                     placeOddHandler={addBetHandler(

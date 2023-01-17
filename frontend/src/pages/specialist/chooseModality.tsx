@@ -2,14 +2,14 @@ import {SportIcon} from '@components/SportIcon';
 import type {NextPage} from 'next';
 import {useSports} from '@hooks/useSports';
 import {CircularProgress} from '@mui/material';
-import {InfoSport} from '@domain/Event';
+import {Sport} from '@domain/Event';
 import {useRouter} from 'next/router';
 
 const Home: NextPage = () => {
     // FIXME: Alterar aqui para ir buscar os desportos do specialist, e não todos
-    const {isSuccess, isLoading, isError, sports, error} = useSports();
+    const {isSuccess, isLoading, isError, sports} = useSports();
     const router = useRouter();
-    const sportSelected = async (sport: InfoSport) => {
+    const sportSelected = async (sport: Sport) => {
         console.log(`Clicou ${sport.name}`);
         await router.push(`/specialist/sports/${sport.name}`);
     };
@@ -24,7 +24,7 @@ const Home: NextPage = () => {
                             {/* TODO: Alterar*/}
                             Selecione uma modalidade
                         </div>
-                        {sports.map((mod: InfoSport) => {
+                        {sports.map((mod: Sport) => {
                             return (
                                 <div
                                     className="flex flex-row gap-1 bg-white text-gl py-2 rounded cursor-pointer"

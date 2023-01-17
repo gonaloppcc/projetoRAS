@@ -1,5 +1,4 @@
 import React from 'react';
-import {Event} from '@domain/Event';
 
 export interface SuspendedGameInfo {
     eventName: string;
@@ -11,7 +10,7 @@ export interface SuspendedGameCardProps {
     game: SuspendedGameInfo;
 }
 
-export const EndGameCard = ({game}: Event) => {
+export const EndGameCard = ({game}: SuspendedGameCardProps) => {
     console.log(game);
     const column = (header: string, body: string) => {
         return (

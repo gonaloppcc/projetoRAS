@@ -9,7 +9,7 @@ import {deleteBet} from '../../../services/backend/bet';
 import {useProfile} from '@state/useProfile';
 
 const Bets = () => {
-    const {id} = useProfile();
+    const {id, refresh} = useProfile();
 
     const {isSuccess, isLoading, isError, bets, refetch} = useBets(id);
 
@@ -22,10 +22,14 @@ const Bets = () => {
         finishedBets = bets.filter((bet) => bet.closed);
     }
 
+    console.log('onGoingBets', onGoingBets);
+    console.log('finishedBets', finishedBets);
+
     const cancelBetHandler = (betId: string) => {
         return async () => {
             await deleteBet(betId);
             refetch();
+            await refresh();
         };
     };
 

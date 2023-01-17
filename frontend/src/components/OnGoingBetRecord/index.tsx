@@ -9,11 +9,11 @@ export interface OnGoingBetRecordProps {
 }
 
 const isSimpleBet = (bet: Bet): bet is SimpleBet => {
-    return 'oddId' in bet;
+    return 'odd' in bet;
 };
 
 const isMultipleBet = (bet: Bet): bet is MultipleBet => {
-    return 'oddIds' in bet;
+    return 'odds' in bet;
 };
 
 export const OnGoingBetRecord = ({

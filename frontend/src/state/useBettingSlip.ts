@@ -6,7 +6,7 @@ import {
     addSimpleBet,
     AddSimpleBetProps,
 } from '../services/backend/bet';
-import {Odd} from '@domain/Bet';
+import {ParticipantOdd} from '@domain/Bet';
 
 export enum Currency {
     EUR = '€',
@@ -23,7 +23,7 @@ export interface BetState {
     eventId: string;
     eventName: string;
     eventType: string;
-    odd: Odd;
+    odd: ParticipantOdd;
     bettingAmount?: number; // Undefined when betType is Multiple
 }
 

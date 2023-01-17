@@ -1,4 +1,4 @@
-import {Specialist, User} from '@domain/User';
+import {Specialist, Transaction, User} from '@domain/User';
 import {BASE_URL} from './constants';
 import axios from 'axios';
 
@@ -38,6 +38,16 @@ export const addBalance = async (
     );
 
     return response.data as number;
+};
+
+export const getTransactions = async (
+    userId: string
+): Promise<Transaction[]> => {
+    const response = await axios.get(
+        `${BASE_URL}/users/${userId}/transactionHist`
+    );
+
+    return response.data as Transaction[];
 };
 export const addSpecialist = async (specialist: Specialist): Promise<User> => {
     const response = await axios.post(

@@ -1,7 +1,6 @@
 import React, {useState} from 'react';
 import {PrimaryButton} from '@components/Button';
-import {Sport, Participant} from '@domain/Event';
-import {postEvent} from 'services/backend/event';
+import {Participant, Sport} from '@domain/Event';
 import {SportIcon} from '@components/SportIcon';
 import {Modal} from '@components/Modal';
 import {UpdateOdd} from './updateOdd';
@@ -27,6 +26,7 @@ export interface Team {
     ParticipantId: string;
     Score: number;
 }
+
 export interface TieOdd {
     Id: string;
     Price: number;
@@ -105,8 +105,8 @@ export const ShowEventInfo = ({info}: ShowEventInfoProps) => {
             <div className="w-full justify-center flex flex-col  bg-CULTURED gap-3">
                 <div className="bg-white  flex flex-col items-center px-10 py-5 h-auto relative gap-2 rounded">
                     <div className="content-start   w-full flex flex-row gap-2 h-10 pl-2  ">
-                        <SportIcon eventType={info.Competition.Sport.Name} />
-                        <div className="text-sm">{`${info.Competition.Sport.Name} - ${info.CompetitionId}`}</div>
+                        <SportIcon eventType={info.Competition.Sport.name} />
+                        <div className="text-sm">{`${info.Competition.Sport.name} - ${info.CompetitionId}`}</div>
                     </div>
                     <div className="text-xl font-semibold">{`${homeTeam} - ${awayTeam}`}</div>
                     <div>{`${gameDay} - ${hour}`}</div>

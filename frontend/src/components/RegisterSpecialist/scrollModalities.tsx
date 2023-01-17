@@ -1,8 +1,8 @@
-import {InfoSport} from '@domain/Event';
+import {Sport} from '@domain/Event';
 
 export interface ScrollModalitiesProps {
     changeModality: (modality: string, value: boolean) => void;
-    modalities: InfoSport[];
+    modalities: Sport[];
     error: string;
 }
 
@@ -12,7 +12,7 @@ export const ScrollModalities = ({
     error,
 }: ScrollModalitiesProps) => {
     // O value é uma coisa do html, tipo input com checkbox
-    const checkBoxClicked = (args: InfoSport, value) => {
+    const checkBoxClicked = (args: Sport, value) => {
         console.log(args.name);
         console.log(value.target.checked);
         changeModality(args.name, value);

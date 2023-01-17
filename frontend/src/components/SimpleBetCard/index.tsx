@@ -17,7 +17,7 @@ export const SimpleBetCard = ({
     eventType,
     bettingAmount,
     setBettingAmount,
-    odd: {partId, price},
+    odd: {participantName, price},
     removeBetHandler,
     currency,
 }: SimpleBetCardProps) => {
@@ -33,7 +33,7 @@ export const SimpleBetCard = ({
                 <div className="w-full flex flex-row gap-2 items-center">
                     <SportIcon eventType={eventType} />
                     <div className="flex flex-col justify-start items-start">
-                        <span className="font-semibold">{partId}</span>
+                        <span className="font-semibold">{participantName}</span>
                         <span className="font-sans font-normal font-extralight text-xs">
                             {eventName}
                         </span>

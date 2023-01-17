@@ -16,20 +16,20 @@ export interface BetRecordProps {
 
 export const BetRecord = ({
     id,
-    oddId: {id: OddId, partId, price},
-    event: {participants},
+    odd: {id: OddId, participantName, price},
+    eventId,
     date,
     closed,
     betterId,
     amount,
 }: SimpleBet) => {
     // FIXME: Hardcoded text in this component
-    const betName = `Resultado Final: ${partId}`;
+    const betName = `Resultado Final: ${participantName}`;
 
     const eventType = 'Football';
 
-    const awayName = participants.away.participant.participantName || '';
-    const homeName = participants.home.participant.participantName || '';
+    const awayName = ''; // participants.away.participant.participantName || '';
+    const homeName = ''; //participants.home.participant.participantName || '';
 
     const eventName = `${homeName} - ${awayName}`;
 
