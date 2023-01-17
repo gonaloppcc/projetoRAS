@@ -8,6 +8,7 @@ export interface ProfileState extends User {
     // Handlers
     getSession: () => Promise<void>;
     login: (email: string, password: string) => Promise<void>;
+    logout: () => void;
     setProfile: (id: string) => void;
     setBalance: (balance: number) => void;
     deposit: (amount: number) => Promise<void>;
@@ -56,6 +57,14 @@ export const useProfile = create<ProfileState>((set, get) => ({
         localStorage.setItem('email', user.email);
         localStorage.setItem('password', password); // FIXME: This is not secure
         localStorage.setItem('expiration', String(expiration));
+    },
+    logout: () => {
+        localStorage.removeItem('email');
+        localStorage.removeItem('password');
+        localStorage.removeItem('expiration');
+        set((state) => {
+            return {...state, isLoggedIn: false};
+        });
     },
     setProfile: (id) => {},
 

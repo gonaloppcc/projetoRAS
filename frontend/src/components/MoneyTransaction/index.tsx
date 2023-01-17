@@ -4,11 +4,10 @@ import {formatDate} from '../../utils/formatters';
 
 export enum TransactionType {
     Deposit = 'Depósito',
-    WITHDRAW = 'Retiro',
-    BET_WIN = 'Aposta Ganha',
-    BET_LOSS = 'Aposta Perdida',
+    Withdraw = 'Retiro',
+    BetWin = 'Aposta Ganha',
+    BetLoss = 'Aposta Perdida',
     BetCancelled = 'Aposta Cancelada',
-
     BetMade = 'Aposta Feita',
 }
 
@@ -17,7 +16,6 @@ export interface MoneyTransactionProps {
     date: string;
     type: string;
     value: number;
-
     balanceAfter: number;
 }
 

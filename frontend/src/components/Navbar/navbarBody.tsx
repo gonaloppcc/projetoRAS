@@ -7,6 +7,7 @@ import {useRouter} from 'next/router';
 import {Balance} from '@components/Balance';
 import {useEffect} from 'react';
 import {Avatar} from '@components/Avatar';
+import {Dropdown} from '@components/Dropdown';
 
 const navlinks = [
     {
@@ -26,7 +27,7 @@ interface NavBarBodyProps {
 }
 
 export const NavBarBody = ({setOpen}: NavBarBodyProps) => {
-    const {isLoggedIn, username, balance, getSession} = useProfile();
+    const {isLoggedIn, username, balance, getSession, logout} = useProfile();
 
     const router = useRouter();
 
@@ -43,6 +44,19 @@ export const NavBarBody = ({setOpen}: NavBarBodyProps) => {
     const signupHandler = async () => {
         await router.push('/register');
     };
+
+    const dropdownActions = [
+        {
+            name: 'Notificações',
+            onClick: () => {
+                // TODO: Implement this
+            },
+        },
+        {
+            name: 'Logout',
+            onClick: logout,
+        },
+    ];
 
     return (
         <div className="hidden md:flex flex-row justify-between items-center px-8 h-12 gap-3 bg-IMPERIAL_RED">
@@ -64,14 +78,15 @@ export const NavBarBody = ({setOpen}: NavBarBodyProps) => {
                     <Link href="/better/transactions" className="text-WHITE">
                         {'Transações' /* FIXME Hardcoded for now */}
                     </Link>
-                    <div className="flex flex-row items-center gap-2">
-                        <Avatar>{username.at(0)?.toUpperCase()}</Avatar>
-                        {/*<div className="w-8 h-8 rounded-full bg-LIGHT_GRAY" />*/}
-                        <span className="text-EERIE_BLACK font-semibold">
-                            {username.charAt(0).toUpperCase() +
-                                username.slice(1)}
-                        </span>
-                    </div>
+                    <Dropdown actions={dropdownActions}>
+                        <div className="flex flex-row items-center gap-2">
+                            <Avatar>{username.at(0)?.toUpperCase()}</Avatar>
+                            <span className="text-EERIE_BLACK font-semibold">
+                                {username.charAt(0).toUpperCase() +
+                                    username.slice(1)}
+                            </span>
+                        </div>
+                    </Dropdown>
                 </div>
             )}
             {!isLoggedIn && (
