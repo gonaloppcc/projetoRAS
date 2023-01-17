@@ -9,7 +9,12 @@ export interface User {
 export interface Transaction {
     id: string;
     value: number;
+    date: string;
+
+    balanceAfter: number;
+    type: string;
 }
+
 export interface Specialist {
     Email: string;
     Username: string;
