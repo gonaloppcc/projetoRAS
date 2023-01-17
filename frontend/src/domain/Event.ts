@@ -1,49 +1,72 @@
 export interface Event {
-    Id: string;
+    id: string;
+    date: string;
+    competition: string;
+
+    sportId: string;
+    participants: Participants;
+
+    completed: boolean;
+}
+
+export interface EventPost {
+    Sport: string;
+    CompetitionId: string;
+    Participants: TwoParticipantsPost;
     Date: string;
-    Competition: Competition;
-    Participants: TwoParticipant;
-    Completed: boolean;
 }
 
-export interface Competition {
-    Name: string;
-    Sport: Sport;
-}
-
-export interface Sport {
-    Name: string;
-}
-
-export interface TwoParticipant {
-    Id: string;
-    Home: ParticipantOdd;
-    Away: ParticipantOdd;
+export interface TwoParticipantsPost {
+    Home: ParticipantOddPost;
+    Away: ParticipantOddPost;
     Tie: TieOdd;
 }
 
+export interface ParticipantOddPost {
+    Price: number;
+    Participant: ParticipantPost;
+    Promotion: number | null;
+}
+
+export interface ParticipantPost {
+    Type: string;
+    Name: string;
+    Players: Player[];
+}
+
+export interface Competition {
+    name: string;
+    sportId: string;
+}
+
+export interface Participants {
+    home: ParticipantOdd;
+    away: ParticipantOdd;
+    tie: TieOdd;
+}
+
 export interface ParticipantOdd {
-    Id: string;
-    Participant: Participant;
-    Score?: number;
+    id: string;
+    participant: Participant;
+    score?: number;
+}
+
+export interface TieOdd {
+    id: string;
+    price: number;
+    promo: ValuePromo;
 }
 
 export interface ValuePromo {
     Value: number;
 }
 
-export interface TieOdd {
-    Id?: string;
-    Price: number | null;
-    Promo: ValuePromo;
-}
-
 export interface Participant {
-    Id: string;
-    Price: number;
-    Player: Player[];
-    Promo?: boolean; // FIXME I don't know if this is the correct type
-    Part?: Part;
+    id: string;
+
+    participantName: string;
+    price: number;
+    promo?: boolean; // FIXME I don't know if this is the correct type
 }
 
 export interface Part {
@@ -56,7 +79,7 @@ export interface Player {
 }
 
 // Utilizado no admin/chooseModality
-export interface InfoSport {
+export interface Sport {
     name: string;
     competitions: string[];
     teams: string[];

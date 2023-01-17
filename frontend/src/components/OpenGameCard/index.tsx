@@ -1,6 +1,4 @@
 import React, {useState} from 'react';
-import {SuspendedGameCard} from '../SuspendedGameCard';
-import {ChangeOdds} from '@components/ChangeOdds';
 import {PrimaryButton} from '@components/Button';
 import {EndGameCard} from '@components/EndGameCard';
 

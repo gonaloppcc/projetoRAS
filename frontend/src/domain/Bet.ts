@@ -1,11 +1,9 @@
-import {Event} from '@domain/Event';
-
 export type Bet = SimpleBet | MultipleBet;
 
 export interface SimpleBet {
     id: string;
-    oddId: string;
-    event: Event;
+    odd: ParticipantOdd;
+    eventId: string;
     date: string;
     closed: boolean;
     betterId: string;
@@ -22,13 +20,14 @@ export interface MultipleBet {
 }
 
 export interface MultiBetOdd {
-    //event: Event;
-    oddId: string;
+    eventId: string;
+    odd: ParticipantOdd;
 }
 
-export interface Odd {
+export interface ParticipantOdd {
+    type: string;
     id: string;
-    partId: string; // Name of the participant
+    participantName: string; // Name of the participant
     price: number;
     //Promo?: boolean;
 }

@@ -4,7 +4,7 @@ import {RegisterEvent} from '@components/RegisterEvent';
 import {useSports} from '@hooks/useSports';
 
 const Home: NextPage = () => {
-    const {isSuccess, isLoading, isError, sports, error} = useSports();
+    const {isSuccess, isLoading, isError, sports} = useSports();
     return (
         <>
             {isLoading && <CircularProgress />}
@@ -14,7 +14,11 @@ const Home: NextPage = () => {
                 </div>
             )}
 
-            {isError && <span>{error}</span>}
+            {isError && (
+                <span>
+                    Ocorreu um erro, por favor tente novamente mais tarde
+                </span>
+            )}
         </>
     );
 };

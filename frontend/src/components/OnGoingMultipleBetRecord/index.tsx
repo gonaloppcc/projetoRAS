@@ -1,5 +1,5 @@
 import React from 'react';
-import {MultipleBet} from '@domain/Bet';
+import {MultiBetOdd, MultipleBet} from '@domain/Bet';
 import {formatDate, formatNumber} from '../../utils/formatters';
 
 export interface OnGoingMultipleBetRecordProps extends MultipleBet {
@@ -17,7 +17,7 @@ export const OnGoingMultipleBetRecord = ({
 
     //const eventType = Sport.Name;
 
-    const price = odds.reduce((acc, odd) => acc * odd.oddId.price, 1);
+    const price = odds.reduce((acc, odd) => acc * odd.odd.price, 1);
 
     const betPossibleWinnings = amount * price;
 
@@ -30,9 +30,15 @@ export const OnGoingMultipleBetRecord = ({
 
     //const eventName = `${homeName} - ${awayName}`;
 
+    const getEventName = (odd: MultiBetOdd) => {
+        const awayName = 'Away';
+        const homeName = 'Home';
+        return `${homeName} - ${awayName}`;
+    };
+
     return (
         <div className="w-full flex flex-col items-start">
-            <div className="w-full flex flex-row justify-between items-center px-4 gap-8 bg-WHITE rounded">
+            <div className="w-full flex flex-row justify-between items-center px-4 py-2 gap-8 bg-WHITE rounded">
                 <div className="flex flex-row justify-center items-center gap-4">
                     <div className="flex flex-col items-start p-0 gap-1">
                         <span className="text-EERIE_BLACK text-base font-semibold">
@@ -80,31 +86,23 @@ export const OnGoingMultipleBetRecord = ({
                     </button>
                 </div>
             </div>
-            <div className="w-full flex flex-col gap-5 pr-40 bg-WHITE">
+            <div className="w-full flex flex-col gap-5 pr-40 bg-WHITE pb-2">
                 {odds.map((odd) => (
                     <div
-                        key={odd.oddId}
+                        key={odd.odd.id}
                         className="w-full flex flex-row justify-between items-center px-4 gap-8 bg-WHITE rounded"
                     >
                         <div className="flex flex-row justify-center items-center gap-4">
                             <div className="flex flex-col items-start p-0 gap-1">
                                 <span className="text-EERIE_BLACK text-base font-semibold">
-                                    {
-                                        odd.event.participants.home.participant
-                                            .participantName
-                                    }
-                                    {' - '}
-                                    {
-                                        odd.event.participants.away.participant
-                                            .participantName
-                                    }
+                                    {getEventName(odd)}
                                 </span>
                             </div>
                         </div>
                         <div className="flex flex-row justify-center items-center gap-4">
                             <div className="flex flex-col items-start p-0 gap-1">
                                 <span className="text-EERIE_BLACK text-base font-semibold">
-                                    {odd.oddId.price}
+                                    {odd.odd.price}
                                 </span>
                             </div>
                         </div>

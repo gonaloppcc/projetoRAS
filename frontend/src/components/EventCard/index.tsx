@@ -3,7 +3,7 @@ import {OddCard} from '../OddCard';
 import {useBettingSlip} from '@state/useBettingSlip';
 import {Event} from '@domain/Event';
 import {formatDate} from '../../utils/formatters';
-import {Odd} from '@domain/Bet';
+import {ParticipantOdd} from '@domain/Bet';
 import {useRouter} from 'next/router';
 import classNames from 'classnames';
 import {getOddsFromParticipants} from '../../utils/helpers';
@@ -32,7 +32,7 @@ export const EventCard = ({
         await router.push(`/event/${id}`);
     };
 
-    const addBetHandler = (odd: Odd) => {
+    const addBetHandler = (odd: ParticipantOdd) => {
         return () =>
             addBet({
                 eventId: id,

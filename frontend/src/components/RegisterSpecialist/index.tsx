@@ -5,7 +5,7 @@ import {REGEX_MAIL, REGEX_USERNAME} from 'utils/regex';
 import {PrimaryButton} from '@components/Button';
 import {Specialist, SportSpecialist} from '@domain/User';
 import {addSpecialist} from '../../services/backend/user';
-import {InfoSport} from '@domain/Event';
+import {Sport} from '@domain/Event';
 
 export interface FormErrors {
     username: string;
@@ -22,7 +22,7 @@ const initialValueFormErrors: FormErrors = {
 };
 
 export interface RegisterSpecialistProps {
-    modalities: InfoSport[];
+    modalities: Sport[];
 }
 
 const intialValues = {

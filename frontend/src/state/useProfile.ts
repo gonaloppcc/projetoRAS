@@ -12,6 +12,7 @@ export interface ProfileState extends User {
     setBalance: (balance: number) => void;
     deposit: (amount: number) => Promise<void>;
     withdraw: (amount: number) => Promise<void>;
+    refresh: () => Promise<void>;
 
     isLoggedIn: boolean;
 }
@@ -73,6 +74,15 @@ export const useProfile = create<ProfileState>((set, get) => ({
         const balance = await addBalance(get().id, -amount);
         set((state) => {
             return {...state, balance};
+        });
+    },
+    refresh: async () => {
+        const user = await login(
+            get().email,
+            localStorage.getItem('password') as string
+        );
+        set((state) => {
+            return {...state, ...user, isLoggedIn: true};
         });
     },
 }));

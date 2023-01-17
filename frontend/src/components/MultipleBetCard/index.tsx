@@ -13,7 +13,7 @@ export const MultipleBetCard = ({
     eventId,
     eventName,
     eventType,
-    odd: {partId, price},
+    odd: {participantName, price},
     removeBetHandler,
 }: MultipleBetCardProps) => {
     return (
@@ -21,7 +21,7 @@ export const MultipleBetCard = ({
             <div className="flex flex-row justify-start items-center gap-2">
                 <SportIcon eventType={eventType} />
                 <div className="flex flex-col justify-start items-start">
-                    <span className="font-semibold">{partId}</span>
+                    <span className="font-semibold">{participantName}</span>
                     <span className="font-sans font-normal font-extralight text-xs">
                         {eventName}
                     </span>

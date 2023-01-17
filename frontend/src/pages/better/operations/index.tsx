@@ -1,6 +1,7 @@
 import React from 'react';
 import {PageLayout} from '@components/PageLayout';
 import {MoneyOperation, OperationType} from '@components/MoneyOperation';
+import {useTransactions} from '@hooks/useTransactions';
 
 const MOCK_DEPOSIT_OPERATION = {
     operationDate: '2021-10-10',
@@ -30,7 +31,10 @@ const MOCK_BET_LOST_OPERATION = {
     balanceAfterOperation: 24.3,
 };
 
-const Bets = () => {
+const Operations = () => {
+    const {isSuccess, isLoading, isError, transactions, error} =
+        useTransactions();
+
     return (
         <PageLayout>
             <div className="w-full flex flex-col justify-start gap-1">
@@ -43,4 +47,4 @@ const Bets = () => {
     );
 };
 
-export default Bets;
+export default Operations;
