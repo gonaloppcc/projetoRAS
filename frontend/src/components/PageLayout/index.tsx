@@ -20,8 +20,11 @@ export const PageLayout = ({children}: PageLayoutProps) => {
             <div className="w-full h-full p-8 bg-CULTURED flex flex-row justify-center gap-8">
                 <div className="hidden md:flex flex-row justify-start w-3/12">
                     {isSuccess && <Competitions competitions={competitions} />}
+                    {isError && (
+                        <div>Aconteceu um erro ao carregar as competitions</div>
+                    )}
                 </div>
-                <div className="flex flex-row justify-center w-6/12">
+                <div className="h-full flex flex-row justify-center w-6/12">
                     {children}
                 </div>
                 <div className="hidden md:flex flex-row justify-center w-3/12 h-full">
