@@ -4,7 +4,6 @@ import {PageLayout} from '@components/PageLayout';
 import {CircularProgress} from '@mui/material';
 import {useEventsBySport} from '@hooks/useEventsBySport';
 import {GameCardAdmin} from '@components/GameCardAdmin';
-import {OpenGameCard, OpenGameInfo} from '@components/OpenGameCard';
 
 interface PageProps {
     eventId: string;
