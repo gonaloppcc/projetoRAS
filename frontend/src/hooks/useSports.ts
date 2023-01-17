@@ -1,11 +1,11 @@
 import {FetcherProps} from '@hooks/Fetcher';
-import {InfoSport} from '@domain/Event';
+import {Sport} from '@domain/Event';
 import {useQuery} from '@tanstack/react-query';
 import {getSports} from '../services/backend/sports';
 import {AxiosError} from 'axios';
 
 export interface useSportsProps extends FetcherProps {
-    sports: InfoSport[];
+    sports: Sport[];
 }
 
 export const useSports = (): useSportsProps => {

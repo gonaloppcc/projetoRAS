@@ -1,6 +1,6 @@
 import {PrimaryButton} from '@components/Button';
 import {HandleChangeProps, InputForm} from '@components/createBetter/inputForm';
-import {ValuePromo, TieOdd} from '@domain/Event';
+import {TieOdd, ValuePromo} from '@domain/Event';
 
 import {useState} from 'react';
 import {
@@ -92,11 +92,11 @@ export const SetResult = ({
                 Value: 0,
             };
             const tie: TieOdd = {
-                Id: game.participants.tie.id,
-                Price: resultOrOdd
+                id: game.participants.tie.id,
+                price: resultOrOdd
                     ? game.participants.tie.price
                     : parseInt(valueTie),
-                Promo: game.participants.tie.promo,
+                promo: game.participants.tie.promo,
             };
             const twoParticipant: TwoParticipantsPost = {
                 Home: participantHomeOdd,

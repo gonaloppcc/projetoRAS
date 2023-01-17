@@ -3,18 +3,18 @@ import {SearchBox} from './searchBox';
 import {Table} from './table';
 import {PrimaryButton} from '@components/Button';
 import {
-    postEvent,
     EventPost,
-    TwoParticipantsPost,
-    ParticipantOddPost,
-    ParticipantMesmo,
     EventToPost,
+    ParticipantMesmo,
+    ParticipantOddPost,
+    postEvent,
+    TwoParticipantsPost,
 } from 'services/backend/event';
 import {Modal} from '@components/Modal';
-import {InfoSport, TieOdd, ValuePromo} from '@domain/Event';
+import {Sport, TieOdd, ValuePromo} from '@domain/Event';
 
 export interface RegisterEventProps {
-    sports: InfoSport[];
+    sports: Sport[];
 }
 
 interface FormErrors {
@@ -50,15 +50,13 @@ export const RegisterEvent = ({sports}: RegisterEventProps) => {
     const [sucess, setSucess] = useState<boolean>(false);
 
     let possibleLeagues = sportSelected
-        ? sports.filter(
-              (sportInfo: InfoSport) => sportInfo.name == sportName
-          )[0].competitions
+        ? sports.filter((sportInfo: Sport) => sportInfo.name == sportName)[0]
+              .competitions
         : [];
 
     let possibleTeams = sportSelected
-        ? sports.filter(
-              (sportInfo: InfoSport) => sportInfo.name == sportName
-          )[0].teams
+        ? sports.filter((sportInfo: Sport) => sportInfo.name == sportName)[0]
+              .teams
         : [];
 
     const changeTeams = (team: string, selected: boolean) => {
@@ -125,8 +123,8 @@ export const RegisterEvent = ({sports}: RegisterEventProps) => {
                 Value: 0,
             };
             const tieOdd: TieOdd = {
-                Price: 0,
-                Promo: valuePromo,
+                price: 0,
+                promo: valuePromo,
             };
             const twoParticipant: TwoParticipantsPost = {
                 Home: participantHomeOdd,
@@ -176,8 +174,8 @@ export const RegisterEvent = ({sports}: RegisterEventProps) => {
             Value: 0,
         };
         const tieOdd: TieOdd = {
-            Price: 0,
-            Promo: valuePromo,
+            price: 0,
+            promo: valuePromo,
         };
         const twoParticipant: TwoParticipantsPost = {
             Home: participantHomeOdd,
@@ -256,9 +254,7 @@ export const RegisterEvent = ({sports}: RegisterEventProps) => {
                 <div className="flex flex-row gap-5 space-evenly">
                     {/* FIXME  Títulos das searchBoxes*/}
                     <SearchBox
-                        allResults={sports.map(
-                            (sport: InfoSport) => sport.name
-                        )}
+                        allResults={sports.map((sport: Sport) => sport.name)}
                         title={'Modalidades'}
                         currentSearch={sportName}
                         changeCurrentSearch={setSportName}

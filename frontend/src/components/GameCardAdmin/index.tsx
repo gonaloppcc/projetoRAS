@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
-import {EventReceived} from '@domain/Event';
 import {Modal} from '@components/Modal';
 import {SetResult} from './setResult';
+import {EventReceived} from '../../services/backend/event';
 
 export interface GameCardAdminProps {
     game: EventReceived;
