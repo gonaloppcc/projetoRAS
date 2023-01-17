@@ -16,6 +16,6 @@ public class EventOddPriceChangedNotification : Notification
     { }
 
     public EventOddPriceChangedNotification(Event e)
-        : this(null, null, $"Odd prices of event '{e.PrettyName}' have changed", DateTime.Now, NotificationSeverity.Low)
+        : this(null, null, $"A cota das odds do evento '{e.PrettyName}' mudaram", DateTime.Now, NotificationSeverity.Low)
     { }
 }
