@@ -16,6 +16,6 @@ public class EventPromotionEndedNotification : Notification
     { }
     
     public EventPromotionEndedNotification(Event e) 
-        : this(null, null, $"A promotion has ended for event '{e.PrettyName}'", DateTime.Now, NotificationSeverity.Info)
+        : this(null, null, $"Uma promoção para o evento '{e.PrettyName}' acabou", DateTime.Now, NotificationSeverity.Info)
     { }
 }

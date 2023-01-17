@@ -16,6 +16,6 @@ public class EventPromotionCreatedNotification : Notification
     { }
     
     public EventPromotionCreatedNotification(Event e)
-        : this(null, null, $"Event '{e.PrettyName}' has a new promotion", DateTime.Now, NotificationSeverity.Info)
+        : this(null, null, $"O evento '{e.PrettyName}' tem uma nova promoção", DateTime.Now, NotificationSeverity.Info)
     { }
 }

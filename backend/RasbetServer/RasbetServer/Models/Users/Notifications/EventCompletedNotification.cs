@@ -16,6 +16,6 @@ public class EventCompletedNotification : Notification
     { }
 
     public EventCompletedNotification(Event e)
-        : this(null, null, $"Event '{e.PrettyName}' has completed", DateTime.Now, NotificationSeverity.Info) 
+        : this(null, null, $"O evento '{e.PrettyName}' acabou", DateTime.Now, NotificationSeverity.Info) 
     { }
 }

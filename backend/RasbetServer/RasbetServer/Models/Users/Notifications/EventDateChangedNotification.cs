@@ -16,6 +16,6 @@ public class EventDateChangedNotification : Notification
     { }
     
     public EventDateChangedNotification(Event e)
-        : this(null, null, $"Event '{e.PrettyName}' has changed been rescheduled to {e.Date:dd/MM/yy hh:mm}.", DateTime.Now, NotificationSeverity.Low)
+        : this(null, null, $"O evento '{e.PrettyName}' teve a sua data alterada para {e.Date:dd/MM/yy hh:mm}", DateTime.Now, NotificationSeverity.Low)
     { }
 }
