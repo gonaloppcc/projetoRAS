@@ -15,18 +15,24 @@ public class BetProfile : Profile
             .IncludeAllDerived();
         CreateMap<SimpleBet, SimpleBetResource>()
             .ForMember(
-                    dest => dest.EventId,
+                dest => dest.EventId,
+                opt => opt.MapFrom(
+                    src => src.Odd.Event.Id
+                )
+            )
+            .ForMember(
+                    dest => dest.Odd,
                     opt => opt.MapFrom(
-                            src => src.Odd.Event.Id
+                            src => src.Odd
                         )
                 );
         CreateMap<MultiBet, MultiBetResource>()
             .ForMember(
             dest => dest.Odds,
             opt => opt.MapFrom(
-                src => src.Odds.ToList().ConvertAll(odd => new OddEventResource { OddId = odd.Id, EventId = odd.Event.Id })
-            )
-        );
+                src => src.Odds.ToList().ConvertAll(odd => new OddEventResource(odd.Event, odd))
+                )
+            );
 
         CreateMap<SaveBetResource, Bet>()
             .IncludeAllDerived();

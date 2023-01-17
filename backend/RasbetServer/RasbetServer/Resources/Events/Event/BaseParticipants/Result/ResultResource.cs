@@ -1,4 +1,4 @@
-using RasbetServer.Resources.Odds.ParticipantOdd;
+using RasbetServer.Resources.Odds.ParticipantOdds;
 
 namespace RasbetServer.Resources.Events.Event.BaseParticipants.Result;
 

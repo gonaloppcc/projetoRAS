@@ -8,7 +8,8 @@ public class PromotionProfile : Profile
 {
     public PromotionProfile()
     {
-        CreateMap<Promotion, PromotionResource>();
+        CreateMap<Promotion, PromotionResource>()
+            .ConstructUsing(p => new PromotionResource(p));
         CreateMap<SavePromotionResource, Promotion>();
     }
 }
