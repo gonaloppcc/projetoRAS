@@ -1,22 +1,20 @@
-import {AllSport} from 'pages/registerEvent';
 import React, {useEffect, useState} from 'react';
 import {SearchBox} from './searchBox';
 import {Table} from './table';
 import {PrimaryButton} from '@components/Button';
-import {useRouter} from 'next/router';
 import {
+    postEvent,
     EventPost,
     TwoParticipantsPost,
-    TieOdd,
-    ValuePromo,
     ParticipantOddPost,
-    ParticipantPost,
-    Player,
-} from '@domain/Event';
-import {postEvent} from 'services/backend/event';
+    ParticipantMesmo,
+    EventToPost,
+} from 'services/backend/event';
+import {Modal} from '@components/Modal';
+import {InfoSport, TieOdd, ValuePromo} from '@domain/Event';
 
 export interface RegisterEventProps {
-    sports: AllSport[];
+    sports: InfoSport[];
 }
 
 interface FormErrors {
@@ -49,17 +47,18 @@ export const RegisterEvent = ({sports}: RegisterEventProps) => {
 
     const [date, setDate] = useState<string>('');
     const [hour, setHour] = useState<string>('');
-
-    const router = useRouter();
+    const [sucess, setSucess] = useState<boolean>(false);
 
     let possibleLeagues = sportSelected
-        ? sports.filter((sportInfo: AllSport) => sportInfo.name == sportName)[0]
-              .leagues
+        ? sports.filter(
+              (sportInfo: InfoSport) => sportInfo.name == sportName
+          )[0].competitions
         : [];
 
     let possibleTeams = sportSelected
-        ? sports.filter((sportInfo: AllSport) => sportInfo.name == sportName)[0]
-              .participants
+        ? sports.filter(
+              (sportInfo: InfoSport) => sportInfo.name == sportName
+          )[0].teams
         : [];
 
     const changeTeams = (team: string, selected: boolean) => {
@@ -89,7 +88,8 @@ export const RegisterEvent = ({sports}: RegisterEventProps) => {
     };
 
     const hasErrors = () => {
-        return Object.values(errors).some((err) => err !== '');
+        let errors_now = validate();
+        return Object.values(errors_now).some((err) => err !== '');
     };
 
     const handleSubmit: React.MouseEventHandler<
@@ -99,47 +99,100 @@ export const RegisterEvent = ({sports}: RegisterEventProps) => {
 
         if (hasErrors()) {
             return;
+        } else {
+            console.log('Só devia estar aqui sem erros');
+            // TODO: Make the request to the backend here
+            const dateAndHour: string = `${date}T${hour}:17.0065405+00:00`;
+            const partipantHome: ParticipantMesmo = {
+                Price: 0,
+                Promo: null,
+                PartId: selectedTeams[0],
+            };
+            const participantHomeOdd: ParticipantOddPost = {
+                Score: 0,
+                Participant: partipantHome,
+            };
+            const partipantAway: ParticipantMesmo = {
+                Price: 0,
+                PartId: selectedTeams[1],
+                Promo: null,
+            };
+            const participantAwayOdd: ParticipantOddPost = {
+                Participant: partipantAway,
+                Score: 0,
+            };
+            const valuePromo: ValuePromo = {
+                Value: 0,
+            };
+            const tieOdd: TieOdd = {
+                Price: 0,
+                Promo: valuePromo,
+            };
+            const twoParticipant: TwoParticipantsPost = {
+                Home: participantHomeOdd,
+                Away: participantAwayOdd,
+                Tie: tieOdd,
+            };
+            const event: EventToPost = {
+                CompetitionId: league,
+                Date: dateAndHour,
+                Completed: false,
+                Participants: twoParticipant,
+            };
+
+            const newEvent: EventPost = {
+                Sport: sportName,
+                Event: event,
+            };
+            console.log('Sucesso?');
+            console.log(newEvent);
+            await postEvent(newEvent);
+            setSucess(true);
         }
 
         // TODO: Make the request to the backend here
         const dateAndHour: string = `${date}T${hour}:17.0065405+00:00`;
-        const partipantHome: ParticipantPost = {
-            Type: 'Team',
-            Name: selectedTeams[0],
-            Players: [],
+
+        const participantAwayMesmo: ParticipantMesmo = {
+            Price: 0,
+            PartId: selectedTeams[1],
+            Promo: null,
+        };
+        const participantHomeMesmo: ParticipantMesmo = {
+            Price: 0,
+            PartId: selectedTeams[0],
+            Promo: null,
+        };
+
+        const participantAwayOdd: ParticipantOddPost = {
+            Score: 0,
+            Participant: participantAwayMesmo,
         };
         const participantHomeOdd: ParticipantOddPost = {
-            Price: 0,
-            Participant: partipantHome,
-            Promotion: null,
-        };
-        const partipantAway: ParticipantPost = {
-            Type: 'Team',
-            Name: selectedTeams[1],
-            Players: [],
-        };
-        const participantAwayOdd: ParticipantOddPost = {
-            Price: 0,
-            Participant: partipantAway,
-            Promotion: null,
+            Score: 0,
+            Participant: participantHomeMesmo,
         };
         const valuePromo: ValuePromo = {
             Value: 0,
         };
         const tieOdd: TieOdd = {
-            price: 0,
-            promo: valuePromo,
+            Price: 0,
+            Promo: valuePromo,
         };
         const twoParticipant: TwoParticipantsPost = {
             Home: participantHomeOdd,
             Away: participantAwayOdd,
             Tie: tieOdd,
         };
+        const eventToPost: EventToPost = {
+            CompetitionId: league,
+            Date: dateAndHour,
+            Completed: false,
+            Participants: twoParticipant,
+        };
         const newEvent: EventPost = {
             Sport: sportName,
-            Date: dateAndHour,
-            CompetitionId: league,
-            Participants: twoParticipant,
+            Event: eventToPost,
         };
 
         await postEvent(newEvent);
@@ -165,7 +218,7 @@ export const RegisterEvent = ({sports}: RegisterEventProps) => {
             (sportInList) => sportInList.name === sportName
         )[0];
 
-        if (leagueSelected && !sportInfo.leagues.includes(league)) {
+        if (leagueSelected && !sportInfo.competitions.includes(league)) {
             errors.league = 'Liga não disponível na modalidade';
         }
 
@@ -178,10 +231,23 @@ export const RegisterEvent = ({sports}: RegisterEventProps) => {
         }
 
         setErrors(errors);
+        return errors;
     };
 
     return (
         <div className="h-screen w-screen justify-center flex items-center bg-CULTURED">
+            {sucess && (
+                <Modal setIsOpen={setSucess} isOpen={sucess}>
+                    <div className="bg-white flex flex-col items-center px-10 py-10 h-auto relative gap-5 ">
+                        <div className="w-fit text-4xl">
+                            Evento submetido com sucesso
+                        </div>
+                        <PrimaryButton onClick={() => setSucess(false)}>
+                            Adicionar novo jogo?
+                        </PrimaryButton>
+                    </div>
+                </Modal>
+            )}
             <div className="bg-white  flex flex-col items-center px-10 py-10 h-auto  relative gap-2">
                 <div className="w-fit h-10  text-4xl ">
                     {/* FIXME */}
@@ -190,7 +256,9 @@ export const RegisterEvent = ({sports}: RegisterEventProps) => {
                 <div className="flex flex-row gap-5 space-evenly">
                     {/* FIXME  Títulos das searchBoxes*/}
                     <SearchBox
-                        allResults={sports.map((sport: AllSport) => sport.name)}
+                        allResults={sports.map(
+                            (sport: InfoSport) => sport.name
+                        )}
                         title={'Modalidades'}
                         currentSearch={sportName}
                         changeCurrentSearch={setSportName}

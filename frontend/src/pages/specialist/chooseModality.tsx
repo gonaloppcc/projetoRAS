@@ -6,11 +6,12 @@ import {InfoSport} from '@domain/Event';
 import {useRouter} from 'next/router';
 
 const Home: NextPage = () => {
+    // FIXME: Alterar aqui para ir buscar os desportos do specialist, e não todos
     const {isSuccess, isLoading, isError, sports, error} = useSports();
     const router = useRouter();
     const sportSelected = async (sport: InfoSport) => {
         console.log(`Clicou ${sport.name}`);
-        await router.push(`/admin/sports/${sport.name}`);
+        await router.push(`/specialist/sports/${sport.name}`);
     };
 
     return (
@@ -42,7 +43,7 @@ const Home: NextPage = () => {
                 </div>
             )}
 
-            {isError && <span>{error.message}</span>}
+            {isError && <span>Something went wrong!</span>}
         </>
     );
 };

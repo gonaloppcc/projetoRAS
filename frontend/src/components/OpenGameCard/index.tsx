@@ -2,6 +2,7 @@ import React, {useState} from 'react';
 import {SuspendedGameCard} from '../SuspendedGameCard';
 import {ChangeOdds} from '@components/ChangeOdds';
 import {PrimaryButton} from '@components/Button';
+import {EndGameCard} from '@components/EndGameCard';
 
 export interface OpenGameInfo {
     eventName: string;
@@ -16,7 +17,7 @@ export interface OpenGameCardProps {
     game: OpenGameInfo;
 }
 
-export const OpenGameCard = ({game}: OpenGameCardProps) => {
+export const OpenGameCard = (game: Event) => {
     const initialValues = {
         duration: 0,
         multiplier: 0,
@@ -43,7 +44,7 @@ export const OpenGameCard = ({game}: OpenGameCardProps) => {
 
     return (
         <div className="bg-white flex flex-col gap-3">
-            <SuspendedGameCard game={game} />
+            <EndGameCard game={game} />
             <div className="pl-5 pb-3  ">
                 <div className="pr-10 m-auto text-xl content-between grow rounded-lg w-full ">
                     {/*FIXME*/}
