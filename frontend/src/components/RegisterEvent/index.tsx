@@ -16,6 +16,7 @@ import {
     ParticipantMesmo,
 } from '@domain/Event';
 import {postEvent} from 'services/backend/event';
+import {Modal} from '@components/Modal';
 
 export interface RegisterEventProps {
     sports: InfoSport[];
@@ -51,8 +52,7 @@ export const RegisterEvent = ({sports}: RegisterEventProps) => {
 
     const [date, setDate] = useState<string>('');
     const [hour, setHour] = useState<string>('');
-
-    const router = useRouter();
+    const [sucess, setSucess] = useState<boolean>(false);
 
     let possibleLeagues = sportSelected
         ? sports.filter(
@@ -152,7 +152,7 @@ export const RegisterEvent = ({sports}: RegisterEventProps) => {
             console.log('Sucesso?');
             console.log(newEvent);
             await postEvent(newEvent);
-            await router.push('/success');
+            setSucess(true);
         }
 
         // TODO: Make the request to the backend here
@@ -237,6 +237,18 @@ export const RegisterEvent = ({sports}: RegisterEventProps) => {
 
     return (
         <div className="h-screen w-screen justify-center flex items-center bg-CULTURED">
+            {sucess && (
+                <Modal setIsOpen={setSucess} isOpen={sucess}>
+                    <div className="bg-white flex flex-col items-center px-10 py-10 h-auto relative gap-5 ">
+                        <div className="w-fit text-4xl">
+                            Evento submetido com sucesso
+                        </div>
+                        <PrimaryButton onClick={() => setSucess(false)}>
+                            Adicionar novo jogo?
+                        </PrimaryButton>
+                    </div>
+                </Modal>
+            )}
             <div className="bg-white  flex flex-col items-center px-10 py-10 h-auto  relative gap-2">
                 <div className="w-fit h-10  text-4xl ">
                     {/* FIXME */}
