@@ -56,9 +56,11 @@ export const RegisterSpecialist = ({modalities}: RegisterSpecialistProps) => {
 
     const changeModalities = (team: string, selected: boolean) => {
         if (selected) {
-            setModalitiesSelected([...modalitiesSelected, team]);
+            setModalitiesSelected([...modalitiesSelected, team as any]);
         } else {
-            setModalitiesSelected(modalitiesSelected.filter((t) => t !== team));
+            setModalitiesSelected(
+                modalitiesSelected.filter((t) => t !== (team as any))
+            );
         }
     };
 

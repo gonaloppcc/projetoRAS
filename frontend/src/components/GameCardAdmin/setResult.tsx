@@ -88,9 +88,6 @@ export const SetResult = ({
                 Participant: partipantAway,
                 Score: resultOrOdd ? parseInt(valueAway) : 0,
             };
-            const valuePromo: ValuePromo = {
-                Value: 0,
-            };
             const tie: TieOdd = {
                 Id: game.participants.tie.id,
                 Price: resultOrOdd
