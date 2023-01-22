@@ -4,14 +4,23 @@ import {PageLayout} from '@components/PageLayout';
 import {CircularProgress} from '@mui/material';
 import {useEventsBySport} from '@hooks/useEventsBySport';
 import {GameCardAdmin} from '@components/GameCardAdmin';
+import {usePagination} from '@hooks/usePagination';
+import {Pagination} from '@components/Pagination';
 
 interface PageProps {
-    eventId: string;
+    sportId: string;
 }
 
-const EventPage: NextPage<PageProps> = ({eventId}) => {
-    const {isSuccess, isLoading, isError, events, error} =
-        useEventsBySport(eventId);
+const NUM_PAGES = 10;
+
+const EventPage: NextPage<PageProps> = ({sportId}) => {
+    const {currentPage, setCurrentPage} = usePagination();
+
+    const {isSuccess, isLoading, isError, events} = useEventsBySport({
+        sportId,
+        pageNum: currentPage,
+    });
+
     return (
         <>
             {isLoading && <CircularProgress />}
@@ -28,7 +37,7 @@ const EventPage: NextPage<PageProps> = ({eventId}) => {
                                     <div key={game.id}>
                                         <GameCardAdmin
                                             game={game}
-                                            sport={eventId}
+                                            sport={sportId}
                                             textButton={'Alterar cotas'}
                                             textPropsUp={'Insira novas cotas'}
                                             textSucess={
@@ -41,6 +50,11 @@ const EventPage: NextPage<PageProps> = ({eventId}) => {
                                 );
                             })}
                     </div>
+                    <Pagination
+                        currentPage={currentPage}
+                        onPageChange={setCurrentPage}
+                        totalPages={NUM_PAGES}
+                    />
                 </div>
             )}
             {isError && <span>Something went wrong</span>}
@@ -49,7 +63,7 @@ const EventPage: NextPage<PageProps> = ({eventId}) => {
 };
 
 EventPage.getInitialProps = async ({query}) => {
-    return {eventId: query.id as string};
+    return {sportId: query.id as string};
 };
 
 export default EventPage;
