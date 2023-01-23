@@ -1,6 +1,5 @@
 import React from 'react';
 import {NextPage} from 'next';
-import {PageLayout} from '@components/PageLayout';
 import {CircularProgress} from '@mui/material';
 import {useEventsBySport} from '@hooks/useEventsBySport';
 import {GameCardAdmin} from '@components/GameCardAdmin';
@@ -20,6 +19,7 @@ const EventPage: NextPage<PageProps> = ({eventId}) => {
         sportId: eventId,
         pageNum: currentPage,
     });
+
     return (
         <>
             {isLoading && <CircularProgress />}
