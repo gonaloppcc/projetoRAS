@@ -15,7 +15,7 @@ const NUM_PAGES = 10;
 const EventPage: NextPage<PageProps> = ({eventId}) => {
     const {currentPage, setCurrentPage} = usePagination();
 
-    const {isSuccess, isLoading, isError, events, error} = useEventsBySport({
+    const {isSuccess, isLoading, isError, events} = useEventsBySport({
         sportId: eventId,
         pageNum: currentPage,
     });
@@ -43,12 +43,12 @@ const EventPage: NextPage<PageProps> = ({eventId}) => {
                                 </div>
                             );
                         })}
+                        <Pagination
+                            currentPage={currentPage}
+                            onPageChange={setCurrentPage}
+                            totalPages={NUM_PAGES}
+                        />
                     </div>
-                    <Pagination
-                        currentPage={currentPage}
-                        onPageChange={setCurrentPage}
-                        totalPages={NUM_PAGES}
-                    />
                 </div>
             )}
             {isError && <span>Something went wrong!</span>}

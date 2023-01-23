@@ -46,7 +46,7 @@ export const useEventsBySport = ({
         data: events,
         error,
         refetch,
-    } = useQuery(['events', sportId], () =>
+    } = useQuery(['events', sportId, pageNum], () =>
         getEventsBySport({sportId, pageNum, pageSize})
     );
 
