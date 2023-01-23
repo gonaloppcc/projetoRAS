@@ -5,6 +5,7 @@ import {BettingSlip} from '@components/BettingSlip';
 import {useCompetitions} from '@hooks/useCompetitions';
 import {useProfile} from '@state/useProfile';
 import classNames from 'classnames';
+import {UserType} from '@domain/User';
 
 export interface PageLayoutProps {
     children: React.ReactNode;
@@ -13,7 +14,7 @@ export interface PageLayoutProps {
 const MAIN_SPORT = 'Football';
 
 export const PageLayout = ({children}: PageLayoutProps) => {
-    const {role} = useProfile();
+    const {type} = useProfile();
 
     const {isSuccess, competitions, isError} = useCompetitions(MAIN_SPORT);
 
@@ -31,13 +32,13 @@ export const PageLayout = ({children}: PageLayoutProps) => {
                     className={classNames(
                         'h-full flex flex-row justify-center w-9/12',
                         {
-                            'md:w-6/12': role === 'better',
+                            'md:w-6/12': type === 'better',
                         }
                     )}
                 >
                     {children}
                 </div>
-                {role === 'better' && (
+                {type !== UserType.Admin && type !== UserType.Specialist && (
                     <div className="hidden md:flex flex-row justify-center w-3/12 h-full">
                         <BettingSlip />
                     </div>
