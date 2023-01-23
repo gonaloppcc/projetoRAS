@@ -19,6 +19,7 @@ const EventPage: NextPage<PageProps> = ({eventId}) => {
         sportId: eventId,
         pageNum: currentPage,
     });
+
     return (
         <>
             {isLoading && <CircularProgress />}
