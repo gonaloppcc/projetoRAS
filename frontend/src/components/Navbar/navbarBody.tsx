@@ -100,10 +100,12 @@ export const NavBarBody = ({setPaymentModalOpen}: NavBarBodyProps) => {
                     </SecondaryButton>
                 </div>
             )}
-            <Notifications
-                open={isNotificationSlideOpen}
-                setOpen={setIsNotificationSlideOpen}
-            />
+            {isLoggedIn && (
+                <Notifications
+                    open={isNotificationSlideOpen}
+                    setOpen={setIsNotificationSlideOpen}
+                />
+            )}
         </div>
     );
 };
