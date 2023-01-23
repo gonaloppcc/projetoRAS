@@ -30,31 +30,29 @@ const EventPage: NextPage<PageProps> = ({sportId}) => {
                         <div className="text-xl bg-white w-full font-semibold pl-4  py-4">
                             Jogos
                         </div>
-                        {events
-                            .filter((game) => !game.completed)
-                            .map((game) => {
-                                return (
-                                    <div key={game.id}>
-                                        <GameCardAdmin
-                                            game={game}
-                                            sport={sportId}
-                                            textButton={'Alterar cotas'}
-                                            textPropsUp={'Insira novas cotas'}
-                                            textSucess={
-                                                'Cotas alteradas com sucesso'
-                                            }
-                                            resultOrOdd={false}
-                                            textSet={'Cota'}
-                                        />
-                                    </div>
-                                );
-                            })}
+                        {events.map((game) => {
+                            return (
+                                <div key={game.id}>
+                                    <GameCardAdmin
+                                        game={game}
+                                        sport={sportId}
+                                        textButton={'Alterar cotas'}
+                                        textPropsUp={'Insira novas cotas'}
+                                        textSucess={
+                                            'Cotas alteradas com sucesso'
+                                        }
+                                        resultOrOdd={false}
+                                        textSet={'Cota'}
+                                    />
+                                </div>
+                            );
+                        })}
+                        <Pagination
+                            currentPage={currentPage}
+                            onPageChange={setCurrentPage}
+                            totalPages={NUM_PAGES}
+                        />
                     </div>
-                    <Pagination
-                        currentPage={currentPage}
-                        onPageChange={setCurrentPage}
-                        totalPages={NUM_PAGES}
-                    />
                 </div>
             )}
             {isError && <span>Something went wrong</span>}
