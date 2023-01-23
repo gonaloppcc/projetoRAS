@@ -19,7 +19,7 @@ export interface ProfileState extends User {
 }
 
 export const useProfile = create<ProfileState>((set, get) => ({
-    id: '',
+    id: '0',
     balance: 0,
     email: '',
     username: '',

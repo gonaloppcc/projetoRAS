@@ -3,6 +3,9 @@ import {SlideOver} from '@components/SlideOver';
 import {useNotification} from '@hooks/useNotification';
 import {Notification} from '@components/Notification';
 import classNames from 'classnames';
+import {useMutation} from '@tanstack/react-query';
+import {deleteNotification} from '../../services/backend/user';
+import {useProfile} from '@state/useProfile';
 
 export interface NotificationProps {
     open: boolean;
@@ -10,8 +13,22 @@ export interface NotificationProps {
 }
 
 export const Notifications = ({open, setOpen}: NotificationProps) => {
+    const {id} = useProfile();
+
     const {isLoading, isError, isSuccess, notifications, refetch} =
         useNotification();
+
+    const deleteNotificationMutation = useMutation({
+        mutationFn: (notificationId: string) =>
+            deleteNotification(id, notificationId),
+        onSuccess: () => refetch(),
+    });
+
+    const deleteNotificationHandler = (notificationId: string) => {
+        return () => {
+            deleteNotificationMutation.mutate(notificationId);
+        };
+    };
 
     const slideTitle = (
         <span className="flex flex-row gap-2">
@@ -43,7 +60,13 @@ export const Notifications = ({open, setOpen}: NotificationProps) => {
             {isSuccess && (
                 <div className="flex flex-col gap-4">
                     {notifications.map((notification) => (
-                        <Notification key={notification.id} {...notification} />
+                        <Notification
+                            key={notification.id}
+                            {...notification}
+                            deleteNotification={deleteNotificationHandler(
+                                notification.id
+                            )}
+                        />
                     ))}
                 </div>
             )}

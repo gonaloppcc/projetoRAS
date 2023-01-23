@@ -65,3 +65,12 @@ export const getNotifications = async (
     );
     return response.data as Notification[];
 };
+
+export const deleteNotification = async (
+    userId: string,
+    notificationId: string
+): Promise<void> => {
+    await axios.delete(
+        `${BASE_URL}/users/${userId}/notifications/${notificationId}`
+    );
+};
