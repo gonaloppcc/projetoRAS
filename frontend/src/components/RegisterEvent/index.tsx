@@ -235,7 +235,7 @@ export const RegisterEvent = ({sports}: RegisterEventProps) => {
     };
 
     return (
-        <div className="h-screen w-screen justify-center flex items-center bg-CULTURED">
+        <div className="h-full w-full justify-start flex flex-col items-center bg-CULTURED">
             {sucess && (
                 <Modal setIsOpen={setSucess} isOpen={sucess}>
                     <div className="bg-white flex flex-col items-center px-10 py-10 h-auto relative gap-5 ">
@@ -248,8 +248,8 @@ export const RegisterEvent = ({sports}: RegisterEventProps) => {
                     </div>
                 </Modal>
             )}
-            <div className="bg-white  flex flex-col items-center px-10 py-10 h-auto  relative gap-2">
-                <div className="w-fit h-10  text-4xl ">
+            <div className="bg-white flex flex-col items-center px-10 py-10 gap-2">
+                <div className="w-fit h-10 text-4xl">
                     {/* FIXME */}
                     Adicionar evento
                 </div>

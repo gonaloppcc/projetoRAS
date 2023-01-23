@@ -23,7 +23,7 @@ export const useProfile = create<ProfileState>((set, get) => ({
     balance: 0,
     email: '',
     username: '',
-    role: '',
+    type: '',
     isLoggedIn: false,
     getSession: async () => {
         const userId = localStorage.getItem('email');

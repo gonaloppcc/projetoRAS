@@ -7,7 +7,7 @@ export const Navbar = () => {
     const [isPaymentModalOpen, setIsPaymentModalOpen] =
         useState<boolean>(false);
 
-    const {balance, setBalance} = useProfile();
+    const {isLoggedIn, balance, setBalance} = useProfile();
 
     return (
         <div>
