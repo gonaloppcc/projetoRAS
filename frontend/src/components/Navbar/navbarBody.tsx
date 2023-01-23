@@ -1,5 +1,4 @@
 import {Navlink} from '@components/Navlink';
-import Link from 'next/link';
 import Image from 'next/image';
 import {useProfile} from '@state/useProfile';
 import {PrimaryButton, SecondaryButton} from '@components/Button';
@@ -9,17 +8,52 @@ import {useEffect, useState} from 'react';
 import {Avatar} from '@components/Avatar';
 import {Dropdown} from '@components/Dropdown';
 import {Notifications} from '@components/Notifications';
+import {UserType} from '@domain/User';
 
-const navlinks = [
+const BETTER_NAVLINKS = [
     {
         name: 'Desporto', // FIXME: Name is in portuguese, needs to be generic
         href: '/', // FIXME: Change this href to the sports page
-        isActive: false, // FIXME Change this to true if the current page is the sports page
+        isActive: true, // FIXME Change this to true if the current page is the sports page
     },
+    /*
     {
         name: 'Promoções', // FIXME: Same as above
         href: '/',
         isActive: true,
+    },
+     */
+    {
+        name: 'Transações',
+        href: '/',
+    },
+];
+
+const SPECIALIST_NAVLINKS = [
+    {
+        name: 'Home',
+        href: '/',
+    },
+    {
+        name: 'Editar Jogos',
+        href: '/specialist/chooseModality',
+        isActive: true,
+    },
+];
+
+const ADMIN_NAVLINKS = [
+    {
+        name: 'Home',
+        href: '/',
+    },
+    {
+        name: 'Jogos',
+        href: '/admin/chooseModality',
+        isActive: true,
+    },
+    {
+        name: 'Registar',
+        href: '/admin/registerEvent',
     },
 ];
 
@@ -28,7 +62,8 @@ interface NavBarBodyProps {
 }
 
 export const NavBarBody = ({setPaymentModalOpen}: NavBarBodyProps) => {
-    const {isLoggedIn, username, balance, getSession, logout} = useProfile();
+    const {isLoggedIn, type, username, balance, getSession, logout} =
+        useProfile();
     const [isNotificationSlideOpen, setIsNotificationSlideOpen] =
         useState(false);
 
@@ -61,6 +96,28 @@ export const NavBarBody = ({setPaymentModalOpen}: NavBarBodyProps) => {
         },
     ];
 
+    if (type === UserType.Better) {
+        dropdownActions.unshift({
+            name: 'Apostas',
+            onClick: async () => {
+                await router.push('/better/bets');
+            },
+        });
+
+        dropdownActions.unshift({
+            name: 'Transações',
+            onClick: async () => {
+                await router.push('/better/transactions');
+            },
+        });
+    }
+
+    const navlinks = [
+        ...(type === UserType.Better ? BETTER_NAVLINKS : []),
+        ...(type === UserType.Specialist ? SPECIALIST_NAVLINKS : []),
+        ...(type === UserType.Admin ? ADMIN_NAVLINKS : []),
+    ];
+
     return (
         <div className="hidden md:flex flex-row justify-between items-center px-8 h-12 gap-3 bg-IMPERIAL_RED">
             <div className="h-full flex flex-row items-center gap-8">
@@ -73,14 +130,12 @@ export const NavBarBody = ({setPaymentModalOpen}: NavBarBodyProps) => {
             </div>
             {isLoggedIn && (
                 <div className="flex flex-row justify-end items-center p-0 gap-12">
-                    <Balance setOpen={setPaymentModalOpen} balance={balance} />
-
-                    <Link href="/better/bets" className="text-WHITE">
-                        {'Apostas' /* FIXME Hardcoded for now */}
-                    </Link>
-                    <Link href="/better/transactions" className="text-WHITE">
-                        {'Transações' /* FIXME Hardcoded for now */}
-                    </Link>
+                    {type === UserType.Better && (
+                        <Balance
+                            setOpen={setPaymentModalOpen}
+                            balance={balance}
+                        />
+                    )}
                     <Dropdown actions={dropdownActions}>
                         <div className="flex flex-row items-center gap-2">
                             <Avatar>{username.at(0)?.toUpperCase()}</Avatar>
@@ -100,10 +155,12 @@ export const NavBarBody = ({setPaymentModalOpen}: NavBarBodyProps) => {
                     </SecondaryButton>
                 </div>
             )}
-            <Notifications
-                open={isNotificationSlideOpen}
-                setOpen={setIsNotificationSlideOpen}
-            />
+            {isLoggedIn && (
+                <Notifications
+                    open={isNotificationSlideOpen}
+                    setOpen={setIsNotificationSlideOpen}
+                />
+            )}
         </div>
     );
 };

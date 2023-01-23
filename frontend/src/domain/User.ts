@@ -3,7 +3,13 @@ export interface User {
     balance: number;
     email: string;
     username: string;
-    role: string;
+    type: string;
+}
+
+export enum UserType {
+    Admin = 'Administrator',
+    Better = 'Better',
+    Specialist = 'Specialist',
 }
 
 export interface Transaction {
