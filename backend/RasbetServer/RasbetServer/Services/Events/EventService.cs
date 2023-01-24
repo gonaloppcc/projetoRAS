@@ -106,7 +106,6 @@ public class EventService : IEventService
         if (!eventChanged)
             return new ObjectResponse<Event>("Event has no changes", StatusCode.Conflict);
         
-        prevEvent.CopyFrom(e);
         await _eventRepository.UpdateAsync(prevEvent);
         return new ObjectResponse<Event>(prevEvent);
     }
@@ -134,6 +133,7 @@ public class EventService : IEventService
         if (changes is null)
             return false;
         var notifications = Notification.CreateNotificationFromEventChanges(previous, changes).ToList();
+        previous.CopyFrom(newEvent);
 
         previous.Odds
             .ToList()
@@ -154,6 +154,9 @@ public class EventService : IEventService
                     {
                         better.Notifications?.Add(n.Clone);
                         if (n is not EventCompletedNotification)
+                            return;
+                        
+                        if (!bet.ShouldClose(previous) || bet.Closed)
                             return;
                         
                         bet.Closed = true;

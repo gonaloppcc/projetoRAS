@@ -3,6 +3,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using RasbetServer.Models.Bets.Odds;
+using RasbetServer.Models.Events;
 using RasbetServer.Models.Users.Better;
 using RasbetServer.Resources.Bets;
 using RasbetServer.Resources.Bets.MultiBet;
@@ -33,6 +34,21 @@ public abstract class Bet
     public float CancelReturn => 0.8f * Amount;
 
     public virtual IList<Odd> Odds { get; set; } = new List<Odd>();
+
+    public bool ShouldClose(Event e)
+    {
+        var closed = true;
+        foreach (var odd in Odds)
+        {
+            if (odd.Event.Id == e.Id)
+                continue;
+
+            closed = closed && odd.Event.Completed;
+        }
+
+        return closed;
+    }
+
 
     public Bet() { }
     
