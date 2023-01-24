@@ -31,7 +31,7 @@ public class Api {
     }
 
     // TODO: Needs cleanup
-    public async Task<bool> WriteToDatabase(string data) {
+    public async Task WriteToDatabase(string data) {
         JArray json = JArray.Parse(data);
         bool dbChanged = false;
         var eventList = new List<SaveFootballEventResource>();
@@ -162,7 +162,5 @@ public class Api {
         });
         var serialized = new StringContent(JsonConvert.SerializeObject(jsonList), Encoding.UTF8, "application/json");
         await _client.PostAsync(CacheEndpoint, serialized);
-        
-        return dbChanged;
     }
 }

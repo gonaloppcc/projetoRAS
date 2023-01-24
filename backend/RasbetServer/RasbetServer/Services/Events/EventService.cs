@@ -147,12 +147,12 @@ public class EventService : IEventService
                 bets?.ForEach(bet =>
                 {
                     var better = bet.Better;
-                    if (notifiedBetters.Any(id => id == better.Id))
-                        return;
                     
                     notifications.ForEach(n =>
                     {
-                        better.Notifications?.Add(n.Clone);
+                        if (notifiedBetters.All(id => id != better.Id))
+                            better.Notifications?.Add(n.Clone);
+                        
                         if (n is not EventCompletedNotification)
                             return;
                         
