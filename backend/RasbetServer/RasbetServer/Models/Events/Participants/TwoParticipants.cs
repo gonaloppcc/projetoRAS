@@ -9,15 +9,23 @@ public class TwoParticipants : BaseParticipants
     [NotMapped]
     public Result Home
     {
-        get => Results[0];
-        set => Results.Insert(0, value);
+        get => Results.ToList().Find(r => r.Position == 0);
+        set
+        {
+            value.Position = 0;
+            Results.Add(value);
+        }
     }
 
     [NotMapped]
     public Result Away
     {
-        get => Results[1];
-        set => Results.Insert(1, value);
+        get => Results.ToList().Find(r => r.Position == 1);
+        set
+        {
+            value.Position = 1;
+            Results.Add(value);
+        }
     }
 
     [ForeignKey("TieId")] 

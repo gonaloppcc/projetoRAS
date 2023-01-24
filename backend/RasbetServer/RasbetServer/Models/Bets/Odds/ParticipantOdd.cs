@@ -42,7 +42,7 @@ public class ParticipantOdd : Odd
     {
         var results = @event.Participants.GetParticipants();
         Result highestScore = results[0];
-        Result sndHighestScore = results[0];
+        Result? sndHighestScore = null;
 
         foreach (var result in results.Skip(1))
         {
@@ -54,7 +54,7 @@ public class ParticipantOdd : Odd
         }
 
         // If the second highest score is equal to the highest score then it's a tie and we lost the bet
-        if (sndHighestScore.Score == highestScore.Score)
+        if (sndHighestScore is not null && sndHighestScore.Score == highestScore.Score)
             return false;
         
         // If the name of the highest score participant is the

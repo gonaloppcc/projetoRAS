@@ -22,6 +22,9 @@ public class Result : ICopyFrom<Result>, IComparable<Result, IEnumerable<EventCo
     public virtual BaseParticipants Participants { get; set; }
     
     public int? Score { get; set; }
+    
+    [Required]
+    public int Position { get; set; }
 
     public Result() { }
     
@@ -34,6 +37,7 @@ public class Result : ICopyFrom<Result>, IComparable<Result, IEnumerable<EventCo
     public void CopyFrom(Result other)
     {
         Score = other.Score;
+        Position = other.Position;
         Participant.CopyFrom(other.Participant);
     }
 
