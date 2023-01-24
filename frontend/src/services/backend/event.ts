@@ -79,7 +79,7 @@ export const getEventsByCompetition = async ({
 export const getEventsBySport = async ({
     sportId,
     pageNum = 0,
-    pageSize = 20,
+    pageSize = 5,
 }: {
     sportId: string;
     pageNum?: number;

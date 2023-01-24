@@ -14,8 +14,6 @@ export const ScrollModalities = ({
 }: ScrollModalitiesProps) => {
     // O value é uma coisa do html, tipo input com checkbox
     const checkBoxClicked = (args: Sport, value: any) => {
-        console.log(args.name);
-        console.log(value.target.checked);
         changeModality(args.name, value);
     };
 

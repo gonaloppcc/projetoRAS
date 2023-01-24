@@ -2,63 +2,65 @@ import React from 'react';
 import {NextPage} from 'next';
 import {CircularProgress} from '@mui/material';
 import {useEventsBySport} from '@hooks/useEventsBySport';
+import {PageLayout} from '@components/PageLayout';
 import {GameCardAdmin} from '@components/GameCardAdmin';
-import {Pagination} from '@components/Pagination';
 import {usePagination} from '@hooks/usePagination';
+import {Pagination} from '@components/Pagination';
 
 interface PageProps {
-    eventId: string;
+    sportId: string;
 }
 
 const NUM_PAGES = 10;
 
-const EventPage: NextPage<PageProps> = ({eventId}) => {
+const EventPage: NextPage<PageProps> = ({sportId}) => {
     const {currentPage, setCurrentPage} = usePagination();
-
     const {isSuccess, isLoading, isError, events} = useEventsBySport({
-        sportId: eventId,
+        sportId: sportId,
         pageNum: currentPage,
     });
 
     return (
-        <>
+        <PageLayout>
             {isLoading && <CircularProgress />}
             {isSuccess && (
-                <div className="gap-8 bg-gray-400 w-screen h-full justify-center flex items-center">
-                    <div className=" flex flex-col gap-5 items-top  py-4 w-max">
-                        <div className="text-xl bg-white w-full font-semibold pl-4  py-4">
+                <div className="gap-8 bg-CULTURED w-full justify-start flex flex-col items-center">
+                    <div className="h-full flex flex-col gap-5 items-top">
+                        <div className="text-xl bg-white font-semibold p-4">
                             Jogos
                         </div>
-                        {events.map((game) => {
-                            return (
-                                <div key={game.id}>
-                                    <GameCardAdmin
-                                        game={game}
-                                        sport={eventId}
-                                        textButton={'Fechar jogo'}
-                                        textPropsUp={'Insira resultado'}
-                                        textSucess={'Jogo fechado com sucesso'}
-                                        resultOrOdd={true}
-                                        textSet={'Pontos'}
-                                    />
-                                </div>
-                            );
-                        })}
+                        {events.map((game) => (
+                            <GameCardAdmin
+                                key={game.id}
+                                game={game}
+                                sport={sportId}
+                                textButton={'Fechar jogo'}
+                                textPropsUp={'Insira resultado'}
+                                textSucess={'Jogo fechado com sucesso'}
+                                resultOrOdd={true}
+                                textSet={'Pontos'}
+                            />
+                        ))}
                         <Pagination
                             currentPage={currentPage}
                             onPageChange={setCurrentPage}
                             totalPages={NUM_PAGES}
                         />
                     </div>
+                    <Pagination
+                        currentPage={currentPage}
+                        onPageChange={setCurrentPage}
+                        totalPages={NUM_PAGES}
+                    />
                 </div>
             )}
             {isError && <span>Something went wrong!</span>}
-        </>
+        </PageLayout>
     );
 };
 
 EventPage.getInitialProps = async ({query}) => {
-    return {eventId: query.id as string};
+    return {sportId: query.id as string};
 };
 
 export default EventPage;

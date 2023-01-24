@@ -25,12 +25,12 @@ export const GameCardAdmin = ({
     const [open, setOpen] = useState(false);
     const column = (header: string, body: string) => {
         return (
-            <div className=" m-3 p-3 rounded-lg w-full">
-                <div className="flex  flex-col gap-1  pl-3">
+            <div className="p-3 rounded-lg w-full">
+                <div className="flex  flex-col gap-1 pl-3">
                     <div className="text-sm text-zinc-500 font-light">
                         {header}
                     </div>
-                    <div className="  font-medium">{body}</div>
+                    <div className="font-medium">{body}</div>
                 </div>
             </div>
         );
@@ -77,7 +77,7 @@ export const GameCardAdmin = ({
                     />
                 </Modal>
             )}
-            <div className=" bg-white px-5 rounded flex flex-row w-full">
+            <div className="bg-white p-4 rounded flex flex-row w-full">
                 <div className="pr-5 m-auto text-xl content-between grow rounded-lg w-full">
                     {`${homeTeam}-${awayTeam}`}
                 </div>

@@ -1,6 +1,6 @@
 import {PrimaryButton} from '@components/Button';
 import {HandleChangeProps, InputForm} from '@components/createBetter/inputForm';
-import {TieOdd, ValuePromo} from '@domain/Event';
+import {TieOdd} from '@domain/Event';
 
 import {useState} from 'react';
 import {
@@ -111,7 +111,6 @@ export const SetResult = ({
                 Sport: sport,
                 Event: event,
             };
-            console.log(newEvent);
             await putEvent(newEvent, game.id);
             setSubmitted(true);
         }

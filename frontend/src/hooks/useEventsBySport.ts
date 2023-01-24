@@ -3,13 +3,21 @@ import {EventReceived, getEventsBySport} from '../services/backend/event';
 import {FetcherProps} from '@hooks/Fetcher';
 import {AxiosError} from 'axios';
 
-export interface useEventsBySportProps extends FetcherProps {
-    events: EventReceived[];
+export interface useEventsBySportProps {
+    sportId: string;
     pageNum?: number;
     pageSize?: number;
 }
 
-export const useEvents = (sportId: string): useEventsBySportProps => {
+export interface UseEventsReturnType extends FetcherProps {
+    events: EventReceived[];
+}
+
+export const useEvents = ({
+    sportId,
+    pageNum = 0,
+    pageSize = 5,
+}: useEventsBySportProps): UseEventsReturnType => {
     const {
         isSuccess,
         isLoading,
@@ -17,7 +25,9 @@ export const useEvents = (sportId: string): useEventsBySportProps => {
         data: events,
         error,
         refetch,
-    } = useQuery(['events', sportId], () => getEventsBySport({sportId}));
+    } = useQuery(['events', sportId, pageNum], () =>
+        getEventsBySport({sportId, pageNum, pageSize})
+    );
 
     return {
         isSuccess,
@@ -29,16 +39,11 @@ export const useEvents = (sportId: string): useEventsBySportProps => {
     };
 };
 
-export interface useEventsBySport {
-    sportId: string;
-    pageNum?: number;
-    pageSize?: number;
-}
 export const useEventsBySport = ({
     sportId,
-    pageNum,
-    pageSize = 8,
-}: useEventsBySport): useEventsBySportProps => {
+    pageNum = 0,
+    pageSize = 4,
+}: useEventsBySportProps): UseEventsReturnType => {
     const {
         isSuccess,
         isLoading,
