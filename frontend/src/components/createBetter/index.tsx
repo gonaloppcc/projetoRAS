@@ -75,7 +75,6 @@ export const CreateBetter = () => {
         event.preventDefault();
         validate();
         if (!hasErrors()) {
-            console.log('submit');
             registerMutation.mutate();
         }
     };

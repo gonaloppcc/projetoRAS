@@ -17,14 +17,12 @@ export const UpdateOdd = ({odd}: UpdateOddProps) => {
     const [error, setError] = useState<string>('');
 
     const handleChange = (e: handleChangeProps) => {
-        //console.log(e);
         setOddValue(e.value);
         //set({...values, [name]: value});
     };
 
     const submit = () => {
         if (parseInt(oddValue) > 0) {
-            console.log('Submit?');
         } else {
             setError('Só números positivos');
         }

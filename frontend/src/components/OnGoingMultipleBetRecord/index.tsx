@@ -1,7 +1,6 @@
 import React from 'react';
 import {MultiBetOdd, MultipleBet} from '@domain/Bet';
 import {formatDate, formatNumber} from '../../utils/formatters';
-import {getEvent} from 'services/backend/event';
 import {useEvent} from '@hooks/useEvent';
 
 export interface OnGoingMultipleBetRecordProps extends MultipleBet {
@@ -35,7 +34,6 @@ export const OnGoingMultipleBetRecord = ({
     const getEventName = (odd: MultiBetOdd) => {
         // eslint-disable-next-line react-hooks/rules-of-hooks
         const {isSuccess, event} = useEvent(odd.eventId);
-        console.log(event);
         const awayName = isSuccess
             ? event.participants.away.participant.participantName
             : 'Away';

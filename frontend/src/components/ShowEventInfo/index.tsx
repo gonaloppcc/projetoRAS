@@ -77,8 +77,6 @@ export const ShowEventInfo = ({info}: ShowEventInfoProps) => {
     const awayTeam = info.Participants.Away.Participant.PartId;
 
     const clickOdd = (content: string) => {
-        console.log('Clicou');
-        console.log(content);
         setUpdateOdd(content);
         setOpen(true);
     };

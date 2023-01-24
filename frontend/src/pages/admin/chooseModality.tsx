@@ -10,7 +10,6 @@ const Home: NextPage = () => {
     const {isSuccess, isLoading, isError, sports, error} = useSports();
     const router = useRouter();
     const sportSelected = async (sport: Sport) => {
-        console.log(`Clicou ${sport.name}`);
         await router.push(`/admin/sports/${sport.name}`);
     };
 

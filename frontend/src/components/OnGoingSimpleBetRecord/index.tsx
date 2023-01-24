@@ -15,7 +15,6 @@ export const OnGoingSimpleBetRecord = ({
     amount,
     cancelBetHandler,
 }: OnGoingSimpleBetRecordProps) => {
-    console.log('OnGoingSimpleBetRecord');
     // FIXME: Hardcoded text in this component
     const betName = `Resultado Final: ${participantName ?? 'Empate'}`; // FIXME: Only valid to Participant Bets
 
