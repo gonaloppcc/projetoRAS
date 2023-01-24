@@ -22,7 +22,6 @@ export const OnGoingBetRecord = ({
     cancelBetHandler,
     open,
 }: OnGoingBetRecordProps) => {
-    console.log('bet', bet);
     return (
         <>
             {isSimpleBet(bet) && (

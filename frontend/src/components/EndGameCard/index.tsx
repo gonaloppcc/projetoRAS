@@ -11,7 +11,6 @@ export interface SuspendedGameCardProps {
 }
 
 export const EndGameCard = ({game}: SuspendedGameCardProps) => {
-    console.log(game);
     const column = (header: string, body: string) => {
         return (
             <div className=" m-3 p-3 rounded-lg w-full">

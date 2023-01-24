@@ -98,7 +98,6 @@ export const RegisterEvent = ({sports}: RegisterEventProps) => {
         if (hasErrors()) {
             return;
         } else {
-            console.log('Só devia estar aqui sem erros');
             // TODO: Make the request to the backend here
             const dateAndHour: string = `${date}T${hour}:17.0065405+00:00`;
             const partipantHome: ParticipantMesmo = {
@@ -143,8 +142,6 @@ export const RegisterEvent = ({sports}: RegisterEventProps) => {
                 Sport: sportName,
                 Event: event,
             };
-            console.log('Sucesso?');
-            console.log(newEvent);
             await postEvent(newEvent);
             setSucess(true);
         }
