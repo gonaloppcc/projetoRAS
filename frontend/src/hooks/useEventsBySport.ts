@@ -5,6 +5,8 @@ import {AxiosError} from 'axios';
 
 export interface useEventsBySportProps extends FetcherProps {
     events: EventReceived[];
+    pageNum?: number;
+    pageSize?: number;
 }
 
 export const useEvents = (sportId: string): useEventsBySportProps => {
@@ -27,7 +29,16 @@ export const useEvents = (sportId: string): useEventsBySportProps => {
     };
 };
 
-export const useEventsBySport = (sportId: string): useEventsBySportProps => {
+export interface useEventsBySport {
+    sportId: string;
+    pageNum?: number;
+    pageSize?: number;
+}
+export const useEventsBySport = ({
+    sportId,
+    pageNum,
+    pageSize = 8,
+}: useEventsBySport): useEventsBySportProps => {
     const {
         isSuccess,
         isLoading,
@@ -35,7 +46,9 @@ export const useEventsBySport = (sportId: string): useEventsBySportProps => {
         data: events,
         error,
         refetch,
-    } = useQuery(['events', sportId], () => getEventsBySport({sportId}));
+    } = useQuery(['events', sportId, pageNum], () =>
+        getEventsBySport({sportId, pageNum, pageSize})
+    );
 
     return {
         isSuccess,

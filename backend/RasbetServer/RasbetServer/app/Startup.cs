@@ -35,7 +35,7 @@ public class Startup
             .SetBasePath($"{Directory.GetCurrentDirectory()}/app")
             .AddJsonFile("appsettings.json")
             .Build()
-            .GetConnectionString("MySQLConnection");
+            .GetConnectionString("GoogleCloudConnection");
     }
 
     public void ConfigureServices(IServiceCollection services)
@@ -58,16 +58,16 @@ public class Startup
 
         services.AddScoped<IUserRepository, UserRepository>();
         services.AddScoped<IUserService, UserService>();
-        
+
         services.AddScoped<IEventRepository, EventRepository>();
         services.AddScoped<IEventService, EventService>();
-        
+
         services.AddScoped<ISportRepository, SportRepository>();
         services.AddScoped<ISportService, SportService>();
-        
+
         services.AddScoped<ICompetitionRepository, CompetitionRepository>();
         services.AddScoped<ICompetitionService, CompetitionsService>();
-        
+
         services.AddScoped<IBetRepository, BetRepository>();
         services.AddScoped<IBetService, BetService>();
 
