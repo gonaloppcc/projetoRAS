@@ -6,6 +6,7 @@ import {useEventsBySport} from '@hooks/useEventsBySport';
 import {GameCardAdmin} from '@components/GameCardAdmin';
 import {usePagination} from '@hooks/usePagination';
 import {Pagination} from '@components/Pagination';
+import {Navbar} from '@components/Navbar';
 
 interface PageProps {
     sportId: string;
@@ -23,6 +24,7 @@ const EventPage: NextPage<PageProps> = ({sportId}) => {
 
     return (
         <>
+            <Navbar />
             {isLoading && <CircularProgress />}
             {isSuccess && (
                 <div className="gap-8 bg-gray-400 w-screen justify-center flex items-center">

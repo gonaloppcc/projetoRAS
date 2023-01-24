@@ -6,6 +6,7 @@ import {useEvent} from '@hooks/useEvent';
 
 export interface OnGoingSimpleBetRecordProps extends SimpleBet {
     cancelBetHandler: () => void;
+    open: boolean;
 }
 
 export const OnGoingSimpleBetRecord = ({
@@ -14,8 +15,10 @@ export const OnGoingSimpleBetRecord = ({
     date,
     amount,
     cancelBetHandler,
+    open,
 }: OnGoingSimpleBetRecordProps) => {
     console.log('OnGoingSimpleBetRecord');
+    console.log(open);
     // FIXME: Hardcoded text in this component
     const betName = `Resultado Final: ${participantName ?? 'Empate'}`; // FIXME: Only valid to Participant Bets
 
@@ -76,15 +79,16 @@ export const OnGoingSimpleBetRecord = ({
                     {formatNumber(betPossibleWinnings)} €
                 </span>
             </div>
-
-            <div className="flex flex-col items-start py-4 gap-2">
-                <button
-                    onClick={cancelBetHandler}
-                    className="bg-SPECIAL hover:bg-SPECIAL_DARK p-3 rounded font-semibold"
-                >
-                    Cancelar
-                </button>
-            </div>
+            {open && (
+                <div className="flex flex-col items-start py-4 gap-2">
+                    <button
+                        onClick={cancelBetHandler}
+                        className="bg-SPECIAL hover:bg-SPECIAL_DARK p-3 rounded font-semibold"
+                    >
+                        Cancelar
+                    </button>
+                </div>
+            )}
         </div>
     );
 };

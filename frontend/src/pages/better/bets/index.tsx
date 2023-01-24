@@ -50,6 +50,7 @@ const Bets = () => {
                                             cancelBetHandler={cancelBetHandler(
                                                 bet.id
                                             )}
+                                            open={true}
                                         />
                                     ))}
                             </div>
@@ -58,9 +59,12 @@ const Bets = () => {
                             <div className="w-full flex flex-col justify-start gap-1">
                                 {isSuccess &&
                                     finishedBets.map((bet) => (
-                                        <>
-
-                                        </> /*<BetRecord key={bet.Id} {...bet} />*/
+                                        <OnGoingBetRecord
+                                            key={bet.id}
+                                            bet={bet}
+                                            cancelBetHandler={() => void 0}
+                                            open={false}
+                                        />
                                     ))}
                             </div>
                         </Accordion>

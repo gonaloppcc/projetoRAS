@@ -4,6 +4,7 @@ import {useSports} from '@hooks/useSports';
 import {CircularProgress} from '@mui/material';
 import {Sport} from '@domain/Event';
 import {useRouter} from 'next/router';
+import {PageLayout} from '@components/PageLayout';
 
 const Home: NextPage = () => {
     // FIXME: Alterar aqui para ir buscar os desportos do specialist, e não todos
@@ -15,7 +16,7 @@ const Home: NextPage = () => {
     };
 
     return (
-        <>
+        <PageLayout>
             {isLoading && <CircularProgress />}
             {isSuccess && (
                 <div className="gap-8 h-screen w-screen justify-center flex items-center bg-CULTURED">
@@ -44,7 +45,7 @@ const Home: NextPage = () => {
             )}
 
             {isError && <span>Error: {error.message}</span>}
-        </>
+        </PageLayout>
     );
 };
 

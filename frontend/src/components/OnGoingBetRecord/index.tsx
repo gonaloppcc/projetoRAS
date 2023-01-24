@@ -6,6 +6,7 @@ import {OnGoingMultipleBetRecord} from '@components/OnGoingMultipleBetRecord';
 export interface OnGoingBetRecordProps {
     bet: Bet;
     cancelBetHandler: () => void;
+    open: boolean;
 }
 
 const isSimpleBet = (bet: Bet): bet is SimpleBet => {
@@ -19,6 +20,7 @@ const isMultipleBet = (bet: Bet): bet is MultipleBet => {
 export const OnGoingBetRecord = ({
     bet,
     cancelBetHandler,
+    open,
 }: OnGoingBetRecordProps) => {
     console.log('bet', bet);
     return (
@@ -27,12 +29,14 @@ export const OnGoingBetRecord = ({
                 <OnGoingSimpleBetRecord
                     {...(bet as SimpleBet)}
                     cancelBetHandler={cancelBetHandler}
+                    open={open}
                 />
             )}
             {isMultipleBet(bet) && (
                 <OnGoingMultipleBetRecord
                     {...(bet as MultipleBet)}
                     cancelBetHandler={cancelBetHandler}
+                    open={open}
                 />
             )}
         </>

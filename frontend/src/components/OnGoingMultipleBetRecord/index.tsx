@@ -6,6 +6,7 @@ import {useEvent} from '@hooks/useEvent';
 
 export interface OnGoingMultipleBetRecordProps extends MultipleBet {
     cancelBetHandler: () => void;
+    open: boolean;
 }
 
 export const OnGoingMultipleBetRecord = ({
@@ -13,6 +14,7 @@ export const OnGoingMultipleBetRecord = ({
     amount,
     cancelBetHandler,
     odds,
+    open,
 }: OnGoingMultipleBetRecordProps) => {
     // FIXME: Hardcoded text in this component
     //const betName = `Resultado Final: ${PartId ?? 'Empate'}`; // FIXME: Only valid to Participant Bets
@@ -86,14 +88,16 @@ export const OnGoingMultipleBetRecord = ({
                     </span>
                 </div>
 
-                <div className="flex flex-col items-start py-4 gap-2">
-                    <button
-                        onClick={cancelBetHandler}
-                        className="bg-SPECIAL hover:bg-SPECIAL_DARK p-3 rounded font-semibold"
-                    >
-                        Cancelar
-                    </button>
-                </div>
+                {open && (
+                    <div className="flex flex-col items-start py-4 gap-2">
+                        <button
+                            onClick={cancelBetHandler}
+                            className="bg-SPECIAL hover:bg-SPECIAL_DARK p-3 rounded font-semibold"
+                        >
+                            Cancelar
+                        </button>
+                    </div>
+                )}
             </div>
             <div className="w-full flex flex-col gap-5 pr-10 bg-WHITE pb-2">
                 {odds.map((odd) => (
