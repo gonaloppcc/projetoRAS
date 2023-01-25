@@ -4,7 +4,6 @@ import {CircularProgress} from '@mui/material';
 import {useEventsBySport} from '@hooks/useEventsBySport';
 import {GameCardAdmin} from '@components/GameCardAdmin';
 import {usePagination} from '@hooks/usePagination';
-import {PageLayout} from '@components/PageLayout';
 import {Navbar} from '@components/Navbar';
 import {Pagination} from '@components/Pagination';
 
@@ -43,11 +42,6 @@ const EventPage: NextPage<PageProps> = ({sportId}) => {
                                 textSet={'Pontos'}
                             />
                         ))}
-                        <Pagination
-                            currentPage={currentPage}
-                            onPageChange={setCurrentPage}
-                            totalPages={NUM_PAGES}
-                        />
                     </div>
                     <Pagination
                         currentPage={currentPage}

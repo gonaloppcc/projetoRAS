@@ -23,17 +23,19 @@ public class EventController : ControllerBase
     }
 
     [HttpGet("competition", Name = "GetPageByCompetition")]
-    public async Task<IActionResult> GetPageByCompetition([FromQuery] string compId, [FromQuery] int pageNum, [FromQuery] int pageSize)
+    public async Task<IActionResult> GetPageByCompetition([FromQuery] string compId, [FromQuery] int pageNum,
+        [FromQuery] int pageSize)
     {
         var response = await _eventService.ListPageByCompetitionAsync(compId, pageNum, pageSize);
         if (!response.Success)
             return this.ProcessResponse(response);
-        
+
         return Ok(_mapper.Map<IEnumerable<Event>, IEnumerable<EventResource>>(response.Object!));
     }
 
     [HttpGet("sport", Name = "GetPageBySport")]
-    public async Task<IActionResult> GetPageBySport([FromQuery] string sportId, [FromQuery] int pageNum, [FromQuery] int pageSize)
+    public async Task<IActionResult> GetPageBySport([FromQuery] string sportId, [FromQuery] int pageNum,
+        [FromQuery] int pageSize)
     {
         var response = await _eventService.ListPageBySportAsync(sportId, pageNum, pageSize);
         if (!response.Success)
@@ -48,7 +50,7 @@ public class EventController : ControllerBase
         var response = await _eventService.GetAsync(id);
         if (!response.Success)
             return this.ProcessResponse(response);
-        
+
         return Ok(_mapper.Map<Event, EventResource>(response.Object!));
     }
 
@@ -58,13 +60,13 @@ public class EventController : ControllerBase
         var eventResource = Event.FromJson(json);
         if (eventResource is null)
             return BadRequest("Request is not in a valid format");
-        
+
         var e = _mapper.Map<SaveEventResource, Event>(eventResource);
         var response = await _eventService.AddAsync(e);
         if (!response.Success)
             return this.ProcessResponse(response);
-        
-        return Ok(_mapper.Map<Event,EventResource>(response.Object!));
+
+        return Ok(_mapper.Map<Event, EventResource>(response.Object!));
     }
 
     [HttpPut("{id}", Name = "UpdateEvent")]
@@ -95,5 +97,16 @@ public class EventController : ControllerBase
             return this.ProcessResponse(response);
 
         return Ok(_mapper.Map<IEnumerable<Event>, IEnumerable<EventResource>>(response.Object!));
+    }
+
+    [HttpPost("subscribe", Name = "Subscribe")]
+    public async Task<IActionResult> SubscribeEvent([FromQuery] string idUser, [FromQuery] string idEvent)
+    {
+        var response = await _eventService.Subscribe(idUser, idEvent);
+
+        if (!response.Success)
+            return this.ProcessResponse(response);
+
+        return Ok();
     }
 }

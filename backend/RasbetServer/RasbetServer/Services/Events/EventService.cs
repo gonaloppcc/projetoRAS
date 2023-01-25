@@ -19,8 +19,8 @@ public class EventService : IEventService
     private readonly IUserRepository _userRepository;
 
     public EventService(
-        IEventRepository eventRepository, 
-        ICompetitionRepository competitionRepository, 
+        IEventRepository eventRepository,
+        ICompetitionRepository competitionRepository,
         ISportRepository sportRepository,
         IBetRepository betRepository,
         IUserRepository userRepository
@@ -32,13 +32,13 @@ public class EventService : IEventService
         _betRepository = betRepository;
         _userRepository = userRepository;
     }
-    
+
     public async Task<ObjectResponse<Event>> GetAsync(string id)
     {
         var e = await _eventRepository.GetAsync(id);
         if (e is null)
             return new ObjectResponse<Event>("Event not found", StatusCode.NotFound);
-        
+
         return new ObjectResponse<Event>(e);
     }
 
@@ -65,7 +65,8 @@ public class EventService : IEventService
         }
     }
 
-    public async Task<ObjectResponse<IEnumerable<Event>>> ListPageByCompetitionAsync(string competitionId, int pageNum, int pageSize)
+    public async Task<ObjectResponse<IEnumerable<Event>>> ListPageByCompetitionAsync(string competitionId, int pageNum,
+        int pageSize)
     {
         var comp = await _competitionRepository.GetAsync(competitionId);
         if (comp is null)
@@ -78,7 +79,8 @@ public class EventService : IEventService
         return new ObjectResponse<IEnumerable<Event>>(eventList);
     }
 
-    public async Task<ObjectResponse<IEnumerable<Event>>> ListPageBySportAsync(string sportId, int pageNum, int pageSize)
+    public async Task<ObjectResponse<IEnumerable<Event>>> ListPageBySportAsync(string sportId, int pageNum,
+        int pageSize)
     {
         var sport = await _sportRepository.GetAsync(sportId);
         if (sport is null)
@@ -105,7 +107,7 @@ public class EventService : IEventService
         var eventChanged = await CreateNotificationsForEventChanged(prevEvent, e);
         if (!eventChanged)
             return new ObjectResponse<Event>("Event has no changes", StatusCode.Conflict);
-        
+
         await _eventRepository.UpdateAsync(prevEvent);
         return new ObjectResponse<Event>(prevEvent);
     }
@@ -118,7 +120,7 @@ public class EventService : IEventService
             var objectResponse = await AddAsync(e);
             if (!objectResponse.Success)
                 continue;
-            
+
             eventList.Add(objectResponse.Object!);
         }
 
@@ -128,7 +130,7 @@ public class EventService : IEventService
     private async Task<bool> CreateNotificationsForEventChanged(Event previous, Event newEvent)
     {
         var notifiedBetters = new List<string>();
-        
+
         var changes = previous.Compare(newEvent)?.ToList();
         if (changes is null)
             return false;
@@ -147,29 +149,50 @@ public class EventService : IEventService
                 bets?.ForEach(bet =>
                 {
                     var better = bet.Better;
-                    
+
                     notifications.ForEach(n =>
                     {
                         if (notifiedBetters.All(id => id != better.Id))
                             better.Notifications?.Add(n.Clone);
-                        
+
                         if (n is not EventCompletedNotification)
                             return;
-                        
+
                         if (!bet.ShouldClose(previous) || bet.Closed)
                             return;
-                        
+
                         bet.Closed = true;
                         if (!odd.HasWon(previous))
                             return;
-                            
+
                         better.Balance += bet.CalcCashOut();
-                        better.TransactionHist.Add(new Transaction(TransactionTypes.BetWin, DateTime.Now, bet.CalcCashOut(), better.Balance));
+                        better.TransactionHist.Add(new Transaction(TransactionTypes.BetWin, DateTime.Now,
+                            bet.CalcCashOut(), better.Balance));
                     });
                     _userRepository.UpdateAsync(better);
                     notifiedBetters.Add(better.Id!);
                 });
             });
+        previous.Followers.ToList().ForEach(f =>
+        {
+            notifications.ForEach(n => f.Notifications?.Add(n.Clone));
+            _userRepository.UpdateAsync(f);
+        });
         return true;
+    }
+
+    public async Task<VoidResponse> Subscribe(string idUser, string idEvent)
+    {
+        var user = await _userRepository.GetAsync(idUser);
+        if (user is not Better b)
+            return new VoidResponse("User not found", StatusCode.NotFound);
+
+        var e = await _eventRepository.GetAsync(idEvent);
+        b.Following.Add(e);
+        e.Followers.Add(b);
+        _userRepository.UpdateAsync(b);
+        _eventRepository.UpdateAsync(e);
+
+        return new VoidResponse();
     }
 }

@@ -5,6 +5,7 @@ using Newtonsoft.Json.Linq;
 using RasbetServer.Models.Bets.Odds;
 using RasbetServer.Models.CompareResults;
 using RasbetServer.Models.Events.Participants;
+using RasbetServer.Models.Users.Better;
 using RasbetServer.Resources.Events.Event;
 using RasbetServer.Resources.Events.Event.FootballEvent;
 
@@ -19,6 +20,7 @@ public abstract class Event : ICopyFrom<Event>, IComparable<Event, IEnumerable<E
     [Required]
     [ForeignKey("ParticipantsId")]
     public string? ParticipantsId { get; set; } = null;
+
     public virtual BaseParticipants Participants { get; set; }
 
     public virtual IEnumerable<Odd> Odds { get; }
@@ -28,14 +30,19 @@ public abstract class Event : ICopyFrom<Event>, IComparable<Event, IEnumerable<E
     [Required]
     [ForeignKey("CompetitionId")]
     public string CompetitionId { get; set; }
+
     public virtual Competition Competition { get; set; }
-    
+
     [Required] public bool Completed { get; set; }
-    
+
     public virtual string PrettyName { get; }
 
-    public Event() { }
-    
+    public virtual IList<Better> Followers { get; set; }
+
+    public Event()
+    {
+    }
+
     public Event(
         string id,
         BaseParticipants participants,
@@ -50,7 +57,7 @@ public abstract class Event : ICopyFrom<Event>, IComparable<Event, IEnumerable<E
         CompetitionId = competitionId;
         Completed = completed;
     }
-    
+
     public Event(
         BaseParticipants participants,
         DateTime date,
@@ -93,13 +100,13 @@ public abstract class Event : ICopyFrom<Event>, IComparable<Event, IEnumerable<E
         var participantsChanged = Participants.Compare(other.Participants)?.ToList();
         if (participantsChanged is null)
             return null;
-        
+
         if (Math.Truncate((Date - other.Date).TotalMinutes) != 0)
             dateChanged = EventCompareResults.DateChanged;
 
         if (Completed != other.Completed)
             eventCompleted = EventCompareResults.EventCompleted;
-        
+
         participantsChanged.Add(dateChanged);
         participantsChanged.Add(eventCompleted);
 
