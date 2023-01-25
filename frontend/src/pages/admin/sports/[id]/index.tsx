@@ -43,11 +43,6 @@ const EventPage: NextPage<PageProps> = ({sportId}) => {
                                 textSet={'Pontos'}
                             />
                         ))}
-                        <Pagination
-                            currentPage={currentPage}
-                            onPageChange={setCurrentPage}
-                            totalPages={NUM_PAGES}
-                        />
                     </div>
                     <Pagination
                         currentPage={currentPage}

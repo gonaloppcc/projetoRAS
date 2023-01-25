@@ -108,3 +108,15 @@ export const putEvent = async (
     const response = await axios.put(`${BASE_URL}/events/${idGame}`, event);
     return response.data as Event;
 };
+export const followEvent = async (
+    eventId: string,
+    userId: string
+): Promise<Event> => {
+    const response = await axios.get(`${BASE_URL}/events/subscribe/`, {
+        params: {
+            userId,
+            eventId,
+        },
+    });
+    return response.data as Event;
+};

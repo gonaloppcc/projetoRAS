@@ -8,6 +8,9 @@ import {OddCard} from '@components/OddCard';
 import {getOddsFromParticipants} from '../../../utils/helpers';
 import {ParticipantOdd} from '@domain/Bet';
 import {useBettingSlip} from '@state/useBettingSlip';
+import {PrimaryButton} from '@components/Button';
+import {followEvent} from 'services/backend/event';
+import {useProfile} from '@state/useProfile';
 
 interface PageProps {
     eventId: string;
@@ -16,6 +19,7 @@ interface PageProps {
 const EventPage: NextPage<PageProps> = ({eventId}) => {
     const {isSuccess, isLoading, isError, event, error} = useEvent(eventId);
     const {addBet} = useBettingSlip();
+    const {id: userId} = useProfile();
 
     let odds: ParticipantOdd[] = [];
 
@@ -35,6 +39,10 @@ const EventPage: NextPage<PageProps> = ({eventId}) => {
                 eventType: event?.sportId || '',
                 odd,
             });
+    };
+
+    const subscribeHandler = async () => {
+        await followEvent(eventId, userId);
     };
 
     return (
@@ -84,6 +92,9 @@ const EventPage: NextPage<PageProps> = ({eventId}) => {
                                             </div>
                                         ))}
                                     </div>
+                                    <PrimaryButton onClick={subscribeHandler}>
+                                        Seguir
+                                    </PrimaryButton>
                                 </div>
                             )}
                             {event.completed && (
